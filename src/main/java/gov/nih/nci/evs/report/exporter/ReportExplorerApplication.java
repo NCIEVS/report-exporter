@@ -28,23 +28,23 @@ public class ReportExplorerApplication {
 		SpringApplication.run(ReportExplorerApplication.class, args);
 	}
 	
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-		messageConverters.add(converter);;
-		builder.additionalMessageConverters(messageConverters);
-		return builder.build();
-	}
-
-	@Bean
-	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
-		return args -> {
-			RestPropertyMetadata[] propMeta = (RestPropertyMetadata[]) restTemplate.getForObject(
-					"https://api-evsrest-qa.nci.nih.gov/api/v1/metadata/ncit/properties?include=minimal", RestPropertyMetadata[].class);
-			Stream.of(propMeta).forEach(x->System.out.println(x.toString()));
-		};
-	}
+//	@Bean
+//	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+//		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+//		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+//		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
+//		messageConverters.add(converter);;
+//		builder.additionalMessageConverters(messageConverters);
+//		return builder.build();
+//	}
+//
+//	@Bean
+//	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
+//		return args -> {
+//			RestPropertyMetadata[] propMeta = (RestPropertyMetadata[]) restTemplate.getForObject(
+//					"https://api-evsrest-qa.nci.nih.gov/api/v1/metadata/ncit/properties?include=minimal", RestPropertyMetadata[].class);
+//			Stream.of(propMeta).forEach(x->System.out.println(x.toString()));
+//		};
+//	}
 
 }
