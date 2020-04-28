@@ -22,10 +22,12 @@
     <div class="starter-template">
         <h1>Properties</h1>
         <h2>
-           <tr th:each="property: ${properties}">
+        	<table class="center">
+           	<tr th:each="property: ${properties}">
    				 <td th:text="${property.name}" />
     			<td th:text="${property.code}" />
 			</tr>
+			</table>
         </h2>
     </div>
 
