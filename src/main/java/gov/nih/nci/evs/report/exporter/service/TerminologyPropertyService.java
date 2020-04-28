@@ -20,7 +20,7 @@ public class TerminologyPropertyService {
 	
 	@Value("${REST_PROP_URL}")
 	String RestPropertyURL;
-	
+
 	public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
@@ -31,11 +31,12 @@ public class TerminologyPropertyService {
 	}
 	
 	public RestPropertyMetadata[] getRestProperties(RestTemplate template){
-		RestTemplateBuilder builder = new RestTemplateBuilder();
-		RestPropertyMetadata[] propMeta = (RestPropertyMetadata[]) getRestTemplate(builder).getForObject(
-				"https://api-evsrest-qa.nci.nih.gov/api/v1/metadata/ncit/properties?include=minimal", RestPropertyMetadata[].class);
+		RestPropertyMetadata[] propMeta = 
+				(RestPropertyMetadata[]) getRestTemplate(new RestTemplateBuilder())
+				.getForObject(
+				"https://api-evsrest-qa.nci.nih.gov/api/v1/metadata/ncit/properties?include=minimal"
+						,RestPropertyMetadata[].class);
 		Stream.of(propMeta).forEach(x->System.out.println(x.toString()));
 		return propMeta;
-		
 	}
 }

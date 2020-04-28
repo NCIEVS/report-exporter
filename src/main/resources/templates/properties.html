@@ -22,6 +22,20 @@
     <div class="starter-template">
         <h1>Properties</h1>
         <h2>
+        <!--<form  class = "form"  action="index.html" method="post">
+			<input type="hidden" th:field="*{name}" />
+			<label for="hobbies">User hobbies (multiple select):</label>
+			<br />
+			<select id="hobbies" th:field="*{hobbies}" size="10" multiple="multiple">
+				<option th:each="hobby : ${properties}"
+						th:value="${{hobby}}"
+						th:text="${hobby.name}">
+					Cinema
+				</option>
+			</select>
+			<br />
+			<input type="submit" />
+		</form>-->
         	<table class="center">
            	<tr th:each="property: ${properties}">
    				 <td th:text="${property.name}" />

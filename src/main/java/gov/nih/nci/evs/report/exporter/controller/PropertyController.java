@@ -2,6 +2,7 @@ package gov.nih.nci.evs.report.exporter.controller;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +12,14 @@ import gov.nih.nci.evs.report.exporter.service.TerminologyPropertyService;
 
 @Controller
 public class PropertyController {
+	
+	@Autowired
+	TerminologyPropertyService service;
 
 	@GetMapping("/properties")
 	public String getPropertyMeta(Model model){
-		TerminologyPropertyService service = new TerminologyPropertyService();
 		model.addAttribute("properties",Arrays.asList(service.getRestProperties(service.getRestTemplate(new RestTemplateBuilder()))));
 		return "properties";
-}
+	}
+	
 }
