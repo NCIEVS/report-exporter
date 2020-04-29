@@ -1,28 +1,36 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Spring Boot Thymeleaf Hello World Example</title>
+<title>Spring Boot Thymeleaf Hello World Example</title>
 
-    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+<link rel="stylesheet"
+	th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
 
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#"></a>
-</nav>
+   	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <a class="navbar-brand" href="/">
+        <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
+      </a>
+    </nav>
+    <nav class="navbar-top" role="navigation">
+      <div class="navbar-brand">
+      </div>
+    </nav>
 
-<main role="main" class="container">
+	<main role="main" class="container">
 
-    <div class="starter-template">
-        <h1>Properties</h1>
-        <h2>
-        <!--<form  class = "form"  action="index.html" method="post">
+		<div class="starter-template">
+			<h1>Properties</h1>
+			<h2>
+				<!--<form  class = "form"  action="index.html" method="post">
 			<input type="hidden" th:field="*{name}" />
 			<label for="hobbies">User hobbies (multiple select):</label>
 			<br />
@@ -36,18 +44,19 @@
 			<br />
 			<input type="submit" />
 		</form>-->
-        	<table class="center">
-           	<tr th:each="property: ${properties}">
-   				 <td th:text="${property.name}" />
-    			<td th:text="${property.code}" />
-			</tr>
-			</table>
-        </h2>
-    </div>
+				<table class="center">
+					<tr th:each="property: ${properties}">
+						<td th:text="${property.name}" />
+						<td th:text="${property.code}" />
+					</tr>
+				</table>
+			</h2>
+		</div>
 
-</main>
-<!-- /.container -->
+	</main>
+	<!-- /.container -->
 
-<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </body>
 </html>
