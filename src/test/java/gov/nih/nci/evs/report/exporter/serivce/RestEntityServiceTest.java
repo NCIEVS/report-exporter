@@ -20,6 +20,7 @@ class RestEntityServiceTest {
 		codes.add("C12434");
 		List<RestEntity> list = service.getRestProperties(
 				service.getRestTemplate(new RestTemplateBuilder()), codes);
+		list.forEach(x -> System.out.println(x));
 		assertTrue(list.size() > 0);
 	}
 

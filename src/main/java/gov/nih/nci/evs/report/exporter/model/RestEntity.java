@@ -67,6 +67,10 @@ public class RestEntity {
 		this.properties = properties;
 	}
 	
+	public String toString() {
+		return "Code: " + code + " name: " + name;
+	}
+	
 	
 
 }
