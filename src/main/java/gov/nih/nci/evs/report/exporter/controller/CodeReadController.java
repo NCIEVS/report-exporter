@@ -31,20 +31,20 @@ public class CodeReadController {
 
 	  @GetMapping("/coderead")
 	  public String codeReadForm(Model model) {
-	    model.addAttribute("coderead", new Code());
+	    model.addAttribute("code", new Code());
 	    return "coderead";
 	  }
 	
 	@PostMapping("/coderead")
-	public String getEntities( @ModelAttribute Code code, BindingResult bzult, Model model){
-		if(bzult.hasErrors()) {
-			System.out.println( "Errors were made");
-		}
+	public String getEntities(@ModelAttribute Code code, Model model){
+//		if(bzult.hasErrors()) {
+//			System.out.println( "Errors were made");
+//		}
 		//model.addAttribute("codes", codes);
-		model.addAttribute("entities",service.getRestProperties( 
-				service.getRestTemplate(new RestTemplateBuilder()),
-				getCodes((String) code.getEntityCode())));
-		((List<RestEntity>)model.getAttribute("entities")).forEach(x -> System.out.println("Model: " + x));
+//		model.addAttribute("entities",service.getRestProperties( 
+//				service.getRestTemplate(new RestTemplateBuilder()),
+//				getCodes((String)(code.getEntityCode()))));
+//		((List<RestEntity>)model.getAttribute("entities")).forEach(x -> System.out.println("Model: " + x));
 		return "coderead";
 	}
 	
