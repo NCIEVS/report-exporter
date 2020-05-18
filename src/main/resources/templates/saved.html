@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>result</title>
+</head>
+<body>
+    <table>
+    <thead>
+        <tr>
+            <th> Properties </th>
+        </tr>
+    </thead>
+    <tbody>
+<!--     <tr th:if="${entities.empty}">
+            <td colspan="2"> No Properties </td>
+        </tr> -->
+        <tr th:each="prop : ${entityProperties.props}">
+            <td><span th:text="${prop}"> Title </span></td>
+        </tr>
+    </tbody>
+</table>
+    <a href="/properties">Select different output properties</a>
+</body>
+</html>
