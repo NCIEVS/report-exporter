@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>result</title>
+</head>
+<body>
+    	<h1>Result</h1>
+    <p th:text="'Codes to process: ' + ${code.id}" />
+    <table class="table">
+    <thead>
+        <tr>
+            <th> Code </th>
+            <th> Name </th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${entities.empty}">
+            <td colspan="2"> No Books Available </td>
+        </tr>
+        <tr th:each="entity : ${entities}">
+            <td><span th:text="${entity.code}"> Title </span></td>
+            <td><span th:text="${entity.name}"> Title </span></td>
+        </tr>
+    </tbody>
+</table>
+    <a href="/coderead">Submit another message</a>
+</body>
+</html>

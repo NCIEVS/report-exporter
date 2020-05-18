@@ -41,11 +41,11 @@ public class CodeReadController {
 //			System.out.println( "Errors were made");
 //		}
 		//model.addAttribute("codes", codes);
-//		model.addAttribute("entities",service.getRestProperties( 
-//				service.getRestTemplate(new RestTemplateBuilder()),
-//				getCodes((String)(code.getEntityCode()))));
-//		((List<RestEntity>)model.getAttribute("entities")).forEach(x -> System.out.println("Model: " + x));
-		return "coderead";
+		model.addAttribute("entities",service.getRestProperties( 
+				service.getRestTemplate(new RestTemplateBuilder()),
+				getCodes((String)(code.getId()))));
+		//((List<RestEntity>)model.getAttribute("entities")).forEach(x -> System.out.println("Model: " + x));
+		return "result";
 	}
 	
 	private List<String> getCodes(String codes){
