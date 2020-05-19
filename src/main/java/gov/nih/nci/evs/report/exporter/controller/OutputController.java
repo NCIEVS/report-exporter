@@ -14,21 +14,19 @@ import gov.nih.nci.evs.report.exporter.model.EntityProperties;
 import gov.nih.nci.evs.report.exporter.service.TerminologyPropertyService;
 
 @Controller
-public class PropertyController {
+public class OutputController {
 	
 	@Autowired
 	TerminologyPropertyService service;
 
-	@GetMapping("/properties")
+	@GetMapping("/output")
 	public String getPropertyMeta(Model model){
-		model.addAttribute("properties", Arrays.asList(service.getRestProperties(service.getRestTemplate(new RestTemplateBuilder()))));
-		 model.addAttribute("selected", new EntityProperties());
-		return "properties";
+		return "output";
 	}
 	
-	@PostMapping("/properties")
+	@PostMapping("/output")
     public String save(@ModelAttribute EntityProperties selected, Model model) {
-        return "saved";
+        return "output";
     }
 	
 }

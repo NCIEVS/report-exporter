@@ -22,12 +22,6 @@ public class CodeReadController {
 	@Autowired
 	CodeReadService service;
 	
-//	@GetMapping("/coderead")
-//	public String getPropertyMeta(Model model){
-//		model.addAttribute("title", "Code Read Service");
-//		return "coderead";
-//	}
-	
 
 	  @GetMapping("/coderead")
 	  public String codeReadForm(Model model) {
@@ -37,14 +31,9 @@ public class CodeReadController {
 	
 	@PostMapping("/coderead")
 	public String getEntities(@ModelAttribute Code code, Model model){
-//		if(bzult.hasErrors()) {
-//			System.out.println( "Errors were made");
-//		}
-		//model.addAttribute("codes", codes);
 		model.addAttribute("entities",service.getRestProperties( 
 				service.getRestTemplate(new RestTemplateBuilder()),
 				getCodes((String)(code.getId()))));
-		//((List<RestEntity>)model.getAttribute("entities")).forEach(x -> System.out.println("Model: " + x));
 		return "result";
 	}
 	

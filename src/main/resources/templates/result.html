@@ -16,7 +16,7 @@
     </thead>
     <tbody>
     <tr th:if="${entities.empty}">
-            <td colspan="2"> No Books Available </td>
+            <td colspan="2" th:text="'No Entities found for: ' + ${code.id}">  </td>
         </tr>
         <tr th:each="entity : ${entities}">
             <td><span th:text="${entity.code}"> Title </span></td>
