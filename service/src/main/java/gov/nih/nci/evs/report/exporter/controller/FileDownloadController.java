@@ -38,5 +38,17 @@ public class FileDownloadController {
 			    return IOUtils.toByteArray(in);
 			}
 	
+	@GetMapping(
+			  value = "/get-file-for-props/{id}/{props}/JsonFile.json",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+			)
+			public @ResponseBody byte[] getFileForProps(@PathVariable String id, @PathVariable String props) throws IOException {
+			    InputStream in = new ByteArrayInputStream(new Gson().toJson(
+			    		service.getRestProperties(
+			    				service.getRestTemplate(
+			    						new RestTemplateBuilder()), 
+			    				service.getCodes(id))).getBytes());
+			    return IOUtils.toByteArray(in);
+			}
 
 }

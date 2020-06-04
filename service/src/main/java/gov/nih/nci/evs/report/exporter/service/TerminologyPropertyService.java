@@ -13,6 +13,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestPropertyMetadata;
 
 @Service
@@ -30,12 +31,12 @@ public class TerminologyPropertyService {
 		return builder.build();
 	}
 	
-	public RestPropertyMetadata[] getRestProperties(RestTemplate template){
-		RestPropertyMetadata[] propMeta = 
-				(RestPropertyMetadata[]) getRestTemplate(new RestTemplateBuilder())
-				.getForObject(
-				"https://api-evsrest-qa.nci.nih.gov/api/v1/metadata/ncit/properties?include=minimal"
-						,RestPropertyMetadata[].class);
+	public List<Property> getRestProperties(RestTemplate template){
+		List<Property> propMeta = 
+				(List<Property>) getRestTemplate(new RestTemplateBuilder())
+		.getForObject(
+		"https://api-evsrest-qa.nci.nih.gov/api/v1/metadata/ncit/properties?include=minimal"
+				,List.class);
 		//Stream.of(propMeta).forEach(x->System.out.println(x.toString()));
 		return propMeta;
 	}
