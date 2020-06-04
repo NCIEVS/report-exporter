@@ -44,24 +44,11 @@ public class CodeReadRestController {
 	@GetMapping("/codereadrestprops/{ids}/{list}")
 	public List<RestEntity> getEntitiesWithParameters(@PathVariable String ids,
 			@PathVariable String list){
-		return getEntitiesForPropertyNameFilter(service.getRestProperties( 
+		return service.getEntitiesForPropertyNameFilter(service.getRestProperties( 
 				service.getRestTemplate(new RestTemplateBuilder()),
 				service.getCodes(ids)), service.getCodes(list));
 	}
 	
 	
-	private List<RestEntity> getEntitiesForPropertyNameFilter
-	(List<RestEntity> list, List<String> propList){
-		list.stream().forEach(
-				entity -> entity.setProperties(
-						filterProperties(entity.getProperties(), propList)));
-		return list;
-	}
-	
-	private List<Property> filterProperties(List<Property> propList, List<String> list){
-		return propList.stream().filter(
-				x -> list.stream().anyMatch(y -> x.getType().equals(y)))
-				.collect(Collectors.toList());
-	}
 
 }

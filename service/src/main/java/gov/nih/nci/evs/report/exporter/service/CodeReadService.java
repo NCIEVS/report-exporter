@@ -14,6 +14,10 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
 @Service
@@ -39,6 +43,24 @@ public class CodeReadService {
 	
 	public List<String> getCodes(String codes){
 		return Arrays.asList(codes.split(","));
+	}
+	
+	public List<RestEntity> getEntitiesForPropertyNameFilter
+	(List<RestEntity> list, List<String> propList){
+		list.stream().forEach(
+				entity -> entity.setProperties(
+						filterProperties(entity.getProperties(), propList)));
+		return list;
+	}
+	
+	public List<Property> filterProperties(List<Property> propList, List<String> list){
+		return propList.stream().filter(
+				x -> list.stream().anyMatch(y -> x.getType().equals(y)))
+				.collect(Collectors.toList());
+	}
+	
+	public Gson getGsonForPrettyPrint() {
+		return new GsonBuilder().setPrettyPrinting().create();
 	}
 
 }

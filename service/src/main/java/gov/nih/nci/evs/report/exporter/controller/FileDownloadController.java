@@ -30,7 +30,7 @@ public class FileDownloadController {
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 			)
 			public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
-			    InputStream in = new ByteArrayInputStream(new Gson().toJson(
+			    InputStream in = new ByteArrayInputStream(service.getGsonForPrettyPrint().toJson(
 			    		service.getRestProperties(
 			    				service.getRestTemplate(
 			    						new RestTemplateBuilder()), 
@@ -43,11 +43,11 @@ public class FileDownloadController {
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 			)
 			public @ResponseBody byte[] getFileForProps(@PathVariable String id, @PathVariable String props) throws IOException {
-			    InputStream in = new ByteArrayInputStream(new Gson().toJson(
-			    		service.getRestProperties(
+			    InputStream in = new ByteArrayInputStream(service.getGsonForPrettyPrint().toJson(
+			    		service.getEntitiesForPropertyNameFilter(service.getRestProperties(
 			    				service.getRestTemplate(
 			    						new RestTemplateBuilder()), 
-			    				service.getCodes(id))).getBytes());
+			    				service.getCodes(id)), service.getCodes(props))).getBytes());
 			    return IOUtils.toByteArray(in);
 			}
 
