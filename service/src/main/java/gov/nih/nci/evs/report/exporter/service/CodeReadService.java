@@ -1,6 +1,7 @@
 package gov.nih.nci.evs.report.exporter.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +35,10 @@ public class CodeReadService {
 				"https://api-evsrest-dev.nci.nih.gov/api/v1/concept/ncit/" + code + "?include=summary"
 						, RestEntity.class)).collect(Collectors.toList());
 		return propMeta;
+	}
+	
+	public List<String> getCodes(String codes){
+		return Arrays.asList(codes.split(","));
 	}
 
 }

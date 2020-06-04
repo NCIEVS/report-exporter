@@ -31,14 +31,14 @@ public class CodeReadRestController {
 	  public List<RestEntity> codeReadForm(@PathVariable String ids) {
 			return service.getRestProperties( 
 					service.getRestTemplate(new RestTemplateBuilder()),
-					getCodes(ids));
+					service.getCodes(ids));
 	  }
 	
 	@PostMapping("/codereadrest/{ids}")
 	public List<RestEntity> getEntities(@PathVariable String ids){
 		return service.getRestProperties( 
 				service.getRestTemplate(new RestTemplateBuilder()),
-				getCodes(ids));
+				service.getCodes(ids));
 	}
 	
 	@GetMapping("/codereadrestprops/{ids}/{list}")
@@ -46,12 +46,9 @@ public class CodeReadRestController {
 			@PathVariable String list){
 		return getEntitiesForPropertyNameFilter(service.getRestProperties( 
 				service.getRestTemplate(new RestTemplateBuilder()),
-				getCodes(ids)), getCodes(list));
+				service.getCodes(ids)), service.getCodes(list));
 	}
 	
-	private List<String> getCodes(String codes){
-		return Arrays.asList(codes.split(","));
-	}
 	
 	private List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
