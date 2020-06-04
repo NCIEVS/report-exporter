@@ -33,7 +33,6 @@ public class CodeReadService {
 				.getForObject(
 				"https://api-evsrest-dev.nci.nih.gov/api/v1/concept/ncit/" + code + "?include=summary"
 						, RestEntity.class)).collect(Collectors.toList());
-		Stream.of(propMeta).forEach(x->System.out.println(x.toString()));
 		return propMeta;
 	}
 

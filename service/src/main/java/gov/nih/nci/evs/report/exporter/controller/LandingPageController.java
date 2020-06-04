@@ -13,9 +13,9 @@ public class LandingPageController {
 	@Autowired
 	LandingPageService service;
 
-	@GetMapping("/")
-	public String getPropertyMeta(Model model){
-		model.addAttribute("landingpage", "Landing Page");
-		return "index";
-	}
+//	@GetMapping("/")
+//	public String getPropertyMeta(Model model){
+//		model.addAttribute("landingpage", "Landing Page");
+//		return "index";
+//	}
 }

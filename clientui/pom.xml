@@ -32,7 +32,7 @@
               <goal>install-node-and-npm</goal>
             </goals>
             <configuration>
-              <nodeVersion>v13.7.0</nodeVersion>
+              <nodeVersion>v14.1.0</nodeVersion>
             </configuration>
           </execution>
           <!-- Install all project dependencies -->

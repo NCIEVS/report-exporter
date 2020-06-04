@@ -2,6 +2,7 @@ package gov.nih.nci.evs.report.exporter.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.evs.report.exporter.model.Code;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 
 @RestController
@@ -25,22 +27,44 @@ public class CodeReadRestController {
 	CodeReadService service;
 	
 
-	  @GetMapping("/codereadrest/{id}")
-	  public List<RestEntity> codeReadForm(@PathVariable String id) {
+	  @GetMapping("/codereadrest/{ids}")
+	  public List<RestEntity> codeReadForm(@PathVariable String ids) {
 			return service.getRestProperties( 
 					service.getRestTemplate(new RestTemplateBuilder()),
-					getCodes(id));
+					getCodes(ids));
 	  }
 	
-	@PostMapping("/codereadrest")
-	public List<RestEntity> getEntities(@ModelAttribute Code code, Model model){
+	@PostMapping("/codereadrest/{ids}")
+	public List<RestEntity> getEntities(@PathVariable String ids){
 		return service.getRestProperties( 
 				service.getRestTemplate(new RestTemplateBuilder()),
-				getCodes((String)(code.getId())));
+				getCodes(ids));
+	}
+	
+	@GetMapping("/codereadrestprops/{ids}/{list}")
+	public List<RestEntity> getEntitiesWithParameters(@PathVariable String ids,
+			@PathVariable String list){
+		return getEntitiesForPropertyNameFilter(service.getRestProperties( 
+				service.getRestTemplate(new RestTemplateBuilder()),
+				getCodes(ids)), getCodes(list));
 	}
 	
 	private List<String> getCodes(String codes){
 		return Arrays.asList(codes.split(","));
+	}
+	
+	private List<RestEntity> getEntitiesForPropertyNameFilter
+	(List<RestEntity> list, List<String> propList){
+		list.stream().forEach(
+				entity -> entity.setProperties(
+						filterProperties(entity.getProperties(), propList)));
+		return list;
+	}
+	
+	private List<Property> filterProperties(List<Property> propList, List<String> list){
+		return propList.stream().filter(
+				x -> list.stream().anyMatch(y -> x.getType().equals(y)))
+				.collect(Collectors.toList());
 	}
 
 }
