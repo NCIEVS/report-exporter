@@ -45,18 +45,27 @@ public class FileDownloadController {
 			}
 	
 	@GetMapping(
-			  value = "/get-file-for-props/{id}/{props}/{filename}",
+			  value = "/get-file-for-props/{codes}/{props}/{filename}",
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 			)
 			public @ResponseBody byte[] getFileForProps(
-					@PathVariable String id, 
+					@PathVariable String codes, 
 					@PathVariable String props) throws IOException {
-			    InputStream in = new ByteArrayInputStream(service.getGsonForPrettyPrint().toJson(
-			    		service.getEntitiesForPropertyNameFilter(service.getRestProperties(
-			    				service.getRestTemplate(
-			    						new RestTemplateBuilder()), 
-			    				service.getCodes(id)), service.getCodes(props))).getBytes());
-			    return IOUtils.toByteArray(in);
+			    service.getJsonBytesForRestParams(codes, props);
+			    return IOUtils.toByteArray(
+			    		service.getJsonBytesForRestParams(codes, props));
+			}
+	
+	@GetMapping(
+			  value = "/get-file-for-csv/{codes}/{props}/{filename}",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+			)
+			public @ResponseBody byte[] getFileForCSV(
+					@PathVariable String codes, 
+					@PathVariable String props) throws IOException {
+			    service.getCSVBytesForRestParams(codes, props);
+			    return IOUtils.toByteArray(
+			    		service.getJsonBytesForRestParams(codes, props));
 			}
 	
 	
