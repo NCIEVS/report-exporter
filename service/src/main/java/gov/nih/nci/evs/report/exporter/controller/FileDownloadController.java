@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("/download")
+@CrossOrigin(origins = "http://localhost:8081")
 public class FileDownloadController {
 	
 	public enum formats{JSON,CSV,TABD, EXCEL};
