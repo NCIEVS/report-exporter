@@ -19,8 +19,10 @@ import gov.nih.nci.evs.report.exporter.model.Code;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class CodeReadRestController {
 	
 	@Autowired
