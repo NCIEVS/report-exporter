@@ -5,6 +5,7 @@ import 'popper.js'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import VueRouter from 'vue-router'
+//import 'axios'
 
 import './assets/app.scss'
 import About from './components/About'
@@ -13,7 +14,8 @@ import ReadCodeEntry from './components/ReadCodeEntry.vue'
 import SearchTermEntry from './components/SearchTermEntry.vue'
 import ResolveBranchEntry from './components/ResolveBranchEntry.vue'
 
-import VoerroTagsInput from '@voerro/vue-tagsinput';
+import VoerroTagsInput from '@voerro/vue-tagsinput'
+import vMultiselectListbox from 'vue-multiselect-listbox'
 
 // setup jquery
 window.$ = window.jQuery = jQuery
@@ -49,7 +51,8 @@ new Vue({
   // declare components that the root component can access
   components: {
     App,
-    'tags-input': VoerroTagsInput
+    'tags-input': VoerroTagsInput,
+     vMultiselectListbox
   },
   // pass in the router to the Vue instance
   router

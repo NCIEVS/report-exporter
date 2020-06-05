@@ -21,9 +21,9 @@ import FooterBar from './components/FooterBar.vue'
 
 export default {
   name: 'app',
-  // props: {
+  props: {
   //   selectedTags:[]
-  // },
+  },
   components: {
     HeaderBar,
     SubHeaderBar,
