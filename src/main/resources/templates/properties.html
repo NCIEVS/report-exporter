@@ -9,7 +9,7 @@
 
 <link rel="stylesheet"
 	th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
-<link rel="stylesheet" th:href="@{/css/main.css}" />
+
 
 </head>
 
@@ -29,27 +29,23 @@
 
 		<div class="starter-template">
 			<h1>Properties</h1>
-			<h2>
-				<!--<form  class = "form"  action="index.html" method="post">
-			<input type="hidden" th:field="*{name}" />
-			<label for="hobbies">User hobbies (multiple select):</label>
-			<br />
-			<select id="hobbies" th:field="*{hobbies}" size="10" multiple="multiple">
-				<option th:each="hobby : ${properties}"
-						th:value="${{hobby}}"
-						th:text="${hobby.name}">
-					Cinema
+			<br/>
+			<form  th:action="@{/properties}" th:object="${selected}" method="post">
+			<select id="savedprops" th:field="*{props}" size="30" multiple="multiple">
+				<option th:each="property : ${properties}"
+						th:value="${property.name}"
+						th:text="${property.name}">
 				</option>
 			</select>
 			<br />
 			<input type="submit" />
-		</form>-->
-				<table class="center">
+			</form>
+<!-- 				<table class="center">
 					<tr th:each="property: ${properties}">
 						<td th:text="${property.name}" />
 						<td th:text="${property.code}" />
 					</tr>
-				</table>
+				</table> -->
 			</h2>
 		</div>
 

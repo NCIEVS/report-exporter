@@ -22,6 +22,9 @@ public class Definition {
 	public void setSource(String source) {
 		this.source = source;
 	}
-			
+		
+	public String toString() {
+		return definition;
+	}
 
 }

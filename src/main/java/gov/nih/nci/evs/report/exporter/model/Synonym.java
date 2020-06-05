@@ -49,5 +49,7 @@ public class Synonym {
 		this.subSource = subSource;
 	}
     
-    
+    public String toString() {
+    	return  "source: " + source + " name: " + name;
+    }
 }
