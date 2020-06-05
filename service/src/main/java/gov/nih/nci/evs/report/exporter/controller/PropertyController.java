@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import gov.nih.nci.evs.report.exporter.model.EntityProperties;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.service.TerminologyPropertyService;
 
-
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class PropertyController {
 	
 	@Autowired

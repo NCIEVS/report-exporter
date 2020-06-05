@@ -88,7 +88,7 @@ export default {
       userSelectedProperyNames: [],
       filename: 'file.json',
       downloadReturnCode: null,
-      baseUrl: ''
+      baseUrl: 'http://localhost:8080'
     }
   },
   
