@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.nih.nci.evs.report.exporter.model.EntityProperties;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.service.TerminologyPropertyService;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
 public class PropertyController {
 	
 	@Autowired
