@@ -30,6 +30,7 @@ import com.google.gson.GsonBuilder;
 
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.util.CSVUtility;
 
 @Service
 public class CodeReadService {
@@ -43,7 +44,7 @@ public class CodeReadService {
 		return builder.build();
 	}
 	
-	public List<RestEntity> getRestProperties(RestTemplate template, List<String> codes){
+	public List<RestEntity> getRestProperties(List<String> codes){
 		List<RestEntity> propMeta = 
 				codes.stream().map(code -> getRestTemplate(new RestTemplateBuilder())
 				.getForObject(
@@ -68,46 +69,16 @@ public class CodeReadService {
 		return new ByteArrayInputStream(
 				getGsonForPrettyPrint().toJson(
 						getEntitiesForPropertyNameFilter(
-								getRestProperties(
-										getRestTemplate(
-					new RestTemplateBuilder()), 
+								getRestProperties( 
 			getCodes(codes)), getCodes(props))).getBytes());
 	}
 	
 	public InputStream getCSVBytesForRestParams(String codes, String props) {
-			try {
-//				JsonNode jsonTree = new ObjectMapper().readTree(new ByteArrayInputStream(
-//					getGsonForPrettyPrint().toJson(
-//							getEntitiesForPropertyNameFilter(
-//									getRestProperties(
-//											getRestTemplate(
-//						new RestTemplateBuilder()), 
-//				getCodes(codes)), getCodes(props))).getBytes()));
-//				Builder csvSchemaBuilder = CsvSchema.builder();
-//				JsonNode firstObject = jsonTree.elements().next();
-//				firstObject.fieldNames().forEachRemaining(
-//						fieldName -> {csvSchemaBuilder.addColumn(fieldName);} );
-//				CsvSchema csvSchema = csvSchemaBuilder.build().withHeader();
-				CsvMapper csvMapper = new CsvMapper();
-				CsvSchema schema = csvMapper.schemaFor(RestEntity.class).withHeader();
-				System.out.println(csvMapper
-						  .writer(schema).writeValueAsString(
-									getEntitiesForPropertyNameFilter(
-											getRestProperties(
-													getRestTemplate(
-								new RestTemplateBuilder()), 
-						getCodes(codes)), getCodes(props))));
-				return null;
-//						new ByteArrayInputStream(csvMapper.writerFor(JsonNode.class)
-//				  .with(csvSchema).writeValues(new ByteArrayOutputStream()).toString().getBytes());
-				 // .writeValue(new File("src/main/resources/orderLines.csv"), jsonTree);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
+						return new ByteArrayInputStream(new CSVUtility().produceCSVOutputFromListWithHeading(getEntitiesForPropertyNameFilter(
+								getRestProperties( 
+	getCodes(codes)), getCodes(props))).getBytes());
 
-		return null;
 	}
 	
 	public List<Property> filterProperties(List<Property> propList, List<String> list){

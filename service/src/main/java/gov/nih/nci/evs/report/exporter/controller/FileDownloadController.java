@@ -39,9 +39,7 @@ public class FileDownloadController {
 			)
 			public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
 			    InputStream in = new ByteArrayInputStream(service.getGsonForPrettyPrint().toJson(
-			    		service.getRestProperties(
-			    				service.getRestTemplate(
-			    						new RestTemplateBuilder()), 
+			    		service.getRestProperties( 
 			    				service.getCodes(id))).getBytes());
 			    return IOUtils.toByteArray(in);
 			}
@@ -53,7 +51,7 @@ public class FileDownloadController {
 			public @ResponseBody byte[] getFileForProps(
 					@PathVariable String codes, 
 					@PathVariable String props) throws IOException {
-			    service.getJsonBytesForRestParams(codes, props);
+			   // service.getJsonBytesForRestParams(codes, props);
 			    return IOUtils.toByteArray(
 			    		service.getJsonBytesForRestParams(codes, props));
 			}
@@ -65,9 +63,9 @@ public class FileDownloadController {
 			public @ResponseBody byte[] getFileForCSV(
 					@PathVariable String codes, 
 					@PathVariable String props) throws IOException {
-			    service.getCSVBytesForRestParams(codes, props);
+			   // service.getCSVBytesForRestParams(codes, props);
 			    return IOUtils.toByteArray(
-			    		service.getJsonBytesForRestParams(codes, props));
+			    		service.getCSVBytesForRestParams(codes, props));
 			}
 	
 	

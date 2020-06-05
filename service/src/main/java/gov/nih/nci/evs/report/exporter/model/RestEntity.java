@@ -11,7 +11,7 @@ public class RestEntity {
 	
 	private String name;
 	
-	private String terminolgy;
+	private String terminology;
 	
 	private List<Synonym> synomyms;
 	
@@ -35,12 +35,12 @@ public class RestEntity {
 		this.name = name;
 	}
 
-	public String getTerminolgy() {
-		return terminolgy;
+	public String getTerminology() {
+		return terminology;
 	}
 
-	public void setTerminolgy(String terminolgy) {
-		this.terminolgy = terminolgy;
+	public void setTerminology(String terminolgy) {
+		this.terminology = terminolgy;
 	}
 
 	public List<Synonym> getSynomyms() {

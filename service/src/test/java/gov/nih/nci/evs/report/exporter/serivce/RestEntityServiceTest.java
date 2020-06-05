@@ -18,8 +18,7 @@ class RestEntityServiceTest {
 		CodeReadService service = new CodeReadService();
 		List<String> codes = new ArrayList<String>();
 		codes.add("C12434");
-		List<RestEntity> list = service.getRestProperties(
-				service.getRestTemplate(new RestTemplateBuilder()), codes);
+		List<RestEntity> list = service.getRestProperties(codes);
 		list.forEach(x -> System.out.println(x));
 		assertTrue(list.size() > 0);
 	}
