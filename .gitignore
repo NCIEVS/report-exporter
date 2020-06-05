@@ -1,3 +1,10 @@
 /target/
+/service/target/
+/service/src/main/resources/public/
+/clientui/target/
+/clientui/dist/
+/clientui/node/
+/clientui/node_modules/
 /.settings/
 .project
+.DS_Store
