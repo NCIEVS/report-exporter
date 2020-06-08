@@ -32,6 +32,7 @@ import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
+import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 
 @Service
 public class CodeReadService {
@@ -81,6 +82,14 @@ public class CodeReadService {
 										getCodes(codes)), getCodes(props))).getBytes());
 
 	}
+	
+	public InputStream getTabDelBytesForRestParams(String codes, String props) {
+
+		return new ByteArrayInputStream(new TabDelUtility().produceTabDelOutputFromListWithHeading(getEntitiesForPropertyNameFilter(
+				getRestProperties( 
+						getCodes(codes)), getCodes(props))).getBytes());
+
+}
 	
 	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props) {
 

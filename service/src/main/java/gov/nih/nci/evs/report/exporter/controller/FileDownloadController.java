@@ -69,6 +69,17 @@ public class FileDownloadController {
 			    		service.getCSVBytesForRestParams(codes, props));
 			}
 	
+	@GetMapping(
+			  value = "/get-file-for-tabdel/{codes}/{props}/{filename}",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+			)
+			public @ResponseBody byte[] getFileForTabDel(
+					@PathVariable String codes, 
+					@PathVariable String props) throws IOException {
+			    return IOUtils.toByteArray(
+			    		service.getTabDelBytesForRestParams(codes, props));
+			}
+	
 //	@GetMapping(
 //			  value = "/get-file-for-excel/{codes}/{props}/{filename}",
 //			  produces = MediaType.parseMediaType("application/vnd.ms-excel")
