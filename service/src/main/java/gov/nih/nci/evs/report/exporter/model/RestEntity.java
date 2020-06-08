@@ -13,7 +13,7 @@ public class RestEntity {
 	
 	private String terminology;
 	
-	private List<Synonym> synomyms;
+	private List<Synonym> synonyms;
 	
 	private List<Definition> definitions;
 	
@@ -43,12 +43,12 @@ public class RestEntity {
 		this.terminology = terminolgy;
 	}
 
-	public List<Synonym> getSynomyms() {
-		return synomyms;
+	public List<Synonym> getSynonyms() {
+		return synonyms;
 	}
 
-	public void setSynomyms(List<Synonym> synomyms) {
-		this.synomyms = synomyms;
+	public void setSynonyms(List<Synonym> synonyms) {
+		this.synonyms = synonyms;
 	}
 
 	public List<Definition> getDefinitions() {
