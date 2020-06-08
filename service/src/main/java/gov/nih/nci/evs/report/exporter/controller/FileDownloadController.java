@@ -10,7 +10,10 @@ import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +54,6 @@ public class FileDownloadController {
 			public @ResponseBody byte[] getFileForProps(
 					@PathVariable String codes, 
 					@PathVariable String props) throws IOException {
-			   // service.getJsonBytesForRestParams(codes, props);
 			    return IOUtils.toByteArray(
 			    		service.getJsonBytesForRestParams(codes, props));
 			}
@@ -63,10 +65,31 @@ public class FileDownloadController {
 			public @ResponseBody byte[] getFileForCSV(
 					@PathVariable String codes, 
 					@PathVariable String props) throws IOException {
-			   // service.getCSVBytesForRestParams(codes, props);
 			    return IOUtils.toByteArray(
 			    		service.getCSVBytesForRestParams(codes, props));
 			}
+	
+//	@GetMapping(
+//			  value = "/get-file-for-excel/{codes}/{props}/{filename}",
+//			  produces = MediaType.parseMediaType("application/vnd.ms-excel")
+//			)
+//			public @ResponseBody byte[] getFileForXSL(
+//					@PathVariable String codes, 
+//					@PathVariable String props) throws IOException {
+//			    return IOUtils.toByteArray(
+//			    		service.getXSLBytesForRestParams(codes, props));
+//			}
+	
+	@GetMapping("/get-file-for-excel/{codes}/{props}")
+	public ResponseEntity<InputStreamResource> excelCustomersReport(@PathVariable String codes, 
+			@PathVariable String props)  throws IOException {
+	    ByteArrayInputStream in = service.getXSLBytesForRestParams(codes, props);
+	    // return IO ByteArray(in);
+	    HttpHeaders headers = new HttpHeaders();
+	    // set filename in header
+	    headers.add("Content-Disposition", "attachment; filename=restentity.xlsx");
+	    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+	}
 	
 	
 		@GetMapping("/output-formats")

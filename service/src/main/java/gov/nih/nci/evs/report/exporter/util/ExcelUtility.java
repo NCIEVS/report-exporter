@@ -3,7 +3,10 @@ package gov.nih.nci.evs.report.exporter.util;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -20,14 +23,15 @@ import gov.nih.nci.evs.report.exporter.model.RestEntity;
 public class ExcelUtility {
 	
 
-	  private byte[] writeToExcel(List<RestEntity> entities) throws IOException {
-	    String[] COLUMNs = {"Id", "Name", "Address", "Age"};
+	  public ByteArrayOutputStream  produceExcelOutputFromListWithHeading(List<RestEntity> entities) throws IOException {
+	    
+		Field[] fields = RestEntity.class.getDeclaredFields();
+	   
+	    List<String> cols = Stream.of(fields).map(x -> x.getName()).collect(Collectors.toList());
 	    
 	    Workbook workbook = new XSSFWorkbook();
-	     
-	    CreationHelper createHelper = workbook.getCreationHelper();
 	 
-	    Sheet sheet = workbook.createSheet("entitys");
+	    Sheet sheet = workbook.createSheet("entities");
 	 
 	    Font headerFont = workbook.createFont();
 	    headerFont.setBold(true);
@@ -40,9 +44,9 @@ public class ExcelUtility {
 	    Row headerRow = sheet.createRow(0);
 	 
 	    // Header
-	    for (int col = 0; col < COLUMNs.length; col++) {
+	    for (int col = 0; col < cols.size(); col++) {
 	      Cell cell = headerRow.createCell(col);
-	      cell.setCellValue(COLUMNs[col]);
+	      cell.setCellValue(cols.get(col));
 	      cell.setCellStyle(headerCellStyle);
 	    }
 	 
@@ -54,14 +58,15 @@ public class ExcelUtility {
 	      row.createCell(0).setCellValue(entity.getCode());
 	      row.createCell(1).setCellValue(entity.getName());
 	      row.createCell(2).setCellValue(entity.getTerminology());
-	      row.createCell(3).setCellValue(entity.getSynonyms().toString());
-	      row.createCell(4).setCellValue(entity.getDefinitions().toString());
-	      row.createCell(5).setCellValue(entity.getProperties().toString());
+	      row.createCell(3).setCellValue(CommonServices.cleanListOutPut(entity.getSynonyms().toString()));
+	      row.createCell(4).setCellValue(CommonServices.cleanListOutPut(entity.getDefinitions().toString()));
+	      row.createCell(5).setCellValue(CommonServices.cleanListOutPut(entity.getProperties().toString()));
 	    }
 	 
-	   byte[] wkbkString = workbook.toString().getBytes();
+	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
+	   workbook.write(stream);
 	   workbook.close();
-	   return wkbkString;
+	   return stream;
 	  }
 
 	public static void main(String[] args) {

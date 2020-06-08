@@ -31,6 +31,7 @@ import com.google.gson.GsonBuilder;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
+import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
 
 @Service
 public class CodeReadService {
@@ -77,10 +78,23 @@ public class CodeReadService {
 
 						return new ByteArrayInputStream(new CSVUtility().produceCSVOutputFromListWithHeading(getEntitiesForPropertyNameFilter(
 								getRestProperties( 
-	getCodes(codes)), getCodes(props))).getBytes());
+										getCodes(codes)), getCodes(props))).getBytes());
 
 	}
 	
+	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props) {
+
+		try {
+			return new ByteArrayInputStream(new ExcelUtility().produceExcelOutputFromListWithHeading(getEntitiesForPropertyNameFilter(
+					getRestProperties( 
+							getCodes(codes)), getCodes(props))).toByteArray());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+}
 	public List<Property> filterProperties(List<Property> propList, List<String> list){
 		return propList.stream().filter(
 				x -> list.stream().anyMatch(y -> x.getType().equals(y)))

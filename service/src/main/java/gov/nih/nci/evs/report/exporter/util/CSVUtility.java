@@ -23,21 +23,14 @@ public class CSVUtility {
 				"\r\n" + x.getCode() + 
 				separator + x.getName() + 
 				separator + x.getTerminology() + 
-				separator + cleanListOutPut(getListValues(x.getSynonyms())) + 
-				separator + cleanListOutPut(getListValues(x.getDefinitions())) + 
-				separator + cleanListOutPut(getListValues(x.getProperties()))));
+				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
+				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
+				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getProperties()))));
 	    System.out.println(oneLine.toString());
 		return oneLine.toString();
 	}
 	
-	public <T> String getListValues(List<T> list) {
-		return list != null?"\"" + list.toString() + "\"": null;
-	}
-	
-	public String cleanListOutPut(String list){
-		if (list == null)  return null;
-		return list.replace("[", "").replace("]", "");
-	}
+
 	
 	public static void main(String ...args) {
 		new CSVUtility().produceCSVOutputFromListWithHeading(null);
