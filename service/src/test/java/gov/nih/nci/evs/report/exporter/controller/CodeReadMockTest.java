@@ -1,4 +1,4 @@
-package gov.nih.nci.evs.report.exporter;
+package gov.nih.nci.evs.report.exporter.controller;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doReturn;

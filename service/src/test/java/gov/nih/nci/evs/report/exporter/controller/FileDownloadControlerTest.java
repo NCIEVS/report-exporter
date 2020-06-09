@@ -1,4 +1,4 @@
-package gov.nih.nci.evs.report.exporter;
+package gov.nih.nci.evs.report.exporter.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import gov.nih.nci.evs.report.exporter.controller.CodeReadRestController;
+import gov.nih.nci.evs.report.exporter.controller.FileDownloadController;
 
 @SpringBootTest
-class CodeReadControllerTest {
+class FileDownloadControllerTest {
 	@Autowired
-	CodeReadRestController controller;
+	FileDownloadController controller;
 
 	@Test
 	void contextLoads() {

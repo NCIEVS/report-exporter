@@ -1,4 +1,4 @@
-package gov.nih.nci.evs.report.exporter;
+package gov.nih.nci.evs.report.exporter.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

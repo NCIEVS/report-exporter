@@ -1,4 +1,4 @@
-package gov.nih.nci.evs.report.exporter;
+package gov.nih.nci.evs.report.exporter.controller;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
