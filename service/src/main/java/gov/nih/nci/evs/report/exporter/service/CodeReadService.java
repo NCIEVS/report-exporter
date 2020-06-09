@@ -56,6 +56,10 @@ public class CodeReadService {
 	}
 	
 	public List<String> getCodes(String codes){
+		if(codes == null) {
+			System.out.println("Input for code, property, or source cannot be null");
+			return null;
+		}
 		return Arrays.asList(codes.split(","));
 	}
 	

@@ -32,12 +32,9 @@ public class CodeReadController {
 	@PostMapping("/coderead")
 	public String getEntities(@ModelAttribute Code code, Model model){
 		model.addAttribute("entities",service.getRestProperties(
-				getCodes((String)(code.getId()))));
+				service.getCodes((String)(code.getId()))));
 		return "result";
 	}
 	
-	private List<String> getCodes(String codes){
-		return Arrays.asList(codes.split(","));
-	}
 
 }
