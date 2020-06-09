@@ -1,7 +1,5 @@
 package gov.nih.nci.evs.report.exporter.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 public class Synonym {
 
 	
@@ -11,6 +9,8 @@ public class Synonym {
     private String source;
     private String code;
     private String subSource;
+    
+    
 	public String getName() {
 		return name;
 	}
