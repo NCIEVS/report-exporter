@@ -28,8 +28,10 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
 import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
@@ -66,8 +68,15 @@ public class CodeReadService {
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
 		list.stream().forEach(
-				entity -> entity.setProperties(
-						filterProperties(entity.getProperties(), propList)));
+				entity -> {
+					entity.setProperties(
+						filterProperties(entity.getProperties(), propList));
+					entity.setDefinitions(
+						filterDefinitions(entity.getDefinitions(), propList));
+					entity.setSynonyms(
+						filterSynonyms(entity.getSynonyms(), propList));
+				
+				});
 		return list;
 	}
 	
@@ -110,9 +119,21 @@ public class CodeReadService {
 }
 	public List<Property> filterProperties(List<Property> propList, List<String> list){
 		return propList.stream().filter(
-				x -> list.stream().anyMatch(y -> x.getType().equals(y)))
+				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());
 	}
+	
+	public List<Definition> filterDefinitions(List<Definition> propList, List<String> list){
+		return propList.stream().filter(
+				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
+				.collect(Collectors.toList());
+	}
+	public List<Synonym> filterSynonyms(List<Synonym> propList, List<String> list){
+		return propList.stream().filter(
+				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
+				.collect(Collectors.toList());
+	}
+	
 	
 	public Gson getGsonForPrettyPrint() {
 		return new GsonBuilder().setPrettyPrinting().create();
