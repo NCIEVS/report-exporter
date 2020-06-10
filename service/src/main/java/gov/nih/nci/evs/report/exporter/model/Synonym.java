@@ -1,11 +1,10 @@
 package gov.nih.nci.evs.report.exporter.model;
 
-public class Synonym {
+public class Synonym extends PropertyPrime {
 
 	
     private String name;
     private String termGroup;
-    private String type;
     private String source;
     private String code;
     private String subSource;
@@ -22,12 +21,6 @@ public class Synonym {
 	}
 	public void setTermGroup(String termGroup) {
 		this.termGroup = termGroup;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 	public String getSource() {
 		return source;

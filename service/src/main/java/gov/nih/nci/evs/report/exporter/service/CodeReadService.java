@@ -30,6 +30,7 @@ import com.google.gson.GsonBuilder;
 
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
+import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
@@ -38,15 +39,6 @@ import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 
 @Service
 public class CodeReadService {
-	
-	public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-		messageConverters.add(converter);
-		builder.additionalMessageConverters(messageConverters);
-		return builder.build();
-	}
 	
 	public List<RestEntity> getRestProperties(List<String> codes){
 		List<RestEntity> propMeta = 
@@ -65,82 +57,50 @@ public class CodeReadService {
 		return Arrays.asList(codes.split(","));
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
 		list.stream().forEach(
 				entity -> {
 					entity.setProperties(
-						filterProperties(entity.getProperties(), propList));
+						(List<Property>)filterProperties(entity.getProperties(), propList));
 					entity.setDefinitions(
-						filterDefinitions(entity.getDefinitions(), propList));
+						(List<Definition>)filterProperties(entity.getDefinitions(), propList));
 					entity.setSynonyms(
-						filterSynonyms(entity.getSynonyms(), propList));
-				
+						(List<Synonym>)filterProperties(entity.getSynonyms(), propList));
 				});
 		return list;
 	}
+	 
 	
-	public InputStream getJsonBytesForRestParams(String codes, String props) {
-		return new ByteArrayInputStream(
-				getGsonForPrettyPrint().toJson(
-						getEntitiesForPropertyNameFilter(
-								getRestProperties( 
-			getCodes(codes)), getCodes(props))).getBytes());
-	}
 	
-	public InputStream getCSVBytesForRestParams(String codes, String props) {
-
-						return new ByteArrayInputStream(new CSVUtility().produceCSVOutputFromListWithHeading(getEntitiesForPropertyNameFilter(
-								getRestProperties( 
-										getCodes(codes)), getCodes(props))).getBytes());
-
-	}
 	
-	public InputStream getTabDelBytesForRestParams(String codes, String props) {
-
-		return new ByteArrayInputStream(new TabDelUtility().produceTabDelOutputFromListWithHeading(getEntitiesForPropertyNameFilter(
-				getRestProperties( 
-						getCodes(codes)), getCodes(props))).getBytes());
-
-}
-	
-	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props) {
-
-		try {
-			return new ByteArrayInputStream(new ExcelUtility().produceExcelOutputFromListWithHeading(getEntitiesForPropertyNameFilter(
-					getRestProperties( 
-							getCodes(codes)), getCodes(props))).toByteArray());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-
-}
-	public List<Property> filterProperties(List<Property> propList, List<String> list){
+	public List<? extends PropertyPrime> filterProperties(List<? extends PropertyPrime> propList, List<String> list){
 		return propList.stream().filter(
 				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());
 	}
-	
-	public List<Definition> filterDefinitions(List<Definition> propList, List<String> list){
-		return propList.stream().filter(
-				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
-				.collect(Collectors.toList());
-	}
-	public List<Synonym> filterSynonyms(List<Synonym> propList, List<String> list){
-		return propList.stream().filter(
-				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
-				.collect(Collectors.toList());
-	}
-	
-	
+		
 	public Gson getGsonForPrettyPrint() {
 		return new GsonBuilder().setPrettyPrinting().create();
 	}
 	
-	public static void main(String ...args) {
-		new CodeReadService().getCSVBytesForRestParams("C12434","Semantic_Type");
+	public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
+		messageConverters.add(converter);
+		builder.additionalMessageConverters(messageConverters);
+		return builder.build();
 	}
-
+	
+	public RestTemplate getRestTemplate() {
+		RestTemplateBuilder builder = new RestTemplateBuilder();
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
+		messageConverters.add(converter);
+		builder.additionalMessageConverters(messageConverters);
+		return builder.build();
+	}
 }

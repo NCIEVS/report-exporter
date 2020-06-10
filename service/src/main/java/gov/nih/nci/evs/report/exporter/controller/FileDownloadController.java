@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
+import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
@@ -34,16 +36,19 @@ public class FileDownloadController {
 	
 	
 	@Autowired
-	CodeReadService service;
+	FormattedOutputService service;
+	
+	@Autowired
+	CodeReadService codeReadService;
 	
 	@GetMapping(
 			  value = "/get-file/{id}/JsonFile.json",
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 			)
 			public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
-			    InputStream in = new ByteArrayInputStream(service.getGsonForPrettyPrint().toJson(
-			    		service.getRestProperties( 
-			    				service.getCodes(id))).getBytes());
+			    InputStream in = new ByteArrayInputStream(codeReadService.getGsonForPrettyPrint().toJson(
+			    		codeReadService.getRestProperties( 
+			    				codeReadService.getCodes(id))).getBytes());
 			    return IOUtils.toByteArray(in);
 			}
 	

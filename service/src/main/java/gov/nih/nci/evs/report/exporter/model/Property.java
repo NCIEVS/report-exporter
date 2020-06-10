@@ -1,15 +1,9 @@
 package gov.nih.nci.evs.report.exporter.model;
 
-public class Property {
-	
-	private String type;
+public class Property extends PropertyPrime {
+
 	private String value;
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
+
 	public String getValue() {
 		return value;
 	}
@@ -18,7 +12,7 @@ public class Property {
 	}
 	
 	public String toString() {
-		return "type: " + type + " value: " + value;
+		return "type: " + super.getType() + " value: " + value;
 	}
 
 }
