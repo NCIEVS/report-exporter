@@ -36,8 +36,7 @@ public class TerminologyPropertyService {
 				(List<Property>) getRestTemplate(new RestTemplateBuilder())
 		.getForObject(
 		"https://api-evsrest-qa.nci.nih.gov/api/v1/metadata/ncit/properties?include=minimal"
-				,List.class);
-		//Stream.of(propMeta).forEach(x->System.out.println(x.toString()));
+				,List.class);;
 		return propMeta;
 	}
 }

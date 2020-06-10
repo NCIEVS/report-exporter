@@ -1,26 +1,13 @@
 package gov.nih.nci.evs.report.exporter.controller;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -28,15 +15,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import gov.nih.nci.evs.report.exporter.controller.CodeReadRestController;
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
+import gov.nih.nci.evs.report.exporter.controller.CodeReadRestController;
 
 
 @WebMvcTest(CodeReadRestController.class)
@@ -62,7 +47,7 @@ public class CodeReadRestMockTest {
 		entity.setTerminology("ncit");
 		output.add(entity);
 
-		Mockito.when(service.getRestProperties(Mockito.anyList())).thenReturn(output);
+		Mockito.when(service.getRestEntities(Mockito.anyList())).thenReturn(output);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
 				"/codereadrest/C12434").accept(

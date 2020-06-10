@@ -47,7 +47,7 @@ public class FileDownloadController {
 			)
 			public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
 			    InputStream in = new ByteArrayInputStream(codeReadService.getGsonForPrettyPrint().toJson(
-			    		codeReadService.getRestProperties( 
+			    		codeReadService.getRestEntities( 
 			    				codeReadService.getCodes(id))).getBytes());
 			    return IOUtils.toByteArray(in);
 			}
@@ -84,17 +84,6 @@ public class FileDownloadController {
 			    return IOUtils.toByteArray(
 			    		service.getTabDelBytesForRestParams(codes, props));
 			}
-	
-//	@GetMapping(
-//			  value = "/get-file-for-excel/{codes}/{props}/{filename}",
-//			  produces = MediaType.parseMediaType("application/vnd.ms-excel")
-//			)
-//			public @ResponseBody byte[] getFileForXSL(
-//					@PathVariable String codes, 
-//					@PathVariable String props) throws IOException {
-//			    return IOUtils.toByteArray(
-//			    		service.getXSLBytesForRestParams(codes, props));
-//			}
 	
 	@GetMapping("/get-file-for-excel/{codes}/{props}")
 	public ResponseEntity<InputStreamResource> excelCustomersReport(@PathVariable String codes, 

@@ -36,7 +36,7 @@ public class CodeReadMockTest {
 	private CodeReadService service;
 
 	@Test
-	public void greetingShouldReturnMessageFromService() throws Exception {
+	public void shouldReturnRestEntity() throws Exception {
 		List<String> input = new ArrayList<String>();
 		input.add("C1234");
 		List<RestEntity> output = new ArrayList<RestEntity>();
@@ -44,7 +44,7 @@ public class CodeReadMockTest {
 		entity.setCode("C1234");
 		entity.setName("Blood");
 		entity.setTerminology("ncit");
-		when(service.getRestProperties(input)).thenReturn(output);
+		when(service.getRestEntities(input)).thenReturn(output);
 		this.mockMvc.perform(post("/coderead").queryParam("id", "C1234")).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string(containsString("C1234")));
 	}

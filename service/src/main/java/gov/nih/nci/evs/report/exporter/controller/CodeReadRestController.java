@@ -22,20 +22,20 @@ public class CodeReadRestController {
 
 	  @GetMapping("/codereadrest/{ids}")
 	  public List<RestEntity> codeReadForm(@PathVariable String ids) {
-			return service.getRestProperties(
+			return service.getRestEntities(
 					service.getCodes(ids));
 	  }
 	
 	@PostMapping("/codereadrest/{ids}")
 	public List<RestEntity> getEntities(@PathVariable String ids){
-		return service.getRestProperties(
+		return service.getRestEntities(
 				service.getCodes(ids));
 	}
 	
 	@GetMapping("/codereadrestprops/{ids}/{list}")
 	public List<RestEntity> getEntitiesWithParameters(@PathVariable String ids,
 			@PathVariable String list){
-		return service.getEntitiesForPropertyNameFilter(service.getRestProperties( 
+		return service.getEntitiesForPropertyNameFilter(service.getRestEntities( 
 				service.getCodes(ids)), service.getCodes(list));
 	}
 	

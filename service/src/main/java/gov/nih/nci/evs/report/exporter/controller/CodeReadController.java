@@ -31,7 +31,7 @@ public class CodeReadController {
 	
 	@PostMapping("/coderead")
 	public String getEntities(@ModelAttribute Code code, Model model){
-		model.addAttribute("entities",service.getRestProperties(
+		model.addAttribute("entities",service.getRestEntities(
 				service.getCodes((String)(code.getId()))));
 		return "result";
 	}

@@ -40,7 +40,7 @@ import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 @Service
 public class CodeReadService {
 	
-	public List<RestEntity> getRestProperties(List<String> codes){
+	public List<RestEntity> getRestEntities(List<String> codes){
 		List<RestEntity> propMeta = 
 				codes.stream().map(code -> getRestTemplate(new RestTemplateBuilder())
 				.getForObject(
