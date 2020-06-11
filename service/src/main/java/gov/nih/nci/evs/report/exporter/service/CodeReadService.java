@@ -34,6 +34,7 @@ import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
 import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 
@@ -42,19 +43,11 @@ public class CodeReadService {
 	
 	public List<RestEntity> getRestEntities(List<String> codes){
 		List<RestEntity> propMeta = 
-				codes.stream().map(code -> getRestTemplate(new RestTemplateBuilder())
+				codes.stream().map(code -> CommonServices.getRestTemplate()
 				.getForObject(
 				"https://api-evsrest-dev.nci.nih.gov/api/v1/concept/ncit/" + code + "?include=summary"
 						, RestEntity.class)).collect(Collectors.toList());
 		return propMeta;
-	}
-	
-	public List<String> getCodes(String codes){
-		if(codes == null) {
-			System.out.println("Input for code, property, or source cannot be null");
-			return null;
-		}
-		return Arrays.asList(codes.split(","));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -71,36 +64,11 @@ public class CodeReadService {
 				});
 		return list;
 	}
-	 
-	
-	
 	
 	public List<? extends PropertyPrime> filterProperties(List<? extends PropertyPrime> propList, List<String> list){
 		return propList.stream().filter(
 				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());
 	}
-		
-	public Gson getGsonForPrettyPrint() {
-		return new GsonBuilder().setPrettyPrinting().create();
-	}
 	
-	public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-		messageConverters.add(converter);
-		builder.additionalMessageConverters(messageConverters);
-		return builder.build();
-	}
-	
-	public RestTemplate getRestTemplate() {
-		RestTemplateBuilder builder = new RestTemplateBuilder();
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-		messageConverters.add(converter);
-		builder.additionalMessageConverters(messageConverters);
-		return builder.build();
-	}
 }

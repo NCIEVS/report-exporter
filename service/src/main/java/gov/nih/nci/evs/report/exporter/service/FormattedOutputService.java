@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
 import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 
@@ -20,11 +21,11 @@ public class FormattedOutputService {
 	
 	public InputStream getJsonBytesForRestParams(String codes, String props) {
 		return new ByteArrayInputStream(
-				service.getGsonForPrettyPrint().toJson(
+				CommonServices.getGsonForPrettyPrint().toJson(
 						service.getEntitiesForPropertyNameFilter(
 								service.getRestEntities( 
-									service.getCodes(codes)), 
-									service.getCodes(props))).getBytes());
+									CommonServices.splitInput(codes)), 
+									CommonServices.splitInput(props))).getBytes());
 	}
 	
 	public InputStream getCSVBytesForRestParams(String codes, String props) {
@@ -32,8 +33,8 @@ public class FormattedOutputService {
 								.produceCSVOutputFromListWithHeading(
 								service.getEntitiesForPropertyNameFilter(
 								service.getRestEntities( 
-										service.getCodes(codes)), 
-										service.getCodes(props))).getBytes());
+										CommonServices.splitInput(codes)), 
+										CommonServices.splitInput(props))).getBytes());
 	}
 	
 	public InputStream getTabDelBytesForRestParams(String codes, String props) {
@@ -41,8 +42,8 @@ public class FormattedOutputService {
 				.produceTabDelOutputFromListWithHeading(
 				service.getEntitiesForPropertyNameFilter(
 				service.getRestEntities( 
-						service.getCodes(codes)), 
-						service.getCodes(props))).getBytes());
+						CommonServices.splitInput(codes)), 
+						CommonServices.splitInput(props))).getBytes());
 	}
 	
 	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props) {
@@ -51,8 +52,8 @@ public class FormattedOutputService {
 					.produceExcelOutputFromListWithHeading(
 					service.getEntitiesForPropertyNameFilter(
 					service.getRestEntities( 
-							service.getCodes(codes)), 
-							service.getCodes(props))).toByteArray());
+							CommonServices.splitInput(codes)), 
+							CommonServices.splitInput(props))).toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);
 		}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
@@ -23,20 +24,20 @@ public class CodeReadRestController {
 	  @GetMapping("/codereadrest/{ids}")
 	  public List<RestEntity> codeReadForm(@PathVariable String ids) {
 			return service.getRestEntities(
-					service.getCodes(ids));
+					CommonServices.splitInput(ids));
 	  }
 	
 	@PostMapping("/codereadrest/{ids}")
 	public List<RestEntity> getEntities(@PathVariable String ids){
 		return service.getRestEntities(
-				service.getCodes(ids));
+				CommonServices.splitInput(ids));
 	}
 	
 	@GetMapping("/codereadrestprops/{ids}/{list}")
 	public List<RestEntity> getEntitiesWithParameters(@PathVariable String ids,
 			@PathVariable String list){
 		return service.getEntitiesForPropertyNameFilter(service.getRestEntities( 
-				service.getCodes(ids)), service.getCodes(list));
+				CommonServices.splitInput(ids)), CommonServices.splitInput(list));
 	}
 	
 	

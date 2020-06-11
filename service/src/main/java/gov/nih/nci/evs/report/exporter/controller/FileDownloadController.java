@@ -9,23 +9,20 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @RestController
 @RequestMapping("/download")
@@ -46,9 +43,9 @@ public class FileDownloadController {
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 			)
 			public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
-			    InputStream in = new ByteArrayInputStream(codeReadService.getGsonForPrettyPrint().toJson(
+			    InputStream in = new ByteArrayInputStream(CommonServices.getGsonForPrettyPrint().toJson(
 			    		codeReadService.getRestEntities( 
-			    				codeReadService.getCodes(id))).getBytes());
+			    				CommonServices.splitInput(id))).getBytes());
 			    return IOUtils.toByteArray(in);
 			}
 	
