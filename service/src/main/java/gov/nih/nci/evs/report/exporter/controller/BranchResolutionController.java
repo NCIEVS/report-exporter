@@ -18,9 +18,15 @@ public class BranchResolutionController {
 	BranchResolutionService service;
 	
 
-	  @GetMapping("/resolve-branch-for-codes/{ids}")
-	  public List<ChildEntity> codeResolveFrom(@PathVariable String ids) {
-			return service.getEnitiesForBranchTopNode(
+	  @GetMapping("/resolve-children-for-codes/{ids}")
+	  public List<ChildEntity> resolveChildrenFromCodes(@PathVariable String ids) {
+			return service.getChildrenForBranchTopNode(
 					CommonServices.splitInput(ids));
+	  }
+	  
+	  @GetMapping("/resolve-branch-for-codes/{ids}/{maximum}")
+	  public List<ChildEntity> resolveTreeFromCodes(@PathVariable String ids, @PathVariable String maximum ) {
+			return service.getAllChildrenForBranchTopNode(
+					CommonServices.splitInput(ids), maximum);
 	  }
 }

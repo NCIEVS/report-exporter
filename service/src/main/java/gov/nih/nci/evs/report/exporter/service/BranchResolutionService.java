@@ -12,11 +12,20 @@ import gov.nih.nci.evs.report.exporter.util.CommonServices;
 @Service
 public class BranchResolutionService {
 	
-	public List<ChildEntity> getEnitiesForBranchTopNode(List<String> codes){
+	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
 		return 
 				codes.stream().map(code -> CommonServices.getRestTemplate()
 				.getForObject(
 				"https://api-evsrest-dev.nci.nih.gov/api/v1/concept/ncit/"  + code + "/children"
+						,ChildEntity[].class)).flatMap(Arrays::stream)
+						.collect(Collectors.toList());
+	}
+	
+	public List<ChildEntity> getAllChildrenForBranchTopNode(List<String> codes, String max){
+		return 
+				codes.stream().map(code -> CommonServices.getRestTemplate()
+				.getForObject(
+				"https://api-evsrest-dev.nci.nih.gov/api/v1/concept/ncit/"  + code + "/descendants?maxLevel=" + max
 						,ChildEntity[].class)).flatMap(Arrays::stream)
 						.collect(Collectors.toList());
 	}
