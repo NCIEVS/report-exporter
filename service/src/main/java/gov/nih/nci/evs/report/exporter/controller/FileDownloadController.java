@@ -82,14 +82,14 @@ public class FileDownloadController {
 			    		service.getTabDelBytesForRestParams(codes, props));
 			}
 	
-	@GetMapping("/get-file-for-excel/{codes}/{props}")
+	@GetMapping("/get-file-for-excel/{codes}/{props}/{filename}")
 	public ResponseEntity<InputStreamResource> excelCustomersReport(@PathVariable String codes, 
-			@PathVariable String props)  throws IOException {
+			@PathVariable String props, @PathVariable String filename)  throws IOException {
 	    ByteArrayInputStream in = service.getXSLBytesForRestParams(codes, props);
 	    // return IO ByteArray(in);
 	    HttpHeaders headers = new HttpHeaders();
 	    // set filename in header
-	    headers.add("Content-Disposition", "attachment; filename=restentity.xlsx");
+	    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
 	    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 	}
 	
