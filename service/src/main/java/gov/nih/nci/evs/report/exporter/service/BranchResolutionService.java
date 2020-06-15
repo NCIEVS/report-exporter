@@ -43,10 +43,15 @@ public class BranchResolutionService {
 	}
 
 	  
-	public List<ChildEntity> resolveChildEntityGraph(ChildEntity child, List<ChildEntity> list){
-		  if(child.isLeaf()) {list.add(child); return list;}
-		  else child.getChildren().stream().forEach(x -> resolveChildEntityGraph(x, list));
-	    return list;  
-	}
-
+	public void resolveChildEntityGraph(ChildEntity child, List<ChildEntity> list){
+		  
+		  if(child != null &&!child.isLeaf()) {
+			  child.getChildren()
+			  .stream()
+			  .forEach(x ->
+			  resolveChildEntityGraph(x, list));}
+		 
+		if(!child.isLeaf()) {child.setChildren(null);}
+		list.add(child);
+	 }
 }
