@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
+import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutService;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
@@ -29,11 +30,15 @@ import gov.nih.nci.evs.report.exporter.util.CommonServices;
 @CrossOrigin(origins = "http://localhost:8081")
 public class FileDownloadController {
 	
-	public enum Formats{JSON,JSON_FLAT,CSV,TABD, EXCEL};
+	public enum Formats{JSON,CSV,TABD,EXCEL};
+	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
 	
 	
 	@Autowired
 	FormattedOutputService service;
+	
+	@Autowired
+	FormattedBranchOutPutService branchService;
 	
 	@Autowired
 	CodeReadService codeReadService;
@@ -135,10 +140,49 @@ public class FileDownloadController {
 	}
 	
 	
+	
 		@GetMapping("/output-formats")
 		public List<String> getFormatOutput(){
 			return Stream.of(Formats.values()).map(
 					x -> x.name()).collect(Collectors.toList());
+		}
+		
+		@GetMapping(
+				  value = "/get-file-for-resolve-branch/{id}/{props}/{max}/{format}/{filename}",
+				  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+				)
+				public @ResponseBody byte[] getFileByFormatForBranch(@PathVariable String id,
+						@PathVariable String props,
+						@PathVariable String max,
+						@PathVariable String format,
+						@PathVariable String filename) throws IOException {
+					Formats fmt = Formats.valueOf(format);
+					switch(fmt) {
+			            case JSON: 
+			            	return IOUtils.toByteArray(
+			         			    branchService.getJsonBytesForRestParams(id, props, max));
+			            case CSV:
+						    return IOUtils.toByteArray(
+						    		branchService.getCSVBytesForRestParams(id, props, max));
+			            case TABD: 
+						    return IOUtils.toByteArray(
+						    		branchService.getTabDelBytesForRestParams(id, props, max));
+			            default:
+			            	return IOUtils.toByteArray(
+			            			branchService.getJsonBytesForRestParams(id, props, max));
+					}
+
+				}
+		
+		@GetMapping("/get-file-for-resolve-branch/{id}/{props}/{max}/EXCEL/{filename}")
+		public ResponseEntity<InputStreamResource> fileReportForExcelBranch(@PathVariable String id, 
+				@PathVariable String props, @PathVariable String max, @PathVariable String filename)  throws IOException {
+		    ByteArrayInputStream in = branchService.getXSLBytesForRestParams(id, props, max);
+		    // return IO ByteArray(in);
+		    HttpHeaders headers = new HttpHeaders();
+		    // set filename in header
+		    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+		    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 		}
 		
 		

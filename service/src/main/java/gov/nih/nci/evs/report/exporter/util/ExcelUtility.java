@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
 public class ExcelUtility {
@@ -66,10 +67,51 @@ public class ExcelUtility {
 	   workbook.close();
 	   return stream;
 	  }
+	  
+	  public ByteArrayOutputStream  produceChildExcelOutputFromListWithHeading(List<ChildEntity> entities) throws IOException {
+		    
+			Field[] fields = ChildEntity.class.getDeclaredFields();
+		   
+		    List<String> cols = Stream.of(fields).map(x -> x.getName()).collect(Collectors.toList());
+		    
+		    Workbook workbook = new XSSFWorkbook();
+		 
+		    Sheet sheet = workbook.createSheet("entities");
+		 
+		    Font headerFont = workbook.createFont();
+		    headerFont.setBold(true);
+		    headerFont.setColor(IndexedColors.BLUE.getIndex());
+		 
+		    CellStyle headerCellStyle = workbook.createCellStyle();
+		    headerCellStyle.setFont(headerFont);
+		 
+		    // Row for Header
+		    Row headerRow = sheet.createRow(0);
+		 
+		    // Header
+		    for (int col = 0; col < cols.size(); col++) {
+		      Cell cell = headerRow.createCell(col);
+		      cell.setCellValue(cols.get(col));
+		      cell.setCellStyle(headerCellStyle);
+		    }
+		 
+		 
+		    int i = 1;
+		    for (ChildEntity entity : entities) {
+		      Row row = sheet.createRow(i++);
+		 
+		      row.createCell(0).setCellValue(entity.getCode());
+		      row.createCell(1).setCellValue(entity.getName());
+		      row.createCell(2).setCellValue(entity.getLevel());
+		      row.createCell(2).setCellValue(entity.isLeaf());
+		      row.createCell(3).setCellValue(CommonServices.cleanListOutPut(entity.getChildren().toString()));
+		    }
+		 
+		   ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		   workbook.write(stream);
+		   workbook.close();
+		   return stream;
+		  }
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

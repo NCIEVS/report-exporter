@@ -41,6 +41,10 @@ public class ChildEntity {
 		this.children = children;
 	}
 	
+	public String toString() {
+		return "code: " + code + " name: " + name;
+	}
+	
 	
 
 }
