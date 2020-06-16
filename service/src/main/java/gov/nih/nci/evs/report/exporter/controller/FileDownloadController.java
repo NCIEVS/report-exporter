@@ -29,7 +29,7 @@ import gov.nih.nci.evs.report.exporter.util.CommonServices;
 @CrossOrigin(origins = "http://localhost:8081")
 public class FileDownloadController {
 	
-	public enum formats{JSON,CSV,TABD, EXCEL};
+	public enum Formats{JSON,JSON_FLAT,CSV,TABD, EXCEL};
 	
 	
 	@Autowired
@@ -48,6 +48,47 @@ public class FileDownloadController {
 			    				CommonServices.splitInput(id))).getBytes());
 			    return IOUtils.toByteArray(in);
 			}
+	
+	@GetMapping(
+			  value = "/get-file-for-readCodes/{id}/{props}/{format}/{filename}",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+			)
+			public @ResponseBody byte[] getFileByFormat(@PathVariable String id,
+					@PathVariable String props,
+					@PathVariable String format, 
+					@PathVariable String filename) throws IOException {
+				Formats fmt = Formats.valueOf(format);
+				switch(fmt) {
+		            case JSON: 
+		            	return IOUtils.toByteArray(
+		         			    		service.getJsonBytesForRestParams(id, props));
+		            case CSV:
+					    return IOUtils.toByteArray(
+					    		service.getCSVBytesForRestParams(id, props));
+		            case TABD: 
+					    return IOUtils.toByteArray(
+					    		service.getTabDelBytesForRestParams(id, props));
+		            default:
+		            	return IOUtils.toByteArray(new ByteArrayInputStream(CommonServices.getGsonForPrettyPrint().toJson(
+					    		codeReadService.getRestEntities( 
+					    				CommonServices.splitInput(id))).getBytes()));
+				}
+
+			}
+	
+	@GetMapping("/get-file-for-readCodes/{id}/{props}/EXCEL/{filename}")
+	public ResponseEntity<InputStreamResource> excelCustomersByFormatReport(@PathVariable String id, 
+			@PathVariable String props, @PathVariable String filename)  throws IOException {
+	    ByteArrayInputStream in = service.getXSLBytesForRestParams(id, props);
+	    // return IO ByteArray(in);
+	    HttpHeaders headers = new HttpHeaders();
+	    // set filename in header
+	    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+	    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+	}
+	
+	
+	
 	
 	@GetMapping(
 			  value = "/get-file-for-props/{codes}/{props}/{filename}",
@@ -96,8 +137,10 @@ public class FileDownloadController {
 	
 		@GetMapping("/output-formats")
 		public List<String> getFormatOutput(){
-			return Stream.of(formats.values()).map(
+			return Stream.of(Formats.values()).map(
 					x -> x.name()).collect(Collectors.toList());
 		}
+		
+		
 
 }
