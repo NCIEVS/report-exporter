@@ -31,7 +31,7 @@ class EXELUtilityTest {
 
 	@Test
 	void testProduceCSVOutputFromListWithHeading() throws IOException {
-		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList()).toString());
+		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList()));
 	}
 	
 	private List<RestEntity> getRestEntityList() {
