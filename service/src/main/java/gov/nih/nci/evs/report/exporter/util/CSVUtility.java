@@ -42,15 +42,11 @@ public class CSVUtility {
 				"\r\n" + x.getCode() + 
 				separator + x.getName() + 
 				separator + x.getLevel() + 
+				separator + x.isLeaf() + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getChildren()))));
 	    System.out.println(oneLine.toString());
 		return oneLine.toString();
 	}
 	
-
-	
-	public static void main(String ...args) {
-		new CSVUtility().produceCSVOutputFromListWithHeading(null);
-	}
 
 }

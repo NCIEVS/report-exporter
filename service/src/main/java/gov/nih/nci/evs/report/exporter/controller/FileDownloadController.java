@@ -148,7 +148,7 @@ public class FileDownloadController {
 		}
 		
 		@GetMapping(
-				  value = "/get-file-for-resolve-branch/{id}/{props}/{max}/{format}/{filename}",
+				  value = "/get-file-for-resolved-branch/{id}/{props}/{max}/{format}/{filename}",
 				  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 				)
 				public @ResponseBody byte[] getFileByFormatForBranch(@PathVariable String id,
@@ -178,13 +178,46 @@ public class FileDownloadController {
 		public ResponseEntity<InputStreamResource> fileReportForExcelBranch(@PathVariable String id, 
 				@PathVariable String props, @PathVariable String max, @PathVariable String filename)  throws IOException {
 		    ByteArrayInputStream in = branchService.getXSLBytesForRestParams(id, props, max);
-		    // return IO ByteArray(in);
 		    HttpHeaders headers = new HttpHeaders();
-		    // set filename in header
 		    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
 		    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 		}
 		
+		@GetMapping(
+				  value = "/get-minfile-for-resolved-branch/{id}/{props}/{max}/{format}/{filename}",
+				  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+				)
+				public @ResponseBody byte[] getMinimalFileByFormatForBranch(@PathVariable String id,
+						@PathVariable String props,
+						@PathVariable String max,
+						@PathVariable String format,
+						@PathVariable String filename) throws IOException {
+					Formats fmt = Formats.valueOf(format);
+					switch(fmt) {
+			            case JSON: 
+			            	return IOUtils.toByteArray(
+			         			    branchService.getJsonBytesForRestChildParams(id, max));
+			            case CSV:
+						    return IOUtils.toByteArray(
+						    		branchService.getChildCSVBytesForRestParams(id, max));
+			            case TABD: 
+						    return IOUtils.toByteArray(
+						    		branchService.getChildTabDelBytesForRestParams(id, max));
+			            default:
+			            	return IOUtils.toByteArray(
+			            			branchService.getJsonBytesForRestChildParams(id, max));
+					}
+
+				}
+		
+		@GetMapping("/get-minfile-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
+		public ResponseEntity<InputStreamResource> minimalFileReportForExcelBranch(@PathVariable String id, 
+				@PathVariable String props, @PathVariable String max, @PathVariable String filename)  throws IOException {
+		    ByteArrayInputStream in = branchService.getChildXSLBytesForRestParams(id, max);
+		    HttpHeaders headers = new HttpHeaders();
+		    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+		    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+		}
 		
 
 }

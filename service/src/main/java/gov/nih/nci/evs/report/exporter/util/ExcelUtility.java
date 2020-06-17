@@ -57,9 +57,21 @@ public class ExcelUtility {
 	      row.createCell(0).setCellValue(entity.getCode());
 	      row.createCell(1).setCellValue(entity.getName());
 	      row.createCell(2).setCellValue(entity.getTerminology());
-	      row.createCell(3).setCellValue(CommonServices.cleanListOutPut(entity.getSynonyms().toString()));
-	      row.createCell(4).setCellValue(CommonServices.cleanListOutPut(entity.getDefinitions().toString()));
-	      row.createCell(5).setCellValue(CommonServices.cleanListOutPut(entity.getProperties().toString()));
+	      row.createCell(3).setCellValue(
+	    		  CommonServices.cleanListOutPut(
+	    				  entity.getSynonyms() != null?
+	    						  entity.getSynonyms().toString():
+	    							  "no synonyms"));
+	      row.createCell(4).setCellValue(
+	    		  CommonServices.cleanListOutPut(
+	    				  entity.getDefinitions() != null?
+	    						  entity.getDefinitions().toString():
+	    							  "no definitions"));
+	      row.createCell(5).setCellValue(
+	    		  CommonServices.cleanListOutPut(
+	    				  entity.getProperties() != null?
+	    						  entity.getProperties().toString():
+	    							  "no properties"));
 	    }
 	 
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -103,8 +115,12 @@ public class ExcelUtility {
 		      row.createCell(0).setCellValue(entity.getCode());
 		      row.createCell(1).setCellValue(entity.getName());
 		      row.createCell(2).setCellValue(entity.getLevel());
-		      row.createCell(2).setCellValue(entity.isLeaf());
-		      row.createCell(3).setCellValue(CommonServices.cleanListOutPut(entity.getChildren().toString()));
+		      row.createCell(3).setCellValue(entity.isLeaf());
+		      if(entity.getChildren() != null && entity.getChildren().size() > 0) {
+		      row.createCell(4).setCellValue(
+		    		  CommonServices.cleanListOutPut(
+		    				  entity.getChildren().toString()));
+		      }
 		    }
 		 
 		   ByteArrayOutputStream stream = new ByteArrayOutputStream();
