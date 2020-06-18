@@ -7,14 +7,16 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
 
-
+@SpringBootTest
 class BranchResolutionServiceTest {
 	
-	
+	@Autowired
 	BranchResolutionService service;
 	
 	@BeforeEach
@@ -81,5 +83,10 @@ class BranchResolutionServiceTest {
 		service.resolveChildEntityGraph(entity, list);
 		assertEquals(7, list.size());
 	}
+	
+//	@Test
+//	public void getCuratedNodesTest() {
+//		service.getCuratedTopNodeList().forEach(x -> System.out.println(x));
+//	}
 
 }
