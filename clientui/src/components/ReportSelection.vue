@@ -13,7 +13,7 @@
             <h4 class="my-0 font-weight-normal">Read Codes</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">title</h1>
+            <h1 class="card-title pricing-card-title">READ</h1>
             <ul class="list-unstyled mt-3 mb-4">
               <li>Enter one or many entity codes</li>
               <li>Select the properties to output</li>
@@ -29,7 +29,7 @@
             <h4 class="my-0 font-weight-normal">Search Terms</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">title</h1>
+            <h1 class="card-title pricing-card-title">SEARCH</h1>
             <ul class="list-unstyled mt-3 mb-4">
               <li>Enter one or more entity terms</li>
               <li>Select the properties to output</li>
@@ -45,9 +45,9 @@
             <h4 class="my-0 font-weight-normal">Resolve Branch</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">title</h1>
+            <h1 class="card-title pricing-card-title">RESOLVE</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>Select root of branch </li>
+              <li>Enter one or many root codes</li>
               <li>Select the properties to output</li>
               <li>Select report format</li>
             </ul>

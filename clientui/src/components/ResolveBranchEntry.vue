@@ -49,12 +49,20 @@
                        selected-options-placeholder="Search selected properties">
         </v-multiselect-listbox>
 
+        <div>
+          <h3> Select Format for Output </h3>
+          <v-select
+            :options="this.availableFormats" @input="value =>updateFormat(value)">
+          </v-select>
+        </div>
+
       </div>
+
+
 
       <div class="row mx-lg-n5 py-1 ">
           <button class="btn btn-primary" :disabled='!(Object.keys(this.selectedTags).length>0)' v-on:click="downloadFile">Download</button>
       </div>
-
     </div>
  
   </div>
@@ -65,8 +73,10 @@
 // Custom input tags
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
+import vSelect from 'vue-select'
 import api from '../api.js';
 import axios from 'axios';
+import "vue-select/dist/vue-select.css";
 
 
 export default {
@@ -76,7 +86,8 @@ export default {
   },
   components: {
     'tags-input': VoerroTagsInput,
-    'vMultiselectListbox': vMultiselectListbox
+    'vMultiselectListbox': vMultiselectListbox,
+    'v-select': vSelect
   },
   data(){
     return {
@@ -88,6 +99,7 @@ export default {
       selectedProperties: [],
       userSelectedProperyNames: [],
       availableFormats: [],
+      userSelectedFormat: 'JSON',
       filename: 'file.json',
       downloadReturnCode: null,
       baseUrl: ''
@@ -112,6 +124,11 @@ export default {
         }
       },
 
+      updateFormat( format) {
+        this.userSelectedFormat = ''
+        this.userSelectedFormat = format;
+      },
+
       getEntities(){
         // clear the entry list
         this.entityList = []
@@ -129,7 +146,7 @@ export default {
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.baseUrl + '/download/get-file-for-resolved-branch/'  + this.userEnteredCodes + '/' + this.userSelectedProperyNames + '/0/JSON/' + this.filename,
+                url: this.baseUrl + '/download/get-file-for-resolved-branch/'  + this.userEnteredCodes + '/' + this.userSelectedProperyNames + '/0/' + this.userSelectedFormat + '/' + this.filename,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
@@ -150,18 +167,22 @@ export default {
       api.getProperties(this.baseUrl)
           .then((data)=>{this.availableProperties = data;
         })
+
+     api.getFormats(this.baseUrl)
+          .then((data)=>{this.availableFormats = data;
+       })
     }
   }
 </script>
 
 <!-- styling for the component -->
 <style>
-#resolve-branch-entry {
+/* #resolve-branch-entry {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
+} */
 </style>

@@ -174,7 +174,7 @@ public class FileDownloadController {
 
 				}
 		
-		@GetMapping("/get-file-for-resolve-branch/{id}/{props}/{max}/EXCEL/{filename}")
+		@GetMapping("/get-file-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
 		public ResponseEntity<InputStreamResource> fileReportForExcelBranch(@PathVariable String id, 
 				@PathVariable String props, @PathVariable String max, @PathVariable String filename)  throws IOException {
 		    ByteArrayInputStream in = branchService.getXSLBytesForRestParams(id, props, max);
