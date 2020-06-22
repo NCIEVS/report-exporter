@@ -26,6 +26,37 @@ class CSVUtilityTest {
 		service = new BranchResolutionService();
 		util = new CSVUtility();
 	}
+	
+	@Test
+	void testSynonymOutput() {
+		Synonym syn = new Synonym();
+		syn.setType("synType");
+		syn.setName("synName");
+		syn.setSource("NCIt");
+		syn.setSubSource("CDISC");
+		syn.setTermGroup("mytermgr");
+		System.out.println(syn.toString());	
+		assertEquals("NCIt synType:synName",syn.toString());
+	}
+	
+	@Test
+	void testDefinitionOutput() {
+		Definition def = new Definition();
+		def.setType("defType");
+		def.setDefinition("defvalue");
+		def.setSource("NCI");
+		System.out.println(def.toString());
+		assertEquals("NCI defType:defvalue", def.toString());
+	}
+	
+	@Test
+	void testPropertyOutput() {
+		Property prop = new Property();
+		prop.setType("PropType");
+		prop.setValue("propvalue");
+		System.out.println(prop.toString());
+		assertEquals("PropType:propvalue", prop.toString());
+	}
 
 	@Test
 	void testProduceCSVOutputFromListWithHeading() {
@@ -178,9 +209,9 @@ class CSVUtilityTest {
 	
 	private String getCSVRestEntityOutput() {
 		return "code,name,terminology,synonyms,definitions,properties" +
-				"\r\nC123234,Myent,ncit,\"source: NCIt name: synName, source: null name: synName2\",\"defvalue, defvalue2\",\"type: PropType value: propvalue, type: PropType2 value: propvalue2\"" +
-				"\r\nC000000,0ent,ncit,null,null,\"type: Prop0Type value: prop0value, type: Prop0Type2 value: prop0value2\"" +
-				"\r\nC999999,My9,ncit,null,null,\"type: Prop9Type value: prop9value, type: Prop9Type2 value: prop9value2\"";	    
+				"\r\nC123234,Myent,ncit,\"NCIt synType:synName, UNDEFINED synType2:synName2\",\"NCI defType:defvalue, No Source Defined defType2:defvalue2\",\"PropType:propvalue, PropType2:propvalue2\"" +
+				"\r\nC000000,0ent,ncit,null,null,\"Prop0Type:prop0value, Prop0Type2:prop0value2\"" +
+				"\r\nC999999,My9,ncit,null,null,\"Prop9Type:prop9value, Prop9Type2:prop9value2\"";	    
 	}
 	
 	private String getChildCSVRestEntityOutput() {

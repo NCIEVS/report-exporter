@@ -42,6 +42,8 @@ public class Synonym extends PropertyPrime {
 	}
     
     public String toString() {
-    	return  "source: " + source + " name: " + name;
+    	return  (source == null?"UNDEFINED":source) + " " 
+    			+ (super.getType()==null?"No Type defined":super.getType()) 
+    					+ ":" + (name == null?"No Name Defined":name);
     }
 }

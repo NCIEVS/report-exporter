@@ -19,7 +19,9 @@ public class Definition extends PropertyPrime {
 	}
 		
 	public String toString() {
-		return definition;
+		return (source == null?"No Source Defined":source) + " " +
+				(super.getType()== null?"No Type defined":super.getType()) + ":" + 
+						(definition == null?"UNDEFINED":definition);
 	}
 
 }
