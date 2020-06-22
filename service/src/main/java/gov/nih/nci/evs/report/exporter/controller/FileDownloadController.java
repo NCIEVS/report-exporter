@@ -9,18 +9,20 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @RestController
 @RequestMapping("/download")
@@ -31,16 +33,19 @@ public class FileDownloadController {
 	
 	
 	@Autowired
-	CodeReadService service;
+	FormattedOutputService service;
+	
+	@Autowired
+	CodeReadService codeReadService;
 	
 	@GetMapping(
 			  value = "/get-file/{id}/JsonFile.json",
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 			)
 			public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
-			    InputStream in = new ByteArrayInputStream(service.getGsonForPrettyPrint().toJson(
-			    		service.getRestProperties( 
-			    				service.getCodes(id))).getBytes());
+			    InputStream in = new ByteArrayInputStream(CommonServices.getGsonForPrettyPrint().toJson(
+			    		codeReadService.getRestEntities( 
+			    				CommonServices.splitInput(id))).getBytes());
 			    return IOUtils.toByteArray(in);
 			}
 	
@@ -51,7 +56,6 @@ public class FileDownloadController {
 			public @ResponseBody byte[] getFileForProps(
 					@PathVariable String codes, 
 					@PathVariable String props) throws IOException {
-			   // service.getJsonBytesForRestParams(codes, props);
 			    return IOUtils.toByteArray(
 			    		service.getJsonBytesForRestParams(codes, props));
 			}
@@ -63,10 +67,31 @@ public class FileDownloadController {
 			public @ResponseBody byte[] getFileForCSV(
 					@PathVariable String codes, 
 					@PathVariable String props) throws IOException {
-			   // service.getCSVBytesForRestParams(codes, props);
 			    return IOUtils.toByteArray(
 			    		service.getCSVBytesForRestParams(codes, props));
 			}
+	
+	@GetMapping(
+			  value = "/get-file-for-tabdel/{codes}/{props}/{filename}",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+			)
+			public @ResponseBody byte[] getFileForTabDel(
+					@PathVariable String codes, 
+					@PathVariable String props) throws IOException {
+			    return IOUtils.toByteArray(
+			    		service.getTabDelBytesForRestParams(codes, props));
+			}
+	
+	@GetMapping("/get-file-for-excel/{codes}/{props}")
+	public ResponseEntity<InputStreamResource> excelCustomersReport(@PathVariable String codes, 
+			@PathVariable String props)  throws IOException {
+	    ByteArrayInputStream in = service.getXSLBytesForRestParams(codes, props);
+	    // return IO ByteArray(in);
+	    HttpHeaders headers = new HttpHeaders();
+	    // set filename in header
+	    headers.add("Content-Disposition", "attachment; filename=restentity.xlsx");
+	    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+	}
 	
 	
 		@GetMapping("/output-formats")

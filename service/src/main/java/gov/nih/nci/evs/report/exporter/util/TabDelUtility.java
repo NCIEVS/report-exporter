@@ -8,13 +8,13 @@ import java.util.stream.Stream;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
 
-public class CSVUtility {
+public class TabDelUtility {
 	
 
-	public String produceCSVOutputFromListWithHeading(List<RestEntity> list) {
+	public String produceTabDelOutputFromListWithHeading(List<RestEntity> list) {
 
 		StringBuffer firstLine = new StringBuffer();
-		String separator = ",";
+		String separator = "\t";
 		Field[] fields = RestEntity.class.getDeclaredFields();
 		Stream.of(fields).forEach(x -> firstLine.append(x.getName() + separator));
 		StringBuffer oneLine =
@@ -33,7 +33,7 @@ public class CSVUtility {
 
 	
 	public static void main(String ...args) {
-		new CSVUtility().produceCSVOutputFromListWithHeading(null);
+		new TabDelUtility().produceTabDelOutputFromListWithHeading(null);
 	}
 
 }

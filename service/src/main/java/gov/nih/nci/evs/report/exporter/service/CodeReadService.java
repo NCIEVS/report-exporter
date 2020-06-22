@@ -28,71 +28,47 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
+import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
+import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
+import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 
 @Service
 public class CodeReadService {
 	
-	public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-		messageConverters.add(converter);
-		builder.additionalMessageConverters(messageConverters);
-		return builder.build();
-	}
-	
-	public List<RestEntity> getRestProperties(List<String> codes){
+	public List<RestEntity> getRestEntities(List<String> codes){
 		List<RestEntity> propMeta = 
-				codes.stream().map(code -> getRestTemplate(new RestTemplateBuilder())
+				codes.stream().map(code -> CommonServices.getRestTemplate()
 				.getForObject(
 				"https://api-evsrest-dev.nci.nih.gov/api/v1/concept/ncit/" + code + "?include=summary"
 						, RestEntity.class)).collect(Collectors.toList());
 		return propMeta;
 	}
 	
-	public List<String> getCodes(String codes){
-		return Arrays.asList(codes.split(","));
-	}
-	
+	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
 		list.stream().forEach(
-				entity -> entity.setProperties(
-						filterProperties(entity.getProperties(), propList)));
+				entity -> {
+					entity.setProperties(
+						(List<Property>)filterProperties(entity.getProperties(), propList));
+					entity.setDefinitions(
+						(List<Definition>)filterProperties(entity.getDefinitions(), propList));
+					entity.setSynonyms(
+						(List<Synonym>)filterProperties(entity.getSynonyms(), propList));
+				});
 		return list;
 	}
 	
-	public InputStream getJsonBytesForRestParams(String codes, String props) {
-		return new ByteArrayInputStream(
-				getGsonForPrettyPrint().toJson(
-						getEntitiesForPropertyNameFilter(
-								getRestProperties( 
-			getCodes(codes)), getCodes(props))).getBytes());
-	}
-	
-	public InputStream getCSVBytesForRestParams(String codes, String props) {
-
-						return new ByteArrayInputStream(new CSVUtility().produceCSVOutputFromListWithHeading(getEntitiesForPropertyNameFilter(
-								getRestProperties( 
-	getCodes(codes)), getCodes(props))).getBytes());
-
-	}
-	
-	public List<Property> filterProperties(List<Property> propList, List<String> list){
+	public List<? extends PropertyPrime> filterProperties(List<? extends PropertyPrime> propList, List<String> list){
 		return propList.stream().filter(
-				x -> list.stream().anyMatch(y -> x.getType().equals(y)))
+				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());
 	}
 	
-	public Gson getGsonForPrettyPrint() {
-		return new GsonBuilder().setPrettyPrinting().create();
-	}
-	
-	public static void main(String ...args) {
-		new CodeReadService().getCSVBytesForRestParams("C12434","Semantic_Type");
-	}
-
 }
