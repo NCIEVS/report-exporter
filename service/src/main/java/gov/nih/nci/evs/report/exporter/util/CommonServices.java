@@ -55,5 +55,11 @@ public class CommonServices {
 		builder.additionalMessageConverters(messageConverters);
 		return builder.build();
 	}
+	
+	  public static List<String> getCodesListForCode(String code){
+		  List<String> list = new ArrayList<String>();
+		  list.add(code);
+		  return list;
+	  }
 
 }
