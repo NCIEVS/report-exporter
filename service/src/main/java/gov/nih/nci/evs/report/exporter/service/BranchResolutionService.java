@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -18,11 +21,24 @@ public class BranchResolutionService {
 	@Autowired
 	CodeReadService readService;
 	
+    @Value("${NODE_LIST}")
+	private String curatedTopNodeList;
+    
+    @Value("${BASE_URL}")
+    private String baseURL;
+    
+    @Value("${CHILDREN}")
+    private String children;
+    
+    @Value("${DESCENDANTS}")
+    private String descendants;
+    
+	
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
 		return 
 				codes.stream().map(code -> CommonServices.getRestTemplate()
 				.getForObject(
-				"https://api-evsrest-dev.nci.nih.gov/api/v1/concept/ncit/"  + code + "/children"
+				baseURL  + code + children
 						,ChildEntity[].class)).flatMap(Arrays::stream)
 						.collect(Collectors.toList());
 	}
@@ -39,9 +55,9 @@ public class BranchResolutionService {
 		return 
 				codes.stream().map(code -> CommonServices.getRestTemplate()
 				.getForObject(
-				"https://api-evsrest-dev.nci.nih.gov/api/v1/concept/ncit/"  
+				baseURL 
 				+ code 
-				+ "/descendants?maxLevel=" + max
+				+ descendants + max
 						,ChildEntity[].class))
 							.flatMap(Arrays::stream)
 							.collect(Collectors.toList());
@@ -70,4 +86,14 @@ public class BranchResolutionService {
 				.flatMap(List::stream)
 				.collect(Collectors.toList());
 	}
+	
+	public List<String> getCuratedTopNodeList(){
+		return Stream.of(
+				curatedTopNodeList
+				.split(","))
+				.collect(Collectors
+						.toList());
+	}
+	
+	
 }
