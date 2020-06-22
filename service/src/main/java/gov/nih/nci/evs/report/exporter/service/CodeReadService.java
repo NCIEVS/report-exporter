@@ -47,6 +47,7 @@ public class CodeReadService {
 	}
 	
 	public List<? extends PropertyPrime> filterProperties(List<? extends PropertyPrime> propList, List<String> list){
+		if(propList == null) {return null;}
 		return propList.stream().filter(
 				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());

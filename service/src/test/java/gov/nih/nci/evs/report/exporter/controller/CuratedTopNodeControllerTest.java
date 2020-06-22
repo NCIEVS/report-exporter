@@ -19,19 +19,19 @@ public class CuratedTopNodeControllerTest {
 	private TestRestTemplate restTemplate;
 
 	@Test
-	public void greetingShouldReturnContent() throws Exception {
+	public void shouldReturnContent() throws Exception {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/curated-top-nodes",
 				String.class)).contains("Anatomic");
 	}
 	
 	@Test
-	public void greetingShouldReturnFirstContent() throws Exception {
+	public void shouldReturnFirstContent() throws Exception {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/curated-top-nodes",
 				String.class)).contains("C1909");
 	}
 	
 	@Test
-	public void greetingShouldReturnLastContent() throws Exception {
+	public void shouldReturnLastContent() throws Exception {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/curated-top-nodes",
 				String.class)).contains("Carcinoma");
 	}
