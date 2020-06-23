@@ -178,9 +178,9 @@ class TabDelUtilityTest {
 	
 	private String getTabDelRestEntityOutput() {
 		return "code\tname\tterminology\tsynonyms\tdefinitions\tproperties" +
-				"\r\nC123234\tMyent\tncit\t\"source: NCIt name: synName, source: null name: synName2\"\t\"defvalue, defvalue2\"\t\"type: PropType value: propvalue, type: PropType2 value: propvalue2\"" +
-				"\r\nC000000\t0ent\tncit\tnull\tnull\t\"type: Prop0Type value: prop0value, type: Prop0Type2 value: prop0value2\"" +
-				"\r\nC999999\tMy9\tncit\tnull\tnull\t\"type: Prop9Type value: prop9value, type: Prop9Type2 value: prop9value2\"";	    
+				"\r\nC123234\tMyent\tncit\t\"NCIt synType:synName, UNDEFINED synType2:synName2\"\t\"NCI defType:defvalue, No Source Defined defType2:defvalue2\"\t\"PropType:propvalue, PropType2:propvalue2\"" +
+				"\r\nC000000\t0ent\tncit\tnull\tnull\t\"Prop0Type:prop0value, Prop0Type2:prop0value2\"" +
+				"\r\nC999999\tMy9\tncit\tnull\tnull\t\"Prop9Type:prop9value, Prop9Type2:prop9value2\"";	    
 	}
 	
 	private String getChildTabDelRestEntityOutput() {
