@@ -47,11 +47,19 @@
                        search-options-placeholder="Search properties"
                        selected-options-placeholder="Search selected properties">
         </v-multiselect-listbox>
+        <div>
+          <h3> Select Format for Output </h3>
+          <v-select
+            :options="this.availableFormats" @input="value =>updateFormat(value)">
+          </v-select>
+        </div>
 
       </div>
 
       <div class="row mx-lg-n5 py-1 ">
-          <button class="btn btn-primary" :disabled='!(Object.keys(this.selectedTags).length>0)' v-on:click="downloadFile">Download</button>
+          <button class="btn btn-primary" 
+              :disabled='!(Object.keys(this.selectedTags).length > 0  && Object.keys(this.selectedProperties).length>0 && this.userSelectedExtension.length >0)' 
+              v-on:click="downloadFile">Download</button>
       </div>
 
     </div>
@@ -64,9 +72,9 @@
 // Custom input tags
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
+import vSelect from 'vue-select'
 import api from '../api.js';
 import axios from 'axios';
-
 
 export default {
   name: 'read-code-entry',
@@ -75,7 +83,8 @@ export default {
   },
   components: {
     'tags-input': VoerroTagsInput,
-    'vMultiselectListbox': vMultiselectListbox
+    'vMultiselectListbox': vMultiselectListbox,
+    'v-select': vSelect
   },
   data(){
     return {
@@ -86,9 +95,18 @@ export default {
       availableProperties: [],
       selectedProperties: [],
       userSelectedProperyNames: [],
-      filename: 'file.json',
+      availableFormats: [],
+      userSelectedFormat: 'JSON',
+      filename: 'readCodes',
       downloadReturnCode: null,
-      baseUrl: ''
+      baseUrl: '',
+      userSelectedExtension: '',
+      extensionMap:[
+        { id: 'JSON', name: 'json' },
+        { id: 'CSV', name: 'csv' },
+        { id: 'TABD', name: 'txt' },
+        { id: 'EXCEL', name: 'xslx' }
+      ]
     }
   },
   
@@ -110,6 +128,20 @@ export default {
         }
       },
 
+      updateFormat( format) {
+        this.userSelectedFormat = ''
+        this.userSelectedFormat = format;
+
+        // find the extension based off the key (user selected format)
+        for (let i = 0; i < Object.keys(this.extensionMap).length; i++) {
+          if (this.extensionMap[i].id == this.userSelectedFormat) {
+            this.userSelectedExtension = this.extensionMap[i].name;
+            break;
+          }
+        }
+
+      },
+
       getEntities(){
         // clear the entry list
         this.entityList = []
@@ -121,13 +153,16 @@ export default {
       },
 
       downloadFile() {
-
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.baseUrl + '/download/get-file-for-props/'  + this.userEnteredCodes + '/' + this.userSelectedProperyNames + '/' + this.filename,
+                url: this.baseUrl + '/download/get-file-for-props/'  + 
+                    this.userEnteredCodes + '/' + 
+                    this.userSelectedProperyNames + '/' + 
+                    this.filename + '.' + 
+                    this.userSelectedFormat + '.' + this.userSelectedExtension,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
@@ -135,7 +170,7 @@ export default {
                   var fileLink = document.createElement('a');
 
                   fileLink.href = fileURL;
-                  fileLink.setAttribute('download', this.filename);
+                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedExtension);
                   document.body.appendChild(fileLink);
 
                   fileLink.click();
@@ -148,6 +183,10 @@ export default {
       api.getProperties(this.baseUrl)
           .then((data)=>{this.availableProperties = data;
         })
+
+      api.getFormats(this.baseUrl)
+          .then((data)=>{this.availableFormats = data;
+       })
     }
   }
 

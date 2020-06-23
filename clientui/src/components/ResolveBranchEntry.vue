@@ -61,7 +61,9 @@
 
 
       <div class="row mx-lg-n5 py-1 ">
-          <button class="btn btn-primary" :disabled='!(Object.keys(this.selectedTags).length>0)' v-on:click="downloadFile">Download</button>
+          <button class="btn btn-primary" 
+            :disabled='!(Object.keys(this.selectedTags).length>0 && Object.keys(this.selectedProperties).length>0 && this.userSelectedExtension.length > 0)' 
+            v-on:click="downloadFile">Download</button>
       </div>
     </div>
  
@@ -76,8 +78,6 @@ import vMultiselectListbox from 'vue-multiselect-listbox'
 import vSelect from 'vue-select'
 import api from '../api.js';
 import axios from 'axios';
-import "vue-select/dist/vue-select.css";
-
 
 export default {
   name: 'resolve-branch-entry',
@@ -100,9 +100,16 @@ export default {
       userSelectedProperyNames: [],
       availableFormats: [],
       userSelectedFormat: 'JSON',
-      filename: 'file.json',
+      filename: 'resolveBranch',
       downloadReturnCode: null,
-      baseUrl: ''
+      baseUrl: '',
+      userSelectedExtension: '',
+      extensionMap:[
+        { id: 'JSON', name: 'json' },
+        { id: 'CSV', name: 'csv' },
+        { id: 'TABD', name: 'txt' },
+        { id: 'EXCEL', name: 'xslx' }
+      ]
     }
   },
   
@@ -127,6 +134,15 @@ export default {
       updateFormat( format) {
         this.userSelectedFormat = ''
         this.userSelectedFormat = format;
+
+        // find the extension based off the key (user selected format)
+        for (let i = 0; i < Object.keys(this.extensionMap).length; i++) {
+          if (this.extensionMap[i].id == this.userSelectedFormat) {
+            this.userSelectedExtension = this.extensionMap[i].name;
+            break;
+          }
+        }
+
       },
 
       getEntities(){
@@ -146,7 +162,11 @@ export default {
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.baseUrl + '/download/get-file-for-resolved-branch/'  + this.userEnteredCodes + '/' + this.userSelectedProperyNames + '/0/' + this.userSelectedFormat + '/' + this.filename,
+                url: this.baseUrl + '/download/get-file-for-resolved-branch/'  + 
+                    this.userEnteredCodes + '/' + 
+                    this.userSelectedProperyNames + '/0/' + 
+                    this.userSelectedFormat + '/' + 
+                    this.filename + '.' + this.userSelectedExtension,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
@@ -154,7 +174,7 @@ export default {
                   var fileLink = document.createElement('a');
 
                   fileLink.href = fileURL;
-                  fileLink.setAttribute('download', this.filename);
+                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedExtension);
                   document.body.appendChild(fileLink);
 
                   fileLink.click();
