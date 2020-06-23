@@ -209,9 +209,9 @@ class CSVUtilityTest {
 	
 	private String getCSVRestEntityOutput() {
 		return "code,name,terminology,synonyms,definitions,properties" +
-				"\r\nC123234,Myent,ncit,\"NCIt synType:synName, UNDEFINED synType2:synName2\",\"NCI defType:defvalue, No Source Defined defType2:defvalue2\",\"PropType:propvalue, PropType2:propvalue2\"" +
-				"\r\nC000000,0ent,ncit,null,null,\"Prop0Type:prop0value, Prop0Type2:prop0value2\"" +
-				"\r\nC999999,My9,ncit,null,null,\"Prop9Type:prop9value, Prop9Type2:prop9value2\"";	    
+				"\r\nC123234,Myent,ncit,\"|NCIt synType:synName|NOSOURCE synType2:synName2|\",\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\",\"|PropType:propvalue|PropType2:propvalue2|\"" +
+				"\r\nC000000,0ent,ncit,null,null,\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
+				"\r\nC999999,My9,ncit,null,null,\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";	    
 	}
 	
 	private String getChildCSVRestEntityOutput() {

@@ -17,7 +17,11 @@ import com.google.gson.GsonBuilder;
 public class CommonServices {
 	
 	public static <T> String getListValues(List<T> list) {
-		return list != null?"\"" + list.toString() + "\"": null;
+		return list != null?"\"" + getListValuesWithPipeDelimiter(list) + "|\"": null;
+	}
+	
+	public static <T> String getListValuesWithPipeDelimiter(List<T> list) {
+		return list.stream().map(x -> x.toString()).reduce("", (part, whole)-> part + "|" + whole);
 	}
 	
 	public static String cleanListOutPut(String list){

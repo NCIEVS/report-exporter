@@ -12,8 +12,8 @@ public class Property extends PropertyPrime {
 	}
 	
 	public String toString() {
-		return (super.getType()==null?"No Type Defined":super.getType())
-				+ ":" + (value==null?"No Value Defined":value);
+		return (super.getType()==null?NOTYPE:super.getType())
+				+ ":" + (value==null?UNDEFINED:value);
 	}
 
 }
