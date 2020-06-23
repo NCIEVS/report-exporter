@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
+import gov.nih.nci.evs.report.exporter.model.CuratedTopNode;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
@@ -88,12 +89,19 @@ public class BranchResolutionService {
 				.collect(Collectors.toList());
 	}
 	
-	public List<String> getCuratedTopNodeList(){
+	public List<CuratedTopNode> getCuratedTopNodeList(){
 		return Stream.of(
 				curatedTopNodeList
-				.split(","))
+				.split(",")).map(x -> getTopNodeFromArray(x.split(":")))
 				.collect(Collectors
 						.toList());
+	}
+	
+	public CuratedTopNode getTopNodeFromArray(String[] strings) {
+		CuratedTopNode node = new CuratedTopNode();
+		node.setCode(strings[0]);
+		node.setName(strings[1]);
+		return node;
 	}
 	
 	
