@@ -80,7 +80,7 @@ class BranchResolutionServiceTest {
 		entity.setLevel("0");
 		entity.setChildren(children);
 
-		service.resolveChildEntityGraph(entity, list);
+		service.resolveChildEntityGraph("noparent", entity, list);
 		assertEquals(7, list.size());
 	}
 	

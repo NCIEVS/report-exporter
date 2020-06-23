@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
+import gov.nih.nci.evs.report.exporter.model.CuratedTopNode;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
@@ -47,7 +48,7 @@ public class BranchResolutionService {
 		List<ChildEntity> entityList = new ArrayList<ChildEntity>();
 		getUnprocessedChildrenForBranchTopNode(codes, max)
 		.stream()
-		.forEach(x -> resolveChildEntityGraph(x, entityList));
+		.forEach(x -> resolveChildEntityGraph(x.getCode() + ":" + x.getName(), x, entityList));
 		return entityList;
 	}
 	
@@ -64,15 +65,16 @@ public class BranchResolutionService {
 	}
 
 	  
-	public void resolveChildEntityGraph(ChildEntity child, List<ChildEntity> list){
+	public void resolveChildEntityGraph(String parent, ChildEntity child, List<ChildEntity> list){
 		  
 		  if(child != null &&!child.isLeaf() && child.getChildren() != null) {
 			  child.getChildren()
 			  .stream()
 			  .forEach(x ->
-			  resolveChildEntityGraph(x, list));}
+			  resolveChildEntityGraph(child.getCode() + ":" + child.getName(), x, list));}
 		 
-		if(!child.isLeaf()){child.setChildren(null);}
+		if(!child.isLeaf()){child.setChildren(null); child.setParent(parent);}
+		child.setParent(parent);
 		list.add(child);
 	 }
 	
@@ -87,12 +89,19 @@ public class BranchResolutionService {
 				.collect(Collectors.toList());
 	}
 	
-	public List<String> getCuratedTopNodeList(){
+	public List<CuratedTopNode> getCuratedTopNodeList(){
 		return Stream.of(
 				curatedTopNodeList
-				.split(","))
+				.split(",")).map(x -> getTopNodeFromArray(x.split(":")))
 				.collect(Collectors
 						.toList());
+	}
+	
+	public CuratedTopNode getTopNodeFromArray(String[] strings) {
+		CuratedTopNode node = new CuratedTopNode();
+		node.setCode(strings[0]);
+		node.setName(strings[1]);
+		return node;
 	}
 	
 	

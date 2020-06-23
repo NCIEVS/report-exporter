@@ -180,7 +180,7 @@ class CSVUtilityTest {
 		grandchild1.setLevel("2");
 		ChildEntity grandchild2 = new ChildEntity();
 		grandchild2.setCode("C00012");
-		grandchild2.setName("grandchild1");
+		grandchild2.setName("grandchild2");
 		grandchild2.setLeaf(true);
 		grandchild2.setLevel("2");
 		ChildEntity grandchild3 = new ChildEntity();
@@ -203,7 +203,7 @@ class CSVUtilityTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-		service.resolveChildEntityGraph(entity, list);
+		service.resolveChildEntityGraph("no parent",entity, list);
 		return list;
 	}
 	
@@ -215,14 +215,14 @@ class CSVUtilityTest {
 	}
 	
 	private String getChildCSVRestEntityOutput() {
-		return "code,name,level,leaf,children" +
-				"\r\nC00011,grandchild1,2,true,null" +
-				"\r\nC00012,grandchild1,2,true,null" +
-				"\r\nC00001,child1,1,false,null" +
-				"\r\nC00002,child2,1,true,null" +
-				"\r\nC00021,grandchild3,2,true,null" +
-				"\r\nC00003,child3,1,false,null" +
-				"\r\nC00000,parent,0,false,null";
+		return "code,name,level,parent,leaf,children" +
+				"\r\nC00011,grandchild1,2,C00001:child1,true,null" +
+				"\r\nC00012,grandchild2,2,C00001:child1,true,null" +
+				"\r\nC00001,child1,1,C00000:parent,false,null" +
+				"\r\nC00002,child2,1,C00000:parent,true,null" +
+				"\r\nC00021,grandchild3,2,C00003:child3,true,null" +
+				"\r\nC00003,child3,1,C00000:parent,false,null" +
+				"\r\nC00000,parent,0,no parent,false,null";
 	}
 
 }

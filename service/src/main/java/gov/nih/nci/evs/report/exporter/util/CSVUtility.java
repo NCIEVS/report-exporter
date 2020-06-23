@@ -41,7 +41,8 @@ public class CSVUtility {
 		list.stream().forEach(x -> oneLine.append(
 				"\r\n" + x.getCode() + 
 				separator + x.getName() + 
-				separator + x.getLevel() + 
+				separator + x.getLevel() +
+				separator + x.getParent() +
 				separator + x.isLeaf() + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getChildren()))));
 	    System.out.println(oneLine.toString());
