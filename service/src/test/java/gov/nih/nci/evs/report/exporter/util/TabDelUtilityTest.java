@@ -172,7 +172,7 @@ class TabDelUtilityTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-		service.resolveChildEntityGraph(entity, list);
+		service.resolveChildEntityGraph("no parent", entity, list);
 		return list;
 	}
 	
@@ -184,14 +184,14 @@ class TabDelUtilityTest {
 	}
 	
 	private String getChildTabDelRestEntityOutput() {
-		return "code\tname\tlevel\tleaf\tchildren" +
-				"\r\nC00011\tgrandchild1\t2\ttrue\tnull" +
-				"\r\nC00012\tgrandchild1\t2\ttrue\tnull" +
-				"\r\nC00001\tchild1\t1\tfalse\tnull" +
-				"\r\nC00002\tchild2\t1\ttrue\tnull" +
-				"\r\nC00021\tgrandchild3\t2\ttrue\tnull" +
-				"\r\nC00003\tchild3\t1\tfalse\tnull" +
-				"\r\nC00000\tparent\t0\tfalse\tnull";
+		return "code\tname\tlevel\tparent\tleaf\tchildren" +
+				"\r\nC00011\tgrandchild1\t2\tC00001:child1\ttrue\tnull" +
+				"\r\nC00012\tgrandchild1\t2\tC00001:child1\ttrue\tnull" +
+				"\r\nC00001\tchild1\t1\tC00000:parent\tfalse\tnull" +
+				"\r\nC00002\tchild2\t1\tC00000:parent\ttrue\tnull" +
+				"\r\nC00021\tgrandchild3\t2\tC00003:child3\ttrue\tnull" +
+				"\r\nC00003\tchild3\t1\tC00000:parent\tfalse\tnull" +
+				"\r\nC00000\tparent\t0\tno parent\tfalse\tnull";
 	}
 
 }
