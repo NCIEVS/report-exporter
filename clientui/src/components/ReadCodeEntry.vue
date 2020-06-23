@@ -99,7 +99,7 @@ export default {
       userSelectedFormat: 'JSON',
       filename: 'readCodes',
       downloadReturnCode: null,
-      baseUrl: 'http://localhost:8080',
+      baseUrl: '',
       userSelectedExtension: '',
       extensionMap:[
         { id: 'JSON', name: 'json' },

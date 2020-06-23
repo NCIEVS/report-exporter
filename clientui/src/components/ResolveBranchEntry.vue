@@ -102,7 +102,7 @@ export default {
       userSelectedFormat: 'JSON',
       filename: 'resolveBranch',
       downloadReturnCode: null,
-      baseUrl: 'http://localhost:8080',
+      baseUrl: '',
       userSelectedExtension: '',
       extensionMap:[
         { id: 'JSON', name: 'json' },
