@@ -19,7 +19,9 @@ public class Definition extends PropertyPrime {
 	}
 		
 	public String toString() {
-		return definition;
+		return (source == null?NOSOURCE:source) + " " +
+				(super.getType()== null?NOTYPE:super.getType()) + ":" + 
+						(definition == null?UNDEFINED:definition);
 	}
 
 }

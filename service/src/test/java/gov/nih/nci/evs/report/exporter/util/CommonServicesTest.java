@@ -25,7 +25,7 @@ class CommonServicesTest {
 		list.add("three");
 		list.add("four");
 		String csvList = CommonServices.getListValues(list);
-		assertEquals("\"[one, two, three, four]\"", csvList);		
+		assertEquals("\"|one|two|three|four|\"", csvList);		
 	}
 	
 	@Test
@@ -36,7 +36,22 @@ class CommonServicesTest {
 		list.add("three");
 		list.add("four");
 		String csvList = CommonServices.getListValues(list);
-		assertEquals("\"[one, two, three, four]\"", csvList);
+		assertEquals("\"|one|two|three|four|\"", csvList);
+		String cleanedList = CommonServices.cleanListOutPut(csvList);
+		assertFalse(cleanedList.contains("["));
+		assertFalse(cleanedList.contains("]"));
+	}
+	
+	@Test
+	void TestGetListValuesWithPipeDelimiter() {
+		List<String> list = new ArrayList<String>();
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		String csvList = CommonServices.getListValuesWithPipeDelimiter(list);
+		System.out.println(csvList);
+		assertEquals("|one|two|three|four", csvList);
 		String cleanedList = CommonServices.cleanListOutPut(csvList);
 		assertFalse(cleanedList.contains("["));
 		assertFalse(cleanedList.contains("]"));
