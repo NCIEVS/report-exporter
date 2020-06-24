@@ -63,7 +63,7 @@ public class ExcelUtility {
 	    				  entity.getSynonyms() != null?
 	    						  entity.getSynonyms().toString():
 	    							  "no synonyms"));
-	      row.createCell(6).setCellValue(
+	      row.createCell(5).setCellValue(
 	    		  CommonServices.cleanListOutPut(
 	    				  entity.getDefinitions() != null?
 	    						  entity.getDefinitions().toString():

@@ -44,24 +44,22 @@ public class BranchResolutionService {
 						.collect(Collectors.toList());
 	}
 	
-	public List<ChildEntity> getAllChildrenForBranchTopNode(List<String> codes, String max){
+	public List<ChildEntity> getAllChildrenForBranchTopNode(String code, String max){
 		List<ChildEntity> entityList = new ArrayList<ChildEntity>();
-		getUnprocessedChildrenForBranchTopNode(codes, max)
+		getUnprocessedChildrenForBranchTopNode(code, max)
 		.stream()
-		.forEach(x -> resolveChildEntityGraph(x.getCode() + ":" + x.getName(), x, entityList));
+		.forEach(x -> resolveChildEntityGraph(code + ":" + "TOPNODE", x, entityList));
 		return entityList;
 	}
 	
-	public List<ChildEntity> getUnprocessedChildrenForBranchTopNode(List<String> codes, String max){
+	public List<ChildEntity> getUnprocessedChildrenForBranchTopNode(String code, String max){
 		return 
-				codes.stream().map(code -> CommonServices.getRestTemplate()
+				Arrays.asList(CommonServices.getRestTemplate()
 				.getForObject(
 				baseURL 
 				+ code 
 				+ descendants + max
-						,ChildEntity[].class))
-							.flatMap(Arrays::stream)
-							.collect(Collectors.toList());
+						,ChildEntity[].class));
 	}
 
 	  
@@ -82,10 +80,10 @@ public class BranchResolutionService {
 	 }
 	
 	public List<RestEntity> getResolvedChildFlatListFromTopNode(
-			String codes, 
+			String code, 
 			String props, 
 			String maximum){
-		return getAllChildrenForBranchTopNode(CommonServices.splitInput(codes), maximum)
+		return getAllChildrenForBranchTopNode(code, maximum)
 				.parallelStream()
 				.map(x -> readService.getEntityForPropertyNameFilter(
 				  readService.getRestEntityWithParent(x.getCode(), x.getParent()), 
