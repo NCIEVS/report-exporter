@@ -31,6 +31,15 @@ public class CodeReadService {
 		return propMeta;
 	}
 	
+	public RestEntity getRestEntityWithParent(String code, String parent){
+		RestEntity entity = CommonServices.getRestTemplate()
+				.getForObject(
+				baseURL + code + summary
+						, RestEntity.class);
+			entity.setParent(parent);
+		return entity;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
@@ -44,6 +53,19 @@ public class CodeReadService {
 						(List<Synonym>)filterProperties(entity.getSynonyms(), propList));
 				});
 		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public RestEntity getEntityForPropertyNameFilter(RestEntity entity, List<String> propList){
+				
+					entity.setProperties(
+						(List<Property>)filterProperties(entity.getProperties(), propList));
+					entity.setDefinitions(
+						(List<Definition>)filterProperties(entity.getDefinitions(), propList));
+					entity.setSynonyms(
+						(List<Synonym>)filterProperties(entity.getSynonyms(), propList));
+				
+		return entity;
 	}
 	
 	public List<? extends PropertyPrime> filterProperties(List<? extends PropertyPrime> propList, List<String> list){

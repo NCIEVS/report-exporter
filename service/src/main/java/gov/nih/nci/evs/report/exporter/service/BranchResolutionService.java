@@ -73,20 +73,23 @@ public class BranchResolutionService {
 			  .forEach(x ->
 			  resolveChildEntityGraph(child.getCode() + ":" + child.getName(), x, list));}
 		 
-		if(!child.isLeaf()){child.setChildren(null); child.setParent(parent);}
-		child.setParent(parent);
+		if(!child.isLeaf()){child.setChildren(null);}
+		if(CommonServices.isChildParent(parent,child.getCode())) {
+			child.setParent("TOP_NODE");
+		}
+		else{child.setParent(parent);}
 		list.add(child);
 	 }
 	
-	public List<RestEntity> getResolvedChildFlatListFromTopNode(String codes, String props, String maximum){
+	public List<RestEntity> getResolvedChildFlatListFromTopNode(
+			String codes, 
+			String props, 
+			String maximum){
 		return getAllChildrenForBranchTopNode(CommonServices.splitInput(codes), maximum)
 				.parallelStream()
-				.map(x -> readService.getEntitiesForPropertyNameFilter(
-				  readService.getRestEntities(
-						  CommonServices.getCodesListForCode(x.getCode())), 
-						  CommonServices.splitInput(props)))
-				.flatMap(List::stream)
-				.collect(Collectors.toList());
+				.map(x -> readService.getEntityForPropertyNameFilter(
+				  readService.getRestEntityWithParent(x.getCode(), x.getParent()), 
+						  CommonServices.splitInput(props))).collect(Collectors.toList());
 	}
 	
 	public List<CuratedTopNode> getCuratedTopNodeList(){

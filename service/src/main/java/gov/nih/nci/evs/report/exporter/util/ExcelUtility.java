@@ -43,9 +43,9 @@ public class ExcelUtility {
 	    Row headerRow = sheet.createRow(0);
 	 
 	    // Header
-	    for (int col = 0; col < cols.size(); col++) {
+	    for (int col = 0; col < fields.length; col++) {
 	      Cell cell = headerRow.createCell(col);
-	      cell.setCellValue(cols.get(col));
+	      cell.setCellValue(fields[col].getName());
 	      cell.setCellStyle(headerCellStyle);
 	    }
 	 
@@ -57,17 +57,18 @@ public class ExcelUtility {
 	      row.createCell(0).setCellValue(entity.getCode());
 	      row.createCell(1).setCellValue(entity.getName());
 	      row.createCell(2).setCellValue(entity.getTerminology());
-	      row.createCell(3).setCellValue(
+	      row.createCell(3).setCellValue(entity.getParent());
+	      row.createCell(4).setCellValue(
 	    		  CommonServices.cleanListOutPut(
 	    				  entity.getSynonyms() != null?
 	    						  entity.getSynonyms().toString():
 	    							  "no synonyms"));
-	      row.createCell(4).setCellValue(
+	      row.createCell(6).setCellValue(
 	    		  CommonServices.cleanListOutPut(
 	    				  entity.getDefinitions() != null?
 	    						  entity.getDefinitions().toString():
 	    							  "no definitions"));
-	      row.createCell(5).setCellValue(
+	      row.createCell(6).setCellValue(
 	    		  CommonServices.cleanListOutPut(
 	    				  entity.getProperties() != null?
 	    						  entity.getProperties().toString():

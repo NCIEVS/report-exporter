@@ -65,5 +65,11 @@ public class CommonServices {
 		  list.add(code);
 		  return list;
 	  }
+	  
+	  public static boolean isChildParent(String parent, String code) {
+		  if(parent == null || parent.equals("TOPNODE")) return false;
+		  String parentCode = parent.substring(0, parent.indexOf(':'));
+		  return parentCode.equals(code);
+	 }
 
 }

@@ -23,6 +23,7 @@ public class TabDelUtility {
 				"\r\n" + x.getCode() + 
 				separator + x.getName() + 
 				separator + x.getTerminology() + 
+				separator + x.getParent() +
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getProperties()))));
