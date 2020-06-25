@@ -27,10 +27,10 @@ class TabDelUtilityTest {
 		util = new TabDelUtility();
 	}
 
-//	@Test
-//	void testProduceCSVOutputFromListWithHeading() {
-//		assertEquals(this.getTabDelRestEntityOutput(), util.produceTabDelOutputFromListWithHeading(getRestEntityList()));
-//	}
+	@Test
+	void testProduceCSVOutputFromListWithHeading() {
+		assertEquals(this.getTabDelRestEntityOutput(), util.produceTabDelOutputFromListWithHeading(getRestEntityList()));
+	}
 	
 	private List<RestEntity> getRestEntityList() {
 		List<RestEntity> list = new ArrayList<RestEntity>();
@@ -113,10 +113,10 @@ class TabDelUtilityTest {
 		return list;
 	}
 
-//	@Test
-//	void testProduceChildTabDelOutputFromListWithHeading() {
-//		assertEquals(getChildTabDelRestEntityOutput(), util.produceChildTabDelOutputFromListWithHeading(getChildEntityList()));
-//	}
+	@Test
+	void testProduceChildTabDelOutputFromListWithHeading() {
+		assertEquals(getChildTabDelRestEntityOutput(), util.produceChildTabDelOutputFromListWithHeading(getChildEntityList()));
+	}
 	
 	private List<ChildEntity> getChildEntityList() {
 		ChildEntity entity = new ChildEntity();
@@ -172,15 +172,15 @@ class TabDelUtilityTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-		service.resolveChildEntityGraph("no parent", entity, list);
+		service.resolveChildEntityGraph("TOPNODE", entity, list);
 		return list;
 	}
 	
 	private String getTabDelRestEntityOutput() {
-		return "code\tname\tterminology\tsynonyms\tdefinitions\tproperties" +
-				"\r\nC123234\tMyent\tncit\t\"|NCIt synType:synName|NOSOURCE synType2:synName2|\"\t\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\"\t\"|PropType:propvalue|PropType2:propvalue2|\"" +
-				"\r\nC000000\t0ent\tncit\tnull\tnull\t\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
-				"\r\nC999999\tMy9\tncit\tnull\tnull\t\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";	    
+		return "code\tname\tterminology\tparent\tsynonyms\tdefinitions\tproperties" +
+				"\r\nC123234\tMyent\tncit\tnull\t\"|NCIt synType:synName|NOSOURCE synType2:synName2|\"\t\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\"\t\"|PropType:propvalue|PropType2:propvalue2|\"" +
+				"\r\nC000000\t0ent\tncit\tnull\tnull\tnull\t\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
+				"\r\nC999999\tMy9\tncit\tnull\tnull\tnull\t\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";	    
 	}
 	
 	private String getChildTabDelRestEntityOutput() {
@@ -191,7 +191,7 @@ class TabDelUtilityTest {
 				"\r\nC00002\tchild2\t1\tC00000:parent\ttrue\tnull" +
 				"\r\nC00021\tgrandchild3\t2\tC00003:child3\ttrue\tnull" +
 				"\r\nC00003\tchild3\t1\tC00000:parent\tfalse\tnull" +
-				"\r\nC00000\tparent\t0\tno parent\tfalse\tnull";
+				"\r\nC00000\tparent\t0\tTOPNODE\tfalse\tnull";
 	}
 
 }
