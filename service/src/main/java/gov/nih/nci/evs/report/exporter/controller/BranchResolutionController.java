@@ -27,31 +27,31 @@ public class BranchResolutionController {
 	CodeReadService readService;
 	
 
-	  @GetMapping("/resolve-children-for-codes/{ids}")
-	  public List<ChildEntity> resolveChildrenFromCodes(@PathVariable String ids) {
+	  @GetMapping("/resolve-children-for-codes/{code}")
+	  public List<ChildEntity> resolveChildrenFromCodes(@PathVariable String code) {
 			return service.getChildrenForBranchTopNode(
-					CommonServices.splitInput(ids));
+					CommonServices.splitInput(code));
 	  }
 	  
-	  @GetMapping("/resolve-flat-branch-for-codes/{ids}/{maximum}")
-	  public List<ChildEntity> resolveTreeToListFromCodes(@PathVariable String ids, @PathVariable String maximum ) {
+	  @GetMapping("/resolve-flat-branch-for-codes/{code}/{maximum}")
+	  public List<ChildEntity> resolveTreeToListFromCodes(@PathVariable String code, @PathVariable String maximum ) {
 			return service.getAllChildrenForBranchTopNode(
-					CommonServices.splitInput(ids), maximum);
+					code, maximum);
 	  }
 	  
-	  @GetMapping("/resolve-branch-for-codes/{ids}/{maximum}")
-	  public List<ChildEntity> resolveTreeFromCodes(@PathVariable String ids, @PathVariable String maximum ) {
+	  @GetMapping("/resolve-branch-for-codes/{code}/{maximum}")
+	  public List<ChildEntity> resolveTreeFromCodes(@PathVariable String code, @PathVariable String maximum ) {
 			return service.getUnprocessedChildrenForBranchTopNode(
-					CommonServices.splitInput(ids), maximum);
+					code, maximum);
 	  }
 	  
-	  @GetMapping("/resolve-flat-branch-for-codes-full/{ids}/{props}/{maximum}")
+	  @GetMapping("/resolve-flat-branch-for-codes-full/{code}/{props}/{maximum}")
 	  public List<RestEntity> resolveFullEntityListFromCodes(
-			  @PathVariable String ids,
+			  @PathVariable String code,
 			  @PathVariable String props, 
 			  @PathVariable String maximum )
 	  {
-		 return service.getAllChildrenForBranchTopNode(CommonServices.splitInput(ids), maximum)
+		 return service.getAllChildrenForBranchTopNode(code, maximum)
 		  .stream()
 		  .map(x -> readService.getEntitiesForPropertyNameFilter(
 				  readService.getRestEntities(

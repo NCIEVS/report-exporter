@@ -23,34 +23,30 @@ public class FormattedBranchOutPutService {
 	CodeReadService readService;
 
 	
-	public InputStream getJsonBytesForRestChildParams(String codes, String max) {
+	public InputStream getJsonBytesForRestChildParams(String code, String max) {
 		return new ByteArrayInputStream(
 				CommonServices.getGsonForPrettyPrint().toJson(
 								service.getAllChildrenForBranchTopNode(
-									CommonServices.splitInput(codes), 
-								max)).getBytes());
+									code, max)).getBytes());
 	}
 	
-	public InputStream getChildCSVBytesForRestParams(String codes, String max) {
+	public InputStream getChildCSVBytesForRestParams(String code, String max) {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceChildCSVOutputFromListWithHeading(service.getAllChildrenForBranchTopNode(
-										CommonServices.splitInput(codes), 
-										max)).getBytes());
+										code, max)).getBytes());
 	}
 	
-	public InputStream getChildTabDelBytesForRestParams(String codes, String max) {
+	public InputStream getChildTabDelBytesForRestParams(String code, String max) {
 		return new ByteArrayInputStream(new TabDelUtility()
 				.produceChildTabDelOutputFromListWithHeading(service.getAllChildrenForBranchTopNode(
-						CommonServices.splitInput(codes), 
-					max)).getBytes());
+						code, max)).getBytes());
 	}
 	
-	public ByteArrayInputStream getChildXSLBytesForRestParams(String codes, String max) {
+	public ByteArrayInputStream getChildXSLBytesForRestParams(String code, String max) {
 		try {
 			return new ByteArrayInputStream(new ExcelUtility()
 					.produceChildExcelOutputFromListWithHeading(service.getAllChildrenForBranchTopNode(
-							CommonServices.splitInput(codes), 
-						max)).toByteArray());
+							code, max)).toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);
 		}

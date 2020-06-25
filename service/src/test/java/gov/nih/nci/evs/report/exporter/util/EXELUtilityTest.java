@@ -174,7 +174,7 @@ class EXELUtilityTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-		service.resolveChildEntityGraph("no parent", entity, list);
+		service.resolveChildEntityGraph(CommonServices.TOP_NODE, entity, list);
 		return list;
 	}
 	

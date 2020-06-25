@@ -44,24 +44,22 @@ public class BranchResolutionService {
 						.collect(Collectors.toList());
 	}
 	
-	public List<ChildEntity> getAllChildrenForBranchTopNode(List<String> codes, String max){
+	public List<ChildEntity> getAllChildrenForBranchTopNode(String code, String max){
 		List<ChildEntity> entityList = new ArrayList<ChildEntity>();
-		getUnprocessedChildrenForBranchTopNode(codes, max)
+		getUnprocessedChildrenForBranchTopNode(code, max)
 		.stream()
-		.forEach(x -> resolveChildEntityGraph(x.getCode() + ":" + x.getName(), x, entityList));
+		.forEach(x -> resolveChildEntityGraph(code + ":" + CommonServices.TOP_NODE, x, entityList));
 		return entityList;
 	}
 	
-	public List<ChildEntity> getUnprocessedChildrenForBranchTopNode(List<String> codes, String max){
+	public List<ChildEntity> getUnprocessedChildrenForBranchTopNode(String code, String max){
 		return 
-				codes.stream().map(code -> CommonServices.getRestTemplate()
+				Arrays.asList(CommonServices.getRestTemplate()
 				.getForObject(
 				baseURL 
 				+ code 
 				+ descendants + max
-						,ChildEntity[].class))
-							.flatMap(Arrays::stream)
-							.collect(Collectors.toList());
+						,ChildEntity[].class));
 	}
 
 	  
@@ -73,20 +71,23 @@ public class BranchResolutionService {
 			  .forEach(x ->
 			  resolveChildEntityGraph(child.getCode() + ":" + child.getName(), x, list));}
 		 
-		if(!child.isLeaf()){child.setChildren(null); child.setParent(parent);}
-		child.setParent(parent);
+		if(!child.isLeaf()){child.setChildren(null);}
+		if(CommonServices.isChildParent(parent,child.getCode())) {
+			child.setParent(CommonServices.TOP_NODE);
+		}
+		else{child.setParent(parent);}
 		list.add(child);
 	 }
 	
-	public List<RestEntity> getResolvedChildFlatListFromTopNode(String codes, String props, String maximum){
-		return getAllChildrenForBranchTopNode(CommonServices.splitInput(codes), maximum)
+	public List<RestEntity> getResolvedChildFlatListFromTopNode(
+			String code, 
+			String props, 
+			String maximum){
+		return getAllChildrenForBranchTopNode(code, maximum)
 				.parallelStream()
-				.map(x -> readService.getEntitiesForPropertyNameFilter(
-				  readService.getRestEntities(
-						  CommonServices.getCodesListForCode(x.getCode())), 
-						  CommonServices.splitInput(props)))
-				.flatMap(List::stream)
-				.collect(Collectors.toList());
+				.map(x -> readService.getEntityForPropertyNameFilter(
+				  readService.getRestEntityWithParent(x.getCode(), x.getParent()), 
+						  CommonServices.splitInput(props))).collect(Collectors.toList());
 	}
 	
 	public List<CuratedTopNode> getCuratedTopNodeList(){

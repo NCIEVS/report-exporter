@@ -203,15 +203,15 @@ class CSVUtilityTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-		service.resolveChildEntityGraph("no parent",entity, list);
+		service.resolveChildEntityGraph(CommonServices.TOP_NODE,entity, list);
 		return list;
 	}
 	
 	private String getCSVRestEntityOutput() {
-		return "code,name,terminology,synonyms,definitions,properties" +
-				"\r\nC123234,Myent,ncit,\"|NCIt synType:synName|NOSOURCE synType2:synName2|\",\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\",\"|PropType:propvalue|PropType2:propvalue2|\"" +
-				"\r\nC000000,0ent,ncit,null,null,\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
-				"\r\nC999999,My9,ncit,null,null,\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";	    
+		return "code,name,terminology,parent,synonyms,definitions,properties" +
+				"\r\nC123234,Myent,ncit,null,\"|NCIt synType:synName|NOSOURCE synType2:synName2|\",\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\",\"|PropType:propvalue|PropType2:propvalue2|\"" +
+				"\r\nC000000,0ent,ncit,null,null,null,\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
+				"\r\nC999999,My9,ncit,null,null,null,\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";	    
 	}
 	
 	private String getChildCSVRestEntityOutput() {
@@ -222,7 +222,7 @@ class CSVUtilityTest {
 				"\r\nC00002,child2,1,C00000:parent,true,null" +
 				"\r\nC00021,grandchild3,2,C00003:child3,true,null" +
 				"\r\nC00003,child3,1,C00000:parent,false,null" +
-				"\r\nC00000,parent,0,no parent,false,null";
+				"\r\nC00000,parent,0," + CommonServices.TOP_NODE + ",false,null";
 	}
 
 }

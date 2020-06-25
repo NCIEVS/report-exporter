@@ -13,6 +13,8 @@ public class RestEntity {
 	
 	private String terminology;
 	
+	private String parent;
+	
 	private List<Synonym> synonyms;
 	
 	private List<Definition> definitions;
@@ -28,7 +30,7 @@ public class RestEntity {
 	}
 
 	public String getName() {
-		return name;
+		return name.replaceAll(",", " ");
 	}
 
 	public void setName(String name) {
@@ -41,6 +43,14 @@ public class RestEntity {
 
 	public void setTerminology(String terminolgy) {
 		this.terminology = terminolgy;
+	}
+
+	public String getParent() {
+		return parent;
+	}
+
+	public void setParent(String parent) {
+		this.parent = parent;
 	}
 
 	public List<Synonym> getSynonyms() {
