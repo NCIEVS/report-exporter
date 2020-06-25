@@ -55,6 +55,9 @@
 <style scoped>
 
 .evs-header {
+  position:sticky;
+  top: 0;
+  width: 100%;
   color:#fff;
   background-color: #1c5e86;
   height: 30px; 

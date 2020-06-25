@@ -46,7 +46,9 @@
 
 
 .evs-subheader {
-  position: fixed;
+  
+  position:sticky;
+  top: 0;
   width: 100%;
   color:#fff;
   background-color: #017ebe;
