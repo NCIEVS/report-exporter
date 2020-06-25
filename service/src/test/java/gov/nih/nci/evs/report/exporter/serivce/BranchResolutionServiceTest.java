@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @SpringBootTest
 class BranchResolutionServiceTest {
@@ -80,7 +81,7 @@ class BranchResolutionServiceTest {
 		entity.setLevel("0");
 		entity.setChildren(children);
 
-		service.resolveChildEntityGraph("TOPNODE", entity, list);
+		service.resolveChildEntityGraph(CommonServices.TOP_NODE, entity, list);
 		assertEquals(7, list.size());
 	}
 	

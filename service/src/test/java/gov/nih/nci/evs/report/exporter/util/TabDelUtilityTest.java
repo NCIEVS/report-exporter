@@ -172,7 +172,7 @@ class TabDelUtilityTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-		service.resolveChildEntityGraph("TOPNODE", entity, list);
+		service.resolveChildEntityGraph(CommonServices.TOP_NODE, entity, list);
 		return list;
 	}
 	
@@ -191,7 +191,7 @@ class TabDelUtilityTest {
 				"\r\nC00002\tchild2\t1\tC00000:parent\ttrue\tnull" +
 				"\r\nC00021\tgrandchild3\t2\tC00003:child3\ttrue\tnull" +
 				"\r\nC00003\tchild3\t1\tC00000:parent\tfalse\tnull" +
-				"\r\nC00000\tparent\t0\tTOPNODE\tfalse\tnull";
+				"\r\nC00000\tparent\t0\t" + CommonServices.TOP_NODE + "\tfalse\tnull";
 	}
 
 }

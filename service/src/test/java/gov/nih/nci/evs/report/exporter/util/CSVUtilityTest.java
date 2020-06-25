@@ -203,7 +203,7 @@ class CSVUtilityTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-		service.resolveChildEntityGraph("TOPNODE",entity, list);
+		service.resolveChildEntityGraph(CommonServices.TOP_NODE,entity, list);
 		return list;
 	}
 	
@@ -222,7 +222,7 @@ class CSVUtilityTest {
 				"\r\nC00002,child2,1,C00000:parent,true,null" +
 				"\r\nC00021,grandchild3,2,C00003:child3,true,null" +
 				"\r\nC00003,child3,1,C00000:parent,false,null" +
-				"\r\nC00000,parent,0,TOPNODE,false,null";
+				"\r\nC00000,parent,0," + CommonServices.TOP_NODE + ",false,null";
 	}
 
 }

@@ -16,6 +16,8 @@ import com.google.gson.GsonBuilder;
 
 public class CommonServices {
 	
+	public static final String TOP_NODE = "TOP_NODE";
+	
 	public static <T> String getListValues(List<T> list) {
 		return list != null?"\"" + getListValuesWithPipeDelimiter(list) + "|\"": null;
 	}
@@ -67,7 +69,7 @@ public class CommonServices {
 	  }
 	  
 	  public static boolean isChildParent(String parent, String code) {
-		  if(parent == null || parent.equals("TOPNODE")) return false;
+		  if(parent == null || parent.equals(CommonServices.TOP_NODE)) return false;
 		  String parentCode = parent.substring(0, parent.indexOf(':'));
 		  return parentCode.equals(code);
 	 }
