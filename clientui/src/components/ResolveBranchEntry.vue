@@ -1,6 +1,5 @@
 <template>
   <div id="resolve-branch-entry">
-    Resolve Branch Entry 
 
     <div class="container px-lg-5">
 

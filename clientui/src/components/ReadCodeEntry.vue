@@ -9,7 +9,7 @@
         </div>
         <div class="col">
             <tags-input element-id="tags"
-              v-model="selectedTags"
+              v-model="selectedTags" placeholder="Type entity code, then space"
               
               :add-tags-on-comma="true"
               :add-tags-on-space="true"
@@ -105,7 +105,7 @@ export default {
         { id: 'JSON', name: 'json' },
         { id: 'CSV', name: 'csv' },
         { id: 'TABD', name: 'txt' },
-        { id: 'EXCEL', name: 'xslx' }
+        { id: 'EXCEL', name: 'xlsx' }
       ]
     }
   },
@@ -158,9 +158,10 @@ export default {
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.baseUrl + '/download/get-file-for-props/'  + 
+                url: this.baseUrl + '/download/get-file-for-readCodes/'  + 
                     this.userEnteredCodes + '/' + 
                     this.userSelectedProperyNames + '/' + 
+                    this.userSelectedFormat + '/'+
                     this.filename + '.' + 
                     this.userSelectedFormat + '.' + this.userSelectedExtension,
                 method: 'GET',

@@ -41,10 +41,9 @@ export default {
 <style scoped>
 
 .footer {
-	position: fixed;
+	position: sticky;
 	bottom: 0;
 	width: 100%;
-	height: 60px;
 	border:1px solid #1c5e86;
 	color:#fff;
 	background:#1c5e86;
