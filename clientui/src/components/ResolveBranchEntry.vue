@@ -3,70 +3,62 @@
     Resolve Branch Entry 
 
     <div class="container px-lg-5">
+
       <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-5">
          <div class="col py-3 px-lg-5"> </div>
         <div class="col">
-          <h5> NCI Thesaurus Top Node Codes</h5>
+
+          <!--div v-if="this.getPropertyError" class="bs-example"> 
+              <div id="myAlert" class="alert alert-info alert-dismissible fade show">
+                  <strong>Note!</strong> This is a simple example of dismissible alert.
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </div>
+          </div-->
+
+          <h5> Select one NCI Thesaurus top node code or enter your own</h5>
         </div>
         <div class="col">
             <tags-input element-id="tags"
               v-model="selectedTags"
-              
+              :existing-tags=this.curratedTopNodesUI
+              :typeahead="true"
+              :typeahead-always-show="false"
+              :typeahead-hide-discard="true"
               :add-tags-on-comma="true"
               :add-tags-on-space="true"
-              :typeahead="false"></tags-input>
+              :limit=1
+              :typeahead-activation-threshold=0
+              :hide-input-on-limit="true"
+              :case-sensitive-tags="true"
+              placeholder="Add Top Node"
+              typeahead-style="dropdown"
+              @tag-added="value =>onTagAdded(value)"
+              ></tags-input>
         </div>
-        <div class="col py-5">
-            <button class="btn btn-primary" :disabled='!(Object.keys(this.selectedTags).length>0)' v-on:click="getEntities">Search</button>
-        </div>
-      </div>
-
-      <div v-if="this.entityList.length"  class="row row-cols-1 row justify-content-start row mx-lg-n5 py-1">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Code</th>
-              <th scope="col">Preferred Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="code in entityList" v-bind:key="code.code">
-              <td>{{code.code}}</td>
-              <td>{{code.name}}</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
 
       <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-1">
         <h3> Select Property to Output </h3>
-
           <v-multiselect-listbox v-model="selectedProperties" :options="this.availableProperties"
-                       :reduce-display-property="(option) => option.name"
-                       :reduce-value-property="(option) => option.code"
-                       search-input-class="custom-input-class"
-                       search-options-placeholder="Search properties"
-                       selected-options-placeholder="Search selected properties">
-        </v-multiselect-listbox>
-
+              :reduce-display-property="(option) => option.name"
+              :reduce-value-property="(option) => option.code"
+              search-input-class="custom-input-class"
+              search-options-placeholder="Search properties"
+              selected-options-placeholder="Search selected properties">
+          </v-multiselect-listbox>
         <div>
-          <h3> Select Format for Output </h3>
+          <h3>Select Format for Output</h3>
           <v-select
             :options="this.availableFormats" @input="value =>updateFormat(value)">
           </v-select>
         </div>
-
       </div>
-
-
-
       <div class="row mx-lg-n5 py-1 ">
           <button class="btn btn-primary" 
             :disabled='!(Object.keys(this.selectedTags).length>0 && Object.keys(this.selectedProperties).length>0 && this.userSelectedExtension.length > 0)' 
             v-on:click="downloadFile">Download</button>
       </div>
     </div>
- 
   </div>
 </template>
 
@@ -100,8 +92,11 @@ export default {
       userSelectedProperyNames: [],
       availableFormats: [],
       userSelectedFormat: 'JSON',
+      curratedTopNodes: [],
+      userSelectedTopNode: '',
       filename: 'resolveBranch',
       downloadReturnCode: null,
+      //baseUrl: 'http://localhost:8080',
       baseUrl: '',
       userSelectedExtension: '',
       extensionMap:[
@@ -109,17 +104,40 @@ export default {
         { id: 'CSV', name: 'csv' },
         { id: 'TABD', name: 'txt' },
         { id: 'EXCEL', name: 'xslx' }
-      ]
+      ],
+      curratedTopNodesUI:[],
+      getPropertyError: false
     }
   },
   
   methods: {
+      setCurratedTags() {
+        this.curratedTopNodesUI = []
+        //console.log ("length: " + Object.keys(this.curratedTopNodes).length);
+
+        // loop through the curratedTopNodes and create another object array
+        // in the form the the tags input widget requires:
+        // [{ key: 'someKey', value: 'someValue' }];
+        for (let i = 0; i < Object.keys(this.curratedTopNodes).length; i++) {
+          //console.log ("key " + this.curratedTopNodes[i].code + "  value " + this.curratedTopNodes[i].name)
+          this.curratedTopNodesUI.push({"key":this.curratedTopNodes[i].code, "value":this.curratedTopNodes[i].code + ":" +this.curratedTopNodes[i].name})
+        }
+      },
+
+      onTagAdded(newCode) {
+        console.log("Added tag: " + newCode)
+        // When a top node is entered/selected, verify it.
+        this.getEntities();
+      },
+        
       setSelectedTags() {
         // clear the internal user codes that are entered
         this.userEnteredCodes = []
           
         for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-          this.userEnteredCodes.push(this.selectedTags[i].value)
+          // currated top nodes (from the server hava a value of "C12434:Blood")
+          // so we need to strip off everything from the : to the right.
+          this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
         }
       },
 
@@ -131,7 +149,7 @@ export default {
         }
       },
 
-      updateFormat( format) {
+      updateFormat(format) {
         this.userSelectedFormat = ''
         this.userSelectedFormat = format;
 
@@ -142,7 +160,23 @@ export default {
             break;
           }
         }
+      },
 
+      // Update the top node that was entered with the description.
+      // User enters "C12434", the updated value displayed will be "C12434:Blood".
+      // If entered value is not valid, remove it and display an error message.
+      updateSelectedTopNodeDescription(topNode){
+        this.selectedTags[0].key = topNode[0].code;
+        this.selectedTags[0].value = topNode[0].code + ":" + topNode[0].name;
+
+        console.log ("Updating top node: " + topNode[0].code + "  " + topNode[0].name)
+        for (let i = 0; i < Object.keys(this.curratedTopNodesUI).length; i++) {
+          console.log ("key " + this.curratedTopNodesUI[i].key + "  value " + this.curratedTopNodesUI[i].value)
+        }
+      },
+
+      updateCurratedTopNodes (topNode) {
+        this.userSelectedTopNode = topNode;
       },
 
       getEntities(){
@@ -150,13 +184,24 @@ export default {
         this.entityList = []
         this.setSelectedTags()
 
+        //console.log(this.selectedTags[0].key +" --- " + this.selectedTags[0].value)
         api.getCodes(this.baseUrl, this.userEnteredCodes)
-          .then((data)=>{this.entityList = data;
-        })
+          .then((data)=>{
+
+            if (data != null) {
+              this.entityList = data;
+              this.updateSelectedTopNodeDescription(data);
+            }
+            else {
+              console.log("Error retrieving top node code");
+              alert("Invalid Top Node");
+              this.selectedTags = [];
+              this.getPropertyError=true;
+            }
+          })
       },
 
       downloadFile() {
-
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
@@ -176,11 +221,9 @@ export default {
                   fileLink.href = fileURL;
                   fileLink.setAttribute('download', this.filename + '.' + this.userSelectedExtension);
                   document.body.appendChild(fileLink);
-
                   fileLink.click();
             });
           }
-
     },
     created() {
       // load properties after the page is loaded.
@@ -188,8 +231,17 @@ export default {
           .then((data)=>{this.availableProperties = data;
         })
 
-     api.getFormats(this.baseUrl)
+      // load the download formats.
+      api.getFormats(this.baseUrl)
           .then((data)=>{this.availableFormats = data;
+       })
+
+      // get the currated tags from the server,
+      // then set the input field with these
+      api.getCuratedTopNodes(this.baseUrl)
+          .then((data)=>{
+            this.curratedTopNodes = data;
+            this.setCurratedTags();
        })
     }
   }
@@ -197,12 +249,20 @@ export default {
 
 <!-- styling for the component -->
 <style>
-/* #resolve-branch-entry {
+ /*resolve-branch-entry {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+
+  
 } */
+/* Typeahead elements style/theme 
+   override the defaults.        */
+.tags-input-typeahead-item-default {
+    color: black;
+    background-color: whitesmoke;
+}
 </style>
