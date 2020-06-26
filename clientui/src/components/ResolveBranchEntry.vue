@@ -8,12 +8,12 @@
          <div class="col py-3 px-lg-5"> </div>
         <div class="col">
 
-          <div v-if="this.getPropertyError" class="bs-example"> 
+          <!--div v-if="this.getPropertyError" class="bs-example"> 
               <div id="myAlert" class="alert alert-info alert-dismissible fade show">
                   <strong>Note!</strong> This is a simple example of dismissible alert.
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
               </div>
-          </div>
+          </div-->
 
           <h5> Select one NCI Thesaurus top node code or enter your own</h5>
         </div>
@@ -21,10 +21,11 @@
             <tags-input element-id="tags"
               v-model="selectedTags"
               :existing-tags=this.curratedTopNodesUI
-              :typeahead='true'
-              :typeahead-always-show='false'
-              :add-tags-on-comma='true'
-              :add-tags-on-space='true'
+              :typeahead="true"
+              :typeahead-always-show="false"
+              :typeahead-hide-discard="true"
+              :add-tags-on-comma="true"
+              :add-tags-on-space="true"
               :limit=1
               :typeahead-activation-threshold=0
               :hide-input-on-limit="true"
@@ -248,12 +249,20 @@ export default {
 
 <!-- styling for the component -->
 <style>
-/* #resolve-branch-entry {
+ /*resolve-branch-entry {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+
+  
 } */
+/* Typeahead elements style/theme 
+   override the defaults.        */
+.tags-input-typeahead-item-default {
+    color: black;
+    background-color: whitesmoke;
+}
 </style>
