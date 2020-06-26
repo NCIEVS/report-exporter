@@ -122,7 +122,7 @@ export default {
         { id: 0, name: '1 Level' },
         { id: 1, name: '2 Levels' },
         { id: 2, name: '3 Levels' },
-        { id: 3, name: '5 Levels' },
+        { id: 3, name: '4 Levels' },
         { id: 4, name: '5 Levels' },
         { id: 5, name: '6 Levels' },
         { id: 6, name: '7 Levels' },
@@ -170,11 +170,6 @@ export default {
         for (let i = 0; i < Object.keys(this.selectedProperties).length; i++) {
           this.userSelectedProperyNames.push(this.selectedProperties[i].name)
         }
-      },
-
-      getLevelSelection(level) {
-        console.log ("getLevelSelection: " + level)
-
       },
 
       updateFormat(format) {
