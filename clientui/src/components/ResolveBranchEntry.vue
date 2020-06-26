@@ -106,8 +106,8 @@ export default {
       userSelectedTopNode: '',
       filename: 'resolveBranch',
       downloadReturnCode: null,
-      baseUrl: 'http://localhost:8080',
-      //baseUrl: '',
+      //baseUrl: 'http://localhost:8080',
+      baseUrl: '',
       userSelectedExtension: '',
       extensionMap:[
         { id: 'JSON', name: 'json' },
