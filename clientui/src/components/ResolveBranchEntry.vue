@@ -37,6 +37,17 @@
       </div>
 
       <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-1">
+        <div class="col">
+            <h5> Select how many levels to retrieve</h5>
+        </div>
+        <div class="col">
+          <select v-model="selectedLevel" id="levelSelection" class="form-control">
+            <option v-for="level in levels" :value="level.id" :key="level.name">{{ level.name }}</option>
+          </select>
+        </div>
+      </div>
+ 
+      <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-1">
         <h3> Select Property to Output </h3>
           <v-multiselect-listbox v-model="selectedProperties" :options="this.availableProperties"
               :reduce-display-property="(option) => option.name"
@@ -102,10 +113,23 @@ export default {
         { id: 'JSON', name: 'json' },
         { id: 'CSV', name: 'csv' },
         { id: 'TABD', name: 'txt' },
-        { id: 'EXCEL', name: 'xslx' }
+        { id: 'EXCEL', name: 'xlsx' }
       ],
       curratedTopNodesUI:[],
-      getPropertyError: false
+      getPropertyError: false,
+      selectedLevel: 0,
+      levels:[
+        { id: 0, name: '1 Level' },
+        { id: 1, name: '2 Levels' },
+        { id: 2, name: '3 Levels' },
+        { id: 3, name: '4 Levels' },
+        { id: 4, name: '5 Levels' },
+        { id: 5, name: '6 Levels' },
+        { id: 6, name: '7 Levels' },
+        { id: 7, name: '8 Levels' },
+        { id: 8, name: '9 Levels' },
+        { id: 9, name: '10 Levels' },
+      ],
     }
   },
   
@@ -208,7 +232,8 @@ export default {
           axios({
                 url: this.baseUrl + '/download/get-file-for-resolved-branch/'  + 
                     this.userEnteredCodes + '/' + 
-                    this.userSelectedProperyNames + '/0/' + 
+                    this.userSelectedProperyNames + '/' + 
+                    this.selectedLevel + '/' + 
                     this.userSelectedFormat + '/' + 
                     this.filename + '.' + this.userSelectedExtension,
                 method: 'GET',
