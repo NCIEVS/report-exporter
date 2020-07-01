@@ -60,6 +60,7 @@ class CSVUtilityTest {
 
 	@Test
 	void testProduceCSVOutputFromListWithHeading() {
+		System.out.println(util.produceCSVOutputFromListWithHeading(getRestEntityList()));
 		assertEquals(this.getCSVRestEntityOutput(), util.produceCSVOutputFromListWithHeading(getRestEntityList()));
 	}
 	

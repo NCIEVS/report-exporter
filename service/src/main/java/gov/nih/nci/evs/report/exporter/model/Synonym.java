@@ -43,7 +43,9 @@ public class Synonym extends PropertyPrime {
     
     public String toString() {
     	return  (source == null?NOSOURCE:source) + " " 
-    			+ (super.getType()==null?NOTYPE:super.getType()) 
-    					+ ":" + (name == null?UNDEFINED:name);
+    			+ (subSource == null?"":subSource) + " "
+    				+ (termGroup == null?NOTYPE:termGroup)
+    					+ ":" + (name == null?UNDEFINED:name) + " "
+    						+ (code == null?"":code);
     }
 }
