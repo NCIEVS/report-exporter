@@ -1,75 +1,97 @@
 <template>
-  <div id="resolve-branch-entry">
+  <div id="resolve-branch-entry" class="container">
 
-    <div class="container px-lg-5">
+    <!-- WIZARD DECLARATION -->
+    <form-wizard
+      @on-complete="onComplete"
+      step-size="xs"
+      title="Resolve Branch Download"
+      subtitle="Steps to select a top node, its properties and download the results"
+      finish-button-text="Download"
+      color="#017ebe">
 
-      <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-5">
-         <div class="col py-3 px-lg-5"> </div>
-        <div class="col">
+      <!-- STEP 1: SELECT CODES -->
+      <tab-content icon="ti-settings" title="Select a Code"
+        :before-change="validateFirstStep">
+        <div class="container">
+          <div class="container">
+              <div class="row justify-content-center">
+                 <div class="col-12 col-md-6">
+                    <form>
+                      <div class="form-group">
+                        <label for="tags">Select one NCI Thesaurus top node code or enter your own</label>
 
-          <!--div v-if="this.getPropertyError" class="bs-example"> 
-              <div id="myAlert" class="alert alert-info alert-dismissible fade show">
-                  <strong>Note!</strong> This is a simple example of dismissible alert.
-                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <tags-input element-id="tags"
+                          v-model="selectedTags"
+                          :existing-tags=this.curratedTopNodesUI
+                          :typeahead="true"
+                          :typeahead-always-show="false"
+                          :typeahead-hide-discard="true"
+                          :add-tags-on-comma="true"
+                          :add-tags-on-space="true"
+                          :limit=1
+                          :typeahead-activation-threshold=0
+                          :hide-input-on-limit="true"
+                          :case-sensitive-tags="true"
+                          placeholder="Add Top Node"
+                          typeahead-style="dropdown"
+                          @tag-added="value =>onTagAdded(value)"
+                        ></tags-input>
+
+                        <label for="levelSelection">Select how many levels to retrieve</label>
+                        <select v-model="selectedLevel" id="levelSelection" class="form-control">
+                          <option v-for="level in levels" :value="level.id" :key="level.name">{{ level.name }}</option>
+                        </select>
+                      </div>
+                    </form>
+                 </div>
               </div>
-          </div-->
+          </div>
+        </div>
+      </tab-content>
 
-          <h5> Select one NCI Thesaurus top node code or enter your own</h5>
-        </div>
-        <div class="col">
-            <tags-input element-id="tags"
-              v-model="selectedTags"
-              :existing-tags=this.curratedTopNodesUI
-              :typeahead="true"
-              :typeahead-always-show="false"
-              :typeahead-hide-discard="true"
-              :add-tags-on-comma="true"
-              :add-tags-on-space="true"
-              :limit=1
-              :typeahead-activation-threshold=0
-              :hide-input-on-limit="true"
-              :case-sensitive-tags="true"
-              placeholder="Add Top Node"
-              typeahead-style="dropdown"
-              @tag-added="value =>onTagAdded(value)"
-              ></tags-input>
-        </div>
-      </div>
+      <!-- STEP 2: SELECT PROPERTIES -->
+      <tab-content icon="ti-view-list-alt" title="Select Properties"
+        :before-change="validatePropertyStep">
 
-      <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-1">
-        <div class="col">
-            <h5> Select how many levels to retrieve</h5>
+        <div class="container">
+          <form>
+            <div class="form-group">
+              <label for="selectedProperties">Select Properties to Output</label>
+            </div>
+            <div class="form-group">
+              <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
+                  :reduce-display-property="(option) => option.name"
+                  :reduce-value-property="(option) => option.code"
+                  search-input-class="custom-input-class"
+                  search-options-placeholder="Search properties"
+                  selected-options-placeholder="Search selected properties">
+              </v-multiselect-listbox>
+            </div>
+          </form>
         </div>
-        <div class="col">
-          <select v-model="selectedLevel" id="levelSelection" class="form-control">
-            <option v-for="level in levels" :value="level.id" :key="level.name">{{ level.name }}</option>
-          </select>
-        </div>
-      </div>
- 
-      <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-1">
-        <h3> Select Property to Output </h3>
-          <v-multiselect-listbox v-model="selectedProperties" :options="this.availableProperties"
-              :reduce-display-property="(option) => option.name"
-              :reduce-value-property="(option) => option.code"
-              search-input-class="custom-input-class"
-              search-options-placeholder="Search properties"
-              selected-options-placeholder="Search selected properties">
-          </v-multiselect-listbox>
-        <div>
-          <h3>Select Format for Output</h3>
-          <v-select
-            :options="this.availableFormats" @input="value =>updateFormat(value)">
-          </v-select>
-        </div>
-      </div>
-      <div class="row mx-lg-n5 py-1 ">
-          <button class="btn btn-primary" 
-            :disabled='!(Object.keys(this.selectedTags).length>0 && Object.keys(this.selectedProperties).length>0 && this.userSelectedExtension.length > 0)' 
-            v-on:click="downloadFile">Download</button>
-      </div>
-    </div>
-  </div>
+       </tab-content>
+
+       <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
+       <tab-content icon="ti-download" title="Select Format and Download">
+         <div class="container">
+             <div class="row justify-content-center">
+                <div class="col-12 col-md-6">
+                 <form ref="formContainer">
+                   <div class="form-group">
+                     <label for="downloadFormat">Select Format for Output</label>
+                     <v-select element-id="downloadFormat" v-model="userSelectedFormat"
+                       :options="this.availableFormats" @input="value =>updateFormat(value)">
+                     </v-select>
+                    </div>
+                 </form>
+              </div>
+            </div>
+         </div>
+       </tab-content>
+    </form-wizard>
+
+ </div>
 </template>
 
 <script>
@@ -78,8 +100,14 @@
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
 import vSelect from 'vue-select'
-import api from '../api.js';
-import axios from 'axios';
+import api from '../api.js'
+import axios from 'axios'
+
+//local registration
+import {FormWizard, TabContent} from 'vue-form-wizard'
+//import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   name: 'resolve-branch-entry',
@@ -89,7 +117,11 @@ export default {
   components: {
     'tags-input': VoerroTagsInput,
     'vMultiselectListbox': vMultiselectListbox,
-    'v-select': vSelect
+    'v-select': vSelect,
+
+    FormWizard,
+    TabContent,
+    //Loading
   },
   data(){
     return {
@@ -108,7 +140,7 @@ export default {
       downloadReturnCode: null,
       //baseUrl: 'http://localhost:8080',
       baseUrl: '',
-      userSelectedExtension: '',
+      userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
         { id: 'CSV', name: 'csv' },
@@ -132,8 +164,23 @@ export default {
       ],
     }
   },
-  
+
   methods: {
+      // Wizard methods
+      validateFirstStep() {
+        // make sure the user has a code entered
+        return Object.keys(this.selectedTags).length>0
+      },
+
+      validatePropertyStep() {
+        // make sure the user has selected at least one property
+        return Object.keys(this.selectedProperties).length>0
+      },
+
+      onComplete: function() {
+        this.downloadFile();
+      },
+
       setCurratedTags() {
         this.curratedTopNodesUI = []
         //console.log ("length: " + Object.keys(this.curratedTopNodes).length);
@@ -152,11 +199,11 @@ export default {
         // When a top node is entered/selected, verify it.
         this.getEntities();
       },
-        
+
       setSelectedTags() {
         // clear the internal user codes that are entered
         this.userEnteredCodes = []
-          
+
         for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
           // currated top nodes (from the server hava a value of "C12434:Blood")
           // so we need to strip off everything from the : to the right.
@@ -225,16 +272,25 @@ export default {
       },
 
       downloadFile() {
+        let loader = this.$loading.show({
+            // Optional parameters
+            container: this.$refs.formContainer,
+            // canCancel: true,
+            // onCancel: this.onCancel,
+            loader: 'dots',
+            isFullPage: false,
+          });
+
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.baseUrl + '/download/get-file-for-resolved-branch/'  + 
-                    this.userEnteredCodes + '/' + 
-                    this.userSelectedProperyNames + '/' + 
-                    this.selectedLevel + '/' + 
-                    this.userSelectedFormat + '/' + 
+                url: this.baseUrl + '/download/get-file-for-resolved-branch/'  +
+                    this.userEnteredCodes + '/' +
+                    this.userSelectedProperyNames + '/' +
+                    this.selectedLevel + '/' +
+                    this.userSelectedFormat + '/' +
                     this.filename + '.' + this.userSelectedExtension,
                 method: 'GET',
                 responseType: 'blob',
@@ -246,6 +302,8 @@ export default {
                   fileLink.setAttribute('download', this.filename + '.' + this.userSelectedExtension);
                   document.body.appendChild(fileLink);
                   fileLink.click();
+
+                  loader.hide()
             });
           }
     },
@@ -267,6 +325,7 @@ export default {
             this.curratedTopNodes = data;
             this.setCurratedTags();
        })
+
     }
   }
 </script>
@@ -281,12 +340,20 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 
-  
+
 } */
-/* Typeahead elements style/theme 
-   override the defaults.        */
+/* Typeahead elements style/theme
+   for tags-input... override the defaults.        */
 .tags-input-typeahead-item-default {
     color: black;
     background-color: whitesmoke;
+},
+
+.modal-active{
+	display:block;
+}
+.msl-multi-select {
+  /* make the multi-select take up the entire width of the container */
+  width: 100%
 }
 </style>

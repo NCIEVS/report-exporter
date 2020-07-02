@@ -3,7 +3,7 @@
   <div class="subheader">
     <nav class="navbar navbar-expand-md navbar-dark fixed evs-subheader">
       <router-link v-bind:to="'/'">
-      <a class="navbar-brand active" href="#" target="_blank">EVS Report Exporter</a>
+      <a class="navbar-brand active" href="#" target="_blank">Home</a>
       </router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

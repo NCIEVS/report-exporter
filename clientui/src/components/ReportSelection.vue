@@ -10,44 +10,44 @@
       <div class="card-deck mb-3 text-center">
         <div class="card mb-4 box-shadow">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Read Codes</h4>
+            <h4 class="my-0 font-weight-normal">Search Codes</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">READ</h1>
+            <h1 class="card-title pricing-card-title">Codes Read</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>Enter one or many entity codes</li>
+              <li>Enter one or more concept codes</li>
               <li>Select the properties to output</li>
               <li>Select report format</li>
             </ul>
 			<router-link v-bind:to="'/readCodeEntry'">
         <button type="button" class="btn btn-lg btn-block btn-primary">Select</button>
 			</router-link>
-          </div>
-        </div>
+    </div>
+  </div>
+    <!--div class="card mb-4 box-shadow">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Search Terms</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">SEARCH</h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Enter one or more concept terms</li>
+          <li>Select the properties to output</li>
+          <li>Select report format</li>
+        </ul>
+        <router-link v-bind:to="'/searchTermEntry'">
+          <button type="button" class="btn btn-lg btn-block btn-primary">Select</button>
+        </router-link>
+      </div>
+    </div-->
         <div class="card mb-4 box-shadow">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Search Terms</h4>
+            <h4 class="my-0 font-weight-normal">Search Branch</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">SEARCH</h1>
+            <h1 class="card-title pricing-card-title">Branch Resolve</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>Enter one or more entity terms</li>
-              <li>Select the properties to output</li>
-              <li>Select report format</li>
-            </ul>
-            <router-link v-bind:to="'/searchTermEntry'">
-              <button type="button" class="btn btn-lg btn-block btn-primary">Select</button>
-			</router-link>
-          </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Resolve Branch</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">RESOLVE</h1>
-            <ul class="list-unstyled mt-3 mb-4">
-              <li>Enter one or many root codes</li>
+              <li>Enter or select a root code</li>
               <li>Select the properties to output</li>
               <li>Select report format</li>
             </ul>
