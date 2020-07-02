@@ -17,6 +17,16 @@ import ResolveBranchEntry from './components/ResolveBranchEntry.vue'
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
 
+import VueFormWizard from 'vue-form-wizard'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+Vue.use(VueFormWizard)
+
+import ThemifyIcon from "vue-themify-icons";
+
+// busy/loading indicator
+import Loading from 'vue-loading-overlay'
+Vue.use(Loading)
+
 // setup jquery
 window.$ = window.jQuery = jQuery
 
@@ -52,7 +62,8 @@ new Vue({
   components: {
     App,
     'tags-input': VoerroTagsInput,
-     vMultiselectListbox
+     vMultiselectListbox,
+     ThemifyIcon
   },
   // pass in the router to the Vue instance
   router
