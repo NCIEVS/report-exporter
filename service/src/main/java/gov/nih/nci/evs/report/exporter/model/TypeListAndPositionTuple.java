@@ -5,11 +5,11 @@ import java.util.List;
 public class TypeListAndPositionTuple {
 	
 	private Integer pos;
-//	private String type;
+	private String type;
 	private List<Property> properties;
 	
-	public TypeListAndPositionTuple(int pos, List<Property> props) {
-		this.pos = pos; this.properties = props;
+	public TypeListAndPositionTuple(int pos, String type, List<Property> props) {
+		this.pos = pos; this.type = type; this.properties = props;
 	}
 	public Integer getPos() {
 		return pos;
@@ -17,12 +17,12 @@ public class TypeListAndPositionTuple {
 	public void setPos(Integer pos) {
 		this.pos = pos;
 	}
-//	public String getType() {
-//		return type;
-//	}
-//	public void setType(String type) {
-//		this.type = type;
-//	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public List<Property> getProperties() {
 		return properties;
 	}

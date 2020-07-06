@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.assertj.core.util.Arrays;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +17,13 @@ import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
 class CommonServicesTest {
+	
+	CommonServices services;
+	
+	@Before
+	void setUp() {
+		services = new CommonServices();
+	}
 	
 	@Test
 	void testGetListValues() {

@@ -29,11 +29,14 @@ public class CSVUtility {
 				separator + x.getParent() +
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
-				separator + services.calculateAndProduceSpacedTerms());});
+				separator + services.calculateAndProduceSpacedTerms());
+				services.clearPropertyListsFromHeaderMap();});
 		
-		Stream.of(fields).forEach(x -> firstLine.append(x.getName() + separator));
-		firstLine.replace(firstLine.length() - 1, firstLine.length(), ",");
-		services.getPropHeaderMap().keySet().forEach(type -> firstLine.append("," + type));
+		Stream.of(fields).filter(item -> 
+			!item.getName().equals("properties") && 
+			!item.getName().equals("maps")).forEach(x -> firstLine.append(x.getName() + separator));
+		firstLine.replace(firstLine.lastIndexOf(","), firstLine.length(), "");
+		services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append("," + type));
 		oneLine.insert(0, firstLine);
 	    System.out.println(oneLine.toString());
 		return oneLine.toString();

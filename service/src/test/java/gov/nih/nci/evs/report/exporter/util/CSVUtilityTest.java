@@ -3,7 +3,10 @@ package gov.nih.nci.evs.report.exporter.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,7 @@ import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
+import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
 
 class CSVUtilityTest {
@@ -60,7 +64,6 @@ class CSVUtilityTest {
 
 	@Test
 	void testProduceCSVOutputFromListWithHeading() {
-		System.out.println(util.produceCSVOutputFromListWithHeading(getRestEntityList()));
 		assertEquals(this.getCSVRestEntityOutput(), util.produceCSVOutputFromListWithHeading(getRestEntityList()));
 	}
 	
@@ -208,6 +211,52 @@ class CSVUtilityTest {
 		return list;
 	}
 	
+	@Test
+	public void TestIterateOnPosition() {
+		ConcurrentMap<String, TypeListAndPositionTuple > map = new ConcurrentHashMap<String, TypeListAndPositionTuple>();
+		List<Property> props9 = new ArrayList<Property>();
+		Property prop9 = new Property();
+		prop9.setType("Prop9Type");
+		prop9.setValue("prop9value");
+		Property prop29 = new Property();
+		prop29.setType("Prop9Type");
+		prop29.setValue("prop9value2");
+		props9.add(prop9);
+		props9.add(prop29);
+		TypeListAndPositionTuple tuple = new TypeListAndPositionTuple(1, "Prop9Type", props9);
+		
+		List<Property> props = new ArrayList<Property>();
+		Property prop = new Property();
+		prop.setType("PropType");
+		prop.setValue("propvalue");
+		Property prop2 = new Property();
+		prop2.setType("PropType");
+		prop2.setValue("propvalue2");
+		props.add(prop);
+		props.add(prop2);
+		TypeListAndPositionTuple tuple2 = new TypeListAndPositionTuple(2,"PropType", props);
+		
+		List<Property> props2 = new ArrayList<Property>();
+		Property prop4 = new Property();
+		prop4.setType("PropType2");
+		prop4.setValue("propvalue2");
+		Property prop3 = new Property();
+		prop3.setType("PropType2");
+		prop3.setValue("propvalue3");
+		props.add(prop4);
+		props.add(prop3);
+		TypeListAndPositionTuple tuple3 = new TypeListAndPositionTuple(0,"PropType2", props2);
+		
+		map.put("Prop9Type", tuple);
+		map.put("PropType", tuple2);
+		map.put("PropType2", tuple3);
+		
+		CommonServices services = new CommonServices();
+		Iterator<TypeListAndPositionTuple> itr = services.iterateOnPostion(map);
+		while(itr.hasNext()) {System.out.println(itr.next().getPos());}
+		
+	}
+	
 	private String getCSVRestEntityOutput() {
 		return "code,name,terminology,parent,synonyms,definitions,properties" +
 				"\r\nC123234,Myent,ncit,null,\"|NCIt synType:synName|NOSOURCE synType2:synName2|\",\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\",\"|PropType:propvalue|PropType2:propvalue2|\"" +
@@ -225,5 +274,7 @@ class CSVUtilityTest {
 				"\r\nC00003,child3,1,C00000:parent,false,null" +
 				"\r\nC00000,parent,0," + CommonServices.TOP_NODE + ",false,null";
 	}
+	
+	
 
 }

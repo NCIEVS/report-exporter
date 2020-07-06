@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -24,12 +25,13 @@ import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 
 public class CommonServices {
 	
-	private ConcurrentMap<String, TypeListAndPositionTuple> propHeaderMap;
 	
+	public static final String TOP_NODE = "TOP_NODE";
+	
+	private ConcurrentMap<String, TypeListAndPositionTuple> propHeaderMap;
 	public CommonServices() {
 		propHeaderMap = new ConcurrentHashMap<String, TypeListAndPositionTuple>();
 	}
-	
 	public ConcurrentMap<String, TypeListAndPositionTuple> getPropHeaderMap() {
 		return propHeaderMap;
 	}
@@ -37,8 +39,6 @@ public class CommonServices {
 	public void setPropHeaderMap(ConcurrentMap<String, TypeListAndPositionTuple> propHeaderMap) {
 		this.propHeaderMap = propHeaderMap;
 	}
-	
-	public static final String TOP_NODE = "TOP_NODE";
 	
 	public static <T> String getListValues(List<T> list) {
 		return list != null?"\"" + getListValuesWithPipeDelimiter(list) + "|\"": null;
@@ -64,14 +64,21 @@ public class CommonServices {
 		int pos = propHeaderMap.keySet().size();
 		List<Property> props = new ArrayList<Property>();
 		props.add(prop);
-		return propHeaderMap.put(prop.getType(), new TypeListAndPositionTuple(pos,props));
+		return propHeaderMap.put(prop.getType(), new TypeListAndPositionTuple(pos,prop.getType(),props));
 		}
 	}
 	
 	public String calculateAndProduceSpacedTerms() {
-		return propHeaderMap.keySet()
-		.stream()
-		.map(x -> setAndReturnSpacedItems(x)).reduce("", (init, end) -> init + "," + end);
+		return flattenListValues(
+				getOrderedPropertyLists(propHeaderMap));
+	}
+	
+	public void clearPropertyListsFromHeaderMap() {
+		getPropHeaderMap()
+		.keySet()
+		.forEach(x -> getPropHeaderMap()
+				.get(x)
+				.setProperties(new ArrayList<Property>()));
 	}
 	
 	public Integer getPropertyPositionFromCache(String value) {
@@ -79,16 +86,58 @@ public class CommonServices {
 	}
 	
 	public String setAndReturnSpacedItems(String key) {
-		return getListValues(propHeaderMap.get(key).getProperties());
+		return flattenListValues(
+				getOrderedPropertyLists(propHeaderMap));
+	}
+	
+	public String flattenListValues(List<List<Property>> list) {
+		return list
+				.stream()
+				.map(e -> getListValues(e))
+				.reduce("", (part, whole)-> part + "," + whole)
+				.replaceFirst(",", "");
 	}
 	
 	public static <T> String getListValuesWithPipeDelimiter(List<T> list) {
+		if(list == null || list.size() == 0) {return "";}
 		return list.stream().map(x -> x.toString()).reduce("", (part, whole)-> part + "|" + whole);
 	}
 	
 	public static String cleanListOutPut(String list){
 		if (list == null)  return null;
 		return list.replace("[", "").replace("]", "");
+	}
+	
+	public Iterator<TypeListAndPositionTuple> iterateOnPostion(ConcurrentMap<String, TypeListAndPositionTuple > map) {
+		return map.values()
+				.stream()
+				.sorted(Comparator
+				.comparing(TypeListAndPositionTuple::getPos))
+				.iterator();
+	}
+	
+	//Start here Monday
+	public List<List<Property>>  getOrderedPropertyLists(ConcurrentMap<String, TypeListAndPositionTuple > map) {
+		return map.values()
+				.stream()
+				.sorted(Comparator
+				.comparing(TypeListAndPositionTuple::getPos))
+				.map(x -> validateAndOrCreateEmptyPropertyList(x))
+						.collect(Collectors.toList());
+	}
+	
+	public List<Property> validateAndOrCreateEmptyPropertyList(TypeListAndPositionTuple tuple){
+		if(tuple.getPos() == null) {return new ArrayList<Property>();}
+		else {return tuple.getProperties();}
+	}
+	
+	public List<String> getHeadersByPosition(ConcurrentMap<String, TypeListAndPositionTuple> map) {
+		return map.values()
+				.stream()
+				.sorted(Comparator
+				.comparing(TypeListAndPositionTuple::getPos))
+				.map(x -> x.getType())
+				.collect(Collectors.toList());
 	}
 	
 	public static List<String> splitInput(String codes){
