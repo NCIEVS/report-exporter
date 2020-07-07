@@ -5,7 +5,7 @@
     <form-wizard
       @on-complete="onComplete"
       step-size="xs"
-      title="Resolve Branch Download"
+      title="Search Branch Download"
       subtitle="Steps to select a top node, its properties and download the results"
       finish-button-text="Download"
       color="#017ebe">
@@ -35,8 +35,8 @@
                           :case-sensitive-tags="true"
                           placeholder="Add Top Node"
                           typeahead-style="dropdown"
-                          @tag-added="value =>onTagAdded(value)"
-                        ></tags-input>
+                          @tag-added="value =>onTagAdded(value)">
+                        </tags-input>
 
                         <label for="levelSelection">Select how many levels to retrieve</label>
                         <select v-model="selectedLevel" id="levelSelection" class="form-control">
@@ -102,11 +102,7 @@ import vMultiselectListbox from 'vue-multiselect-listbox'
 import vSelect from 'vue-select'
 import api from '../api.js'
 import axios from 'axios'
-
-//local registration
 import {FormWizard, TabContent} from 'vue-form-wizard'
-//import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
@@ -118,10 +114,8 @@ export default {
     'tags-input': VoerroTagsInput,
     'vMultiselectListbox': vMultiselectListbox,
     'v-select': vSelect,
-
     FormWizard,
     TabContent,
-    //Loading
   },
   data(){
     return {
@@ -138,8 +132,8 @@ export default {
       userSelectedTopNode: '',
       filename: 'resolveBranch',
       downloadReturnCode: null,
-      //baseUrl: 'http://localhost:8080',
-      baseUrl: '',
+      baseUrl: 'http://localhost:8080',
+      //baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
@@ -272,11 +266,9 @@ export default {
       },
 
       downloadFile() {
+        // show the busy indicator
         let loader = this.$loading.show({
-            // Optional parameters
             container: this.$refs.formContainer,
-            // canCancel: true,
-            // onCancel: this.onCancel,
             loader: 'dots',
             isFullPage: false,
           });
@@ -302,9 +294,10 @@ export default {
                   fileLink.setAttribute('download', this.filename + '.' + this.userSelectedExtension);
                   document.body.appendChild(fileLink);
                   fileLink.click();
-
-                  loader.hide()
-            });
+              }).catch(function(error) {
+                  console.error("OOOOPS: " + error);
+                  alert("Error Downloading file");
+              }).finally(function() { loader.hide()});
           }
     },
     created() {
