@@ -132,8 +132,8 @@ export default {
       userSelectedTopNode: '',
       filename: 'resolveBranch',
       downloadReturnCode: null,
-      baseUrl: 'http://localhost:8080',
-      //baseUrl: '',
+      //baseUrl: 'http://localhost:8080',
+      baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
@@ -295,7 +295,7 @@ export default {
                   document.body.appendChild(fileLink);
                   fileLink.click();
               }).catch(function(error) {
-                  console.error("OOOOPS: " + error);
+                  console.error("Download Error: " + error);
                   alert("Error Downloading file");
               }).finally(function() { loader.hide()});
           }
