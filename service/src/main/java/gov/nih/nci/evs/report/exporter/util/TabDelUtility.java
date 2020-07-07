@@ -12,22 +12,31 @@ public class TabDelUtility {
 	
 
 	public String produceTabDelOutputFromListWithHeading(List<RestEntity> list) {
-
+		CommonServices services = new CommonServices();
 		StringBuffer firstLine = new StringBuffer();
 		String separator = "\t";
 		Field[] fields = RestEntity.class.getDeclaredFields();
-		Stream.of(fields).forEach(x -> firstLine.append(x.getName() + separator));
-		StringBuffer oneLine =
-		firstLine.replace(firstLine.length() - 1, firstLine.length(), "");
-		list.stream().forEach(x -> oneLine.append(
+		StringBuffer oneLine = new StringBuffer();
+		list.stream().forEach(x -> {x.getProperties()
+			.stream()
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));  
+			oneLine.append(
 				"\r\n" + x.getCode() + 
 				separator + x.getName() + 
 				separator + x.getTerminology() + 
 				separator + x.getParent() +
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
-				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getProperties()))));
-	    System.out.println(oneLine.toString());
+				separator + services.calculateAndProduceSpacedTerms(separator));
+			    services.clearPropertyListsFromHeaderMap();});
+		
+				Stream.of(fields).filter(item -> 
+				!item.getName().equals("properties") && 
+				!item.getName().equals("maps")).forEach(x -> firstLine.append(x.getName() + separator));
+			firstLine.replace(firstLine.lastIndexOf(separator), firstLine.length(), "");
+			services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append(separator + type));
+			oneLine.insert(0, firstLine);
+		System.out.println(oneLine.toString());
 		return oneLine.toString();
 	}
 	

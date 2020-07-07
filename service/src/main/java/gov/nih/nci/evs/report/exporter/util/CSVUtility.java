@@ -16,9 +16,7 @@ public class CSVUtility {
 		StringBuffer firstLine = new StringBuffer();
 		String separator = ",";
 		Field[] fields = RestEntity.class.getDeclaredFields();
-		//Stream.of(fields).forEach(x -> firstLine.append(x.getName() + separator));
 		StringBuffer oneLine = new StringBuffer();
-	//	firstLine.replace(firstLine.length() - 1, firstLine.length(), "");
 		list.stream().forEach(x -> { x.getProperties()
 			.stream()
 			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));       
@@ -29,14 +27,14 @@ public class CSVUtility {
 				separator + x.getParent() +
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
-				separator + services.calculateAndProduceSpacedTerms());
+				separator + services.calculateAndProduceSpacedTerms(separator));
 				services.clearPropertyListsFromHeaderMap();});
 		
 		Stream.of(fields).filter(item -> 
 			!item.getName().equals("properties") && 
 			!item.getName().equals("maps")).forEach(x -> firstLine.append(x.getName() + separator));
-		firstLine.replace(firstLine.lastIndexOf(","), firstLine.length(), "");
-		services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append("," + type));
+		firstLine.replace(firstLine.lastIndexOf(separator), firstLine.length(), "");
+		services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append(separator + type));
 		oneLine.insert(0, firstLine);
 	    System.out.println(oneLine.toString());
 		return oneLine.toString();

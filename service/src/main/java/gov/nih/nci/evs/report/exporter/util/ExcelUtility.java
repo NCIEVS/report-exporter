@@ -29,6 +29,8 @@ public class ExcelUtility {
 	    List<String> cols = Stream.of(fields).map(x -> x.getName()).collect(Collectors.toList());
 	    
 	    Workbook workbook = new XSSFWorkbook();
+	    
+	    CommonServices services = new CommonServices();
 	 
 	    Sheet sheet = workbook.createSheet("entities");
 	 
@@ -43,15 +45,22 @@ public class ExcelUtility {
 	    Row headerRow = sheet.createRow(0);
 	 
 	    // Header
-	    for (int col = 0; col < fields.length; col++) {
+	    int col = 0;
+	    for (Field field: fields) {
+	      if(field.getName().equals("properties")) {break;}
 	      Cell cell = headerRow.createCell(col);
 	      cell.setCellValue(fields[col].getName());
 	      cell.setCellStyle(headerCellStyle);
+	      col++;
 	    }
 	 
 	 
 	    int i = 1;
 	    for (RestEntity entity : entities) {
+	    	
+	    	entity.getProperties()
+			.stream()
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));
 	      Row row = sheet.createRow(i++);
 	 
 	      row.createCell(0).setCellValue(entity.getCode());
@@ -67,14 +76,17 @@ public class ExcelUtility {
 	    		  CommonServices.cleanListOutPut(
 	    				  entity.getDefinitions() != null?
 	    						  entity.getDefinitions().toString():
-	    							  "no definitions"));
-	      row.createCell(6).setCellValue(
-	    		  CommonServices.cleanListOutPut(
-	    				  entity.getProperties() != null?
-	    						  entity.getProperties().toString():
-	    							  "no properties"));
+	    							  "no definitions"));	      		  
+	    		  services.setPropertyRowOutPut(
+	    				  entity.getProperties(), row, 6);
+	    		  services.clearPropertyListsFromHeaderMap();		  
 	    }
-	 
+	    List<String> postHeaders = services.getHeadersByPosition(services.getPropHeaderMap());
+	    for(String s: postHeaders) {
+	    Cell cell = headerRow.createCell(col);
+	      cell.setCellValue(s);
+	      cell.setCellStyle(headerCellStyle);
+	      col++;}
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	   workbook.write(stream);
 	   workbook.close();

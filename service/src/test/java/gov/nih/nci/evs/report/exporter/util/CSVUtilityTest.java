@@ -1,5 +1,6 @@
 package gov.nih.nci.evs.report.exporter.util;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -23,6 +24,14 @@ class CSVUtilityTest {
 	
 	CSVUtility util;
 	
+	String csvOutLine1 = "code,name,terminology,parent,synonyms,definitions,PropType,PropType2,Prop0Type,Prop0Type2,Prop9Type,Prop9Type2";
+	String csvOutLine2a = "C123234,Myent,ncit,null,";
+	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
+	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
+	String csvOutLine2d	= ",\"|NCI:defvalue|NOSOURCE:defvalue2|\",";
+	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\",\"|PropType2:propvalue2|\"";
+	String csvOutLine3 = "C000000,0ent,ncit,null,,,,,\"|Prop0Type:prop0value|\",\"|Prop0Type2:prop0value2|\"";
+	String csvOutline4 = "C999999,My9,ncit,null,,,,,,,\"|Prop9Type:prop9value|\",\"|Prop9Type2:prop9value2|\"";
 	BranchResolutionService service;
 
 	@BeforeEach
@@ -40,7 +49,7 @@ class CSVUtilityTest {
 		syn.setSubSource("CDISC");
 		syn.setTermGroup("mytermgr");
 		System.out.println(syn.toString());	
-		assertEquals("NCIt synType:synName",syn.toString());
+		assertEquals("NCIt CDISC mytermgr:synName ",syn.toString());
 	}
 	
 	@Test
@@ -64,7 +73,16 @@ class CSVUtilityTest {
 
 	@Test
 	void testProduceCSVOutputFromListWithHeading() {
-		assertEquals(this.getCSVRestEntityOutput(), util.produceCSVOutputFromListWithHeading(getRestEntityList()));
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList());
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertTrue(csvLines[0].contains(csvOutLine1));
+		assertTrue(csvLines[1].contains(csvOutLine2a));
+		assertTrue(csvLines[1].contains(csvOutLine2b));
+		assertTrue(csvLines[1].contains(csvOutLine2c));
+		assertTrue(csvLines[1].contains(csvOutLine2d));
+		assertTrue(csvLines[1].contains(csvOutLine2e));
+		assertTrue(csvLines[2].contains(csvOutLine3));
+		assertTrue(csvLines[3].contains(csvOutline4));
 	}
 	
 	private List<RestEntity> getRestEntityList() {
@@ -83,7 +101,9 @@ class CSVUtilityTest {
 		syn.setSubSource("CDISC");
 		syn.setTermGroup("mytermgr");
 		Synonym syn2 = new Synonym();
-		syn2.setType("synType2");
+		syn2.setSource("synSource2");
+		syn2.setSubSource("NCI");
+		syn2.setTermGroup("atermgrp");
 		syn2.setName("synName2");
 		syns.add(syn);
 		syns.add(syn2);
@@ -105,10 +125,14 @@ class CSVUtilityTest {
 		Property prop = new Property();
 		prop.setType("PropType");
 		prop.setValue("propvalue");
+		Property propa = new Property();
+		propa.setType("PropType");
+		propa.setValue("propvalue1");
 		Property prop2 = new Property();
 		prop2.setType("PropType2");
 		prop2.setValue("propvalue2");
 		props.add(prop);
+		props.add(propa);
 		props.add(prop2);
 		ent.setProperties(props);
 		

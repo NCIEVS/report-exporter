@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -41,7 +44,7 @@ public class CommonServices {
 	}
 	
 	public static <T> String getListValues(List<T> list) {
-		return list != null?"\"" + getListValuesWithPipeDelimiter(list) + "|\"": null;
+		return list != null && list.size() > 0?"\"" + getListValuesWithPipeDelimiter(list) + "|\"": "";
 	}
 	
 	public String getSortedIndexedPropertyListValues(
@@ -68,9 +71,9 @@ public class CommonServices {
 		}
 	}
 	
-	public String calculateAndProduceSpacedTerms() {
+	public String calculateAndProduceSpacedTerms(String separator) {
 		return flattenListValues(
-				getOrderedPropertyLists(propHeaderMap));
+				getOrderedPropertyLists(propHeaderMap), separator);
 	}
 	
 	public void clearPropertyListsFromHeaderMap() {
@@ -85,17 +88,23 @@ public class CommonServices {
 		return propHeaderMap.get(value).getPos();
 	}
 	
-	public String setAndReturnSpacedItems(String key) {
-		return flattenListValues(
-				getOrderedPropertyLists(propHeaderMap));
-	}
+//	public String setAndReturnSpacedItems(String key, String separator) {
+//		return flattenListValues(
+//				getOrderedPropertyLists(propHeaderMap), separator);
+//	}
 	
-	public String flattenListValues(List<List<Property>> list) {
+	public String flattenListValues(List<List<Property>> list, String separator) {
 		return list
 				.stream()
 				.map(e -> getListValues(e))
-				.reduce("", (part, whole)-> part + "," + whole)
-				.replaceFirst(",", "");
+				.reduce("", (part, whole)-> part + separator + whole)
+				.replaceFirst(separator, "");
+	}
+	
+	public void flattenListValuesIntoRowCells(List<List<Property>> list, Row row, int index) {	
+		for(List<Property> prop: list) {
+		row.createCell(index).setCellValue(getListValues(prop)); index++;
+		}
 	}
 	
 	public static <T> String getListValuesWithPipeDelimiter(List<T> list) {
@@ -183,6 +192,11 @@ public class CommonServices {
 		  return parentCode.equals(code);
 	 }
 	  
+	  public void setPropertyRowOutPut(List<Property> properties, Row row, int index) {
+
+			this.flattenListValuesIntoRowCells(getOrderedPropertyLists(propHeaderMap), row, index);
+	  }
+	  
 	 public static void main(String ...strings) {
 		 
 		 Property prop = new Property();
@@ -200,6 +214,6 @@ public class CommonServices {
 		 props.add(prop1);
 		 props.add(prop2);
 		 
-		 }
+	 }
 
 }
