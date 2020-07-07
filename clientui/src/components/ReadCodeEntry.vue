@@ -210,7 +210,7 @@ export default {
             }
             else {
               console.log("Error retrieving top node code");
-              alert("Invalid Top Node");
+              alert("Invalid Concept Code");
               this.selectedTags = [];
               this.getPropertyError=true;
             }
@@ -269,6 +269,9 @@ export default {
 
 <!-- styling for the component -->
 <style>
+/* #read-codes-entry{
+  top: 60;
+} */
 .modal-active{
 	display:block;
 }
