@@ -24,27 +24,27 @@ public class ExcelUtility {
 
 	  public ByteArrayOutputStream  produceExcelOutputFromListWithHeading(List<RestEntity> entities) throws IOException {
 	    
+		//The fields of this class will become the headers of the row/column structures
 		Field[] fields = RestEntity.class.getDeclaredFields();
 	   
 	    List<String> cols = Stream.of(fields).map(x -> x.getName()).collect(Collectors.toList());
-	    
+	    //Init the workbook for Excel
 	    Workbook workbook = new XSSFWorkbook();
-	    
+	    //Init the services to maintain an instance of the prooerty cache
 	    CommonServices services = new CommonServices();
-	 
+	    //Create a sheet for the workbook
 	    Sheet sheet = workbook.createSheet("entities");
-	 
+	    //Set up the head configuration
 	    Font headerFont = workbook.createFont();
 	    headerFont.setBold(true);
 	    headerFont.setColor(IndexedColors.BLUE.getIndex());
-	 
 	    CellStyle headerCellStyle = workbook.createCellStyle();
 	    headerCellStyle.setFont(headerFont);
 	 
 	    // Row for Header
 	    Row headerRow = sheet.createRow(0);
 	 
-	    // Header
+	    // First part of the header, before we know what properties are there
 	    int col = 0;
 	    for (Field field: fields) {
 	      if(field.getName().equals("properties")) {break;}
@@ -54,39 +54,49 @@ public class ExcelUtility {
 	      col++;
 	    }
 	 
-	 
+	    //Iterate over the list of RestEntities to designated rows and columns
 	    int i = 1;
 	    for (RestEntity entity : entities) {
-	    	
+	    //Add each property list to the cache noting the position of the property in 
+	    //the cache
 	    	entity.getProperties()
 			.stream()
 			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));
 	      Row row = sheet.createRow(i++);
 	 
+	      //Create a set of rows for the static values
 	      row.createCell(0).setCellValue(entity.getCode());
 	      row.createCell(1).setCellValue(entity.getName());
 	      row.createCell(2).setCellValue(entity.getTerminology());
 	      row.createCell(3).setCellValue(entity.getParent());
+	      //Process the Synonyms as a list
 	      row.createCell(4).setCellValue(
 	    		  CommonServices.cleanListOutPut(
 	    				  entity.getSynonyms() != null?
 	    						  entity.getSynonyms().toString():
 	    							  "no synonyms"));
+	      //Process the definitions as a list
 	      row.createCell(5).setCellValue(
 	    		  CommonServices.cleanListOutPut(
 	    				  entity.getDefinitions() != null?
 	    						  entity.getDefinitions().toString():
-	    							  "no definitions"));	      		  
+	    							  "no definitions"));	
+	      //Process the properties to rows and columns adding properties as we go
 	    		  services.setPropertyRowOutPut(
 	    				  entity.getProperties(), row, 6);
+	      //Clearing property list for the next entity, leaving type and position metadata
 	    		  services.clearPropertyListsFromHeaderMap();		  
 	    }
+	    
+	    //Finish setting up headers with each property type designation
 	    List<String> postHeaders = services.getHeadersByPosition(services.getPropHeaderMap());
 	    for(String s: postHeaders) {
+	    
 	    Cell cell = headerRow.createCell(col);
 	      cell.setCellValue(s);
 	      cell.setCellStyle(headerCellStyle);
 	      col++;}
+	   //Setup the output stream for download
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	   workbook.write(stream);
 	   workbook.close();

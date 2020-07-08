@@ -22,17 +22,17 @@ public class Property extends PropertyPrime {
 	}
 	public String toString() {
 		if(super.getType().equals("Maps_To")) {
-			return getQualsValue(qualifiers, "Target Terminology") + " "
-						+ getQualsValue(qualifiers, "Target_Terminology_Version") + " "
-					    + getQualsValue(qualifiers, "Target_Term_Type") + " "
-					    + getQualsValue(qualifiers, "Target_Code") + " "
+			return getQualsValue(qualifiers, "targetTerminology") + " "
+						+ getQualsValue(qualifiers, "targetTerminologyVersion") + " "
+					    + getQualsValue(qualifiers, "targetTermType") + " "
+					    + getQualsValue(qualifiers, "targetCode") + " "
 						+ value + ":"
-						+ getQualsValue(qualifiers, "Relationship_to_Target");
+						+ getQualsValue(qualifiers, "Related To");
 		}
 		if(super.getType().equals("GO_Annotation")) {
-			return getQualsValue(qualifiers, "go_id") + " "
+			return getQualsValue(qualifiers, "go-id") + " "
 					+ value + ":"
-						+ getQualsValue(qualifiers, "go_evi");
+						+ getQualsValue(qualifiers, "go-evi");
 		}
 		
 		return (super.getType()==null?NOTYPE:super.getType())
