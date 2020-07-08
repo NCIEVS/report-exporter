@@ -21,14 +21,6 @@ public class Property extends PropertyPrime {
 		this.qualifiers = qualifiers;
 	}
 	public String toString() {
-		if(super.getType().equals("Maps_To")) {
-			return getQualsValue(qualifiers, "targetTerminology") + " "
-						+ getQualsValue(qualifiers, "targetTerminologyVersion") + " "
-					    + getQualsValue(qualifiers, "targetTermType") + " "
-					    + getQualsValue(qualifiers, "targetCode") + " "
-						+ value + ":"
-						+ getQualsValue(qualifiers, "Related To");
-		}
 		if(super.getType().equals("GO_Annotation")) {
 			return getQualsValue(qualifiers, "go-id") + " "
 					+ value + ":"
@@ -38,15 +30,5 @@ public class Property extends PropertyPrime {
 		return (super.getType()==null?NOTYPE:super.getType())
 				+ ":" + (value==null?UNDEFINED:value);
 	}
-	
-	private String getQualsValue(List<Qualifier> quals, String type) {
-		return quals.stream()
-				.filter(x -> x.getType()
-						.equals(type))
-						.findFirst()
-						.get()
-						.getValue();
-	}
-	
 
 }

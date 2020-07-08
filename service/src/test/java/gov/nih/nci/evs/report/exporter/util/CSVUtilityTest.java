@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
+import gov.nih.nci.evs.report.exporter.model.Qualifier;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
@@ -24,14 +25,14 @@ class CSVUtilityTest {
 	
 	CSVUtility util;
 	
-	String csvOutLine1 = "code,name,terminology,parent,synonyms,definitions,PropType,PropType2,Prop0Type,Prop0Type2,Prop9Type,Prop9Type2";
+	String csvOutLine1 = "code,name,terminology,parent,synonyms,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
 	String csvOutLine2a = "C123234,Myent,ncit,null,";
 	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
 	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
 	String csvOutLine2d	= ",\"|NCI:defvalue|NOSOURCE:defvalue2|\",";
 	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\",\"|PropType2:propvalue2|\"";
-	String csvOutLine3 = "C000000,0ent,ncit,null,,,,,\"|Prop0Type:prop0value|\",\"|Prop0Type2:prop0value2|\"";
-	String csvOutline4 = "C999999,My9,ncit,null,,,,,,,\"|Prop9Type:prop9value|\",\"|Prop9Type2:prop9value2|\"";
+	String csvOutLine3 = "C000000,0ent,ncit,null,,,,,\"|Prop0Type:prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
+	String csvOutline4 = "C999999,My9,ncit,null,,,\"|PropType:prop9value3|\",,,,\"|Prop9Type:prop9value|\",\"|Prop9Type2:prop9value2|\"";
 	BranchResolutionService service;
 
 	@BeforeEach
@@ -145,8 +146,26 @@ class CSVUtilityTest {
 		prop1.setType("Prop0Type");
 		prop1.setValue("prop0value");
 		Property prop0 = new Property();
-		prop0.setType("Prop0Type2");
+		prop0.setType("GO_Annotation");
 		prop0.setValue("prop0value2");
+		Qualifier qual = new Qualifier();
+		Qualifier qual1 = new Qualifier();
+		Qualifier qual2 = new Qualifier();
+		Qualifier qual3 = new Qualifier();
+		qual.setType("go-evi");
+		qual.setValue("TAS");
+		qual1.setType("go-id");
+		qual1.setValue("GO:0000075");
+		qual2.setType("source-date");
+		qual2.setValue("29-SEP-2003");
+		qual3.setType("go-source");
+		qual3.setValue("CGAP");
+		List<Qualifier> quallist = new ArrayList<Qualifier>();
+		quallist.add(qual);
+		quallist.add(qual1);
+		quallist.add(qual2);
+		quallist.add(qual3);
+		prop0.setQualifiers(quallist);
 		props1.add(prop1);
 		props1.add(prop0);
 		ent1.setProperties(props1);
@@ -162,8 +181,12 @@ class CSVUtilityTest {
 		Property prop29 = new Property();
 		prop29.setType("Prop9Type2");
 		prop29.setValue("prop9value2");
+		Property prop39 = new Property();
+		prop39.setType("PropType");
+		prop39.setValue("prop9value3");
 		props9.add(prop9);
 		props9.add(prop29);
+		props9.add(prop39);
 		ent9.setProperties(props9);
 
 		list.add(ent);

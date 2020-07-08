@@ -29,7 +29,7 @@ class TabDelUtilityTest {
 	String csvOutLine2d	= "\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t";
 	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\"\t\"|PropType2:propvalue2|\"";
 	String csvOutLine3 = "C000000\t0ent\tncit\tnull\t\t\t\t\t\"|Prop0Type:prop0value|\"\t\"|Prop0Type2:prop0value2|\"";
-	String csvOutline4 = "C999999\tMy9\tncit\tnull\t\t\t\t\t\t\t\"|Prop9Type:prop9value|\"\t\"|Prop9Type2:prop9value2|\"";
+	String csvOutline4 = "C999999\tMy9\tncit\tnull\t\t\t\"|PropType:prop9value2|\"\t\t\t\t\"|Prop9Type:prop9value|\"\t\"|Prop9Type2:prop9value2|\"";
 	
 
 	@BeforeEach
@@ -37,11 +37,6 @@ class TabDelUtilityTest {
 		service = new BranchResolutionService();
 		util = new TabDelUtility();
 	}
-
-//	@Test
-//	void testProduceTabDelimitedOutputFromListWithHeading() {
-//		assertEquals(this.getTabDelRestEntityOutput(), util.produceTabDelOutputFromListWithHeading(getRestEntityList()));
-//	}
 	
 	@Test
 	void testProduceCSVOutputFromListWithHeading() {
@@ -54,7 +49,7 @@ class TabDelUtilityTest {
 		assertTrue(csvLines[1].contains(csvOutLine2d));
 		assertTrue(csvLines[1].contains(csvOutLine2e));
 		assertTrue(csvLines[2].contains(csvOutLine3));
-		assertTrue(csvLines[3].contains(csvOutline4));
+		assertEquals(csvLines[3],csvOutline4);
 	}
 	
 	private List<RestEntity> getRestEntityList() {
@@ -134,8 +129,12 @@ class TabDelUtilityTest {
 		Property prop29 = new Property();
 		prop29.setType("Prop9Type2");
 		prop29.setValue("prop9value2");
+		Property prop39 = new Property();
+		prop39.setType("PropType");
+		prop39.setValue("prop9value2");
 		props9.add(prop9);
 		props9.add(prop29);
+		props9.add(prop39);
 		ent9.setProperties(props9);
 
 		list.add(ent);
@@ -207,19 +206,6 @@ class TabDelUtilityTest {
 		return list;
 	}
 	
-//	private String getTabDelRestEntityOutput() {
-//		return "code\tname\tterminology\tparent\tsynonyms\tdefinitions\tproperties" +
-//				"\r\nC123234\tMyent\tncit\tnull\t\"|NCIt synType:synName|NOSOURCE synType2:synName2|\"\t\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\"\t\"|PropType:propvalue|PropType2:propvalue2|\"" +
-//				"\r\nC000000\t0ent\tncit\tnull\tnull\tnull\t\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
-//				"\r\nC999999\tMy9\tncit\tnull\tnull\tnull\t\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";	    
-//	}
-	
-	private String getTabDelRestEntityOutput() {
-		return "code\tname\tterminology\tparent\tsynonyms\tdefinitions\tproperties" +
-				"\r\nC123234\tMyent\tncit\tnull\t\"|NCIt synType:synName|NOSOURCE synType2:synName2|\"\t\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\"\t\"|PropType:propvalue|PropType2:propvalue2|\"" +
-				"\r\nC000000\t0ent\tncit\tnull\t\\t\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
-				"\r\nC999999\tMy9\tncit\tnull\t\t\t\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";
-	}
 	
 	private String getChildTabDelRestEntityOutput() {
 		return "code\tname\tlevel\tparent\tleaf\tchildren" +
