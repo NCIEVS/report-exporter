@@ -5,8 +5,8 @@
     <form-wizard
       @on-complete="onComplete"
       step-size="xs"
-      title="Search Branch Download"
-      subtitle="Steps to select a top node, its properties and download the results"
+      title="Resolved Branch Export"
+      subtitle="Steps to select a top node, its properties and export the results"
       finish-button-text="Download"
       color="#017ebe">
 
@@ -57,7 +57,7 @@
         <div class="container">
           <form>
             <div class="form-group">
-              <label for="selectedProperties">Select Properties to Output</label>
+              <label for="selectedProperties">Select properties to include in the export</label>
             </div>
             <div class="form-group">
               <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
@@ -130,9 +130,9 @@ export default {
       userSelectedFormat: 'JSON',
       curratedTopNodes: [],
       userSelectedTopNode: '',
-      filename: 'resolveBranch',
+      filename: 'branch',
       downloadReturnCode: null,
-      //baseUrl: 'http://localhost:8080',
+      // baseUrl: 'http://localhost:8080',
       baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
