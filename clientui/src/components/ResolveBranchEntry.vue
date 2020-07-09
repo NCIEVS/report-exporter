@@ -7,7 +7,7 @@
       step-size="xs"
       title="Resolved Branch Export"
       subtitle="Steps to select a top node, its properties and export the results"
-      finish-button-text="Download"
+      finish-button-text="Export"
       color="#017ebe">
 
       <!-- STEP 1: SELECT CODES -->
@@ -73,13 +73,13 @@
        </tab-content>
 
        <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
-       <tab-content icon="ti-download" title="Select Format and Download">
+       <tab-content icon="ti-download" title="Select Format and Export">
          <div class="container">
              <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
                  <form ref="formContainer">
                    <div class="form-group">
-                     <label for="downloadFormat">Select Format for Output</label>
+                     <label for="downloadFormat">Select Format for Export</label>
                      <v-select element-id="downloadFormat" v-model="userSelectedFormat"
                        :options="this.availableFormats" @input="value =>updateFormat(value)">
                      </v-select>
