@@ -1,6 +1,5 @@
 package gov.nih.nci.evs.report.exporter.util;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -26,15 +25,15 @@ class CSVUtilityTest {
 	
 	CSVUtility util;
 	
-	String csvOutLine1 = "code,name,terminology,parent,synonyms,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-	String csvOutLine2a = "C123234,Myent,ncit,null,";
-	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
-	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
-	String csvOutLine2d	= ",\"|NCI:defvalue|NOSOURCE:defvalue2|\",";
-	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\",\"|PropType2:propvalue2|\",";
-	String csvOutLine3 = "C000000,0ent,ncit,null,,,,,\"|Prop0Type:prop0value|\",\"|GO:0000075 prop0value2:TAS|\",";
-	String csvOutline4 = "C999999,My9,ncit,null,,,\"|PropType:prop9value3|\",,,,\"|Prop9Type:prop9value|\",\"|Prop9Type2:prop9value2|\",";
-	String csvOutline5 = "C2222,My2,ncit,null,,,\"|PropType:prop9value3|\",,,,\"|Prop9Type:prop9value|\",\"|Prop9Type2:prop9value2|\",\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"";
+	String csvOutLine1 = "terminology,code,name,parent,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLine2a = "ncit,C123234,Myent,null,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+//	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
+//	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
+//	String csvOutLine2d	= ",\"|NCI:defvalue|NOSOURCE:defvalue2|\",";
+//	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\",\"|PropType2:propvalue2|\",\r";
+	String csvOutLine3 = "ncit,C000000,0ent,null,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4 = "ncit,C999999,My9,null,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline5 = "ncit,C2222,My2,null,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	
 	BranchResolutionService service;
 
@@ -72,22 +71,18 @@ class CSVUtilityTest {
 		prop.setType("PropType");
 		prop.setValue("propvalue");
 		System.out.println(prop.toString());
-		assertEquals("PropType:propvalue", prop.toString());
+		assertEquals("propvalue", prop.toString());
 	}
 
 	@Test
 	void testProduceCSVOutputFromListWithHeading() {
 		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList());
 		String[] csvLines = csv.split(System.lineSeparator());
-		assertTrue(csvLines[0].contains(csvOutLine1));
-		assertTrue(csvLines[1].contains(csvOutLine2a));
-		assertTrue(csvLines[1].contains(csvOutLine2b));
-		assertTrue(csvLines[1].contains(csvOutLine2c));
-		assertTrue(csvLines[1].contains(csvOutLine2d));
-		assertTrue(csvLines[1].contains(csvOutLine2e));
-		assertTrue(csvLines[2].contains(csvOutLine3));
-		assertTrue(csvLines[3].contains(csvOutline4));
-		assertTrue(csvLines[4].contains(csvOutline5));
+		assertEquals(csvLines[0],csvOutLine1);
+		assertEquals(csvLines[1],csvOutLine2a);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
 	}
 	
 	private List<RestEntity> getRestEntityList() {
@@ -248,11 +243,6 @@ class CSVUtilityTest {
 		list.add(ent2);
 		return list;
 	}
-
-//	@Test
-//	void testProduceChildCSVOutputFromListWithHeading() {
-//		assertEquals(getChildCSVRestEntityOutput(), util.produceChildCSVOutputFromListWithHeading(getChildEntityList()));
-//	}
 	
 	private List<ChildEntity> getChildEntityList() {
 		ChildEntity entity = new ChildEntity();
@@ -358,23 +348,23 @@ class CSVUtilityTest {
 		
 	}
 	
-	private String getCSVRestEntityOutput() {
-		return "code,name,terminology,parent,synonyms,definitions,properties" +
-				"\r\nC123234,Myent,ncit,null,\"|NCIt synType:synName|NOSOURCE synType2:synName2|\",\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\",\"|PropType:propvalue|PropType2:propvalue2|\"" +
-				"\r\nC000000,0ent,ncit,null,null,null,\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
-				"\r\nC999999,My9,ncit,null,null,null,\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";	    
-	}
-	
-	private String getChildCSVRestEntityOutput() {
-		return "code,name,level,parent,leaf,children" +
-				"\r\nC00011,grandchild1,2,C00001:child1,true,null" +
-				"\r\nC00012,grandchild2,2,C00001:child1,true,null" +
-				"\r\nC00001,child1,1,C00000:parent,false,null" +
-				"\r\nC00002,child2,1,C00000:parent,true,null" +
-				"\r\nC00021,grandchild3,2,C00003:child3,true,null" +
-				"\r\nC00003,child3,1,C00000:parent,false,null" +
-				"\r\nC00000,parent,0," + CommonServices.TOP_NODE + ",false,null";
-	}
+//	private String getCSVRestEntityOutput() {
+//		return "code,name,terminology,parent,synonyms,definitions,properties" +
+//				"\r\nC123234,Myent,ncit,null,\"|NCIt synType:synName|NOSOURCE synType2:synName2|\",\"|NCI defType:defvalue|NOSOURCE defType2:defvalue2|\",\"|PropType:propvalue|PropType2:propvalue2|\"" +
+//				"\r\nC000000,0ent,ncit,null,null,null,\"|Prop0Type:prop0value|Prop0Type2:prop0value2|\"" +
+//				"\r\nC999999,My9,ncit,null,null,null,\"|Prop9Type:prop9value|Prop9Type2:prop9value2|\"";	    
+//	}
+//	
+//	private String getChildCSVRestEntityOutput() {
+//		return "code,name,level,parent,leaf,children" +
+//				"\r\nC00011,grandchild1,2,C00001:child1,true,null" +
+//				"\r\nC00012,grandchild2,2,C00001:child1,true,null" +
+//				"\r\nC00001,child1,1,C00000:parent,false,null" +
+//				"\r\nC00002,child2,1,C00000:parent,true,null" +
+//				"\r\nC00021,grandchild3,2,C00003:child3,true,null" +
+//				"\r\nC00003,child3,1,C00000:parent,false,null" +
+//				"\r\nC00000,parent,0," + CommonServices.TOP_NODE + ",false,null";
+//	}
 	
 	
 

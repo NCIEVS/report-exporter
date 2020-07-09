@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -20,13 +19,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
-public class ExcelUtility {
+public class ExcelUtility extends FormatUtility {
 	
 
+	
 	  public ByteArrayOutputStream  produceExcelOutputFromListWithHeading(List<RestEntity> entities) throws IOException {
 	    
 		//The fields of this class will become the headers of the row/column structures
-		Field[] fields = RestEntity.class.getDeclaredFields();
 	   
 //	    List<String> cols = Stream.of(fields).map(x -> x.getName()).collect(Collectors.toList());
 	    //Init the workbook for Excel
@@ -47,10 +46,10 @@ public class ExcelUtility {
 	 
 	    // First part of the header, before we know what properties are there
 	    int col = 0;
-	    for (Field field: fields) {
-	      if(field.getName().equals("properties")) {break;}
+	    for (String field: FIELDS) {
+	      if(field.equals("properties")) {break;}
 	      Cell cell = headerRow.createCell(col);
-	      cell.setCellValue(fields[col].getName());
+	      cell.setCellValue(FIELDS[col]);
 	      cell.setCellStyle(headerCellStyle);
 	      col++;
 	    }
@@ -81,12 +80,13 @@ public class ExcelUtility {
 	    				  entity.getDefinitions() != null?
 	    						  entity.getDefinitions().toString():
 	    							  "no definitions"));	
+	      row.createCell(6).setCellValue(
+	    		  CommonServices.cleanListOutPut(CommonServices.getListValues(
+	    				  entity.getMaps())));
 	      //Process the properties to rows and columns adding properties as we go
 	      		  int index = services.setPropertyRowOutPut(
-	    				  entity.getProperties(), row, 6);
-	    	      row.createCell(index).setCellValue(
-	    	    		  CommonServices.cleanListOutPut(CommonServices.getListValues(
-	    	    				  entity.getMaps())));
+	    				  entity.getProperties(), row, 7);
+
 	      //Clearing property list for the next entity, leaving type and position metadata
 	    		  services.clearPropertyListsFromHeaderMap();		  
 	    }
@@ -100,10 +100,10 @@ public class ExcelUtility {
 	      cell.setCellStyle(headerCellStyle);
 	      col++;}
 	    //Finally add the maps property to the the headings
-	    Cell cell = headerRow.createCell(col);
-	      cell.setCellValue("Maps_To");
-	      cell.setCellStyle(headerCellStyle);
-	      col++;
+//	    Cell cell = headerRow.createCell(col);
+//	      cell.setCellValue("Maps_To");
+//	      cell.setCellStyle(headerCellStyle);
+//	      col++;
 	   //Setup the output stream for download
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	   workbook.write(stream);

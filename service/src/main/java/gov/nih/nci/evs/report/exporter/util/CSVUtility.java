@@ -8,35 +8,32 @@ import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
 
-public class CSVUtility {
+public class CSVUtility extends FormatUtility {
+
 	
 
 	public String produceCSVOutputFromListWithHeading(List<RestEntity> list) {
 		CommonServices services = new CommonServices();
 		StringBuffer firstLine = new StringBuffer();
 		String separator = ",";
-		Field[] fields = RestEntity.class.getDeclaredFields();
 		StringBuffer oneLine = new StringBuffer();
 		list.stream().forEach(x -> { x.getProperties()
 			.stream()
 			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));       
 				oneLine.append(
-				"\r\n" + x.getCode() + 
-				separator + x.getName() + 
-				separator + x.getTerminology() + 
+				"\r\n" + x.getTerminology() + 
+				separator + x.getCode() + 
+				separator + x.getName() +  
 				separator + x.getParent() +
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
-				separator + services.calculateAndProduceSpacedTerms(separator) +
-				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getMaps())));
+				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getMaps())) +
+				separator + services.calculateAndProduceSpacedTerms(separator));				
 				services.clearPropertyListsFromHeaderMap();});
 		
-		Stream.of(fields).filter(item -> 
-			!item.getName().equals("properties") && 
-			!item.getName().equals("maps")).forEach(x -> firstLine.append(x.getName() + separator));
+		Stream.of(FIELDS).forEach(x -> firstLine.append(x + separator));
 		firstLine.replace(firstLine.lastIndexOf(separator), firstLine.length(), "");
 		services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append(separator + type));
-		firstLine.append(separator + "Maps_To");
 		oneLine.insert(0, firstLine);
 	    System.out.println(oneLine.toString());
 		return oneLine.toString();

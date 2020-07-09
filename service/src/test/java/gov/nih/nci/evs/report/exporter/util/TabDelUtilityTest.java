@@ -23,17 +23,11 @@ class TabDelUtilityTest {
 	TabDelUtility util;
 	
 	BranchResolutionService service;
-	
-	String csvOutLine1 = "code\tname\tterminology\tparent\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\tMaps_To\r";
-	String csvOutLine2a = "C123234\tMyent\tncit\tnull\t";
-	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
-	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
-	String csvOutLine2d	= "\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t";
-	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\"\t\"|PropType2:propvalue2|\"";
-	String csvOutLine3 = "C000000\t0ent\tncit\tnull\t\t\t\t\t\"|Prop0Type:prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\t\r";
-	String csvOutline4 = "C999999\tMy9\tncit\tnull\t\t\t\"|PropType:prop9value3|\"\t\t\t\t\"|Prop9Type:prop9value|\"\t\"|Prop9Type2:prop9value2|\"\t\r";
-	String csvOutline5 = "C2222\tMy2\tncit\tnull\t\t\t\"|PropType:prop9value3|\"\t\t\t\t\"|Prop9Type:prop9value|\"\t\"|Prop9Type2:prop9value2|\"\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"";
-	
+	String csvOutLine1 = "terminology\tcode\tname\tparent\tsynonyms\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String csvOutLine2a = "ncit\tC123234\tMyent\tnull\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3 = "ncit\tC000000\t0ent\tnull\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4 = "ncit\tC999999\tMy9\tnull\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5 = "ncit\tC2222\tMy2\tnull\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -46,11 +40,7 @@ class TabDelUtilityTest {
 		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList());
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLine1);
-		assertTrue(csvLines[1].contains(csvOutLine2a));
-		assertTrue(csvLines[1].contains(csvOutLine2b));
-		assertTrue(csvLines[1].contains(csvOutLine2c));
-		assertTrue(csvLines[1].contains(csvOutLine2d));
-		assertTrue(csvLines[1].contains(csvOutLine2e));
+		assertEquals(csvLines[1],csvOutLine2a);
 		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
 		assertEquals(csvLines[4],csvOutline5);

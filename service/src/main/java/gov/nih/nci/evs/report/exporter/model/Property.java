@@ -27,8 +27,7 @@ public class Property extends PropertyPrime {
 						+ getQualsValue(qualifiers, "go-evi");
 		}
 		
-		return (super.getType()==null?NOTYPE:super.getType())
-				+ ":" + (value==null?UNDEFINED:value);
+		return value==null?UNDEFINED:value;
 	}
 
 }
