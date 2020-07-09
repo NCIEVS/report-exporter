@@ -27,7 +27,7 @@ public class ExcelUtility {
 		//The fields of this class will become the headers of the row/column structures
 		Field[] fields = RestEntity.class.getDeclaredFields();
 	   
-	    List<String> cols = Stream.of(fields).map(x -> x.getName()).collect(Collectors.toList());
+//	    List<String> cols = Stream.of(fields).map(x -> x.getName()).collect(Collectors.toList());
 	    //Init the workbook for Excel
 	    Workbook workbook = new XSSFWorkbook();
 	    //Init the services to maintain an instance of the prooerty cache
