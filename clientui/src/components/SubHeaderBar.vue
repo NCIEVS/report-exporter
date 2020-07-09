@@ -1,35 +1,25 @@
 <template>
-
   <div class="subheader">
-    <nav class="navbar navbar-expand-md navbar-dark fixed evs-subheader">
+    <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
       <router-link v-bind:to="'/'">
-      <a class="navbar-brand active" href="#" target="_blank">Home</a>
+        <a class="navbar-brand active" href="#">Home</a>
       </router-link>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <!-- Leave empty for correct alignment -->
-          </li>
-        </ul>
-        <span class="navbar-text">
-          <ul class="navbar-nav mr-auto">
+      <div class="navbar-collapse collapse" id="collapsingNavbarSubHeader">
 
-              <li class="nav-item">
-                <a class="nav-link" href="#">Documentation</a>
-              </li>
-               <li class="nav-item">
-                <a class="nav-link" href="#">Help</a>
-              </li>
-
-            </ul>
-        </span>
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Documentation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+          </ul>
       </div>
     </nav>
   </div>
-
 </template>
 
 <script>
@@ -44,17 +34,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-
 .evs-subheader {
-  
-  position:sticky;
-  top: 0;
-  width: 100%;
-  color:#fff;
-  background-color: #017ebe;
-  height: 40px; 
+    background-color: #017ebe;
+    padding: 0 30px 2px;
 }
-
 .navbar-brand {
    font-size: 16px;
 }
@@ -78,5 +61,3 @@ a {
 */
 
 </style>
-
-

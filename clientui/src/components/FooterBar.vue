@@ -1,31 +1,31 @@
 <template>
-<div class="footer">
-	<div class="footer navbar-inverse navbar-fixed-bottom">
-		<div class="center-block">
-			<div class="small navbar-text text-center">
-				<p>
-					<a href="http://www.cancer.gov/global/web/policies" title="link to NCI Policies">Policies</a>
-					&nbsp; | &nbsp;
-					<a href="http://www.cancer.gov/global/web/policies/accessibility" title="link to NCI Accessibility Policies">Accessibility</a>
-					&nbsp; | &nbsp;
-					<a href="http://www.cancer.gov/global/viewing-files" title="link to NCI Tools for Viewing Files">Viewing Files</a>
-					&nbsp; | &nbsp;
-					<a href="http://www.cancer.gov/global/web/policies/foia" title="link to FOIA">FOIA</a>
-				</p>
-				<p>
-					<a href="http://www.hhs.gov/" target="_blank" title="link to HHS.gov">U.S. Department of Health and Human Services</a>
-					&nbsp; | &nbsp;
-					<a href="http://www.nih.gov/" target="_blank" title="link to NIH.gov">National Institutes of Health</a>
-					&nbsp; | &nbsp;
-					<a href="http://www.cancer.gov/" title="link to Cancer.gov">National Cancer Institute</a>
-					&nbsp; | &nbsp;
-					<a href="http://www.usa.gov/" target="_blank" title="link to USA.gov">USA.gov</a>
-				</p>
-				<p>NIH… Turning Discovery Into Health ®</p>
+	<div class="footer">
+		<div class="footer navbar-inverse navbar-fixed-bottom">
+			<div class="center-block">
+				<div class="small navbar-text text-center">
+					<p>
+						<a href="http://www.cancer.gov/global/web/policies" title="link to NCI Policies">Policies</a>
+						&nbsp; | &nbsp;
+						<a href="http://www.cancer.gov/global/web/policies/accessibility" title="link to NCI Accessibility Policies">Accessibility</a>
+						&nbsp; | &nbsp;
+						<a href="http://www.cancer.gov/global/viewing-files" title="link to NCI Tools for Viewing Files">Viewing Files</a>
+						&nbsp; | &nbsp;
+						<a href="http://www.cancer.gov/global/web/policies/foia" title="link to FOIA">FOIA</a>
+					</p>
+					<p>
+						<a href="http://www.hhs.gov/" target="_blank" title="link to HHS.gov">U.S. Department of Health and Human Services</a>
+						&nbsp; | &nbsp;
+						<a href="http://www.nih.gov/" target="_blank" title="link to NIH.gov">National Institutes of Health</a>
+						&nbsp; | &nbsp;
+						<a href="http://www.cancer.gov/" title="link to Cancer.gov">National Cancer Institute</a>
+						&nbsp; | &nbsp;
+						<a href="http://www.usa.gov/" target="_blank" title="link to USA.gov">USA.gov</a>
+					</p>
+					<p>NIH… Turning Discovery Into Health ®</p>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <script>
@@ -41,7 +41,7 @@ export default {
 <style scoped>
 
 .footer {
-	position: sticky;
+	/* position: relative; */
 	bottom: 0;
 	width: 100%;
 	border:1px solid #1c5e86;
@@ -63,8 +63,8 @@ a {
 	color: #fff;
 }
 
-a:link { 
-	color: #fff; 
+a:link {
+	color: #fff;
 	text-decoration: none
 }
 

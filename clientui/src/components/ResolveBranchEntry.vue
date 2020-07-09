@@ -5,9 +5,9 @@
     <form-wizard
       @on-complete="onComplete"
       step-size="xs"
-      title="Search Branch Download"
-      subtitle="Steps to select a top node, its properties and download the results"
-      finish-button-text="Download"
+      title="Resolved Branch Export"
+      subtitle="Steps to select a top node, its properties and export the results"
+      finish-button-text="Export"
       color="#017ebe">
 
       <!-- STEP 1: SELECT CODES -->
@@ -57,7 +57,7 @@
         <div class="container">
           <form>
             <div class="form-group">
-              <label for="selectedProperties">Select Properties to Output</label>
+              <label for="selectedProperties">Select properties to include in the export</label>
             </div>
             <div class="form-group">
               <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
@@ -73,13 +73,13 @@
        </tab-content>
 
        <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
-       <tab-content icon="ti-download" title="Select Format and Download">
+       <tab-content icon="ti-download" title="Select Format and Export">
          <div class="container">
              <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
                  <form ref="formContainer">
                    <div class="form-group">
-                     <label for="downloadFormat">Select Format for Output</label>
+                     <label for="downloadFormat">Select Format for Export</label>
                      <v-select element-id="downloadFormat" v-model="userSelectedFormat"
                        :options="this.availableFormats" @input="value =>updateFormat(value)">
                      </v-select>
@@ -130,9 +130,9 @@ export default {
       userSelectedFormat: 'JSON',
       curratedTopNodes: [],
       userSelectedTopNode: '',
-      filename: 'resolveBranch',
+      filename: 'branch',
       downloadReturnCode: null,
-      //baseUrl: 'http://localhost:8080',
+      // baseUrl: 'http://localhost:8080',
       baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[

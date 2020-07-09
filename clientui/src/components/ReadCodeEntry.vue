@@ -5,13 +5,13 @@
     <form-wizard
       @on-complete="onComplete"
       step-size="xs"
-      title="Search Codes Download"
-      subtitle="Steps to select concept codes, their properties and download the results"
-      finish-button-text="Download"
+      title="Entity Export"
+      subtitle="Steps to select concept codes, their properties and export the results"
+      finish-button-text="Export"
       color="#017ebe">
 
       <!-- STEP 1: SELECT CODES -->
-      <tab-content icon="ti-settings" title="Select Concept Codes"
+      <tab-content icon="ti-settings" title="Select Concept Codes for Entity Export"
         :before-change="validateFirstStep">
         <div class="container">
           <div class="container">
@@ -45,7 +45,7 @@
         <div class="container">
           <form>
             <div class="form-group">
-              <label for="selectedProperties">Select Properties to Output</label>
+              <label for="selectedProperties">Select properties to include in the export</label>
             </div>
             <div class="form-group">
               <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
@@ -61,13 +61,13 @@
       </tab-content>
 
       <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
-      <tab-content icon="ti-download" title="Select Format and Download">
+      <tab-content icon="ti-download" title="Select Format and Export">
         <div class="container">
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
                 <form ref="formContainer">
                   <div class="form-group">
-                    <label for="downloadFormat">Select Format for Output</label>
+                    <label for="downloadFormat">Select Format for Export</label>
                     <v-select element-id="downloadFormat" v-model="userSelectedFormat"
                       :options="this.availableFormats" @input="value =>updateFormat(value)">
                     </v-select>
@@ -116,9 +116,9 @@ export default {
       userSelectedProperyNames: [],
       availableFormats: [],
       userSelectedFormat: 'JSON',
-      filename: 'readCodes',
+      filename: 'entities',
       downloadReturnCode: null,
-      //baseUrl: 'http://localhost:8080',
+      // baseUrl: 'http://localhost:8080',
       baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
@@ -272,9 +272,7 @@ export default {
 /* #read-codes-entry{
   top: 60;
 } */
-.modal-active{
-	display:block;
-}
+
 .msl-multi-select {
   /* make the multi-select take up the entire width of the container */
   width: 100%
