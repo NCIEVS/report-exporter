@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -63,7 +64,6 @@ public class ExcelUtility {
 			.stream()
 			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));
 	      Row row = sheet.createRow(i++);
-	 
 	      //Create a set of rows for the static values
 	      row.createCell(0).setCellValue(entity.getCode());
 	      row.createCell(1).setCellValue(entity.getName());

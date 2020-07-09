@@ -41,13 +41,12 @@ public class PropertyMap extends PropertyPrime{
 	
 	public String toString() {
 
-			return  targetTerminology  + " " +
-						 targetTerminologyVersion + " " +
-					     targetTermGroup + " " +
-						 targetCode + " " +
-					     targetName 
-					     + ":" +
-						 getType();
+			return  (targetTerminology == null?"":targetTerminology  + " ") +
+						 (targetTerminologyVersion == null?"":targetTerminologyVersion + " ") +
+					     (targetTermGroup  == null?"":targetTermGroup + " ") +
+						 (targetCode == null?"":targetCode + " ") +
+					     (targetName  == null?"":targetName + ":") +
+						 (getType() == null?"":getType());
 
 	}
     

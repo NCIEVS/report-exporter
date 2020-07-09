@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
+import gov.nih.nci.evs.report.exporter.model.PropertyMap;
+import gov.nih.nci.evs.report.exporter.model.Qualifier;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
@@ -22,14 +24,15 @@ class TabDelUtilityTest {
 	
 	BranchResolutionService service;
 	
-	String csvOutLine1 = "code\tname\tterminology\tparent\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tProp0Type2\tProp9Type\tProp9Type2";
+	String csvOutLine1 = "code\tname\tterminology\tparent\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\tMaps_To\r";
 	String csvOutLine2a = "C123234\tMyent\tncit\tnull\t";
 	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
 	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
 	String csvOutLine2d	= "\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t";
 	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\"\t\"|PropType2:propvalue2|\"";
-	String csvOutLine3 = "C000000\t0ent\tncit\tnull\t\t\t\t\t\"|Prop0Type:prop0value|\"\t\"|Prop0Type2:prop0value2|\"";
-	String csvOutline4 = "C999999\tMy9\tncit\tnull\t\t\t\"|PropType:prop9value2|\"\t\t\t\t\"|Prop9Type:prop9value|\"\t\"|Prop9Type2:prop9value2|\"";
+	String csvOutLine3 = "C000000\t0ent\tncit\tnull\t\t\t\t\t\"|Prop0Type:prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\t\r";
+	String csvOutline4 = "C999999\tMy9\tncit\tnull\t\t\t\"|PropType:prop9value3|\"\t\t\t\t\"|Prop9Type:prop9value|\"\t\"|Prop9Type2:prop9value2|\"\t\r";
+	String csvOutline5 = "C2222\tMy2\tncit\tnull\t\t\t\"|PropType:prop9value3|\"\t\t\t\t\"|Prop9Type:prop9value|\"\t\"|Prop9Type2:prop9value2|\"\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"";
 	
 
 	@BeforeEach
@@ -42,14 +45,15 @@ class TabDelUtilityTest {
 	void testProduceCSVOutputFromListWithHeading() {
 		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList());
 		String[] csvLines = csv.split(System.lineSeparator());
-		assertTrue(csvLines[0].contains(csvOutLine1));
+		assertEquals(csvLines[0],csvOutLine1);
 		assertTrue(csvLines[1].contains(csvOutLine2a));
 		assertTrue(csvLines[1].contains(csvOutLine2b));
 		assertTrue(csvLines[1].contains(csvOutLine2c));
 		assertTrue(csvLines[1].contains(csvOutLine2d));
 		assertTrue(csvLines[1].contains(csvOutLine2e));
-		assertTrue(csvLines[2].contains(csvOutLine3));
+		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4],csvOutline5);
 	}
 	
 	private List<RestEntity> getRestEntityList() {
@@ -112,8 +116,26 @@ class TabDelUtilityTest {
 		prop1.setType("Prop0Type");
 		prop1.setValue("prop0value");
 		Property prop0 = new Property();
-		prop0.setType("Prop0Type2");
+		prop0.setType("GO_Annotation");
 		prop0.setValue("prop0value2");
+		Qualifier qual = new Qualifier();
+		Qualifier qual1 = new Qualifier();
+		Qualifier qual2 = new Qualifier();
+		Qualifier qual3 = new Qualifier();
+		qual.setType("go-evi");
+		qual.setValue("TAS");
+		qual1.setType("go-id");
+		qual1.setValue("GO:0000075");
+		qual2.setType("source-date");
+		qual2.setValue("29-SEP-2003");
+		qual3.setType("go-source");
+		qual3.setValue("CGAP");
+		List<Qualifier> quallist = new ArrayList<Qualifier>();
+		quallist.add(qual);
+		quallist.add(qual1);
+		quallist.add(qual2);
+		quallist.add(qual3);
+		prop0.setQualifiers(quallist);
 		props1.add(prop1);
 		props1.add(prop0);
 		ent1.setProperties(props1);
@@ -131,22 +153,67 @@ class TabDelUtilityTest {
 		prop29.setValue("prop9value2");
 		Property prop39 = new Property();
 		prop39.setType("PropType");
-		prop39.setValue("prop9value2");
+		prop39.setValue("prop9value3");
 		props9.add(prop9);
 		props9.add(prop29);
 		props9.add(prop39);
 		ent9.setProperties(props9);
+		
+		
+		RestEntity ent2 = new RestEntity();
+		ent2.setCode("C2222");
+		ent2.setName("My2");
+		ent2.setTerminology("ncit");
+		List<Property> props2 = new ArrayList<Property>();
+		Property prop2a = new Property();
+		prop2a.setType("Prop2Type");
+		prop2a.setValue("prop2value");
+		Property prop22 = new Property();
+		prop22.setType("Prop2Type2");
+		prop22.setValue("prop2value2");
+		Property prop32 = new Property();
+		prop32.setType("PropType");
+		prop32.setValue("prop2value3");
+		props2.add(prop2);
+		props2.add(prop22);
+		props2.add(prop32);
+		ent2.setProperties(props9);
+		List<PropertyMap> maps = new ArrayList<PropertyMap>();
+		PropertyMap map = new PropertyMap();
+		map.setType("Has Synonym");
+		map.setTargetName("Acute myeloid leukemia, NOS");
+		map.setTargetTermGroup("PT");
+		map.setTargetCode("PD");
+		map.setTargetTerminology("GDC");
+		
+		PropertyMap map1 = new PropertyMap();
+		map1.setType("Related To");
+		map1.setTargetName("Acute myeloid leukemia, NOS");
+		map1.setTargetTermGroup("PT");
+		map1.setTargetCode("9861/3");
+		map1.setTargetTerminology("ICDO3");
+		map1.setTargetTerminologyVersion("3.1");
+		
+		PropertyMap map2 = new PropertyMap();
+		map2.setType("Related To");
+		map2.setTargetName("Acute myeloid leukemia, NOS");
+		map2.setTargetTermGroup("PT");
+		map2.setTargetCode("9861/3");
+		map2.setTargetTerminology("ICDO3");
+		map2.setTargetTerminologyVersion("3.2");
+		maps.add(map);
+		maps.add(map1);
+		maps.add(map);
+		
+		ent2.setMaps(maps);
+		
 
 		list.add(ent);
 		list.add(ent1);
 		list.add(ent9);
+		list.add(ent2);
 		return list;
 	}
-
-//	@Test
-//	void testProduceChildTabDelOutputFromListWithHeading() {
-//		assertEquals(getChildTabDelRestEntityOutput(), util.produceChildTabDelOutputFromListWithHeading(getChildEntityList()));
-//	}
 	
 	private List<ChildEntity> getChildEntityList() {
 		ChildEntity entity = new ChildEntity();
