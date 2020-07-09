@@ -82,8 +82,11 @@ public class ExcelUtility {
 	    						  entity.getDefinitions().toString():
 	    							  "no definitions"));	
 	      //Process the properties to rows and columns adding properties as we go
-	    		  services.setPropertyRowOutPut(
+	      		  int index = services.setPropertyRowOutPut(
 	    				  entity.getProperties(), row, 6);
+	    	      row.createCell(index).setCellValue(
+	    	    		  CommonServices.cleanListOutPut(CommonServices.getListValues(
+	    	    				  entity.getMaps())));
 	      //Clearing property list for the next entity, leaving type and position metadata
 	    		  services.clearPropertyListsFromHeaderMap();		  
 	    }
@@ -96,6 +99,11 @@ public class ExcelUtility {
 	      cell.setCellValue(s);
 	      cell.setCellStyle(headerCellStyle);
 	      col++;}
+	    //Finally add the maps property to the the headings
+	    Cell cell = headerRow.createCell(col);
+	      cell.setCellValue("Maps_To");
+	      cell.setCellStyle(headerCellStyle);
+	      col++;
 	   //Setup the output stream for download
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	   workbook.write(stream);

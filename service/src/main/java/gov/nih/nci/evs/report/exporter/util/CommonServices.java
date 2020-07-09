@@ -88,11 +88,6 @@ public class CommonServices {
 		return propHeaderMap.get(value).getPos();
 	}
 	
-//	public String setAndReturnSpacedItems(String key, String separator) {
-//		return flattenListValues(
-//				getOrderedPropertyLists(propHeaderMap), separator);
-//	}
-	
 	public String flattenListValues(List<List<Property>> list, String separator) {
 		return list
 				.stream()
@@ -101,10 +96,11 @@ public class CommonServices {
 				.replaceFirst(separator, "");
 	}
 	
-	public void flattenListValuesIntoRowCells(List<List<Property>> list, Row row, int index) {	
+	public int flattenListValuesIntoRowCells(List<List<Property>> list, Row row, int index) {	
 		for(List<Property> prop: list) {
 		row.createCell(index).setCellValue(getListValues(prop)); index++;
 		}
+		return index;
 	}
 	
 	public static <T> String getListValuesWithPipeDelimiter(List<T> list) {
@@ -192,9 +188,9 @@ public class CommonServices {
 		  return parentCode.equals(code);
 	 }
 	  
-	  public void setPropertyRowOutPut(List<Property> properties, Row row, int index) {
+	  public int setPropertyRowOutPut(List<Property> properties, Row row, int index) {
 
-			this.flattenListValuesIntoRowCells(getOrderedPropertyLists(propHeaderMap), row, index);
+			return this.flattenListValuesIntoRowCells(getOrderedPropertyLists(propHeaderMap), row, index);
 	  }
 	  
 	 public static void main(String ...strings) {

@@ -27,14 +27,15 @@ public class TabDelUtility {
 				separator + x.getParent() +
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
-				separator + services.calculateAndProduceSpacedTerms(separator));
+				separator + services.calculateAndProduceSpacedTerms(separator) +
+				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getMaps())));
 			    services.clearPropertyListsFromHeaderMap();});
-		
 				Stream.of(fields).filter(item -> 
 				!item.getName().equals("properties") && 
 				!item.getName().equals("maps")).forEach(x -> firstLine.append(x.getName() + separator));
 			firstLine.replace(firstLine.lastIndexOf(separator), firstLine.length(), "");
 			services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append(separator + type));
+			firstLine.append(separator + "Maps_To");
 			oneLine.insert(0, firstLine);
 		System.out.println(oneLine.toString());
 		return oneLine.toString();
