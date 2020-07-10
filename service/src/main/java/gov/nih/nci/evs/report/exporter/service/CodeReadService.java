@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
+import gov.nih.nci.evs.report.exporter.model.PropertyMap;
 import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
@@ -22,11 +23,14 @@ public class CodeReadService {
 	@Value("${SUMMARY}")
 	private String summary;
 	
+	@Value("${MAPS}")
+	private String maps;
+	
 	public List<RestEntity> getRestEntities(List<String> codes){
 		List<RestEntity> propMeta = 
 				codes.stream().map(code -> CommonServices.getRestTemplate()
 				.getForObject(
-				baseURL + code + summary
+				baseURL + code + summary + "," + maps
 						, RestEntity.class)).collect(Collectors.toList());
 		return propMeta;
 	}
@@ -34,7 +38,7 @@ public class CodeReadService {
 	public RestEntity getRestEntityWithParent(String code, String parent){
 		RestEntity entity = CommonServices.getRestTemplate()
 				.getForObject(
-				baseURL + code + summary
+				baseURL + code + summary + "," + maps
 						, RestEntity.class);
 			entity.setParent(parent);
 		return entity;
@@ -51,6 +55,8 @@ public class CodeReadService {
 						(List<Definition>)filterProperties(entity.getDefinitions(), propList));
 					entity.setSynonyms(
 						(List<Synonym>)filterProperties(entity.getSynonyms(), propList));
+					entity.setMaps(
+							(List<PropertyMap>)filterProperties(entity.getMaps(), propList));
 				});
 		return list;
 	}
@@ -64,12 +70,15 @@ public class CodeReadService {
 						(List<Definition>)filterProperties(entity.getDefinitions(), propList));
 					entity.setSynonyms(
 						(List<Synonym>)filterProperties(entity.getSynonyms(), propList));
+					entity.setMaps(
+							(List<PropertyMap>)filterProperties(entity.getMaps(), propList));
 				
 		return entity;
 	}
 	
 	public List<? extends PropertyPrime> filterProperties(List<? extends PropertyPrime> propList, List<String> list){
 		if(propList == null) {return null;}
+		if(propList.get(0) instanceof PropertyMap && list.contains("Maps_To")) {return propList;}
 		return propList.stream().filter(
 				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());

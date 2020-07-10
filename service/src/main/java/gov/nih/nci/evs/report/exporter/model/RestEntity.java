@@ -20,6 +20,8 @@ public class RestEntity {
 	private List<Definition> definitions;
 	
 	private List<Property> properties;
+	
+	private List<PropertyMap> maps;
 
 	public String getCode() {
 		return code;
@@ -77,6 +79,14 @@ public class RestEntity {
 		this.properties = properties;
 	}
 	
+	public List<PropertyMap> getMaps() {
+		return maps;
+	}
+
+	public void setMaps(List<PropertyMap> maps) {
+		this.maps = maps;
+	}
+
 	public String toString() {
 		return "Code: " + code + " name: " + name;
 	}
