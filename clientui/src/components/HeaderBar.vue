@@ -1,39 +1,31 @@
 <template>
 
   <div class="header">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top evs-header">
+    <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
       <a class="navbar-brand active" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <!-- Leave empty for correct alignment -->
-          </li>
-        </ul>
-        <span class="navbar-text">
-          <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">About Cancer<span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Research</a>
-              </li>
-               <li class="nav-item">
-                <a class="nav-link" href="#">Grants & Training</a>
-              </li>
-               <li class="nav-item">
-                <a class="nav-link" href="#">News & Events</a>
-              </li>
-               <li class="nav-item">
-                <a class="nav-link" href="#">About NCI</a>
-              </li>
-            </ul>
-        </span>
+      <div class="navbar-collapse collapse" id="collapsingNavbarHeader">
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">About Cancer<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Research</a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="#">Grants & Training</a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="#">News & Events</a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="#">About NCI</a>
+            </li>
+          </ul>
       </div>
     </nav>
-
   </div>
 
   <!--div class="header">
@@ -55,12 +47,9 @@
 <style scoped>
 
 .evs-header {
-  position:sticky;
-  top: 0;
-  width: 100%;
   color:#fff;
   background-color: #1c5e86;
-  height: 30px; 
+  padding: 0 30px 2px;
 }
 
 .navbar-brand {
@@ -69,7 +58,9 @@
 a {
   font-size: 10px;
 }
-
+.button {
+  padding: 0;
+}
 /*  To control link and mouse over links
 .navbar a  {
   color: yellow;
@@ -86,5 +77,3 @@ a {
 */
 
 </style>
-
-

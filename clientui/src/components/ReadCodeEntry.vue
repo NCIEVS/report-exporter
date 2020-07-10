@@ -1,69 +1,84 @@
 <template>
-  <div id="read-codes-entry">
+  <div id="read-codes-entry" class="container">
 
-    <div class="container px-lg-5">
-      <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-5">
-         <div class="col py-3 px-lg-5"> </div>
-        <div class="col">
-          <h5> NCI Thesaurus Entity Codes</h5>
+    <!-- WIZARD DECLARATION -->
+    <form-wizard
+      @on-complete="onComplete"
+      step-size="xs"
+      title="Entity Export"
+      subtitle="Steps to select concept codes, their properties and export the results"
+      finish-button-text="Export"
+      color="#017ebe">
+
+      <!-- STEP 1: SELECT CODES -->
+      <tab-content icon="ti-settings" title="Select Concept Codes for Entity Export"
+        :before-change="validateFirstStep">
+        <div class="container">
+          <div class="container">
+              <div class="row justify-content-center">
+                 <div class="col-12 col-md-6">
+                    <form>
+                      <div class="form-group">
+                        <label for="tags">Enter NCI Thesaurus concept codes</label>
+
+                        <tags-input element-id="tags"
+                          v-model="selectedTags" placeholder="Type entity code, then space"
+                          :add-tags-on-comma="true"
+                          :add-tags-on-space="true"
+                          :case-sensitive-tags="true"
+                          :typeahead="false"
+                          @tag-added="value =>onTagAdded(value)">
+                        </tags-input>
+
+                      </div>
+                    </form>
+                 </div>
+              </div>
+          </div>
         </div>
-        <div class="col">
-            <tags-input element-id="tags"
-              v-model="selectedTags" placeholder="Type entity code, then space"
-              
-              :add-tags-on-comma="true"
-              :add-tags-on-space="true"
-              :typeahead="false"></tags-input>
+      </tab-content>
+
+      <!-- STEP 2: SELECT PROPERTIES -->
+      <tab-content icon="ti-view-list-alt" title="Select Properties"
+        :before-change="validatePropertyStep">
+
+        <div class="container">
+          <form>
+            <div class="form-group">
+              <label for="selectedProperties">Select properties to include in the export</label>
+            </div>
+            <div class="form-group">
+              <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
+                  :reduce-display-property="(option) => option.name"
+                  :reduce-value-property="(option) => option.code"
+                  search-input-class="custom-input-class"
+                  search-options-placeholder="Search properties"
+                  selected-options-placeholder="Search selected properties">
+              </v-multiselect-listbox>
+            </div>
+          </form>
         </div>
-        <div class="col py-5">
-            <button class="btn btn-primary" :disabled='!(Object.keys(this.selectedTags).length>0)' v-on:click="getEntities">Search</button>
+      </tab-content>
+
+      <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
+      <tab-content icon="ti-download" title="Select Format and Export">
+        <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-12 col-md-6">
+                <form ref="formContainer">
+                  <div class="form-group">
+                    <label for="downloadFormat">Select Format for Export</label>
+                    <v-select element-id="downloadFormat" v-model="userSelectedFormat"
+                      :options="this.availableFormats" @input="value =>updateFormat(value)">
+                    </v-select>
+                   </div>
+                </form>
+             </div>
+           </div>
         </div>
-      </div>
+      </tab-content>
 
-      <div v-if="this.entityList.length"  class="row row-cols-1 row justify-content-start row mx-lg-n5 py-1">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Code</th>
-              <th scope="col">Preferred Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="code in entityList" v-bind:key="code.code">
-              <td>{{code.code}}</td>
-              <td>{{code.name}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="row row-cols-1 row justify-content-start row mx-lg-n5 py-1">
-        <h3> Select Property to Output </h3>
-
-          <v-multiselect-listbox v-model="selectedProperties" :options="this.availableProperties"
-                       :reduce-display-property="(option) => option.name"
-                       :reduce-value-property="(option) => option.code"
-                       search-input-class="custom-input-class"
-                       search-options-placeholder="Search properties"
-                       selected-options-placeholder="Search selected properties">
-        </v-multiselect-listbox>
-        <div>
-          <h3> Select Format for Output </h3>
-          <v-select
-            :options="this.availableFormats" @input="value =>updateFormat(value)">
-          </v-select>
-        </div>
-
-      </div>
-
-      <div class="row mx-lg-n5 py-1 ">
-          <button class="btn btn-primary" 
-              :disabled='!(Object.keys(this.selectedTags).length > 0  && Object.keys(this.selectedProperties).length>0 && this.userSelectedExtension.length >0)' 
-              v-on:click="downloadFile">Download</button>
-      </div>
-
-    </div>
-
+    </form-wizard>
   </div>
 </template>
 
@@ -75,6 +90,8 @@ import vMultiselectListbox from 'vue-multiselect-listbox'
 import vSelect from 'vue-select'
 import api from '../api.js';
 import axios from 'axios';
+import {FormWizard, TabContent} from 'vue-form-wizard';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   name: 'read-code-entry',
@@ -84,7 +101,9 @@ export default {
   components: {
     'tags-input': VoerroTagsInput,
     'vMultiselectListbox': vMultiselectListbox,
-    'v-select': vSelect
+    'v-select': vSelect,
+    FormWizard,
+    TabContent
   },
   data(){
     return {
@@ -97,36 +116,60 @@ export default {
       userSelectedProperyNames: [],
       availableFormats: [],
       userSelectedFormat: 'JSON',
-      filename: 'readCodes',
+      filename: 'entities',
       downloadReturnCode: null,
+      // baseUrl: 'http://localhost:8080',
       baseUrl: '',
-      userSelectedExtension: '',
+      userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
         { id: 'CSV', name: 'csv' },
         { id: 'TABD', name: 'txt' },
         { id: 'EXCEL', name: 'xlsx' }
-      ]
+      ],
+      curratedTopNodesUI:[],
     }
   },
-  
+
   methods: {
-      setSelectedTags() {
-        // clear the internal user codes that are entered
-        this.userEnteredCodes = []
-          
-        for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-          this.userEnteredCodes.push(this.selectedTags[i].value)
-        }
-      },
+    // Wizard methods
+    validateFirstStep() {
+      // make sure the user has a code entered
+      return Object.keys(this.selectedTags).length>0
+    },
 
-      setSelectedPropertyNames() {
-        this.userSelectedProperyNames = []
+    validatePropertyStep() {
+      // make sure the user has selected at least one property
+      return Object.keys(this.selectedProperties).length>0
+    },
 
-        for (let i = 0; i < Object.keys(this.selectedProperties).length; i++) {
-          this.userSelectedProperyNames.push(this.selectedProperties[i].name)
-        }
-      },
+    onComplete: function() {
+      this.downloadFile();
+    },
+
+    onTagAdded(newCode) {
+      console.log("Added tag: " + newCode)
+      // When a top node is entered/selected, verify it.
+      this.getEntities();
+    },
+
+    setSelectedTags() {
+      // clear the internal user codes that are entered
+      this.userEnteredCodes = []
+      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+        // currated top nodes (from the server hava a value of "C12434:Blood")
+        // so we need to strip off everything from the : to the right.
+        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
+      }
+    },
+
+    setSelectedPropertyNames() {
+      this.userSelectedProperyNames = []
+
+      for (let i = 0; i < Object.keys(this.selectedProperties).length; i++) {
+        this.userSelectedProperyNames.push(this.selectedProperties[i].name)
+      }
+    },
 
       updateFormat( format) {
         this.userSelectedFormat = ''
@@ -139,7 +182,19 @@ export default {
             break;
           }
         }
+      },
 
+      // Update the top node that was entered with the description.
+      // User enters "C12434", the updated value displayed will be "C12434:Blood".
+      // If entered value is not valid, remove it and display an error message.
+      updateSelectedConceptCodeDescription(topNode){
+        this.selectedTags[0].key = topNode[0].code;
+        this.selectedTags[0].value = topNode[0].code + ":" + topNode[0].name;
+
+        console.log ("Updating top node: " + topNode[0].code + "  " + topNode[0].name)
+        for (let i = 0; i < Object.keys(this.curratedTopNodesUI).length; i++) {
+          console.log ("key " + this.curratedTopNodesUI[i].key + "  value " + this.curratedTopNodesUI[i].value)
+        }
       },
 
       getEntities(){
@@ -148,21 +203,38 @@ export default {
         this.setSelectedTags()
 
         api.getCodes(this.baseUrl, this.userEnteredCodes)
-          .then((data)=>{this.entityList = data;
-        })
+          .then((data)=>{
+            if (data != null) {
+              this.entityList = data;
+              this.updateSelectedConceptCodeDescription(data);
+            }
+            else {
+              console.log("Error retrieving top node code");
+              alert("Invalid Concept Code");
+              this.selectedTags = [];
+              this.getPropertyError=true;
+            }
+          })
       },
 
       downloadFile() {
+        // show the busy indicator
+        let loader = this.$loading.show({
+            container: this.$refs.formContainer,
+            loader: 'dots',
+            isFullPage: false,
+          });
+
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.baseUrl + '/download/get-file-for-readCodes/'  + 
-                    this.userEnteredCodes + '/' + 
-                    this.userSelectedProperyNames + '/' + 
+                url: this.baseUrl + '/download/get-file-for-readCodes/'  +
+                    this.userEnteredCodes + '/' +
+                    this.userSelectedProperyNames + '/' +
                     this.userSelectedFormat + '/'+
-                    this.filename + '.' + 
+                    this.filename + '.' +
                     this.userSelectedFormat + '.' + this.userSelectedExtension,
                 method: 'GET',
                 responseType: 'blob',
@@ -173,11 +245,13 @@ export default {
                   fileLink.href = fileURL;
                   fileLink.setAttribute('download', this.filename + '.' + this.userSelectedExtension);
                   document.body.appendChild(fileLink);
-
                   fileLink.click();
-            });
-          }
 
+            }).catch(function(error) {
+                  console.error("Download Error: " + error);
+                  alert("Error Downloading file");
+            }).finally(function() { loader.hide()});
+        }
     },
     created() {
       // load properties after the page is loaded.
@@ -195,6 +269,12 @@ export default {
 
 <!-- styling for the component -->
 <style>
+/* #read-codes-entry{
+  top: 60;
+} */
 
-
+.msl-multi-select {
+  /* make the multi-select take up the entire width of the container */
+  width: 100%
+}
 </style>
