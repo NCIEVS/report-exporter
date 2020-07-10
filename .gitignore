@@ -1,6 +1,8 @@
 /target/
 /service/bin/
 /service/target/
+/service/.settings/
+/service/.settings/org.eclipse.jdt.core.prefs
 /service/src/main/resources/public/
 /clientui/bin/
 /clientui/target/

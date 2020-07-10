@@ -47,6 +47,10 @@ public class CommonServices {
 		return list != null && list.size() > 0?"\"" + getListValuesWithPipeDelimiter(list) + "|\"": "";
 	}
 	
+	public static <T> String getListValuesForExcel(List<T> list) {
+		return list != null && list.size() > 0?getListValuesWithPipeDelimiter(list) + "|": "";
+	}
+	
 	public String getSortedIndexedPropertyListValues(
 			List<Property> list, 
 			String separator, 
@@ -98,7 +102,7 @@ public class CommonServices {
 	
 	public int flattenListValuesIntoRowCells(List<List<Property>> list, Row row, int index) {	
 		for(List<Property> prop: list) {
-		row.createCell(index).setCellValue(getListValues(prop)); index++;
+		row.createCell(index).setCellValue(getListValuesForExcel(prop)); index++;
 		}
 		return index;
 	}

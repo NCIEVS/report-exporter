@@ -24,10 +24,7 @@ public class ExcelUtility extends FormatUtility {
 
 	
 	  public ByteArrayOutputStream  produceExcelOutputFromListWithHeading(List<RestEntity> entities) throws IOException {
-	    
-		//The fields of this class will become the headers of the row/column structures
 	   
-//	    List<String> cols = Stream.of(fields).map(x -> x.getName()).collect(Collectors.toList());
 	    //Init the workbook for Excel
 	    Workbook workbook = new XSSFWorkbook();
 	    //Init the services to maintain an instance of the prooerty cache
@@ -70,21 +67,22 @@ public class ExcelUtility extends FormatUtility {
 	      row.createCell(3).setCellValue(entity.getParent());
 	      //Process the Synonyms as a list
 	      row.createCell(4).setCellValue(
-	    		  CommonServices.cleanListOutPut(
+	    		  CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(
 	    				  entity.getSynonyms() != null?
-	    						  entity.getSynonyms().toString():
-	    							  "no synonyms"));
+	    						  entity.getSynonyms():
+	    							  null)));
 	      //Process the definitions as a list
 	      row.createCell(5).setCellValue(
-	    		  CommonServices.cleanListOutPut(
+	    		  CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(
 	    				  entity.getDefinitions() != null?
-	    						  entity.getDefinitions().toString():
-	    							  "no definitions"));	
+	    						  entity.getDefinitions():
+	    							  null)));	
+	      //Process the maps as a list
 	      row.createCell(6).setCellValue(
-	    		  CommonServices.cleanListOutPut(CommonServices.getListValues(
+	    		  CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(
 	    				  entity.getMaps())));
 	      //Process the properties to rows and columns adding properties as we go
-	      		  int index = services.setPropertyRowOutPut(
+	      		  services.setPropertyRowOutPut(
 	    				  entity.getProperties(), row, 7);
 
 	      //Clearing property list for the next entity, leaving type and position metadata
@@ -99,11 +97,7 @@ public class ExcelUtility extends FormatUtility {
 	      cell.setCellValue(s);
 	      cell.setCellStyle(headerCellStyle);
 	      col++;}
-	    //Finally add the maps property to the the headings
-//	    Cell cell = headerRow.createCell(col);
-//	      cell.setCellValue("Maps_To");
-//	      cell.setCellStyle(headerCellStyle);
-//	      col++;
+
 	   //Setup the output stream for download
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	   workbook.write(stream);
