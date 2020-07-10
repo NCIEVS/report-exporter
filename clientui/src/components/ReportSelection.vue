@@ -3,7 +3,7 @@
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">NCI Report Exporter</h1>
-      <p class="lead">NCI Thesaurus (NCIt) provides reference terminology for many NCI and other systems. It covers vocabulary for clinical care, translational and basic research, and public information and administrative activities.</p>
+      <p class="lead">NCI Thesaurus (NCIt) provides reference terminology services for the National Cancer Institute and other institutional users. It covers vocabulary for clinical care, translational and basic research, as well as, public information and administrative activities.</p>
     </div>
 
     <div class="container">
@@ -13,9 +13,9 @@
             <h4 class="my-0 font-weight-normal">Export Entities</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">Codes Read</h1>
+            <h1 class="card-title pricing-card-title">Read Concept Codes</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>Entity export based off from concept codes and properties</li>
+              <li>Export entities and selected properties from concept code matches</li>
             </ul>
 			<router-link v-bind:to="'/readCodeEntry'">
         <button type="button" class="btn btn-lg btn-block btn-primary">Select</button>
@@ -45,7 +45,7 @@
           <div class="card-body">
             <h1 class="card-title pricing-card-title">Branch Resolve</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>Branch export based off from a root concept code and properties</li>
+              <li>Export resolved branch of entities from a root concept code match</li>
             </ul>
             <router-link v-bind:to="'/resolveBranchEntry'">
               <button type="button" class="btn btn-lg btn-block btn-primary">Select</button>

@@ -61,9 +61,9 @@ public class ExcelUtility extends FormatUtility {
 			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));
 	      Row row = sheet.createRow(i++);
 	      //Create a set of rows for the static values
-	      row.createCell(0).setCellValue(entity.getCode());
-	      row.createCell(1).setCellValue(entity.getName());
-	      row.createCell(2).setCellValue(entity.getTerminology());
+	      row.createCell(0).setCellValue(entity.getTerminology());
+	      row.createCell(1).setCellValue(entity.getCode());
+	      row.createCell(2).setCellValue(entity.getName());
 	      row.createCell(3).setCellValue(entity.getParent());
 	      //Process the Synonyms as a list
 	      row.createCell(4).setCellValue(
