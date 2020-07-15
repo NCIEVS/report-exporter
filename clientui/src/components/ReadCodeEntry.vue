@@ -16,7 +16,7 @@
         <div class="container">
           <div class="container">
               <div class="row justify-content-center">
-                 <div class="col-12 col-md-6">
+                 <div class="col-12 col-md-8">
                     <form>
                       <div class="form-group">
                         <label for="tags">Enter NCI Thesaurus concept codes</label>
@@ -67,7 +67,7 @@
                <div class="col-12 col-md-6">
                 <form ref="formContainer">
                   <div class="form-group">
-                    <label for="downloadFormat">Select Format for Export</label>
+                    <label for="downloadFormat">Select format for export</label>
                     <v-select element-id="downloadFormat" v-model="userSelectedFormat"
                       :options="this.availableFormats" @input="value =>updateFormat(value)">
                     </v-select>
@@ -118,8 +118,8 @@ export default {
       userSelectedFormat: 'JSON',
       filename: 'entities',
       downloadReturnCode: null,
-      // baseUrl: 'http://localhost:8080',
-      baseUrl: '',
+      baseUrl: 'http://localhost:8080',
+      // baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
@@ -127,7 +127,8 @@ export default {
         { id: 'TABD', name: 'txt' },
         { id: 'EXCEL', name: 'xlsx' }
       ],
-      curratedTopNodesUI:[],
+      invalidTag: '',
+      multipleEntitiesSplit: [],
     }
   },
 
@@ -147,8 +148,37 @@ export default {
       this.downloadFile();
     },
 
+    // called when an entity/code is added
     onTagAdded(newCode) {
-      console.log("Added tag: " + newCode)
+      //console.log("Added tag: " + newCode.value),
+
+      // Test if the string entered was pasted in - if it has a comma separated
+      // list of values
+      newCode.value.includes(',') ?
+        this.multipleEntitiesSplit = this.cleanString(newCode.value).split(",") :
+        this.multipleEntitiesSplit = []
+
+      // if the user entered multiple values, remove the last entry (which
+      // is the comma separated string) and add each one individually.
+      if (this.multipleEntitiesSplit.length > 0) {
+        this.selectedTags.splice(-1,1);
+
+        for(let x=0; x <this.multipleEntitiesSplit.length; x++ ) {
+          // make sure we don't add a duplicate.
+          if (! this.isDuplicateTag(this.multipleEntitiesSplit[x])) {
+            this.selectedTags.push({key: '', value: this.multipleEntitiesSplit[x]})
+          }
+        }
+      }
+
+      else {
+        if (this.isDuplicateTag(newCode.value))
+        {
+          // remove the last entered entity code
+          this.selectedTags.splice(-1,1);
+        }
+      }
+
       // When a top node is entered/selected, verify it.
       this.getEntities();
     },
@@ -187,13 +217,24 @@ export default {
       // Update the top node that was entered with the description.
       // User enters "C12434", the updated value displayed will be "C12434:Blood".
       // If entered value is not valid, remove it and display an error message.
-      updateSelectedConceptCodeDescription(topNode){
-        this.selectedTags[0].key = topNode[0].code;
-        this.selectedTags[0].value = topNode[0].code + ":" + topNode[0].name;
+      updateSelectedConceptCodeDescriptions(entities){
+        // this.selectedTags[0].key = entities[0].code;
+        // this.selectedTags[0].value = entities[0].code + ":" + entities[0].name;
 
-        console.log ("Updating top node: " + topNode[0].code + "  " + topNode[0].name)
-        for (let i = 0; i < Object.keys(this.curratedTopNodesUI).length; i++) {
-          console.log ("key " + this.curratedTopNodesUI[i].key + "  value " + this.curratedTopNodesUI[i].value)
+        //console.log ("Updating entities: " + entities[0].code + "  " + entities[0].name)
+        for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+          //console.log ("key " + this.selectedTags[i].key + "  value " + this.selectedTags[i].value)
+          this.updateSelectedConceptCodeDescription(this.selectedTags[i], entities);
+        }
+      },
+
+      updateSelectedConceptCodeDescription(selectedTag, entities) {
+        for (let x = 0; x < Object.keys(entities).length; x++) {
+            //console.log ("code " + entities[x].code + "  name " + entities[x].name)
+            if (selectedTag.value == entities[x].code) {
+              selectedTag.value = entities[x].code + ":" + entities[x].name;
+              selectedTag.key = entities[x].code;
+            }
         }
       },
 
@@ -206,18 +247,49 @@ export default {
           .then((data)=>{
             if (data != null) {
               this.entityList = data;
-              this.updateSelectedConceptCodeDescription(data);
+              this.updateSelectedConceptCodeDescriptions(data);
             }
             else {
-              console.log("Error retrieving top node code");
-              alert("Invalid Concept Code");
-              this.selectedTags = [];
-              this.getPropertyError=true;
+              // update structure - remove invalid value that was entered
+              this.invalidTag = this.selectedTags.splice(-1,1);
+              this.userEnteredCodes.splice(-1,1);
+
+              this.$notify({
+                group: 'app',
+                title: 'Invalid Concept Code',
+                //text: 'The concept code <b>' + this.userEnteredCodes[0] +'</b> is not valid. It has been removed.',
+                text: 'The concept code <b>' + this.invalidTag[0].value +'</b> is not valid. It has been removed.',
+                type: 'error',
+                duration: 4000,
+                position: "left bottom"
+              });
             }
           })
       },
 
+      // Determine if the user entered entity code is unique
+      isDuplicateTag(newTag){
+        for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+          //console.log ('Existing code: ' + this.selectedTags[i].key + ' newTag: ' + newTag);
+          if (this.selectedTags[i].key == newTag) {
+            //console.log ('Removing duplicate entity code: ' + this.selectedTags[i].key);
+            return true;
+          }
+        }
+        return false;
+      },
+
       downloadFile() {
+
+        this.$notify({
+          group: 'download',
+          title: 'Export in Progress',
+          text: 'Your export is running.  Please wait.',
+          type: 'success',
+          duration: 2000,
+          position: "bottom left"
+        });
+
         // show the busy indicator
         let loader = this.$loading.show({
             container: this.$refs.formContainer,
@@ -248,9 +320,14 @@ export default {
                   fileLink.click();
 
             }).catch(function(error) {
-                  console.error("Download Error: " + error);
-                  alert("Error Downloading file");
+              console.error("Download Error: " + error);
+              alert("Error Downloading file");
             }).finally(function() { loader.hide()});
+        },
+
+        // removes forward slashes and all kinds of Unicode whitespace characters
+        cleanString(string) {
+            return string.replace(/[\s/]/g, '')
         }
     },
     created() {

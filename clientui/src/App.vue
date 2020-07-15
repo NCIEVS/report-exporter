@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <notifications group="app"/>
+    <notifications group="download"/>
+
      <div class="header-div">
         <HeaderBar msg="Top"/>
         <SubHeaderBar msg="SubTop"/>
