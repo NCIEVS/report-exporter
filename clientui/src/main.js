@@ -21,6 +21,7 @@ import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 Vue.use(VueFormWizard)
 
+import Notifications from 'vue-notification'
 import ThemifyIcon from "vue-themify-icons";
 
 // busy/loading indicator
@@ -34,6 +35,7 @@ Vue.config.productionTip = false
 
 // tell vue to use the router
 Vue.use(VueRouter)
+Vue.use(Notifications)
 
 // define your routes
 const routes = [

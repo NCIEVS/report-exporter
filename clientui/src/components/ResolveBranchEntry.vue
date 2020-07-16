@@ -79,7 +79,7 @@
                 <div class="col-12 col-md-6">
                  <form ref="formContainer">
                    <div class="form-group">
-                     <label for="downloadFormat">Select Format for Export</label>
+                     <label for="downloadFormat">Select format for export</label>
                      <v-select element-id="downloadFormat" v-model="userSelectedFormat"
                        :options="this.availableFormats" @input="value =>updateFormat(value)">
                      </v-select>
@@ -258,7 +258,18 @@ export default {
             }
             else {
               console.log("Error retrieving top node code");
-              alert("Invalid Top Node");
+              //alert("Invalid Top Node");
+
+              this.$notify({
+                group: 'app',
+                title: 'Invalid Top Node',
+                text: 'The top node code <b>' + this.userEnteredCodes[0] +'</b> is not valid. It has been removed.',
+                type: 'error',
+                duration: 4000,
+                position: 'bottom left'
+
+              });
+
               this.selectedTags = [];
               this.getPropertyError=true;
             }
@@ -266,6 +277,15 @@ export default {
       },
 
       downloadFile() {
+        this.$notify({
+          group: 'download',
+          title: 'Export in Progress',
+          text: 'Your export is running.  Please wait.',
+          type: 'success',
+          duration: 2000,
+          position: "bottom left"
+        });
+
         // show the busy indicator
         let loader = this.$loading.show({
             container: this.$refs.formContainer,
