@@ -18,21 +18,22 @@
               <div class="row justify-content-center">
                  <div class="col-12 col-md-8">
                     <form>
+                      <label for="tags">Enter NCI Thesaurus concept codes</label>
                       <div class="form-group">
-                        <label for="tags">Enter NCI Thesaurus concept codes</label>
-
-                        <tags-input element-id="tags"
-                          v-model="selectedTags" placeholder="Type entity code, then space"
-                          :add-tags-on-comma="true"
-                          :add-tags-on-space="true"
-                          :case-sensitive-tags="true"
-                          :typeahead="false"
-                          @tag-added="value =>onTagAdded(value)">
-                        </tags-input>
-
+                          <tags-input element-id="tags"
+                            v-model="selectedTags" placeholder="Type entity code, then space"
+                            :add-tags-on-comma="true"
+                            :add-tags-on-space="true"
+                            :case-sensitive-tags="true"
+                            :typeahead="false"
+                            @tag-added="value =>onTagAdded(value)">
+                          </tags-input>
                       </div>
+                      <button type="button"  v-on:click="clearSelection"
+                        class="btn btn-primary mb-2 exportButtons">Clear</button>
                     </form>
                  </div>
+
               </div>
           </div>
         </div>
@@ -146,6 +147,15 @@ export default {
 
     onComplete: function() {
       this.downloadFile();
+    },
+
+    // clear all of the entitiy codes in the input selection
+    clearSelection() {
+      this.userEnteredCodes = []
+      this.selectedTags = []
+      this.entityList = []
+      this.multipleEntitiesSplit = []
+      this.invalidTag = ''
     },
 
     // called when an entity/code is added
@@ -350,6 +360,11 @@ export default {
   top: 60;
 } */
 
+.exportButtons {
+  background-color: rgb(1, 126, 190);
+  border-color: rgb(1, 126, 190);
+  color: white;
+}
 .msl-multi-select {
   /* make the multi-select take up the entire width of the container */
   width: 100%
