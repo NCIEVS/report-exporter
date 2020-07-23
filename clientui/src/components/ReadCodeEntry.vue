@@ -365,6 +365,11 @@ export default {
   border-color: rgb(1, 126, 190);
   color: white;
 }
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background-color: rgb(1, 126, 190);
+  border-color: rgb(1, 126, 190);
+  color: white;
+}
 .msl-multi-select {
   /* make the multi-select take up the entire width of the container */
   width: 100%
