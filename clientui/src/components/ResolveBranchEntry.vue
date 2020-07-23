@@ -44,45 +44,46 @@
               <div class="row justify-content-center">
                  <div class="col-12 col-md-8">
 
-                    <form >
-                      <div class="form-row">
-                        <div class="form-group col-md-8">
-                          <label for="tags">Select one NCI Thesaurus top node code or enter your own</label>
-
-                          <tags-input element-id="tags"
-                            v-model="selectedTags"
-                            :existing-tags=this.curratedTopNodesUI
-                            :typeahead="true"
-                            :typeahead-always-show="false"
-                            :typeahead-hide-discard="true"
-                            :add-tags-on-comma="true"
-                            :add-tags-on-space="true"
-                            :limit=1
-                            :typeahead-activation-threshold=0
-                            :hide-input-on-limit="true"
-                            :case-sensitive-tags="true"
-                            placeholder="Add Top Node"
-                            typeahead-style="dropdown"
-                            @tag-added="value =>onTagAdded(value)">
-                          </tags-input>
-                        </div>
-                        <div class="form-group col-md-3 align-items-bottom">
-                          <button type="button" class="btn btn-primary btn-md float-right" data-toggle="modal" data-target="#treeModal">
-                            Tree View
-                          </button>
-                        </div>
+                   <label for="tags">Select one NCI Thesaurus top node code or enter your own</label>
+                   <div class="row">
+                      <div class="col-md-12">
+                          <form class="row form-group">
+                              <div class="col-12 col-sm pr-sm-0">
+                                  <tags-input element-id="tags"
+                                    v-model="selectedTags"
+                                    :existing-tags=this.curratedTopNodesUI
+                                    :typeahead="true"
+                                    :typeahead-always-show="false"
+                                    :typeahead-hide-discard="true"
+                                    :add-tags-on-comma="true"
+                                    :add-tags-on-space="true"
+                                    :limit=1
+                                    :typeahead-activation-threshold=0
+                                    :hide-input-on-limit="true"
+                                    :case-sensitive-tags="true"
+                                    placeholder="Add Top Node"
+                                    typeahead-style="dropdown"
+                                    @tag-added="value =>onTagAdded(value)">
+                                  </tags-input>
+                              </div>
+                              <div class="col-12 col-sm-auto pl-sm-0">
+                                <button type="button" class="btn btn-primary btn-md float-right treeViewButton" data-toggle="modal" data-target="#treeModal">
+                                  Tree View
+                                </button>
+                              </div>
+                          </form>
                       </div>
-
-                        <div class="form-row">
-
-                              <label for="levelSelection">Select how many levels to retrieve</label>
-                              <select v-model="selectedLevel" id="levelSelection" class="form-control">
-                                <option v-for="level in levels" :value="level.id" :key="level.name">{{ level.name }}</option>
-                              </select>
-
-                          </div>
-
-                    </form>
+                  </div>
+                  <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                                <label for="levelSelection">Select how many levels to retrieve</label>
+                                <select v-model="selectedLevel" id="levelSelection" class="form-control">
+                                  <option v-for="level in levels" :value="level.id" :key="level.name">{{ level.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                  </div>
               </div>
 
@@ -173,8 +174,8 @@ export default {
       userSelectedTopNode: '',
       filename: 'branch',
       downloadReturnCode: null,
-      baseUrl: 'http://localhost:8080',
-      // baseUrl: '',
+      // baseUrl: 'http://localhost:8080',
+      baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
@@ -455,23 +456,16 @@ export default {
 
 <!-- styling for the component -->
 <style>
- /*resolve-branch-entry {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 
-
-} */
 /* Typeahead elements style/theme
    for tags-input... override the defaults.        */
 .tags-input-typeahead-item-default {
     color: black;
     background-color: whitesmoke;
 }
-
+.tags-input-root {
+  line-height: 1.0;
+}
 /* .form-group {
     margin-bottom: 0rem;
 } */
@@ -481,5 +475,15 @@ export default {
 .msl-multi-select {
   /* make the multi-select take up the entire width of the container */
   width: 100%
+}
+.treeViewButton {
+  background-color: rgb(1, 126, 190);
+  border-color: rgb(1, 126, 190);
+  color: white;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background-color: rgb(1, 126, 190);
+  border-color: rgb(1, 126, 190);
+  color: white;
 }
 </style>
