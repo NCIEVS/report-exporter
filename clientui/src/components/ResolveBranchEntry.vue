@@ -1,6 +1,33 @@
 <template>
   <div id="resolve-branch-entry" class="container">
 
+    <!-- Modal -->
+    <div class="modal fade" id="treeModal" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="treeTitle">NCIt Tree</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <v-jstree
+              :data="asyncData"
+              :async= "loadData"
+              show-checkbox
+              multiple:false
+              @item-click="itemClick">
+            </v-jstree>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal"  v-on:click="userSelectTreeBranchNode">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- WIZARD DECLARATION -->
     <form-wizard
       @on-complete="onComplete"
@@ -14,39 +41,51 @@
       <tab-content icon="ti-settings" title="Select a Code"
         :before-change="validateFirstStep">
         <div class="container">
-          <div class="container">
               <div class="row justify-content-center">
-                 <div class="col-12 col-md-6">
-                    <form>
-                      <div class="form-group">
-                        <label for="tags">Select one NCI Thesaurus top node code or enter your own</label>
+                 <div class="col-12 col-md-8">
 
-                        <tags-input element-id="tags"
-                          v-model="selectedTags"
-                          :existing-tags=this.curratedTopNodesUI
-                          :typeahead="true"
-                          :typeahead-always-show="false"
-                          :typeahead-hide-discard="true"
-                          :add-tags-on-comma="true"
-                          :add-tags-on-space="true"
-                          :limit=1
-                          :typeahead-activation-threshold=0
-                          :hide-input-on-limit="true"
-                          :case-sensitive-tags="true"
-                          placeholder="Add Top Node"
-                          typeahead-style="dropdown"
-                          @tag-added="value =>onTagAdded(value)">
-                        </tags-input>
+                    <form >
+                      <div class="form-row">
+                        <div class="form-group col-md-8">
+                          <label for="tags">Select one NCI Thesaurus top node code or enter your own</label>
 
-                        <label for="levelSelection">Select how many levels to retrieve</label>
-                        <select v-model="selectedLevel" id="levelSelection" class="form-control">
-                          <option v-for="level in levels" :value="level.id" :key="level.name">{{ level.name }}</option>
-                        </select>
+                          <tags-input element-id="tags"
+                            v-model="selectedTags"
+                            :existing-tags=this.curratedTopNodesUI
+                            :typeahead="true"
+                            :typeahead-always-show="false"
+                            :typeahead-hide-discard="true"
+                            :add-tags-on-comma="true"
+                            :add-tags-on-space="true"
+                            :limit=1
+                            :typeahead-activation-threshold=0
+                            :hide-input-on-limit="true"
+                            :case-sensitive-tags="true"
+                            placeholder="Add Top Node"
+                            typeahead-style="dropdown"
+                            @tag-added="value =>onTagAdded(value)">
+                          </tags-input>
+                        </div>
+                        <div class="form-group col-md-3 align-items-bottom">
+                          <button type="button" class="btn btn-primary btn-md float-right" data-toggle="modal" data-target="#treeModal">
+                            Tree View
+                          </button>
+                        </div>
                       </div>
+
+                        <div class="form-row">
+
+                              <label for="levelSelection">Select how many levels to retrieve</label>
+                              <select v-model="selectedLevel" id="levelSelection" class="form-control">
+                                <option v-for="level in levels" :value="level.id" :key="level.name">{{ level.name }}</option>
+                              </select>
+
+                          </div>
+
                     </form>
                  </div>
               </div>
-          </div>
+
         </div>
       </tab-content>
 
@@ -104,6 +143,7 @@ import api from '../api.js'
 import axios from 'axios'
 import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VJstree from 'vue-jstree'
 
 export default {
   name: 'resolve-branch-entry',
@@ -116,6 +156,7 @@ export default {
     'v-select': vSelect,
     FormWizard,
     TabContent,
+   'v-jstree': VJstree
   },
   data(){
     return {
@@ -132,8 +173,8 @@ export default {
       userSelectedTopNode: '',
       filename: 'branch',
       downloadReturnCode: null,
-      // baseUrl: 'http://localhost:8080',
-      baseUrl: '',
+      baseUrl: 'http://localhost:8080',
+      // baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
@@ -156,10 +197,68 @@ export default {
         { id: 8, name: '9 Levels' },
         { id: 9, name: '10 Levels' },
       ],
+
+      showTree: true,
+      asyncData: [],
+      treeSelectedCode: null,
+
+      // function to get tree data
+      loadData: function (oriNode, resolve) {
+          // set id to the root if not defined
+          var id = oriNode.data.id ? oriNode.data.id : 'C12508'
+          var data = []
+          console.log('id: ' + id)
+
+          for (let i = 0; i < 1; i++) {
+            api.getChildren('http://localhost:8080', id)
+            .then((children)=>{
+              if (children != null) {
+                for (let x=0; x < children.length; x++){
+                  //console.log(children[x].code + '  :  ' + children[x].name)
+                  data.push(
+                    {
+                      "id": children[x].code,
+                      "text": children[x].code + ' : ' + children[x].name,
+                      "isLeaf": children[x].leaf,
+                    },
+                  )
+                }
+                resolve(data)
+            }
+            else {
+                console.log("Error retrieving children");
+                data.push(
+                  {
+                    "id": '0',
+                    "text": 'Error retrieving tree',
+                     "isLeaf": true,
+                  },
+                )
+                resolve(data)
+              }
+            })
+          }
+      },
     }
   },
 
   methods: {
+
+      // Tree dialog user chose a tree node
+      userSelectTreeBranchNode() {
+        console.log('userSelectTreeBranchNode - user selected:' + this.treeSelectedCode)
+
+        this.selectedTags = [
+          { key: this.treeSelectedCode, value: this.treeSelectedCode },
+        ]
+      },
+
+      // tree item clicked
+      itemClick (node) {
+        console.log(node.model.id + ' clicked !')
+        this.treeSelectedCode = node.model.id;
+      },
+
       // Wizard methods
       validateFirstStep() {
         // make sure the user has a code entered
@@ -267,7 +366,6 @@ export default {
                 type: 'error',
                 duration: 4000,
                 position: 'bottom left'
-
               });
 
               this.selectedTags = [];
@@ -318,9 +416,22 @@ export default {
                   console.error("Download Error: " + error);
                   alert("Error Downloading file");
               }).finally(function() { loader.hide()});
+      },
+
+      getChildren(){
+        api.getChildren(this.baseUrl, this.userEnteredCodes)
+        .then((data)=>{
+          if (data != null) {
+            console.log("got children : " + data);
+        }
+        else {
+            console.log("Error retrieving children");
           }
-    },
+        })
+      },
+  },
     created() {
+      console.log("CREATED")
       // load properties after the page is loaded.
       api.getProperties(this.baseUrl)
           .then((data)=>{this.availableProperties = data;
@@ -338,7 +449,6 @@ export default {
             this.curratedTopNodes = data;
             this.setCurratedTags();
        })
-
     }
   }
 </script>
@@ -360,8 +470,11 @@ export default {
 .tags-input-typeahead-item-default {
     color: black;
     background-color: whitesmoke;
-},
+}
 
+/* .form-group {
+    margin-bottom: 0rem;
+} */
 .modal-active{
 	display:block;
 }
