@@ -18,7 +18,7 @@
               <li>Export entities and selected properties from concept code matches</li>
             </ul>
 			<router-link v-bind:to="'/readCodeEntry'">
-        <button type="button" class="btn btn-lg btn-block btn-primary">Select</button>
+        <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Select</button>
 			</router-link>
     </div>
   </div>
@@ -48,7 +48,7 @@
               <li>Export resolved branch of entities from a root concept code match</li>
             </ul>
             <router-link v-bind:to="'/resolveBranchEntry'">
-              <button type="button" class="btn btn-lg btn-block btn-primary">Select</button>
+              <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Select</button>
 			</router-link>
           </div>
         </div>
@@ -96,4 +96,15 @@ html {
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
 
+.selectButton {
+  background-color: rgb(1, 126, 190);
+  border-color: rgb(1, 126, 190);
+  color: white;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background-color: rgb(1, 126, 190);
+  border-color: rgb(1, 126, 190);
+  color: white;
+}
 </style>

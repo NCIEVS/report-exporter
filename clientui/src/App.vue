@@ -37,6 +37,10 @@ export default {
       message: 'Hello',
       selectedTags:[]
     }
+  },
+  created () {
+    // Set the title in browser tab
+    document.title = "EVS Report Exporter";
   }
 }
 </script>
