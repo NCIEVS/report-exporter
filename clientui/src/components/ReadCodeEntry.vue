@@ -80,6 +80,67 @@
       </tab-content>
 
     </form-wizard>
+
+    <!-- Summary Information -->
+    <div id="accordion" class="pb-3 pt-3">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+
+            <center>
+            <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
+              {{this.showSummaryText}}
+            </button>
+          </center>
+
+        </div>
+
+        <div id="collapseSummary" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="card bg-light border-dark mb-3">
+                  <div class="card-header">Selected Concept Codes <span class="badge badge-secondary">{{Object.keys(this.selectedTags).length}}</span></div>
+                  <div class="card-body">
+                    <ul class="list-group" id="selectedTagList">
+                      <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
+                        {{ selectedTag.value }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card bg-light border-dark mb-3">
+                  <div class="card-header">Selected Properties <span class="badge badge-secondary">{{Object.keys(this.selectedProperties).length}}</span></div>
+                  <div class="card-body">
+
+                    <ul class="list-group" id="selectedPropertyList">
+                      <li v-for="selectedProperty in selectedProperties" :key="selectedProperty.code">
+                        {{ selectedProperty.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card bg-light border-dark mb-3">
+                  <div class="card-header">Selected Export Format</div>
+                  <div class="card-body">
+                    <ul class="list-group" id="selectedPropertyList">
+                      <li>
+                        {{userSelectedExtension}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -130,6 +191,8 @@ export default {
       ],
       invalidTag: '',
       multipleEntitiesSplit: [],
+      showSummary: true,
+      showSummaryText: ''
     }
   },
 
@@ -147,6 +210,16 @@ export default {
 
     onComplete: function() {
       this.downloadFile();
+    },
+
+    updateShowSummary() {
+      this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
+      //
+      // if (showSummary) {
+      //   showSummaryText = 'Hide Selection Summary'
+      // }
+      // else {}
+      this.showSummary = !this.showSummary;
     },
 
     // clear all of the entitiy codes in the input selection
@@ -341,6 +414,8 @@ export default {
         }
     },
     created() {
+      this.updateShowSummary();
+
       // load properties after the page is loaded.
       api.getProperties(this.baseUrl)
           .then((data)=>{this.availableProperties = data;
@@ -359,6 +434,13 @@ export default {
 /* #read-codes-entry{
   top: 60;
 } */
+
+/* Summary list box formatting */
+.list-group{
+    max-height: 150px;
+    min-height: 150px;
+    overflow-y:auto;
+}
 
 .exportButtons {
   background-color: rgb(1, 126, 190);
