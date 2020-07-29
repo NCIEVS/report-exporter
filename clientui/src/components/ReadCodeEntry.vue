@@ -30,7 +30,7 @@
                           </tags-input>
                       </div>
                       <button type="button"  v-on:click="clearSelection"
-                        class="btn btn-primary mb-2 exportButtons">Clear</button>
+                        class="btn btn-primary mb-5 exportButtons">Clear</button>
                     </form>
                  </div>
 
@@ -249,7 +249,7 @@ export default {
         for(let x=0; x <this.multipleEntitiesSplit.length; x++ ) {
           // make sure we don't add a duplicate.
           if (! this.isDuplicateTag(this.multipleEntitiesSplit[x])) {
-            this.selectedTags.push({key: '', value: this.multipleEntitiesSplit[x]})
+            this.selectedTags.push({key: this.multipleEntitiesSplit[x], value: this.multipleEntitiesSplit[x]})
           }
         }
       }
