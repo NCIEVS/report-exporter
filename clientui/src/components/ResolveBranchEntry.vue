@@ -22,7 +22,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal"  v-on:click="userSelectTreeBranchNode">Save changes</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal"  v-on:click="userSelectTreeBranchNode">Select</button>
           </div>
         </div>
       </div>
@@ -113,7 +113,8 @@
        </tab-content>
 
        <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
-       <tab-content icon="ti-download" title="Select Format and Export">
+       <tab-content icon="ti-download" title="Select Format and Export"
+          :before-change="validateExportStep">
          <div class="container">
              <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
@@ -191,7 +192,7 @@
         </div>
       </div>
     </div>
-    
+
  </div>
 </template>
 
@@ -334,6 +335,11 @@ export default {
         return Object.keys(this.selectedProperties).length>0
       },
 
+      validateExportStep() {
+        // make sure there is an export format selected.
+        return this.userSelectedExtension != null && this.userSelectedExtension.length >0
+      },
+
       onComplete: function() {
         this.downloadFile();
       },
@@ -383,8 +389,8 @@ export default {
       },
 
       updateFormat(format) {
-        this.userSelectedFormat = ''
-        this.userSelectedFormat = format;
+        this.userSelectedExtension = ''
+        this.userSelectedFormat = format
 
         // find the extension based off the key (user selected format)
         for (let i = 0; i < Object.keys(this.extensionMap).length; i++) {
