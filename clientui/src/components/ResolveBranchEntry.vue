@@ -274,7 +274,8 @@ export default {
 
       // function to get tree data
       loadData: function (oriNode, resolve) {
-          // set id to the root if not defined
+          // set id to the node to retrieve children for.
+          // set to null to indicate this is the root.
           var id = oriNode.data.id ? oriNode.data.id : null
           var data = []
           console.log('id: ' + id)
@@ -328,8 +329,8 @@ export default {
                   )
                 }
                 resolve(data)
-            }
-            else {
+              }
+              else {
                 console.log("Error retrieving children");
                 data.push(
                   {
