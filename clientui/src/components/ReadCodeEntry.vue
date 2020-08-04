@@ -85,8 +85,12 @@
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
       <div class="card">
-        <div class="card-header" id="headingOne">
-
+        <div class="card-header" id="headingOne"  style="
+              padding-left: 1px;
+              padding-right: 1px;
+              padding-bottom: 1px;
+              padding-top: 1px;
+          ">
             <center>
             <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
               {{this.showSummaryText}}
@@ -96,9 +100,9 @@
         </div>
 
         <div id="collapseSummary" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
+          <div class="card-body pb-1">
 
-            <div class="row">
+            <div class="row p-1">
               <div class="col-sm-4">
                 <div class="card bg-light border-dark mb-3">
                   <div class="card-header">Selected Concept Codes <span class="badge badge-secondary">{{Object.keys(this.selectedTags).length}}</span></div>

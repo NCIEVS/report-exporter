@@ -80,6 +80,11 @@ html {
   }
 }
 
+a:hover {
+  text-decoration: none;
+}
+
+
 .container {
   max-width: 960px;
 }
