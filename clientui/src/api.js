@@ -43,6 +43,19 @@ const api = {
         })
     },
 
+    getRoots(baseUrl){
+        return new Promise((resolve)=>{
+            axios.get(baseUrl + '/roots/')
+                .then((response) =>{
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    console.log("Error getting roots: " + error);
+                    resolve(null)
+                })
+        })
+    },
+
     getChildren(baseUrl, code){
         return new Promise((resolve)=>{
             axios.get(baseUrl + '/resolve-children-for-codes/' + code)

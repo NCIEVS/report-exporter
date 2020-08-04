@@ -136,7 +136,12 @@
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
       <div class="card">
-        <div class="card-header" id="headingOne">
+        <div class="card-header" id="headingOne" style="
+              padding-left: 1px;
+              padding-right: 1px;
+              padding-bottom: 1px;
+              padding-top: 1px;
+          ">
             <center>
             <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
               {{this.showSummaryText}}
@@ -145,8 +150,8 @@
         </div>
 
         <div id="collapseSummary" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
-            <div class="row">
+          <div class="card-body pb-1">
+            <div class="row p-1">
               <div class="col-sm-4">
                 <div class="card bg-light border-dark mb-3">
                   <div class="card-header">Selected Top Node and Levels <span class="badge badge-secondary">{{ selectedLevel + 1 }}</span></div>
@@ -270,11 +275,45 @@ export default {
       // function to get tree data
       loadData: function (oriNode, resolve) {
           // set id to the root if not defined
-          var id = oriNode.data.id ? oriNode.data.id : 'C12508'
+          var id = oriNode.data.id ? oriNode.data.id : null
           var data = []
           console.log('id: ' + id)
 
-          for (let i = 0; i < 1; i++) {
+          // if id is null, this is the root.  get all root children
+          if (id == null) {
+            api.getRoots('http://localhost:8080')
+            .then((children)=>{
+              if (children != null) {
+
+                for (let x=0; x < children.length; x++){
+                  //console.log(children[x].code + '  :  ' + children[x].name)
+                  data.push(
+                    {
+                      "id": children[x].code,
+                      "text": children[x].code + ' : ' + children[x].name,
+                      "isLeaf": false,
+                    },
+                  )
+                }
+                resolve(data)
+              }
+              else {
+                  console.log("Error retrieving roots");
+                  data.push(
+                    {
+                      "id": '0',
+                      "text": 'Error retrieving tree',
+                      "isLeaf": true,
+                    },
+                  )
+                  resolve(data)
+                }
+              })
+          }
+
+          // Id was not null, get the children
+          else {
+            // for (let i = 0; i < 1; i++) {
             api.getChildren('http://localhost:8080', id)
             .then((children)=>{
               if (children != null) {
@@ -302,12 +341,16 @@ export default {
                 resolve(data)
               }
             })
+          // }
           }
       },
+
     }
   },
 
   methods: {
+
+
 
       // Tree dialog user chose a tree node
       userSelectTreeBranchNode() {
@@ -492,6 +535,19 @@ export default {
                   console.error("Download Error: " + error);
                   alert("Error Downloading file");
               }).finally(function() { loader.hide()});
+      },
+
+
+      getRoots(){
+        api.getRoots(this.baseUrl)
+        .then((data)=>{
+          if (data != null) {
+            console.log("got roots : " + data);
+        }
+        else {
+            console.log("Error retrieving roots");
+          }
+        })
       },
 
       getChildren(){
