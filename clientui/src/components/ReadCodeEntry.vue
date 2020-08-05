@@ -185,8 +185,6 @@ export default {
       userSelectedFormat: 'JSON',
       filename: 'entities',
       downloadReturnCode: null,
-      // baseUrl: 'http://localhost:8080',
-      baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
@@ -336,7 +334,7 @@ export default {
         this.entityList = []
         this.setSelectedTags()
 
-        api.getCodes(this.baseUrl, this.userEnteredCodes)
+        api.getCodes(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
             if (data != null) {
               this.entityList = data;
@@ -395,7 +393,7 @@ export default {
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.baseUrl + '/download/get-file-for-readCodes/'  +
+                url: this.$baseURL + '/download/get-file-for-readCodes/'  +
                     this.userEnteredCodes + '/' +
                     this.userSelectedProperyNames + '/' +
                     this.userSelectedFormat + '/'+
@@ -427,11 +425,11 @@ export default {
       this.updateShowSummary();
 
       // load properties after the page is loaded.
-      api.getProperties(this.baseUrl)
+      api.getProperties(this.$baseURL)
           .then((data)=>{this.availableProperties = data;
         })
 
-      api.getFormats(this.baseUrl)
+      api.getFormats(this.$baseURL)
           .then((data)=>{this.availableFormats = data;
        })
     }

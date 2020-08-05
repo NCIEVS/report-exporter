@@ -210,7 +210,7 @@ import vSelect from 'vue-select'
 import api from '../api.js'
 import axios from 'axios'
 import {FormWizard, TabContent} from 'vue-form-wizard'
-import 'vue-loading-overlay/dist/vue-loading.css';
+import 'vue-loading-overlay/dist/vue-loading.css'
 import VJstree from 'vue-jstree'
 
 export default {
@@ -241,8 +241,6 @@ export default {
       userSelectedTopNode: '',
       filename: 'branch',
       downloadReturnCode: null,
-      // baseUrl: 'http://localhost:8080',
-      baseUrl: '',
       userSelectedExtension: 'json',
       extensionMap:[
         { id: 'JSON', name: 'json' },
@@ -282,7 +280,7 @@ export default {
 
           // if id is null, this is the root.  get all root children
           if (id == null) {
-            api.getRoots('http://localhost:8080')
+            api.getRoots(this.$baseURL)
             .then((children)=>{
               if (children != null) {
 
@@ -314,8 +312,7 @@ export default {
 
           // Id was not null, get the children
           else {
-            // for (let i = 0; i < 1; i++) {
-            api.getChildren('http://localhost:8080', id)
+            api.getChildren(this.$baseURL, id)
             .then((children)=>{
               if (children != null) {
                 for (let x=0; x < children.length; x++){
@@ -342,7 +339,6 @@ export default {
                 resolve(data)
               }
             })
-          // }
           }
       },
 
@@ -350,8 +346,6 @@ export default {
   },
 
   methods: {
-
-
 
       // Tree dialog user chose a tree node
       userSelectTreeBranchNode() {
@@ -468,7 +462,7 @@ export default {
         this.setSelectedTags()
 
         //console.log(this.selectedTags[0].key +" --- " + this.selectedTags[0].value)
-        api.getCodes(this.baseUrl, this.userEnteredCodes)
+        api.getCodes(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
 
             if (data != null) {
@@ -516,7 +510,7 @@ export default {
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.baseUrl + '/download/get-file-for-resolved-branch/'  +
+                url: this.$baseURL + '/download/get-file-for-resolved-branch/'  +
                     this.userEnteredCodes + '/' +
                     this.userSelectedProperyNames + '/' +
                     this.selectedLevel + '/' +
@@ -540,7 +534,7 @@ export default {
 
 
       getRoots(){
-        api.getRoots(this.baseUrl)
+        api.getRoots(this.$baseURL)
         .then((data)=>{
           if (data != null) {
             console.log("got roots : " + data);
@@ -552,7 +546,7 @@ export default {
       },
 
       getChildren(){
-        api.getChildren(this.baseUrl, this.userEnteredCodes)
+        api.getChildren(this.$baseURL, this.userEnteredCodes)
         .then((data)=>{
           if (data != null) {
             console.log("got children : " + data);
@@ -567,18 +561,18 @@ export default {
       this.updateShowSummary();
 
       // load properties after the page is loaded.
-      api.getProperties(this.baseUrl)
+      api.getProperties(this.$baseURL)
           .then((data)=>{this.availableProperties = data;
         })
 
       // load the download formats.
-      api.getFormats(this.baseUrl)
+      api.getFormats(this.$baseURL)
           .then((data)=>{this.availableFormats = data;
        })
 
       // get the currated tags from the server,
       // then set the input field with these
-      api.getCuratedTopNodes(this.baseUrl)
+      api.getCuratedTopNodes(this.$baseURL)
           .then((data)=>{
             this.curratedTopNodes = data;
             this.setCurratedTags();
