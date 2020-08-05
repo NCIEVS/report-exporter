@@ -53,6 +53,9 @@ const router = new VueRouter({
   mode: 'history'
 })
 
+// global variable visible to all Vue instances
+Vue.prototype.$baseURL = 'http://localhost:8080'
+
 // instatinate the vue instance
 new Vue({
   // define the selector for the root component
