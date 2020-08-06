@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -103,6 +102,14 @@ public class BranchResolutionService {
 		node.setCode(strings[0]);
 		node.setName(strings[1]);
 		return node;
+	}
+
+	public CodeReadService getReadService() {
+		return readService;
+	}
+
+	public void setReadService(CodeReadService readService) {
+		this.readService = readService;
 	}
 	
 	

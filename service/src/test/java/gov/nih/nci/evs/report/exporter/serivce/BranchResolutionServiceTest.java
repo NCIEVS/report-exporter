@@ -1,28 +1,39 @@
 package gov.nih.nci.evs.report.exporter.serivce;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
+import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
+import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @SpringBootTest
 class BranchResolutionServiceTest {
 	
-	@Autowired
+
 	BranchResolutionService service;
+	
+	@Mock
+	CodeReadService crService;
 	
 	@BeforeEach
 	public  void setUp() {
 		this.service = new BranchResolutionService();
+		crService = mock(CodeReadService.class);
 	}
 
  	@Test
@@ -80,9 +91,27 @@ class BranchResolutionServiceTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-
+		
+		List<Root> roots = new ArrayList<Root>();
+		Root r1 = new Root();
+		r1.setCode("C23423");
+		r1.setName("Bird");
+		Root r2 = new Root();
+		r2.setCode("C8988");
+		r2.setName("dog");
+		Root r3 = new Root();
+		r3.setCode("C534");
+		r3.setName("Cat");
+		roots.add(r1);
+		roots.add(r2);
+		roots.add(r3);
+		when(crService.getRestParents(Mockito.anyString())).thenReturn(roots);
+		service.setReadService(crService);
 		service.resolveChildEntityGraph(CommonServices.TOP_NODE, entity, list);
 		assertEquals(7, list.size());
+		list.get(0).getParents().stream().anyMatch(x -> x.getCode().equals("C23423"));
+		list.get(0).getParents().stream().anyMatch(x -> x.getName().equals("dog"));
+		list.get(0).getParents().stream().anyMatch(x -> x.getCode().equals("C534"));
 	}
 	
 //	@Test

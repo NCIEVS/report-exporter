@@ -26,14 +26,14 @@ class CSVUtilityTest {
 	CSVUtility util;
 	
 	String csvOutLine1 = "terminology,code,name,parent,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
-	String csvOutLine2a = "ncit,C123234,Myent,null,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2a = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 //	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
 //	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
 //	String csvOutLine2d	= ",\"|NCI:defvalue|NOSOURCE:defvalue2|\",";
 //	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\",\"|PropType2:propvalue2|\",\r";
-	String csvOutLine3 = "ncit,C000000,0ent,null,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
-	String csvOutline4 = "ncit,C999999,My9,null,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
-	String csvOutline5 = "ncit,C2222,My2,null,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String csvOutLine3 = "ncit,C000000,0ent,,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4 = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline5 = "ncit,C2222,My2,,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	
 	BranchResolutionService service;
 
