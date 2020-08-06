@@ -64,7 +64,11 @@ public class ExcelUtility extends FormatUtility {
 	      row.createCell(0).setCellValue(entity.getTerminology());
 	      row.createCell(1).setCellValue(entity.getCode());
 	      row.createCell(2).setCellValue(entity.getName());
-	      row.createCell(3).setCellValue(entity.getParent());
+	      row.createCell(3).setCellValue(
+	    	    CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(
+	    	    		entity.getParents() != null?
+	    	    				entity.getParents():
+	    	    					null)));
 	      //Process the Synonyms as a list
 	      row.createCell(4).setCellValue(
 	    		  CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(

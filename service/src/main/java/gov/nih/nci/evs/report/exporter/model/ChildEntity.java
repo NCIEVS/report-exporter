@@ -7,7 +7,7 @@ public class ChildEntity {
 	private String code;
 	private String name;
 	private String level;
-	private String parent;
+	private List<Root> parents;
 	private boolean leaf;
 	private List<ChildEntity> children;
 	
@@ -42,11 +42,11 @@ public class ChildEntity {
 		this.children = children;
 	}
 	
-	public String getParent() {
-		return parent;
+	public List<Root> getParents() {
+		return parents;
 	}
-	public void setParent(String parent) {
-		this.parent = parent;
+	public void setParents(List<Root> parents) {
+		this.parents = parents;
 	}
 	public String toString() {
 		return "code: " + code + " name: " + name;

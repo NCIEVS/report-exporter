@@ -22,7 +22,7 @@ public class TabDelUtility extends FormatUtility{
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
 				separator + x.getName() + 
-				separator + x.getParent() +
+				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getMaps())) +
@@ -33,7 +33,6 @@ public class TabDelUtility extends FormatUtility{
 			firstLine.replace(firstLine.lastIndexOf(separator), firstLine.length(), "");
 			services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append(separator + type));
 			oneLine.insert(0, firstLine);
-			System.out.println(oneLine.toString());
 		return oneLine.toString();
 	}
 	
@@ -49,10 +48,9 @@ public class TabDelUtility extends FormatUtility{
 				"\r\n" + x.getCode() + 
 				separator + x.getName() + 
 				separator + x.getLevel() + 
-				separator + x.getParent()  +
+				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents()))  +
 				separator + x.isLeaf() + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getChildren()))));
-	    System.out.println(oneLine.toString());
 		return oneLine.toString();
 	}
 	

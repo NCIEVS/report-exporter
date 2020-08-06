@@ -73,9 +73,9 @@ public class BranchResolutionService {
 		 
 		if(!child.isLeaf()){child.setChildren(null);}
 		if(CommonServices.isChildParent(parent,child.getCode())) {
-			child.setParent(CommonServices.TOP_NODE);
+			child.setParents(readService.getRestParents(child.getCode()));
 		}
-		else{child.setParent(parent);}
+		else{child.setParents(readService.getRestParents(child.getCode()));}
 		list.add(child);
 	 }
 	
@@ -86,7 +86,7 @@ public class BranchResolutionService {
 		return getAllChildrenForBranchTopNode(code, maximum)
 				.parallelStream()
 				.map(x -> readService.getEntityForPropertyNameFilter(
-				  readService.getRestEntityWithParent(x.getCode(), x.getParent()), 
+				  readService.getRestEntityWithParent(x.getCode(), x.getParents()), 
 						  CommonServices.splitInput(props))).collect(Collectors.toList());
 	}
 	
