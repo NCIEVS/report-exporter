@@ -1,20 +1,15 @@
 package gov.nih.nci.evs.report.exporter.serivce;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.test.web.servlet.MockMvc;
 
-import gov.nih.nci.evs.report.exporter.controller.PropertyController;
 import gov.nih.nci.evs.report.exporter.model.RestPropertyMetadata;
 import gov.nih.nci.evs.report.exporter.service.TerminologyPropertyService;
 
@@ -76,9 +71,7 @@ class TerminologyPropertyServiceTest {
 		r9.setName("FULL_SYN");
 		r9.setTerminology("ncit");
 		r9.setVersion("20.19d");
-//		RestPropertyMetadata r10 = new RestPropertyMetadata();
-//		r10.setCode("p10");
-//		r1.setName("ALT_DEFINITION");
+
 		
 		props = new RestPropertyMetadata[] { 
 				r1,

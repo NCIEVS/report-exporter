@@ -6,7 +6,7 @@
 
 
 	<artifactId>service</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<parent>
 		<groupId>gov.nih.nci.evs</groupId>
