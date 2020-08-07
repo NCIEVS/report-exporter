@@ -18,12 +18,14 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.MimeType;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import gov.nih.nci.evs.report.exporter.model.Property;
+import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 
 public class CommonServices {
@@ -109,7 +111,19 @@ public class CommonServices {
 	
 	public static <T> String getListValuesWithPipeDelimiter(List<T> list) {
 		if(list == null || list.size() == 0) {return "";}
-		return list.stream().map(x -> x.toString()).reduce("", (part, whole)-> part + "|" + whole);
+		return list.stream().map(x -> removeAllNoSourceNoTypeSynonyms(x))
+				.reduce("", (part, whole)-> 
+				(whole == null)?
+						(""):
+							(part + "|" + whole));
+	}
+	
+	private static <T> String removeAllNoSourceNoTypeSynonyms(Object t) {
+		if(t instanceof Synonym) {
+			if(((Synonym) t).getType() == null) {return t.toString();}
+			if(((Synonym) t).getType().equals("Preferred_Name")) {return null;}
+		}
+		return t.toString();		
 	}
 	
 	public static String cleanListOutPut(String list){
@@ -125,7 +139,6 @@ public class CommonServices {
 				.iterator();
 	}
 	
-	//Start here Monday
 	public List<List<Property>>  getOrderedPropertyLists(ConcurrentMap<String, TypeListAndPositionTuple > map) {
 		return map.values()
 				.stream()
