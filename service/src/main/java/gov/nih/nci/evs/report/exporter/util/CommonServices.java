@@ -32,6 +32,7 @@ public class CommonServices {
 	
 	
 	public static final String TOP_NODE = "TOP_NODE";
+	public static final String PREFERRED_NAME = "Preferred_Name";
 	
 	private ConcurrentMap<String, TypeListAndPositionTuple> propHeaderMap;
 	public CommonServices() {
@@ -118,10 +119,10 @@ public class CommonServices {
 							(part + "|" + whole));
 	}
 	
-	private static <T> String removeAllNoSourceNoTypeSynonyms(Object t) {
+	public static <T> String removeAllNoSourceNoTypeSynonyms(Object t) {
 		if(t instanceof Synonym) {
 			if(((Synonym) t).getType() == null) {return t.toString();}
-			if(((Synonym) t).getType().equals("Preferred_Name")) {return null;}
+			if(((Synonym) t).getType().equals(PREFERRED_NAME)) {return null;}
 		}
 		return t.toString();		
 	}

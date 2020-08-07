@@ -13,8 +13,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
+import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.model.Synonym;
 
 class CommonServicesTest {
 	
@@ -63,6 +65,43 @@ class CommonServicesTest {
 		String cleanedList = CommonServices.cleanListOutPut(csvList);
 		assertFalse(cleanedList.contains("["));
 		assertFalse(cleanedList.contains("]"));
+	}
+	
+	@Test
+	void TestRemoveAllNonSourceTypeSynonyms() {
+		Synonym syn = new Synonym();
+		syn.setCode("C1232");
+		syn.setName("SynNameOne");
+		syn.setSource("CDISC");
+		syn.setType("FULL_SYN");
+		syn.setTermGroup("PT");
+		Synonym synPreferredName = new Synonym();
+		synPreferredName.setCode("C12434");
+		synPreferredName.setName("Blood");
+		synPreferredName.setSource(null);
+		synPreferredName.setSubSource(null);
+		synPreferredName.setTermGroup(null);
+		synPreferredName.setType("Preferred_Name");
+		Synonym synNoType = new Synonym();
+		synNoType.setCode("C0345");
+		synNoType.setName("NoTypeSyn");
+		synNoType.setSource("NCI");
+		synNoType.setSubSource("CADSR");
+		synNoType.setTermGroup("SY");
+		synNoType.setType(null);
+		Definition def = new Definition();
+		def.setDefinition("a definition");
+		def.setSource("CDISC");
+		def.setType("DEFINITION");
+		Property prop = new Property();
+		prop.setQualifiers(null);
+		prop.setType("Prop");
+		prop.setValue("a prop value");
+		assertNotNull(CommonServices.removeAllNoSourceNoTypeSynonyms(syn));
+		assertNull(CommonServices.removeAllNoSourceNoTypeSynonyms(synPreferredName));
+		assertNotNull(CommonServices.removeAllNoSourceNoTypeSynonyms(synNoType));
+		assertNotNull(CommonServices.removeAllNoSourceNoTypeSynonyms(def));
+		assertNotNull(CommonServices.removeAllNoSourceNoTypeSynonyms(prop));
 	}
 	
 	@Test
