@@ -2,6 +2,7 @@ package gov.nih.nci.evs.report.exporter.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyMap;
 import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
@@ -26,6 +28,18 @@ public class CodeReadService {
 	@Value("${MAPS}")
 	private String maps;
 	
+	@Value("${PARENTS}")
+	private String parents;
+	
+	public List<RestEntity> getRestEntitiesWithParents(List<String> codes){
+		List<RestEntity> propMeta = 
+				codes.stream().map(x -> 
+					getRestEntityWithParent(
+							x, getRestParents(x)))
+				.collect(Collectors.toList());
+		return propMeta;
+	}
+	
 	public List<RestEntity> getRestEntities(List<String> codes){
 		List<RestEntity> propMeta = 
 				codes.stream().map(code -> CommonServices.getRestTemplate()
@@ -35,12 +49,21 @@ public class CodeReadService {
 		return propMeta;
 	}
 	
-	public RestEntity getRestEntityWithParent(String code, String parent){
+	public List<Root> getRestParents(String code){
+		List<Root> roots = Stream.of(CommonServices.getRestTemplate()
+				.getForObject(
+				baseURL + code + parents
+						, Root[].class)).collect(Collectors.toList());
+			
+		return roots;
+	}
+	
+	public RestEntity getRestEntityWithParent(String code, List<Root> parents){
 		RestEntity entity = CommonServices.getRestTemplate()
 				.getForObject(
 				baseURL + code + summary + "," + maps
 						, RestEntity.class);
-			entity.setParent(parent);
+			entity.setParents(parents);
 		return entity;
 	}
 	

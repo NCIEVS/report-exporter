@@ -23,7 +23,7 @@ public class FormattedOutputService {
 		return new ByteArrayInputStream(
 				CommonServices.getGsonForPrettyPrint().toJson(
 						service.getEntitiesForPropertyNameFilter(
-								service.getRestEntities( 
+								service.getRestEntitiesWithParents( 
 									CommonServices.splitInput(codes)), 
 									CommonServices.splitInput(props))).getBytes());
 	}
@@ -32,7 +32,7 @@ public class FormattedOutputService {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
 								service.getEntitiesForPropertyNameFilter(
-								service.getRestEntities( 
+								service.getRestEntitiesWithParents( 
 										CommonServices.splitInput(codes)), 
 										CommonServices.splitInput(props))).getBytes());
 	}
@@ -41,7 +41,7 @@ public class FormattedOutputService {
 		return new ByteArrayInputStream(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
 				service.getEntitiesForPropertyNameFilter(
-				service.getRestEntities( 
+				service.getRestEntitiesWithParents( 
 						CommonServices.splitInput(codes)), 
 						CommonServices.splitInput(props))).getBytes());
 	}
@@ -51,7 +51,7 @@ public class FormattedOutputService {
 			return new ByteArrayInputStream(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
 					service.getEntitiesForPropertyNameFilter(
-					service.getRestEntities( 
+					service.getRestEntitiesWithParents( 
 							CommonServices.splitInput(codes)), 
 							CommonServices.splitInput(props))).toByteArray());
 		} catch (IOException e) {

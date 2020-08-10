@@ -2,13 +2,21 @@ package gov.nih.nci.evs.report.exporter.util;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.Definition;
@@ -16,6 +24,7 @@ import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyMap;
 import gov.nih.nci.evs.report.exporter.model.Qualifier;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
 
@@ -23,11 +32,16 @@ class EXELUtilityTest {
 	
 	ExcelUtility util;
 	
+	@Mock
 	BranchResolutionService service;
+	
+	@Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
 	@BeforeEach
 	void setUp() throws Exception {
-		service = new BranchResolutionService();
+		//Mockito.when(
+			//	service.resolveChildEntityGraph(Mockito.anyString(), Mockito., Mockito.anyList())).
+		service = mock(BranchResolutionService.class);
 		util = new ExcelUtility();
 	}
 
@@ -254,6 +268,25 @@ class EXELUtilityTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
+		List<Root> roots = new ArrayList<Root>();
+		Root r1 = new Root();
+		r1.setCode("C23423");
+		r1.setName("Bird");
+		Root r2 = new Root();
+		r2.setCode("C8988");
+		r2.setName("dog");
+		Root r3 = new Root();
+		r3.setCode("C534");
+		r3.setName("Cat");
+		roots.add(r1);
+		roots.add(r2);
+		roots.add(r3);
+		
+		doAnswer(invocation -> {
+			  Object[] args = invocation.getArguments();
+			  ((ChildEntity)args[1]).setParents(roots);
+			  return null; // void method in a block-style lambda, so return null
+			}).when(service).resolveChildEntityGraph(Mockito.anyString(), Mockito.any(ChildEntity.class), Mockito.anyList());;
 		service.resolveChildEntityGraph(CommonServices.TOP_NODE, entity, list);
 		return list;
 	}

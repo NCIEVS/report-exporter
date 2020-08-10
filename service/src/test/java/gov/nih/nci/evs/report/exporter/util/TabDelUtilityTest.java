@@ -24,10 +24,10 @@ class TabDelUtilityTest {
 	
 	BranchResolutionService service;
 	String csvOutLine1 = "terminology\tcode\tname\tparent\tsynonyms\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
-	String csvOutLine2a = "ncit\tC123234\tMyent\tnull\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
-	String csvOutLine3 = "ncit\tC000000\t0ent\tnull\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
-	String csvOutline4 = "ncit\tC999999\tMy9\tnull\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String csvOutline5 = "ncit\tC2222\tMy2\tnull\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String csvOutLine2a = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3 = "ncit\tC000000\t0ent\t\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4 = "ncit\tC999999\tMy9\t\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5 = "ncit\tC2222\tMy2\t\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
 
 	@BeforeEach
 	void setUp() throws Exception {

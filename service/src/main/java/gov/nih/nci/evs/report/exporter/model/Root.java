@@ -18,6 +18,11 @@ public class Root {
 		this.name = name;
 	}
 	
+	public String toString() {
+		return (code == null?"NOCODE":code) + ":" + 
+						(name == null?"UNDEFINED":name);
+	}
+	
 	
 
 }

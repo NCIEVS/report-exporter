@@ -13,7 +13,7 @@ public class RestEntity {
 	
 	private String terminology;
 	
-	private String parent;
+	private List<Root> parents;
 	
 	private List<Synonym> synonyms;
 	
@@ -47,12 +47,12 @@ public class RestEntity {
 		this.terminology = terminolgy;
 	}
 
-	public String getParent() {
-		return parent;
+	public List<Root> getParents() {
+		return parents;
 	}
 
-	public void setParent(String parent) {
-		this.parent = parent;
+	public void setParents(List<Root> parents) {
+		this.parents = parents;
 	}
 
 	public List<Synonym> getSynonyms() {
