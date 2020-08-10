@@ -25,7 +25,7 @@ class CSVUtilityTest {
 	
 	CSVUtility util;
 	
-	String csvOutLine1 = "terminology,code,name,parent,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLine1 = "terminology,code,name,parents,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLine2a = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 //	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
 //	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
