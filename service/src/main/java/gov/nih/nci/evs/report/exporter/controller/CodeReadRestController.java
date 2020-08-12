@@ -14,7 +14,6 @@ import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
 public class CodeReadRestController {
 	
 	@Autowired

@@ -27,7 +27,6 @@ import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @RestController
 @RequestMapping("/download")
-@CrossOrigin(origins = "http://localhost:8081")
 public class FileDownloadController {
 	
 	public enum Formats{JSON,CSV,TABD,EXCEL};
