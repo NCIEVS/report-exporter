@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.nih.nci.evs.report.exporter.model.Format;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutService;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
@@ -32,6 +33,12 @@ public class FileDownloadController {
 	public enum Formats{JSON,CSV,TABD,EXCEL};
 	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
 	
+	
+	public Format[] formats = new Format[]
+			{new Format(Formats.JSON.name(), "JavaScript Object Notation Format" ),
+			 new Format(Formats.CSV.name(), "Comma Separated Value Format" ),
+			 new Format(Formats.TABD.name(), "Tab Delimited Value Format" ),
+			 new Format(Formats.EXCEL.name(), "Microsoft Excel Format" )};
 	
 	@Autowired
 	FormattedOutputService service;
@@ -141,9 +148,8 @@ public class FileDownloadController {
 	
 	
 		@GetMapping("/output-formats")
-		public List<String> getFormatOutput(){
-			return Stream.of(Formats.values()).map(
-					x -> x.name()).collect(Collectors.toList());
+		public Format[] getFormatOutput(){
+			return  formats;
 		}
 		
 		@GetMapping(
