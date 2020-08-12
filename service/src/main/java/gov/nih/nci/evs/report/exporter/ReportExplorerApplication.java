@@ -41,19 +41,21 @@ public class ReportExplorerApplication extends SpringBootServletInitializer{
 				public void addCorsMappings(CorsRegistry registry) {
 					registry.addMapping("/properties")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
-					registry.addMapping("/resolve-children-for-codes/{code}")
+					registry.addMapping("/resolve-children-for-codes/**")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
-					registry.addMapping("/resolve-flat-branch-for-codes/{code}/{maximum}")
+					registry.addMapping("/resolve-flat-branch-for-codes/**")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
-					registry.addMapping("/resolve-branch-for-codes/{code}/{maximum}")
+					registry.addMapping("/resolve-branch-for-codes/**")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
-					registry.addMapping("/codereadrest/{ids}")
+					registry.addMapping("/codereadrest/**")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
-					registry.addMapping("/codereadrestprops/{ids}/{list}")
+					registry.addMapping("/codereadrestprops/**")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
-					registry.addMapping("/download")
+					registry.addMapping("/download/**")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
-					registry.addMapping("/roots")
+					registry.addMapping("/curated-top-nodes")
+						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
+					registry.addMapping("/roots/**")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url);
 				}
 			};
