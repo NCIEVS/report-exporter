@@ -158,6 +158,8 @@
 										<include>static/</include>
 										<include>js/</include>
 										<include>css/</include>
+										<include>img/</include>
+										<include>fonts/</include>
 										<include>index.html</include>
 									</includes>
 								</resource>

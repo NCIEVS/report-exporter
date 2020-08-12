@@ -11,7 +11,6 @@ import gov.nih.nci.evs.report.exporter.model.CuratedTopNode;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
 public class CuratedTopNodeController {
 	
 	@Autowired

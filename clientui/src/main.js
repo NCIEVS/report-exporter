@@ -55,6 +55,8 @@ const router = new VueRouter({
 
 // global variable visible to all Vue instances
 Vue.prototype.$baseURL = 'http://localhost:8080'
+//Uncomment for production
+//Vue.prototype.$baseURL = 'http://localhost:8080/reportExporter'
 
 // instatinate the vue instance
 new Vue({
