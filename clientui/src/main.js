@@ -9,6 +9,7 @@ import VueRouter from 'vue-router'
 
 import './assets/app.scss'
 import About from './components/About'
+// import ErrorPage from './components/ErrorPage.vue'
 import ReportSelection from './components/ReportSelection.vue'
 import ReadCodeEntry from './components/ReadCodeEntry.vue'
 import SearchTermEntry from './components/SearchTermEntry.vue'
@@ -43,20 +44,26 @@ const routes = [
   { path: '/readCodeEntry', component: ReadCodeEntry, props: { msg: "this is it", selectedTags:[] }},
   { path: '/searchTermEntry', component: SearchTermEntry },
   { path: '/resolveBranchEntry', component: ResolveBranchEntry },
-  { path: '/about', component: About }
+  { path: '/about', component: About },
+  // if page is unknown, show main selection page.
+  { path: '*', component: ReportSelection }
 ]
 
 /* eslint-disable no-new */
 // Create the router instance and pass the `routes` option
 const router = new VueRouter({
   routes: routes,
-  mode: 'history'
+  mode: 'history',
+  //base: '/reportExporter/'
 })
 
 // global variable visible to all Vue instances
-Vue.prototype.$baseURL = 'http://localhost:8080'
-//Uncomment for production
-//Vue.prototype.$baseURL = 'http://localhost:8080/reportExporter'
+// values come from the env.development or env.production files.
+Vue.prototype.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
+
+console.log('APP BASE URL: ' + process.env.VUE_APP_BASE_URL)
+console.log('ROOT CONTEXT: ' + process.env.VUE_APP_ROOT_CONTEXT)
+console.log('baseURL: ' + Vue.prototype.$baseURL)
 
 // instatinate the vue instance
 new Vue({
