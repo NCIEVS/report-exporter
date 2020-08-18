@@ -510,7 +510,7 @@ export default {
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.$baseURL + '/download/get-file-for-resolved-branch/'  +
+                url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
                     this.userEnteredCodes + '/' +
                     this.userSelectedProperyNames + '/' +
                     this.selectedLevel + '/' +

@@ -5,7 +5,7 @@ const api = {
 
 	getCodes(baseUrl, codes){
       return new Promise((resolve)=>{
-          axios.get(baseUrl + '/codereadrest/' + codes)
+          axios.get(baseUrl + 'codereadrest/' + codes)
               .then((response) =>{
                   resolve(response.data);
               })
@@ -18,7 +18,7 @@ const api = {
 
     getProperties(baseUrl){
         return new Promise((resolve)=>{
-            axios.get(baseUrl + '/properties')
+            axios.get(baseUrl + 'properties')
             .then((response) =>{
             resolve(response.data);
             })
@@ -27,7 +27,7 @@ const api = {
 
     getFormats(baseUrl){
         return new Promise((resolve)=>{
-            axios.get(baseUrl + '/download/output-formats')
+            axios.get(baseUrl + 'download/output-formats')
             .then((response) =>{
             resolve(response.data);
             })
@@ -36,7 +36,7 @@ const api = {
 
     getCuratedTopNodes(baseUrl){
         return new Promise((resolve)=>{
-            axios.get(baseUrl + '/curated-top-nodes')
+            axios.get(baseUrl + 'curated-top-nodes')
             .then((response) =>{
             resolve(response.data);
             })
@@ -45,7 +45,7 @@ const api = {
 
     getRoots(baseUrl){
         return new Promise((resolve)=>{
-            axios.get(baseUrl + '/roots/')
+            axios.get(baseUrl + 'roots/')
                 .then((response) =>{
                     resolve(response.data);
                 })
@@ -59,7 +59,7 @@ const api = {
     getChildren(baseUrl, code){
         return new Promise((resolve)=>{
             // hard code to 1 for single level resolution only
-            axios.get(baseUrl + '/resolve-branch-for-codes/' + code + '/1'
+            axios.get(baseUrl + 'resolve-branch-for-codes/' + code + '/1'
           )
                 .then((response) =>{
                     resolve(response.data);

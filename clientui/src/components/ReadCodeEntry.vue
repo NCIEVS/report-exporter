@@ -393,7 +393,7 @@ export default {
         this.setSelectedPropertyNames()
 
           axios({
-                url: this.$baseURL + '/download/get-file-for-readCodes/'  +
+                url: this.$baseURL + 'download/get-file-for-readCodes/'  +
                     this.userEnteredCodes + '/' +
                     this.userSelectedProperyNames + '/' +
                     this.userSelectedFormat + '/'+
