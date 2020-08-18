@@ -35,10 +35,10 @@ public class FileDownloadController {
 	
 	
 	public Format[] formats = new Format[]
-			{new Format(Formats.JSON.name(), "JavaScript Object Notation Format" ),
-			 new Format(Formats.CSV.name(), "Comma Separated Value Format" ),
-			 new Format(Formats.TABD.name(), "Tab Delimited Value Format" ),
-			 new Format(Formats.EXCEL.name(), "Microsoft Excel Format" )};
+			{new Format(Formats.JSON.name(), "JavaScript Object Notation Format", "json" ),
+			 new Format(Formats.CSV.name(), "Comma Separated Value Format", "csv" ),
+			 new Format(Formats.TABD.name(), "Tab Delimited Value Format", "txt" ),
+			 new Format(Formats.EXCEL.name(), "Microsoft Excel Format", "xlsx" )};
 	
 	@Autowired
 	FormattedOutputService service;
