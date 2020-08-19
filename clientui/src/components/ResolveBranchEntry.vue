@@ -79,7 +79,11 @@
                           <div class="form-group">
                                 <label for="levelSelection">Select how many levels to retrieve</label>
                                 <select v-model="selectedLevel" id="levelSelection" class="form-control">
-                                  <option v-for="level in levels" :value="level.id" :key="level.name">{{ level.name }}</option>
+                                  <option v-for="level in levels"
+                                    :value="level.id"
+                                    :key="level.name">
+                                    {{ level.name }}
+                                  </option>
                                 </select>
                             </div>
                         </div>
@@ -121,9 +125,19 @@
                  <form ref="formContainer">
                    <div class="form-group">
                      <label for="downloadFormat">Select format for export</label>
-                     <v-select element-id="downloadFormat" v-model="userSelectedFormat"
-                       :options="this.availableFormats" @input="value =>updateFormat(value)">
-                     </v-select>
+
+                     <select v-model="userSelectedFormat"
+                          id="downloadFormat"
+                          class="form-control">
+                       <option
+                          v-for="availableFormat in availableFormats"
+                          :value="availableFormat"
+                          :key="availableFormat.name">
+                          {{ availableFormat.name + ' (' +
+                             availableFormat.extension + ')  ' +
+                             availableFormat.description }}
+                        </option>
+                     </select>
                     </div>
                  </form>
               </div>
@@ -186,7 +200,13 @@
                   <div class="card-body">
                     <ul class="list-group" id="selectedPropertyList">
                       <li>
-                        {{userSelectedExtension}}
+                        {{
+                            userSelectedFormat.length !== 0 ?
+                              userSelectedFormat.name + ' (' +
+                              userSelectedFormat.extension + ')  ' +
+                              userSelectedFormat.description
+                            : 'None'
+                        }}
                       </li>
                     </ul>
                   </div>
@@ -206,7 +226,6 @@
 // Custom input tags
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
-import vSelect from 'vue-select'
 import api from '../api.js'
 import axios from 'axios'
 import {FormWizard, TabContent} from 'vue-form-wizard'
@@ -221,7 +240,7 @@ export default {
   components: {
     'tags-input': VoerroTagsInput,
     'vMultiselectListbox': vMultiselectListbox,
-    'v-select': vSelect,
+    //'v-select': vSelect,
     FormWizard,
     TabContent,
    'v-jstree': VJstree
@@ -236,18 +255,11 @@ export default {
       selectedProperties: [],
       userSelectedProperyNames: [],
       availableFormats: [],
-      userSelectedFormat: 'JSON',
+      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format","extension":"json"},
       curratedTopNodes: [],
       userSelectedTopNode: '',
       filename: 'branch',
       downloadReturnCode: null,
-      userSelectedExtension: 'json',
-      extensionMap:[
-        { id: 'JSON', name: 'json' },
-        { id: 'CSV', name: 'csv' },
-        { id: 'TABD', name: 'txt' },
-        { id: 'EXCEL', name: 'xlsx' }
-      ],
       curratedTopNodesUI:[],
       getPropertyError: false,
       selectedLevel: 0,
@@ -375,7 +387,7 @@ export default {
 
       validateExportStep() {
         // make sure there is an export format selected.
-        return this.userSelectedExtension != null && this.userSelectedExtension.length >0
+        return this.userSelectedFormat !== null
       },
 
       onComplete: function() {
@@ -423,19 +435,6 @@ export default {
 
         for (let i = 0; i < Object.keys(this.selectedProperties).length; i++) {
           this.userSelectedProperyNames.push(this.selectedProperties[i].name)
-        }
-      },
-
-      updateFormat(format) {
-        this.userSelectedExtension = ''
-        this.userSelectedFormat = format
-
-        // find the extension based off the key (user selected format)
-        for (let i = 0; i < Object.keys(this.extensionMap).length; i++) {
-          if (this.extensionMap[i].id == this.userSelectedFormat) {
-            this.userSelectedExtension = this.extensionMap[i].name;
-            break;
-          }
         }
       },
 
@@ -514,8 +513,8 @@ export default {
                     this.userEnteredCodes + '/' +
                     this.userSelectedProperyNames + '/' +
                     this.selectedLevel + '/' +
-                    this.userSelectedFormat + '/' +
-                    this.filename + '.' + this.userSelectedExtension,
+                    this.userSelectedFormat.name + '/' +
+                    this.filename + '.' + this.userSelectedFormat.extension,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
@@ -523,7 +522,7 @@ export default {
                   var fileLink = document.createElement('a');
 
                   fileLink.href = fileURL;
-                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedExtension);
+                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
                   document.body.appendChild(fileLink);
                   fileLink.click();
               }).catch(function(error) {
