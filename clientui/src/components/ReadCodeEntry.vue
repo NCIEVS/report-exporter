@@ -143,7 +143,13 @@
                   <div class="card-body">
                     <ul class="list-group" id="selectedPropertyList">
                       <li>
-                        {{userSelectedExtension}}
+                        {{
+                            userSelectedFormat.length !== 0 ?
+                              userSelectedFormat.name + ' (' +
+                              userSelectedFormat.extension + ')  ' +
+                              userSelectedFormat.description
+                            : 'None'
+                        }}
                       </li>
                     </ul>
                   </div>
