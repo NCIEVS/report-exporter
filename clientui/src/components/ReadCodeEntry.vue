@@ -70,9 +70,18 @@
                 <form ref="formContainer">
                   <div class="form-group">
                     <label for="downloadFormat">Select format for export</label>
-                    <v-select element-id="downloadFormat" v-model="userSelectedFormat"
-                      :options="this.availableFormats" @input="value =>updateFormat(value)">
-                    </v-select>
+                    <select v-model="userSelectedFormat"
+                         id="downloadFormat"
+                         class="form-control">
+                      <option
+                         v-for="availableFormat in availableFormats"
+                         :value="availableFormat"
+                         :key="availableFormat.name">
+                         {{ availableFormat.name + ' (' +
+                            availableFormat.extension + ')  ' +
+                            availableFormat.description }}
+                       </option>
+                    </select>
                    </div>
                 </form>
              </div>
@@ -134,7 +143,13 @@
                   <div class="card-body">
                     <ul class="list-group" id="selectedPropertyList">
                       <li>
-                        {{userSelectedExtension}}
+                        {{
+                            userSelectedFormat.length !== 0 ?
+                              userSelectedFormat.name + ' (' +
+                              userSelectedFormat.extension + ')  ' +
+                              userSelectedFormat.description
+                            : 'None'
+                        }}
                       </li>
                     </ul>
                   </div>
@@ -154,7 +169,6 @@
 // Custom input tags
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
-import vSelect from 'vue-select'
 import api from '../api.js';
 import axios from 'axios';
 import {FormWizard, TabContent} from 'vue-form-wizard';
@@ -168,7 +182,6 @@ export default {
   components: {
     'tags-input': VoerroTagsInput,
     'vMultiselectListbox': vMultiselectListbox,
-    'v-select': vSelect,
     FormWizard,
     TabContent
   },
@@ -182,16 +195,9 @@ export default {
       selectedProperties: [],
       userSelectedProperyNames: [],
       availableFormats: [],
-      userSelectedFormat: 'JSON',
+      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format","extension":"json"},
       filename: 'entities',
       downloadReturnCode: null,
-      userSelectedExtension: 'json',
-      extensionMap:[
-        { id: 'JSON', name: 'json' },
-        { id: 'CSV', name: 'csv' },
-        { id: 'TABD', name: 'txt' },
-        { id: 'EXCEL', name: 'xlsx' }
-      ],
       invalidTag: '',
       multipleEntitiesSplit: [],
       showSummary: true,
@@ -213,7 +219,7 @@ export default {
 
     validateExportStep() {
       // make sure there is an export format selected.
-      return this.userSelectedExtension != null && this.userSelectedExtension.length >0
+      return this.userSelectedFormat !== null
     },
 
     onComplete: function() {
@@ -291,19 +297,6 @@ export default {
         this.userSelectedProperyNames.push(this.selectedProperties[i].name)
       }
     },
-
-      updateFormat( format) {
-        this.userSelectedExtension = ''
-        this.userSelectedFormat = format
-
-        // find the extension based off the key (user selected format)
-        for (let i = 0; i < Object.keys(this.extensionMap).length; i++) {
-          if (this.extensionMap[i].id == this.userSelectedFormat) {
-            this.userSelectedExtension = this.extensionMap[i].name;
-            break;
-          }
-        }
-      },
 
       // Update the top node that was entered with the description.
       // User enters "C12434", the updated value displayed will be "C12434:Blood".
@@ -396,9 +389,9 @@ export default {
                 url: this.$baseURL + 'download/get-file-for-readCodes/'  +
                     this.userEnteredCodes + '/' +
                     this.userSelectedProperyNames + '/' +
-                    this.userSelectedFormat + '/'+
+                    this.userSelectedFormat.name  + '/'+
                     this.filename + '.' +
-                    this.userSelectedFormat + '.' + this.userSelectedExtension,
+                    this.userSelectedFormat.extension,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
@@ -406,7 +399,7 @@ export default {
                   var fileLink = document.createElement('a');
 
                   fileLink.href = fileURL;
-                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedExtension);
+                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
                   document.body.appendChild(fileLink);
                   fileLink.click();
 
