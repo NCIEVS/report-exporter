@@ -3,7 +3,7 @@
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">NCI Report Exporter</h1>
-      <p class="lead">NCI Thesaurus (NCIt) provides reference terminology services for the National Cancer Institute and other institutional users. It covers vocabulary for clinical care, translational and basic research, as well as, public information and administrative activities.</p>
+      <p class="lead">The NCI Thesaurus (NCIt) provides reference terminology services for the National Cancer Institute and other institutional users. The Report Exporter provides curated, filtered, and formatted output from the NCI Thesaurus in file types designed for typical research and development purposes.</p>
     </div>
 
     <div class="container">
