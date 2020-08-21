@@ -3,7 +3,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="treeModal" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="treeTitle">NCIt Tree</h5>
@@ -303,6 +303,7 @@ export default {
                       "id": children[x].code,
                       "text": children[x].code + ' : ' + children[x].name,
                       "isLeaf": false,
+                      "disabled": children[x].leaf,
                     },
                   )
                 }
@@ -334,6 +335,7 @@ export default {
                       "id": children[x].code,
                       "text": children[x].code + ' : ' + children[x].name,
                       "isLeaf": children[x].leaf,
+                      "disabled": children[x].leaf,
                     },
                   )
                 }
