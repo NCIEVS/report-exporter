@@ -611,13 +611,13 @@ export default {
   width: 100%
 }
 .treeViewButton {
-  background-color: rgb(1, 126, 190);
-  border-color: rgb(1, 126, 190);
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
   color: white;
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
-  background-color: rgb(1, 126, 190);
-  border-color: rgb(1, 126, 190);
+.btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
   color: white;
 }
 </style>

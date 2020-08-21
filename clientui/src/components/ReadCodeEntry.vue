@@ -489,5 +489,6 @@ a.disabled {
 
 .msl-searchable-list__no-item{
 	color: #74767a;
+	font-size: 16px
 } 
 </style>
