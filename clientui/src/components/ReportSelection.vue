@@ -108,8 +108,8 @@ a:hover {
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
-  background-color: rgb(0, 125, 188);
-  border-color: rgb(0, 126, 188);
+  background-color: rgb(0, 125, 188) !important;
+  border-color: rgb(0, 125, 188) !important;
   color: white;
 }
 .button {
@@ -117,4 +117,5 @@ a:hover {
   border-color: rgb(0, 125, 188);
   color: white;
 }
+
 </style>

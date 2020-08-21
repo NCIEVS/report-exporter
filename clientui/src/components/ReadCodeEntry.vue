@@ -444,21 +444,30 @@ export default {
 }
 
 .exportButtons {
-  background-color: rgb(1, 126, 190);
-  border-color: rgb(1, 126, 190);
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
   color: white;
 }
+
+.wizard-btn {
+	background-color: rgb(0, 125, 188) !important;
+	border-color: rgb(0, 125, 188) !important;
+	color: white;
+}
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
-  background-color: rgb(1, 126, 190);
-  border-color: rgb(1, 126, 190);
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
   color: white;
+}
+.btn-link {
+	color: rgba(33, 37, 41, 1) !important;
 }
 .msl-multi-select {
   /* make the multi-select take up the entire width of the container */
   width: 100%
 }
 
-.vue-form-wizard .category {
+.vue-form-wizard, .category {
 	color: #767676 !important;
 }
 
@@ -466,11 +475,19 @@ a.disabled {
 	color: #767676 !important;
 }
 
-wizard-icon-circle.span {
+.active {
 	color: rgb(0, 125, 188) !important;
 }
 
 .wizard-header p {
 	color: #767676;
 }
+
+.wizard-nav-pills>li>a{
+    color: rgba(0,0,0,.8) !important;
+}
+
+.msl-searchable-list__no-item{
+	color: #74767a;
+} 
 </style>
