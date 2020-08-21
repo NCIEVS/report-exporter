@@ -47,7 +47,7 @@ export default {
 	border:1px solid #1c5e86;
 	color:#fff;
 	background:#1c5e86;
-	background:linear-gradient(#0188cb,#1c5e86);
+/*	background:linear-gradient(#0188cb,#1c5e86);*/
 	text-align: center;
 }
 

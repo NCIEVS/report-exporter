@@ -55,8 +55,14 @@
 .navbar-brand {
    font-size: 14px;
 }
+
+/*.navbar */
 a {
   font-size: 10px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+	color: rgba(255,255,255, 1);
 }
 .button {
   padding: 0;

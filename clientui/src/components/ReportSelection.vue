@@ -18,7 +18,7 @@
               <li>Export entities and selected properties from concept code matches</li>
             </ul>
 			<router-link v-bind:to="'/readCodeEntry'">
-        <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Select</button>
+        <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Start Selecting Concepts</button>
 			</router-link>
     </div>
   </div>
@@ -48,7 +48,7 @@
               <li>Export resolved branch of entities from a root concept code match</li>
             </ul>
             <router-link v-bind:to="'/resolveBranchEntry'">
-              <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Select</button>
+              <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
 			</router-link>
           </div>
         </div>
@@ -102,14 +102,19 @@ a:hover {
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
 
 .selectButton {
-  background-color: rgb(1, 126, 190);
-  border-color: rgb(1, 126, 190);
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
   color: white;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
-  background-color: rgb(1, 126, 190);
-  border-color: rgb(1, 126, 190);
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 126, 188);
+  color: white;
+}
+.button {
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
   color: white;
 }
 </style>

@@ -1,9 +1,7 @@
 <template>
   <div class="subheader">
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
-      <router-link v-bind:to="'/'">
-        <a class="navbar-brand active" href="#">Home</a>
-      </router-link>
+      <router-link v-bind:to="'/'" >Home</router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -35,22 +33,21 @@
 <style scoped>
 
 .evs-subheader {
-    background-color: #017ebe;
+    color: rgba(255,255,255, 1);
+    background-color: #007dbd;
     padding: 0 30px 2px;
 }
-.navbar-brand {
+.navbar-dark .navbar-nav .nav-link {
    font-size: 16px;
+   color: rgba(255,255,255, 1);
 }
-a {
-  font-size: 12px;
-}
-
-/*  To control link and mouse over links
 .navbar a  {
-  color: yellow;
+  font-size: 16px;
+  color: rgba(255,255,255, 1);
+  text-decoration: none;
 }
 
-.navbar a:hover {
+/* .navbar a:hover {
 
   color: pink;
 }

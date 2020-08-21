@@ -26,7 +26,7 @@
                             :add-tags-on-space="true"
                             :case-sensitive-tags="true"
                             :typeahead="false"
-                            @tag-added="value =>onTagAdded(value)">
+                            @tag-added="value =>onTagAdded(value)" title="remove selected tag">
                           </tags-input>
                       </div>
                       <button type="button"  v-on:click="clearSelection"
@@ -456,5 +456,21 @@ export default {
 .msl-multi-select {
   /* make the multi-select take up the entire width of the container */
   width: 100%
+}
+
+.vue-form-wizard .category {
+	color: #767676 !important;
+}
+
+a.disabled {
+	color: #767676 !important;
+}
+
+wizard-icon-circle.span {
+	color: rgb(0, 125, 188) !important;
+}
+
+.wizard-header p {
+	color: #767676;
 }
 </style>
