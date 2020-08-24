@@ -168,6 +168,28 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+			  <artifactId>maven-clean-plugin</artifactId>
+			  <version>3.1.0</version>
+			  <configuration>
+			    <filesets>
+			      <fileset>
+			        <directory>${project.parent.basedir}/service/src/main/resources/public</directory>
+			        <includes>
+			          <include>css/*.css</include>
+			          <include>js/*.js</include>
+			          <include>js/*.js.map</include>
+			          <include>fonts/*.eot</include>
+			          <include>fonts/*.woff</include>
+			          <include>fonts/*.ttf</include>
+			          <include>img/*.svg</include>
+			          <include>*.html</include>
+			        </includes>
+			        <followSymlinks>false</followSymlinks>
+			      </fileset>
+			    </filesets>
+			  </configuration>
+		  	</plugin>
 		</plugins>
 	</build>
 
