@@ -47,14 +47,4 @@
   text-decoration: none;
 }
 
-/* .navbar a:hover {
-
-  color: pink;
-}
-
-.navbar-text .navbar-nav .nav-link {
-  color: greenyellow;
-}
-*/
-
 </style>
