@@ -2,7 +2,7 @@
 
   <div class="header">
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
-      <a class="navbar-brand active" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV </a>
+      <a class="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -55,8 +55,14 @@
 .navbar-brand {
    font-size: 14px;
 }
+
+/*.navbar */
 a {
   font-size: 10px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+	color: rgba(255,255,255, 1);
 }
 .button {
   padding: 0;
