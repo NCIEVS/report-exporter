@@ -9,19 +9,19 @@
       <div class="navbar-collapse collapse" id="collapsingNavbarHeader">
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">About Cancer<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="https://www.cancer.gov/about-cancer" target="_blank">About Cancer<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Research</a>
+              <a class="nav-link" href="https://www.cancer.gov/research" target="_blank">Research</a>
             </li>
              <li class="nav-item">
-              <a class="nav-link" href="#">Grants & Training</a>
+              <a class="nav-link" href="https://www.cancer.gov/grants-training" target="_blank">Grants & Training</a>
             </li>
              <li class="nav-item">
-              <a class="nav-link" href="#">News & Events</a>
+              <a class="nav-link" href="https://www.cancer.gov/news-events" target="_blank">News & Events</a>
             </li>
              <li class="nav-item">
-              <a class="nav-link" href="#">About NCI</a>
+              <a class="nav-link" href="https://www.cancer.gov/about-nci" target="_blank">About NCI</a>
             </li>
           </ul>
       </div>

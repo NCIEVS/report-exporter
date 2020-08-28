@@ -9,6 +9,7 @@ import VueRouter from 'vue-router'
 
 import './assets/app.scss'
 import About from './components/About'
+import Documentation from './components/Documentation'
 // import ErrorPage from './components/ErrorPage.vue'
 import ReportSelection from './components/ReportSelection.vue'
 import ReadCodeEntry from './components/ReadCodeEntry.vue'
@@ -45,6 +46,7 @@ const routes = [
   { path: '/searchTermEntry', component: SearchTermEntry },
   { path: '/resolveBranchEntry', component: ResolveBranchEntry },
   { path: '/about', component: About },
+  { path: '/documentation', component: Documentation },
   // if page is unknown, show main selection page.
   { path: '*', component: ReportSelection }
 ]
