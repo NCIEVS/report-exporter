@@ -50,20 +50,6 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="card">
-                              <div class="card-header" id="accordion-tab-1-heading-2">
-                                  <h5>
-                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-2" aria-expanded="false" aria-controls="accordion-tab-1-content-2">
-                                        Q2
-                                      </button>
-                                  </h5>
-                              </div>
-                              <div class="collapse" id="accordion-tab-1-content-2" aria-labelledby="accordion-tab-1-heading-2" data-parent="#accordion-tab-1">
-                                  <div class="card-body">
-                                      Answer 2
-                                  </div>
-                              </div>
-                          </div>
                       </div>
                   </div>
                   <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="tab2">
