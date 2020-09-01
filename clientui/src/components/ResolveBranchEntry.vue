@@ -168,14 +168,14 @@
             <div class="row p-1">
               <div class="col-sm-4">
                 <div class="card bg-light border-dark mb-3">
-                  <div class="card-header">Selected Top Node and Levels <span class="badge badge-secondary">{{ selectedLevel + 1 }}</span></div>
+                  <div class="card-header">Selected Top Node and Levels <span class="badge badge-secondary">{{ selectedLevel }}</span></div>
                   <div class="card-body">
                     <ul class="list-group" id="selectedTagList">
                       <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
                         {{ selectedTag.value }}
                       </li>
                       <li>
-                        Levels to Export: {{ selectedLevel + 1 }}
+                        Levels to Export: {{ selectedLevel }}
                       </li>
                     </ul>
                   </div>
@@ -264,16 +264,16 @@ export default {
       getPropertyError: false,
       selectedLevel: 0,
       levels:[
-        { id: 0, name: '1 Level' },
-        { id: 1, name: '2 Levels' },
-        { id: 2, name: '3 Levels' },
-        { id: 3, name: '4 Levels' },
-        { id: 4, name: '5 Levels' },
-        { id: 5, name: '6 Levels' },
-        { id: 6, name: '7 Levels' },
-        { id: 7, name: '8 Levels' },
-        { id: 8, name: '9 Levels' },
-        { id: 9, name: '10 Levels' },
+        { id: 1, name: '1 Level' },
+        { id: 2, name: '2 Levels' },
+        { id: 3, name: '3 Levels' },
+        { id: 4, name: '4 Levels' },
+        { id: 5, name: '5 Levels' },
+        { id: 6, name: '6 Levels' },
+        { id: 7, name: '7 Levels' },
+        { id: 8, name: '8 Levels' },
+        { id: 9, name: '9 Levels' },
+        { id: 10, name: '10 Levels' },
       ],
 
       showTree: true,
@@ -288,7 +288,7 @@ export default {
           // set to null to indicate this is the root.
           var id = oriNode.data.id ? oriNode.data.id : null
           var data = []
-          console.log('id: ' + id)
+          //console.log('id: ' + id)
 
           // if id is null, this is the root.  get all root children
           if (id == null) {
@@ -363,7 +363,7 @@ export default {
 
       // Tree dialog user chose a tree node
       userSelectTreeBranchNode() {
-        console.log('userSelectTreeBranchNode - user selected:' + this.treeSelectedCode)
+        //console.log('userSelectTreeBranchNode - user selected:' + this.treeSelectedCode)
 
         this.selectedTags = [
           { key: this.treeSelectedCode, value: this.treeSelectedCode },
@@ -372,7 +372,7 @@ export default {
 
       // tree item clicked
       itemClick (node) {
-        console.log(node.model.id + ' clicked !')
+        //console.log(node.model.id + ' clicked !')
         this.treeSelectedCode = node.model.id;
       },
 
@@ -447,9 +447,9 @@ export default {
         this.selectedTags[0].key = topNode[0].code;
         this.selectedTags[0].value = topNode[0].code + ":" + topNode[0].name;
 
-        console.log ("Updating top node: " + topNode[0].code + "  " + topNode[0].name)
+        //console.log ("Updating top node: " + topNode[0].code + "  " + topNode[0].name)
         for (let i = 0; i < Object.keys(this.curratedTopNodesUI).length; i++) {
-          console.log ("key " + this.curratedTopNodesUI[i].key + "  value " + this.curratedTopNodesUI[i].value)
+          //console.log ("key " + this.curratedTopNodesUI[i].key + "  value " + this.curratedTopNodesUI[i].value)
         }
       },
 
@@ -538,7 +538,7 @@ export default {
         api.getRoots(this.$baseURL)
         .then((data)=>{
           if (data != null) {
-            console.log("got roots : " + data);
+            //console.log("got roots : " + data);
         }
         else {
             console.log("Error retrieving roots");
@@ -550,7 +550,7 @@ export default {
         api.getChildren(this.$baseURL, this.userEnteredCodes)
         .then((data)=>{
           if (data != null) {
-            console.log("got children : " + data);
+            //console.log("got children : " + data);
         }
         else {
             console.log("Error retrieving children");
