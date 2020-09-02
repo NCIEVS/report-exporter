@@ -124,7 +124,7 @@ public class CodeReadService {
 			catch (HttpClientErrorException.NotFound nf) {
 				entity = new RestEntity();
 				entity.setName("");
-				entity.setCode("-1");
+				entity.setCode(code);
 				entity.setQueryCode(-1);
 				entity.setQueryStatus("404:NotFound");
 				return entity;
@@ -132,7 +132,7 @@ public class CodeReadService {
 		if(retiredConceptsFilter(entity)) {
 			entity = new RestEntity();
 			entity.setName("");
-			entity.setCode("-1");
+			entity.setCode(code);
 			entity.setQueryCode(-1);
 			entity.setQueryStatus("RETIRED");
 			return entity;
