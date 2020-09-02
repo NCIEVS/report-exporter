@@ -32,6 +32,10 @@ public class CodeReadService {
 	@Value("${PARENTS}")
 	private String parents;
 	
+	public static final String NOTFOUND = "Concept Code Not Found";
+	public static final String RETIRED = "Concept Code Retired";
+	public static final String VALID = "SUCCESS";
+	
 	public List<RestEntity> getRestEntitiesWithParents(List<String> codes){
 		List<RestEntity> propMeta = 
 				codes.stream().map(x -> 
@@ -126,7 +130,7 @@ public class CodeReadService {
 				entity.setName("");
 				entity.setCode(code);
 				entity.setQueryCode(-1);
-				entity.setQueryStatus("404:NotFound");
+				entity.setQueryStatus(NOTFOUND);
 				return entity;
 		}
 		if(retiredConceptsFilter(entity)) {
@@ -134,12 +138,12 @@ public class CodeReadService {
 			entity.setName("");
 			entity.setCode(code);
 			entity.setQueryCode(-1);
-			entity.setQueryStatus("RETIRED");
+			entity.setQueryStatus(RETIRED);
 			return entity;
 		}
 		
 		entity.setQueryCode(0);
-		entity.setQueryStatus("SUCCESS");
+		entity.setQueryStatus(VALID);
 		return entity;
 	}
 
