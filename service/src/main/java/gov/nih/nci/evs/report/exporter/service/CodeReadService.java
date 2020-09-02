@@ -123,15 +123,23 @@ public class CodeReadService {
 		}
 			catch (HttpClientErrorException.NotFound nf) {
 				entity = new RestEntity();
-				entity.setName("Invalid:NotFound");
-				entity.setCode("404:NotFound");
+				entity.setName("");
+				entity.setCode("-1");
+				entity.setQueryCode(-1);
+				entity.setQueryStatus("404:NotFound");
 				return entity;
 		}
 		if(retiredConceptsFilter(entity)) {
 			entity = new RestEntity();
-			entity.setName("Invalid:InActive");
-			entity.setCode("RETIRED");
+			entity.setName("");
+			entity.setCode("-1");
+			entity.setQueryCode(-1);
+			entity.setQueryStatus("RETIRED");
+			return entity;
 		}
+		
+		entity.setQueryCode(0);
+		entity.setQueryStatus("SUCCESS");
 		return entity;
 	}
 

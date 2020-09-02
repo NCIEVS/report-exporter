@@ -46,26 +46,26 @@ public class CodeReadRestController {
 	}
 	
 	
-	public RestEntity getCuratedEntityForCode(String code){
-		RestEntity entity = null;
-		try {
-			entity = CommonServices.getRestTemplate()
-			.getForObject(
-			service.getBaseURL() + code + service.getSummary() + "," + service.getMaps()
-					, RestEntity.class);
-		}
-			catch (HttpClientErrorException.NotFound nf) {
-				entity = new RestEntity();
-				entity.setName("Invalid:NotFound");
-				entity.setCode("404:NotFound");
-		}
-		if(entity != null && entity.getCode() == null) {
-			entity = new RestEntity();
-			entity.setName("Invalid:Inactive");
-			entity.setCode("RETIRED");
-		}
-		return entity;
-	}
+//	public RestEntity getCuratedEntityForCode(String code){
+//		RestEntity entity = null;
+//		try {
+//			entity = CommonServices.getRestTemplate()
+//			.getForObject(
+//			service.getBaseURL() + code + service.getSummary() + "," + service.getMaps()
+//					, RestEntity.class);
+//		}
+//			catch (HttpClientErrorException.NotFound nf) {
+//				entity = new RestEntity();
+//				entity.setName("Invalid:NotFound");
+//				entity.setCode("404:NotFound");
+//		}
+//		if(entity != null && entity.getCode() == null) {
+//			entity = new RestEntity();
+//			entity.setName("Invalid:Inactive");
+//			entity.setCode("RETIRED");
+//		}
+//		return entity;
+//	}
 	
 
 }

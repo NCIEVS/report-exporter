@@ -22,6 +22,10 @@ public class RestEntity {
 	private List<Property> properties;
 	
 	private List<PropertyMap> maps;
+	
+	private int queryCode;
+	
+	private String queryStatus;
 
 	public String getCode() {
 		return code;
@@ -85,6 +89,22 @@ public class RestEntity {
 
 	public void setMaps(List<PropertyMap> maps) {
 		this.maps = maps;
+	}
+
+	public int getQueryCode() {
+		return queryCode;
+	}
+
+	public void setQueryCode(int queryCode) {
+		this.queryCode = queryCode;
+	}
+
+	public String getQueryStatus() {
+		return queryStatus;
+	}
+
+	public void setQueryStatus(String queryStatus) {
+		this.queryStatus = queryStatus;
 	}
 
 	public String toString() {
