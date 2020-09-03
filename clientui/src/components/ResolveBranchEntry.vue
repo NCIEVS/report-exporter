@@ -444,13 +444,15 @@ export default {
       // User enters "C12434", the updated value displayed will be "C12434:Blood".
       // If entered value is not valid, remove it and display an error message.
       updateSelectedTopNodeDescription(topNode){
-        this.selectedTags[0].key = topNode[0].code;
-        this.selectedTags[0].value = topNode[0].code + ":" + topNode[0].name;
+        if (topNode.length >0) {
+          this.selectedTags[0].key = topNode[0].code;
+          this.selectedTags[0].value = topNode[0].code + ":" + topNode[0].name;
+        }
 
         //console.log ("Updating top node: " + topNode[0].code + "  " + topNode[0].name)
-        for (let i = 0; i < Object.keys(this.curratedTopNodesUI).length; i++) {
+        //for (let i = 0; i < Object.keys(this.curratedTopNodesUI).length; i++) {
           //console.log ("key " + this.curratedTopNodesUI[i].key + "  value " + this.curratedTopNodesUI[i].value)
-        }
+        //}
       },
 
       updateCurratedTopNodes (topNode) {
@@ -461,12 +463,40 @@ export default {
         // clear the entry list
         this.entityList = []
         this.setSelectedTags()
+        var tempCode = ''
+        var tempStatus = ''
 
         //console.log(this.selectedTags[0].key +" --- " + this.selectedTags[0].value)
         api.getCodes(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
 
             if (data != null) {
+              // If a code is retired, the object may be empty.
+              for (let x = data.length -1; x >=0; x--) {
+                  if (data[x].queryCode < 0) {
+                    //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
+                    tempCode =  data[x].code
+                    tempStatus = data[x].queryStatus
+                    data.splice(x,1)
+
+                    // need to remove from selectedTags
+                    for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                      if (tempCode == this.selectedTags[i].value) {
+                        this.selectedTags.splice(i,1)
+                      }
+                    }
+                    // Display error message for this code
+                    this.$notify({
+                      group: 'app',
+                      title: 'Invalid Concept Code',
+                      text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.  <b>' +tempCode+'</b> has been removed.',
+                      type: 'error',
+                      duration: 6000,
+                      position: "left bottom"
+                    });
+                  }
+              }
+
               this.entityList = data;
               this.updateSelectedTopNodeDescription(data);
             }

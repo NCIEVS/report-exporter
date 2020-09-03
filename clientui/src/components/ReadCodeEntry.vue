@@ -326,23 +326,49 @@ export default {
         // clear the entry list
         this.entityList = []
         this.setSelectedTags()
+        var tempCode = ''
+        var tempStatus = ''
 
         api.getCodes(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
             if (data != null) {
+              // loop through all codes and verify data is returned for each
+              // If a code is retired, the object may be empty.
+              for (let x = data.length -1; x >=0; x--) {
+                  if (data[x].queryCode < 0) {
+                    //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
+                    tempCode =  data[x].code
+                    tempStatus = data[x].queryStatus
+                    data.splice(x,1)
+
+                    // need to remove from selectedTags
+                    for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                      if (tempCode == this.selectedTags[i].value) {
+                        this.selectedTags.splice(i,1)
+                      }
+                    }
+                    // Display error message for this code
+                    this.$notify({
+                      group: 'app',
+                      title: 'Invalid Concept Code',
+                      text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.  <b>' +tempCode+'</b> has been removed.',
+                      type: 'error',
+                      duration: 6000,
+                      position: "left bottom"
+                    });
+                  }
+              }
+
               this.entityList = data;
               this.updateSelectedConceptCodeDescriptions(data);
             }
             else {
-              // update structure - remove invalid value that was entered
-              this.invalidTag = this.selectedTags.splice(-1,1);
-              this.userEnteredCodes.splice(-1,1);
-
+              // There was a failure making the REST call.
+              this.clearSelection()
               this.$notify({
                 group: 'app',
-                title: 'Invalid Concept Code',
-                //text: 'The concept code <b>' + this.userEnteredCodes[0] +'</b> is not valid. It has been removed.',
-                text: 'The concept code <b>' + this.invalidTag[0].value +'</b> is not valid. It has been removed.',
+                title: 'Validation Failure',
+                text: 'Could not verify concept code(s).  Possible network issue.',
                 type: 'error',
                 duration: 4000,
                 position: "left bottom"
@@ -490,5 +516,5 @@ a.disabled {
 .msl-searchable-list__no-item{
 	color: #74767a;
 	font-size: 16px
-} 
+}
 </style>
