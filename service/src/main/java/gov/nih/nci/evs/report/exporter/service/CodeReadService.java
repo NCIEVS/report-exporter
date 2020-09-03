@@ -6,6 +6,8 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
@@ -31,6 +33,10 @@ public class CodeReadService {
 	@Value("${PARENTS}")
 	private String parents;
 	
+	public static final String NOTFOUND = "Concept Code Not Found";
+	public static final String RETIRED = "Concept Code Retired";
+	public static final String VALID = "SUCCESS";
+	
 	public List<RestEntity> getRestEntitiesWithParents(List<String> codes){
 		List<RestEntity> propMeta = 
 				codes.stream().map(x -> 
@@ -42,10 +48,7 @@ public class CodeReadService {
 	
 	public List<RestEntity> getRestEntities(List<String> codes){
 		List<RestEntity> propMeta = 
-				codes.stream().map(code -> CommonServices.getRestTemplate()
-				.getForObject(
-				baseURL + code + summary + "," + maps
-						, RestEntity.class)).collect(Collectors.toList());
+				codes.stream().map(code -> getCuratedEntityForCode(code)).collect(Collectors.toList());
 		return propMeta;
 	}
 	
@@ -59,10 +62,7 @@ public class CodeReadService {
 	}
 	
 	public RestEntity getRestEntityWithParent(String code, List<Root> parents){
-		RestEntity entity = CommonServices.getRestTemplate()
-				.getForObject(
-				baseURL + code + summary + "," + maps
-						, RestEntity.class);
+		RestEntity entity = getEntity(CommonServices.getRestTemplate(), code);
 			entity.setParents(parents);
 		return entity;
 	}
@@ -108,11 +108,77 @@ public class CodeReadService {
 	}
 	
 	public  boolean retiredConceptsFilter(RestEntity entity){
-		return !(entity
+		return (entity
 				.getProperties()
 				.stream()
 				.anyMatch(prop -> prop.getValue()
 						.equals("Retired_Concept")));
+	}
+	
+	public RestEntity getCuratedEntityForCode(String code){
+		RestEntity entity = null;
+		try {
+			entity = getEntity(CommonServices.getRestTemplate(), code);
+		}
+			catch (HttpClientErrorException.NotFound nf) {
+				entity = new RestEntity();
+				entity.setName("");
+				entity.setCode(code);
+				entity.setQueryCode(-1);
+				entity.setQueryStatus(NOTFOUND);
+				return entity;
+		}
+		if(retiredConceptsFilter(entity)) {
+			entity = new RestEntity();
+			entity.setName("");
+			entity.setCode(code);
+			entity.setQueryCode(-1);
+			entity.setQueryStatus(RETIRED);
+			return entity;
+		}
+		
+		entity.setQueryCode(0);
+		entity.setQueryStatus(VALID);
+		return entity;
+	}
+	
+	public RestEntity getEntity(RestTemplate template, String code) {
+		return template
+				.getForObject(
+						baseURL + code + summary + "," + maps
+								, RestEntity.class);	
+	}
+
+	public String getBaseURL() {
+		return baseURL;
+	}
+
+	public void setBaseURL(String baseURL) {
+		this.baseURL = baseURL;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getMaps() {
+		return maps;
+	}
+
+	public void setMaps(String maps) {
+		this.maps = maps;
+	}
+
+	public String getParents() {
+		return parents;
+	}
+
+	public void setParents(String parents) {
+		this.parents = parents;
 	}
 	
 }

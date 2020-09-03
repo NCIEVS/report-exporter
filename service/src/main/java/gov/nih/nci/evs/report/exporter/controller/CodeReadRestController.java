@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
@@ -28,9 +29,6 @@ public class CodeReadRestController {
 			return service.getRestEntities(
 					CommonServices.splitInput(ids))
 					.stream()
-					.filter(entity -> 
-						service.retiredConceptsFilter(entity))
-//					.map(x -> {if(x != null) {if(x.getCode() == null) {return null;}}else{return x;}})
 					.collect(Collectors.toList());
 	  }
 	
@@ -47,6 +45,4 @@ public class CodeReadRestController {
 				CommonServices.splitInput(ids)), CommonServices.splitInput(list));
 	}
 	
-	
-
 }
