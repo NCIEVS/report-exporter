@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
@@ -61,10 +62,7 @@ public class CodeReadService {
 	}
 	
 	public RestEntity getRestEntityWithParent(String code, List<Root> parents){
-		RestEntity entity = CommonServices.getRestTemplate()
-				.getForObject(
-				baseURL + code + summary + "," + maps
-						, RestEntity.class);
+		RestEntity entity = getEntity(CommonServices.getRestTemplate(), code);
 			entity.setParents(parents);
 		return entity;
 	}
@@ -120,10 +118,10 @@ public class CodeReadService {
 	public RestEntity getCuratedEntityForCode(String code){
 		RestEntity entity = null;
 		try {
-			entity = CommonServices.getRestTemplate()
-			.getForObject(
-			baseURL + code + summary + "," + maps
-					, RestEntity.class);
+			entity = getEntity(CommonServices.getRestTemplate(), code);
+//			.getForObject(
+//			baseURL + code + summary + "," + maps
+//					, RestEntity.class);
 		}
 			catch (HttpClientErrorException.NotFound nf) {
 				entity = new RestEntity();
@@ -145,6 +143,13 @@ public class CodeReadService {
 		entity.setQueryCode(0);
 		entity.setQueryStatus(VALID);
 		return entity;
+	}
+	
+	public RestEntity getEntity(RestTemplate template, String code) {
+		return template
+				.getForObject(
+						baseURL + code + summary + "," + maps
+								, RestEntity.class);	
 	}
 
 	public String getBaseURL() {
