@@ -1,6 +1,9 @@
 package gov.nih.nci.evs.report.exporter.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.swing.text.html.parser.Entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,7 +26,12 @@ public class CodeReadRestController {
 	  @GetMapping("/codereadrest/{ids}")
 	  public List<RestEntity> codeReadForm(@PathVariable String ids) {
 			return service.getRestEntities(
-					CommonServices.splitInput(ids));
+					CommonServices.splitInput(ids))
+					.stream()
+					.filter(entity -> 
+						service.retiredConceptsFilter(entity))
+//					.map(x -> {if(x != null) {if(x.getCode() == null) {return null;}}else{return x;}})
+					.collect(Collectors.toList());
 	  }
 	
 	@PostMapping("/codereadrest/{ids}")

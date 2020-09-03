@@ -70,7 +70,7 @@ public class CodeReadService {
 	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
-		list.stream().forEach(
+		list.stream().filter(x -> retiredConceptsFilter(x) ).forEach(
 				entity -> {
 					entity.setProperties(
 						(List<Property>)filterProperties(entity.getProperties(), propList));
@@ -105,6 +105,14 @@ public class CodeReadService {
 		return propList.stream().filter(
 				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());
+	}
+	
+	public  boolean retiredConceptsFilter(RestEntity entity){
+		return !(entity
+				.getProperties()
+				.stream()
+				.anyMatch(prop -> prop.getValue()
+						.equals("Retired_Concept")));
 	}
 	
 }
