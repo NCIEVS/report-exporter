@@ -119,9 +119,6 @@ public class CodeReadService {
 		RestEntity entity = null;
 		try {
 			entity = getEntity(CommonServices.getRestTemplate(), code);
-//			.getForObject(
-//			baseURL + code + summary + "," + maps
-//					, RestEntity.class);
 		}
 			catch (HttpClientErrorException.NotFound nf) {
 				entity = new RestEntity();
