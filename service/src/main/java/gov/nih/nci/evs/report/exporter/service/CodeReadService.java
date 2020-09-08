@@ -65,10 +65,8 @@ public class CodeReadService {
 				.create()
 				.get()
 				.uri(baseURL + code + parents)
-				.retrieve()
-				.bodyToFlux(Root.class)
-				.blockLast())
-				.collect(Collectors.toList());			
+				.retrieve().bodyToMono(Root[].class)
+				.block()).collect(Collectors.toList());			
 		return roots;
 	}
 	
