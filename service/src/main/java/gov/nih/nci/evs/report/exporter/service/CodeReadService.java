@@ -156,7 +156,8 @@ public class CodeReadService {
 					.bodyToMono(RestEntity.class)
 					.block();
 		} catch (URISyntaxException e) {
-			throw new RuntimeException("Resource URL is incorrectly constructed for: " + code);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}
