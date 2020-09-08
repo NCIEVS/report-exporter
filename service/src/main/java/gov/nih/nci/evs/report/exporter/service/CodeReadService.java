@@ -41,14 +41,11 @@ public class CodeReadService {
 	public static final String VALID = "SUCCESS";
 	
 	public List<RestEntity> getRestEntitiesWithParents(List<String> codes){
-		//long start = System.currentTimeMillis();
 		List<RestEntity> propMeta = 
 				codes.stream().map(x -> 
 					getRestEntityWithParent(
 							x, getRestParents(x)))
 				.collect(Collectors.toList());
-//		System.out.println("milli seconds to resolve parents and entity: " 
-//				+ (System.currentTimeMillis() - start));
 		return propMeta;
 	}
 	
@@ -159,8 +156,7 @@ public class CodeReadService {
 					.bodyToMono(RestEntity.class)
 					.block();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException("Resource URL is incorrectly constructed for: " + code);
 		}
 		return null;
 	}
