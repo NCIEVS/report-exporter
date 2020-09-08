@@ -1,5 +1,7 @@
 package gov.nih.nci.evs.report.exporter.service;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
@@ -53,11 +56,12 @@ public class CodeReadService {
 	}
 	
 	public List<Root> getRestParents(String code){
-		List<Root> roots = Stream.of(CommonServices.getRestTemplate()
-				.getForObject(
-				baseURL + code + parents
-						, Root[].class)).collect(Collectors.toList());
-			
+		List<Root> roots = Stream.of(WebClient
+				.create()
+				.get()
+				.uri(baseURL + code + parents)
+				.retrieve().bodyToMono(Root[].class)
+				.block()).collect(Collectors.toList());			
 		return roots;
 	}
 	
@@ -142,11 +146,20 @@ public class CodeReadService {
 		return entity;
 	}
 	
-	public RestEntity getEntity(RestTemplate template, String code) {
-		return template
-				.getForObject(
-						baseURL + code + summary + "," + maps
-								, RestEntity.class);	
+	public RestEntity getEntity(RestTemplate template, String code) {	
+		try {
+			return WebClient
+					.create()
+					.get()
+					.uri(new URI(baseURL + code + summary + "," + maps))
+					.retrieve()
+					.bodyToMono(RestEntity.class)
+					.block();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getBaseURL() {
