@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
@@ -124,7 +125,7 @@ public class CodeReadService {
 		try {
 			entity = getEntity(CommonServices.getRestTemplate(), code);
 		}
-			catch (HttpClientErrorException.NotFound nf) {
+			catch (WebClientResponseException.NotFound nf) {
 				entity = new RestEntity();
 				entity.setName("");
 				entity.setCode(code);
