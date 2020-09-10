@@ -21,9 +21,10 @@
                       <label for="tags">Enter NCI Thesaurus concept codes</label>
                       <div class="form-group">
                           <tags-input element-id="tags"
-                            v-model="selectedTags" placeholder="Type entity code, then space"
+                            v-model="selectedTags" placeholder="Type entity code, then click the enter"
                             :add-tags-on-comma="true"
                             :add-tags-on-space="true"
+                            :add-tags-on-blur="true"
                             :case-sensitive-tags="true"
                             :typeahead="false"
                             @tag-added="value =>onTagAdded(value)" title="remove selected tag">
@@ -455,6 +456,9 @@ export default {
         }
     },
     created() {
+      // scroll to the top of the page
+      window.scrollTo(0,0);
+
       this.updateShowSummary();
 
       // load properties after the page is loaded.

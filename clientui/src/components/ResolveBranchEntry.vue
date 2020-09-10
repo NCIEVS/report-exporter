@@ -22,7 +22,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal"  v-on:click="userSelectTreeBranchNode">Select</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="userSelectTreeBranchNode">Select</button>
           </div>
         </div>
       </div>
@@ -589,6 +589,9 @@ export default {
       },
   },
     created() {
+      // scroll to the top of the page
+      window.scrollTo(0,0);
+      
       this.updateShowSummary();
 
       // load properties after the page is loaded.
