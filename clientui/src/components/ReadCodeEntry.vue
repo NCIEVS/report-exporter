@@ -17,7 +17,7 @@
           <div class="container">
               <div class="row justify-content-center">
                  <div class="col-12 col-md-8">
-                    <form>
+                    <form ref="formSelectCodes">
                       <label for="tags">Enter NCI Thesaurus concept codes</label>
                       <div class="form-group">
                           <tags-input element-id="tags"
@@ -260,9 +260,14 @@ export default {
       if (this.multipleEntitiesSplit.length > 0) {
         this.selectedTags.splice(-1,1);
 
-        for(let x=0; x <this.multipleEntitiesSplit.length; x++ ) {
-          // make sure we don't add a duplicate.
-          if (! this.isDuplicateTag(this.multipleEntitiesSplit[x])) {
+
+        for(let x = this.multipleEntitiesSplit.length; x >=0; x-- ) {
+          // Make sure we don't add a duplicate.
+          // Check if user entered two commas with no entitiy code inbetween them
+          // example:  C101171,  ,C101173
+          if ( (! this.isDuplicateTag(this.multipleEntitiesSplit[x])) &&
+               (this.multipleEntitiesSplit[x] !== undefined) &&
+               (this.multipleEntitiesSplit[x].length > 0)) {
             this.selectedTags.push({key: this.multipleEntitiesSplit[x], value: this.multipleEntitiesSplit[x]})
           }
         }
@@ -329,6 +334,13 @@ export default {
         var tempCode = ''
         var tempStatus = ''
 
+        // show the busy indicator
+        let loader = this.$loading.show({
+            container: this.$refs.formSelectCodes,
+            loader: 'dots',
+            isFullPage: false,
+          });
+
         api.getCodes(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
             if (data != null) {
@@ -374,7 +386,9 @@ export default {
                 position: "left bottom"
               });
             }
-          })
+          }).catch(function(error) {
+            console.error("Error retrieving entities: " + error);
+          }).finally(function() { loader.hide()});
       },
 
       // Determine if the user entered entity code is unique

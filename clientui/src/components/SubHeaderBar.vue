@@ -9,10 +9,10 @@
 
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">
-              <router-link class="nav-link" v-bind:to="'/documentation'">Documentation</router-link>
+              <router-link class="nav-link" v-bind:to="'/documentation'" title="Link to Documentation">Documentation</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Help</a>
+              <a class="nav-link" href="https://github.com/NCIEVS/report-exporter/issues" target="_blank" title="Link to Help">Help</a>
             </li>
           </ul>
       </div>
