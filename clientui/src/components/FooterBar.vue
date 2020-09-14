@@ -21,7 +21,7 @@
 						&nbsp; | &nbsp;
 						<a href="http://www.usa.gov/" target="_blank" title="link to USA.gov">USA.gov</a>
 					</p>
-					<p>NIH… Turning Discovery Into Health ®</p>
+					<p>NIH &hellip;Turning Discovery into Health &copy;</p>
 				</div>
 			</div>
 		</div>
