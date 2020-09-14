@@ -49,7 +49,7 @@
             </ul>
             <router-link v-bind:to="'/resolveBranchEntry'">
               <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
-			</router-link>
+            </router-link>
           </div>
         </div>
       </div>
@@ -60,12 +60,17 @@
 </template>
 
 <script>
-export default {
-  name: 'ReportSelection',
-  props: {
-    msg: String
+  export default {
+    name: 'ReportSelection',
+    props: {
+      msg: String
+    },
+
+    created() {
+      // scroll to the top of the page
+      window.scrollTo(0,0);
+    }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
