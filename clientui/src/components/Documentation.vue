@@ -227,8 +227,13 @@
 </template>
 
 <script>
-export default {
-  name: 'documentation'
+  export default {
+    name: 'documentation',
+    
+  created() {
+    // scroll to the top of the page
+    window.scrollTo(0,0);
+    }
 }
 </script>
 <!-- styling for the component -->
