@@ -21,7 +21,7 @@
                       <label for="tags">Enter NCI Thesaurus concept codes</label>
                       <div class="form-group">
                           <tags-input element-id="tags"
-                            v-model="selectedTags" placeholder="Type entity code, then click the enter"
+                            v-model="selectedTags" placeholder="Type entity code, then click enter"
                             :add-tags-on-comma="true"
                             :add-tags-on-space="true"
                             :add-tags-on-blur="true"
