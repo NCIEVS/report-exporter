@@ -43,7 +43,7 @@
                                           <strong>Export Entities</strong>: Enter one or more concept codes, select properties to be exported and the file format.
                                         </li>
                                         <li>
-                                          <strong>Export Resolved Branch</strong>: Enter or select a top node, the numbers of levels to retrieve, the properties to be exported and the file format.
+                                          <strong>Export Resolved Branch</strong>: Enter or select a top node, the numbers of levels to retrieve, the properties to be exported, and the file format.
                                         </li>
                                       </ul>
                                     </p>
@@ -108,7 +108,7 @@
                                   <div class="card-body">
                                     <p>
                                       The "Select Concept Codes for Entity Export" step/icon will turn red if
-                                      you do not enter a concept code and try to go to the next step using the "Next" button.
+                                      you do not enter a concept code and try to go to the next step using the "Select Next Option" button.
                                     </p>
                                   </div>
                               </div>
@@ -169,7 +169,7 @@
                               </div>
                               <div class="collapse show" id="accordion-tab-3-content-1" aria-labelledby="accordion-tab-3-heading-1" data-parent="#accordion-tab-3">
                                   <div class="card-body">
-                                      A top node is a node that has children concept codes under it.
+                                      A top node is a node that has at least one level of child concept codes.
                                   </div>
                               </div>
                           </div>
@@ -184,7 +184,7 @@
                               <div class="collapse" id="accordion-tab-3-content-2" aria-labelledby="accordion-tab-3-heading-2" data-parent="#accordion-tab-3">
                                   <div class="card-body">
                                       <p>
-                                        If you know the top node concept code, you can enter it directly in the text field
+                                        If you know the top node concept code, you can enter it directly in the text field and click enter
                                       </p>
                                       <p>
                                         By selecting the top node text field, a drop down will appear with common top nodes you can select.
@@ -210,7 +210,7 @@
                                         The level indicates how many sub levels of concept nodes to retrieve.
                                       </p>
                                       <p>
-                                        The higher the number of levels selected, the more concept codes will be searched.
+                                        The higher the number of levels selected, the more concept codes will be resolved.
                                         The higher the number of levels selected will also increase the time it takes to export.
                                       </p>
                                   </div>

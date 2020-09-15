@@ -6,8 +6,9 @@
       @on-complete="onComplete"
       step-size="xs"
       title="Entity Export"
-      subtitle="Steps to select concept codes, their properties and export the results"
+      subtitle="Steps to select concept codes, then their properties and export the results"
       finish-button-text="Export"
+      nextButtonText="Select Next Option"
       color="#017ebe">
 
       <!-- STEP 1: SELECT CODES -->
