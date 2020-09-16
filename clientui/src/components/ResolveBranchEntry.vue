@@ -33,8 +33,9 @@
       @on-complete="onComplete"
       step-size="xs"
       title="Resolved Branch Export"
-      subtitle="Steps to select a top node, its properties and export the results"
+      subtitle="Steps to select a top node, then its properties and export the results. Resolutions in the thousands and more will take some time."
       finish-button-text="Export"
+      nextButtonText="Select Next Option"
       color="#017ebe">
 
       <!-- STEP 1: SELECT CODES -->
@@ -61,7 +62,7 @@
                                     :typeahead-activation-threshold=0
                                     :hide-input-on-limit="true"
                                     :case-sensitive-tags="true"
-                                    placeholder="Add Top Node"
+                                    placeholder="Add Top Node, or type in your own and click enter"
                                     typeahead-style="dropdown"
                                     @tag-added="value =>onTagAdded(value)">
                                   </tags-input>
