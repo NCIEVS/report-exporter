@@ -16,14 +16,14 @@ import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 public class FormattedOutputService {
 	
 	@Autowired
-	CodeReadService service;
+	CodeReadService crservice;
 
 	
 	public InputStream getJsonBytesForRestParams(String codes, String props) {
 		return new ByteArrayInputStream(
 				CommonServices.getGsonForPrettyPrint().toJson(
-						service.getEntitiesForPropertyNameFilter(
-								service.getRestEntitiesWithParents( 
+						crservice.getEntitiesForPropertyNameFilter(
+								crservice.getRestEntitiesWithParents( 
 									CommonServices.splitInput(codes)), 
 									CommonServices.splitInput(props))).getBytes());
 	}
@@ -31,8 +31,8 @@ public class FormattedOutputService {
 	public InputStream getCSVBytesForRestParams(String codes, String props) {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
-								service.getEntitiesForPropertyNameFilter(
-								service.getRestEntitiesWithParents( 
+								crservice.getEntitiesForPropertyNameFilter(
+								crservice.getRestEntitiesWithParents( 
 										CommonServices.splitInput(codes)), 
 										CommonServices.splitInput(props))).getBytes());
 	}
@@ -40,8 +40,8 @@ public class FormattedOutputService {
 	public InputStream getTabDelBytesForRestParams(String codes, String props) {
 		return new ByteArrayInputStream(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
-				service.getEntitiesForPropertyNameFilter(
-				service.getRestEntitiesWithParents( 
+				crservice.getEntitiesForPropertyNameFilter(
+				crservice.getRestEntitiesWithParents( 
 						CommonServices.splitInput(codes)), 
 						CommonServices.splitInput(props))).getBytes());
 	}
@@ -50,8 +50,8 @@ public class FormattedOutputService {
 		try {
 			return new ByteArrayInputStream(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
-					service.getEntitiesForPropertyNameFilter(
-					service.getRestEntitiesWithParents( 
+					crservice.getEntitiesForPropertyNameFilter(
+					crservice.getRestEntitiesWithParents( 
 							CommonServices.splitInput(codes)), 
 							CommonServices.splitInput(props))).toByteArray());
 		} catch (IOException e) {

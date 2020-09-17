@@ -1,7 +1,6 @@
 package gov.nih.nci.evs.report.exporter.serivce;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,30 +9,28 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
-import gov.nih.nci.evs.report.exporter.service.CodeReadService;
+import gov.nih.nci.evs.report.exporter.service.EVSAPIBaseService;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @SpringBootTest
 class BranchResolutionServiceTest {
 	
-
-	BranchResolutionService service;
+	EVSAPIBaseService baseservice;
 	
-	@Mock
-	CodeReadService crService;
+	
+	BranchResolutionService service;
+
 	
 	@BeforeEach
 	public  void setUp() {
-		this.service = new BranchResolutionService();
-		crService = mock(CodeReadService.class);
+		this.baseservice = mock(EVSAPIBaseService.class);
+		service = new BranchResolutionService();
 	}
 
  	@Test
@@ -105,18 +102,14 @@ class BranchResolutionServiceTest {
 		roots.add(r1);
 		roots.add(r2);
 		roots.add(r3);
-		when(crService.getRestParents(Mockito.anyString())).thenReturn(roots);
-		service.setReadService(crService);
+		when(baseservice.getRestParents(Mockito.anyString())).thenReturn(roots);
+		service.setService(baseservice);
 		service.resolveChildEntityGraph(CommonServices.TOP_NODE, entity, list);
 		assertEquals(7, list.size());
 		list.get(0).getParents().stream().anyMatch(x -> x.getCode().equals("C23423"));
 		list.get(0).getParents().stream().anyMatch(x -> x.getName().equals("dog"));
 		list.get(0).getParents().stream().anyMatch(x -> x.getCode().equals("C534"));
 	}
-	
-//	@Test
-//	public void getCuratedNodesTest() {
-//		service.getCuratedTopNodeList().forEach(x -> System.out.println(x));
-//	}
+
 
 }

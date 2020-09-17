@@ -21,33 +21,38 @@ import org.springframework.web.client.RestTemplate;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
+import gov.nih.nci.evs.report.exporter.service.EVSAPIBaseService;
 
 class CodeReadUtilityMethodsTest {
 	
 	@Autowired
-	CodeReadService service;
+	CodeReadService crservice;
+	
+	EVSAPIBaseService service;
 	
 
 	@BeforeEach
 	void setUp() throws Exception {
-		service = new CodeReadService();
+		crservice = new CodeReadService();
+		service = Mockito.mock(EVSAPIBaseService.class);
+		crservice.setService(service);
 		}
 
 	@Test
 	void testFilter() {
 		RestEntity entity = getEntity();
-			assertTrue(service.retiredConceptsFilter(entity));
+			assertTrue(crservice.retiredConceptsFilter(entity));
 	}
 	
 	@Test
 	void testCurationFilterException(){
-		CodeReadService spyService = Mockito.spy(CodeReadService.class);
+		//EVSAPIBaseService spyService = Mockito.spy(EVSAPIBaseService.class);
 		doThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND))
-		.when(spyService).getEntity(Mockito.any(RestTemplate.class), 
+		.when(service).getEntity( 
 				Mockito.anyString());
 		
 	    Exception exception = assertThrows(HttpClientErrorException.class, () -> {
-	    	spyService.getCuratedEntityForCode("CNOTVALID");;
+	    	crservice.getCuratedEntityForCode("CNOTVALID");;
 	    });
 	    String expected = "404 NOT_FOUND";
 	    String actual = exception.getMessage();
@@ -56,12 +61,12 @@ class CodeReadUtilityMethodsTest {
 	
 	@Test
 	void testCurationFilterRetired(){
-		CodeReadService spyService = Mockito.spy(CodeReadService.class);
+//		EVSAPIBaseService spyService = Mockito.spy(EVSAPIBaseService.class);		
 		doReturn(getEntity())
-		.when(spyService).getEntity(Mockito.any(RestTemplate.class), 
+		.when(service).getEntity(
 				Mockito.anyString());
 		
-	    RestEntity retiredErrorEnt = spyService.getCuratedEntityForCode("CMUSTBERETIRED");
+	    RestEntity retiredErrorEnt = crservice.getCuratedEntityForCode("CMUSTBERETIRED");
 	    
 	    assertEquals(retiredErrorEnt.getCode(),"CMUSTBERETIRED");
 	    assertEquals(retiredErrorEnt.getName(),"");
