@@ -1,15 +1,10 @@
 package gov.nih.nci.evs.report.exporter.service;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import gov.nih.nci.evs.report.exporter.model.Definition;
@@ -19,23 +14,14 @@ import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
-import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @Service
 public class CodeReadService {
 	
-	@Value("${BASE_URL}")
-	private String baseURL;
+	@Autowired
+	EVSAPIBaseService service;
 	
-	@Value("${SUMMARY}")
-	private String summary;
-	
-	@Value("${MAPS}")
-	private String maps;
-	
-	@Value("${PARENTS}")
-	private String parents;
-	
+
 	public static final String NOTFOUND = "Concept Code Not Found";
 	public static final String RETIRED = "Concept Code Retired";
 	public static final String VALID = "SUCCESS";
@@ -44,7 +30,7 @@ public class CodeReadService {
 		List<RestEntity> propMeta = 
 				codes.stream().map(x -> 
 					getRestEntityWithParent(
-							x, getRestParents(x)))
+							x, service.getRestParents(x)))
 				.collect(Collectors.toList());
 		return propMeta;
 	}
@@ -55,18 +41,8 @@ public class CodeReadService {
 		return propMeta;
 	}
 	
-	public List<Root> getRestParents(String code){
-		List<Root> roots = Stream.of(WebClient
-				.create()
-				.get()
-				.uri(baseURL + code + parents)
-				.retrieve().bodyToMono(Root[].class)
-				.block()).collect(Collectors.toList());			
-		return roots;
-	}
-	
 	public RestEntity getRestEntityWithParent(String code, List<Root> parents){
-		RestEntity entity = getEntity(CommonServices.getRestTemplate(), code);
+		RestEntity entity = service.getEntity(code);
 			entity.setParents(parents);
 		return entity;
 	}
@@ -122,7 +98,7 @@ public class CodeReadService {
 	public RestEntity getCuratedEntityForCode(String code){
 		RestEntity entity = null;
 		try {
-			entity = getEntity(CommonServices.getRestTemplate(), code);
+			entity = service.getEntity(code);
 		}
 			catch (WebClientResponseException.NotFound nf) {
 				entity = new RestEntity();
@@ -146,51 +122,7 @@ public class CodeReadService {
 		return entity;
 	}
 	
-	public RestEntity getEntity(RestTemplate template, String code) {	
-		try {
-			return WebClient
-					.create()
-					.get()
-					.uri(new URI(baseURL + code + summary + "," + maps))
-					.retrieve()
-					.bodyToMono(RestEntity.class)
-					.block();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public void setService(EVSAPIBaseService service) {
+		this.service = service;
 	}
-
-	public String getBaseURL() {
-		return baseURL;
-	}
-
-	public void setBaseURL(String baseURL) {
-		this.baseURL = baseURL;
-	}
-
-	public String getSummary() {
-		return summary;
-	}
-
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
-
-	public String getMaps() {
-		return maps;
-	}
-
-	public void setMaps(String maps) {
-		this.maps = maps;
-	}
-
-	public String getParents() {
-		return parents;
-	}
-
-	public void setParents(String parents) {
-		this.parents = parents;
-	}
-	
 }

@@ -1,13 +1,11 @@
 package gov.nih.nci.evs.report.exporter.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -21,26 +19,11 @@ public class BranchResolutionService {
 	@Autowired
 	CodeReadService readService;
 	
-    @Value("${NODE_LIST}")
-	private String curatedTopNodeList;
-    
-    @Value("${BASE_URL}")
-    private String baseURL;
-    
-    @Value("${CHILDREN}")
-    private String children;
-    
-    @Value("${DESCENDANTS}")
-    private String descendants;
-    
+	@Autowired
+	EVSAPIBaseService service;
 	
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
-		return 
-				codes.stream().map(code -> CommonServices.getRestTemplate()
-				.getForObject(
-				baseURL  + code + children
-						,ChildEntity[].class)).flatMap(Arrays::stream)
-						.collect(Collectors.toList());
+		return service.getChildrenForBranchTopNode(codes);
 	}
 	
 	public List<ChildEntity> getAllChildrenForBranchTopNode(String code, String max){
@@ -52,13 +35,7 @@ public class BranchResolutionService {
 	}
 	
 	public List<ChildEntity> getUnprocessedChildrenForBranchTopNode(String code, String max){
-		return 
-				Arrays.asList(CommonServices.getRestTemplate()
-				.getForObject(
-				baseURL 
-				+ code 
-				+ descendants + max
-						,ChildEntity[].class));
+		return service.getUnprocessedChildrenForBranchTopNode(code, max);
 	}
 
 	  
@@ -72,9 +49,9 @@ public class BranchResolutionService {
 		 
 		if(!child.isLeaf()){child.setChildren(null);}
 		if(CommonServices.isChildParent(parent,child.getCode())) {
-			child.setParents(readService.getRestParents(child.getCode()));
+			child.setParents(service.getRestParents(child.getCode()));
 		}
-		else{child.setParents(readService.getRestParents(child.getCode()));}
+		else{child.setParents(service.getRestParents(child.getCode()));}
 		list.add(child);
 	 }
 	
@@ -91,7 +68,7 @@ public class BranchResolutionService {
 	
 	public List<CuratedTopNode> getCuratedTopNodeList(){
 		return Stream.of(
-				curatedTopNodeList
+				service.getCuratedTopNodeList()
 				.split(",")).map(x -> getTopNodeFromArray(x.split(":")))
 				.collect(Collectors
 						.toList());
@@ -104,13 +81,14 @@ public class BranchResolutionService {
 		return node;
 	}
 
-	public CodeReadService getReadService() {
-		return readService;
+	public EVSAPIBaseService getService() {
+		return service;
 	}
 
-	public void setReadService(CodeReadService readService) {
-		this.readService = readService;
+	public void setService(EVSAPIBaseService service) {
+		this.service = service;
 	}
+
 	
 	
 }

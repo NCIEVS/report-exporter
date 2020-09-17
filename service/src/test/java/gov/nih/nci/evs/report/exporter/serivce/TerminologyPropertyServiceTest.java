@@ -2,30 +2,40 @@ package gov.nih.nci.evs.report.exporter.serivce;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import gov.nih.nci.evs.report.exporter.model.RestPropertyMetadata;
+import gov.nih.nci.evs.report.exporter.service.EVSAPIBaseService;
 import gov.nih.nci.evs.report.exporter.service.TerminologyPropertyService;
 
 class TerminologyPropertyServiceTest {
 	
 
-
-
 		@InjectMocks
+		EVSAPIBaseService baseservice;
+	
+		@Autowired
 		private TerminologyPropertyService service;
+		
+		
 		
 		RestPropertyMetadata[] props;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		service = new TerminologyPropertyService();
+		baseservice = mock(EVSAPIBaseService.class);
+		service.setService(baseservice);
 		RestPropertyMetadata r1 = new RestPropertyMetadata();
 		r1.setCode("p1");
 		r1.setName("ALT_DEFINITION");
@@ -83,9 +93,7 @@ class TerminologyPropertyServiceTest {
 				r7,
 				r8,
 				r9};
-		
-		ReflectionTestUtils.setField(service, "filterList", "BioCarta_ID,Extensible_List,FDA_Table");
-		
+		when(baseservice.getFilterList()).thenReturn("BioCarta_ID,Extensible_List,FDA_Table");
 	}
 
 	@Test
