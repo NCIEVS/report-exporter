@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -24,7 +25,11 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
+import gov.nih.nci.evs.report.exporter.model.PropertyMap;
+import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
+import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 
@@ -33,6 +38,9 @@ public class CommonServices {
 	
 	public static final String TOP_NODE = "TOP_NODE";
 	public static final String PREFERRED_NAME = "Preferred_Name";
+	private boolean noDefinitions = false;
+	private boolean noSynonyms = false;
+	private boolean noMaps= false;
 	
 	private ConcurrentMap<String, TypeListAndPositionTuple> propHeaderMap;
 	public CommonServices() {
@@ -119,6 +127,29 @@ public class CommonServices {
 							(part + "|" + whole));
 	}
 	
+	public List<String> filterHeadings(CommonServices services) {
+		return Stream.of(FormatUtility.FIELDS)
+		.filter(x -> x != getDefinitionHeaderForIndicator(services))
+		.filter(x -> x != getSynonymHeaderForIndicator(services))
+		.filter(x -> x != getMapHeaderForIndicator(services))
+		.collect(Collectors.toList());
+	}
+	
+	public String getDefinitionHeaderForIndicator(CommonServices services) {
+		if(services.isNoDefinitions()) {return "definitions";}
+		return null;
+	}
+	
+	public String getSynonymHeaderForIndicator(CommonServices services) {
+		if(services.isNoSynonyms()) {return "synonyms";}
+		return null;
+	}
+	
+	public String getMapHeaderForIndicator(CommonServices services) {
+		if(services.isNoMaps()) {return "Maps_To";}
+		return null;
+	}
+	
 	public static <T> String removeAllNoSourceNoTypeSynonyms(Object t) {
 		if(t instanceof Synonym) {
 			if(((Synonym) t).getType() == null) {return t.toString();}
@@ -130,6 +161,13 @@ public class CommonServices {
 	public static String cleanListOutPut(String list){
 		if (list == null)  return null;
 		return list.replace("[", "").replace("]", "");
+	}
+	
+	public String fullyCuratedProperties(List<? extends PropertyPrime> x, String separator) {
+		if(x == null || ((x.get(0) instanceof Synonym) && !isNoSynonyms())) {return "";}
+		if(x == null || ((x.get(0) instanceof Definition) && !isNoDefinitions())) {return "";}
+		if(x == null || ((x.get(0) instanceof PropertyMap) && !isNoMaps())) {return "";}
+		return separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x));
 	}
 	
 	public Iterator<TypeListAndPositionTuple> iterateOnPostion(ConcurrentMap<String, TypeListAndPositionTuple > map) {
@@ -211,7 +249,26 @@ public class CommonServices {
 			return this.flattenListValuesIntoRowCells(getOrderedPropertyLists(propHeaderMap), row, index);
 	  }
 	  
-	 public static void main(String ...strings) {
+	  
+	 public boolean isNoDefinitions() {
+		return noDefinitions;
+	}
+	public void setNoDefinitions(boolean noDefinitions) {
+		this.noDefinitions = noDefinitions;
+	}
+	public boolean isNoSynonyms() {
+		return noSynonyms;
+	}
+	public void setNoSynonyms(boolean noSynonyms) {
+		this.noSynonyms = noSynonyms;
+	}
+	public boolean isNoMaps() {
+		return noMaps;
+	}
+	public void setNoMaps(boolean noMaps) {
+		this.noMaps = noMaps;
+	}
+	public static void main(String ...strings) {
 		 
 		 Property prop = new Property();
 		 Property prop1 = new Property();

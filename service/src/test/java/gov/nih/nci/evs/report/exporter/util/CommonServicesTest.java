@@ -149,5 +149,18 @@ class CommonServicesTest {
 		RestTemplate t = CommonServices.getRestTemplate(new RestTemplateBuilder());
 		assertTrue(t != null);
 	}
+	
+	@Test
+	void testGetFilteredListSynonym() {
+		List<String> props = new ArrayList<String>();
+		props.add("FULL_SYN");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		List<String> filtered = services.filterHeadings(services);
+		System.out.println(filtered.get(0));
+		
+	}
 
 }

@@ -1,5 +1,6 @@
 package gov.nih.nci.evs.report.exporter.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,6 +83,14 @@ public class CodeReadService {
 	public List<? extends PropertyPrime> filterProperties(List<? extends PropertyPrime> propList, List<String> list){
 		if(propList == null) {return null;}
 		if(propList.get(0) instanceof PropertyMap && list.contains("Maps_To")) {return propList;}
+		if(propList.get(0) instanceof Definition && !(list.contains("DEFINITION") || list.contains("ALT_DEFINITION"))){
+			propList.clear();
+			return propList; 
+		}
+		if(propList.get(0) instanceof Synonym && !list.contains("FULL_SYN")){
+			propList.clear();
+			return propList; 
+		}	
 		return propList.stream().filter(
 				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());

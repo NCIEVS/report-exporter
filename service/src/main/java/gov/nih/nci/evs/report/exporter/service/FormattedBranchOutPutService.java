@@ -55,11 +55,11 @@ public class FormattedBranchOutPutService {
 									codes, props, max)).getBytes());
 	}
 	
-	public InputStream getCSVBytesForRestParams(String codes, String props,String max) {
+	public InputStream getCSVBytesForRestParams(String codes, String props, String max) {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
 										service.getResolvedChildFlatListFromTopNode( 
-										codes, props, max)).getBytes());
+										codes, props, max) , props).getBytes());
 	}
 	
 	public InputStream getTabDelBytesForRestParams(String codes, String props,String max) {
