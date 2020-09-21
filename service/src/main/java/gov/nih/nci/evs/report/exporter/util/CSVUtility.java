@@ -2,6 +2,7 @@ package gov.nih.nci.evs.report.exporter.util;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -16,7 +17,7 @@ public class CSVUtility extends FormatUtility {
 		CommonServices services = new CommonServices();
 		services.setNoSynonyms(!props.contains("FULL_SYN"));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
-		services.setNoMaps(!props.contains("MapsTo"));
+		services.setNoMaps(!props.contains("Maps_To"));
 		StringBuffer firstLine = new StringBuffer();
 		String separator = ",";
 		StringBuffer oneLine = new StringBuffer();
@@ -34,11 +35,15 @@ public class CSVUtility extends FormatUtility {
 				separator + services.calculateAndProduceSpacedTerms(separator));				
 				services.clearPropertyListsFromHeaderMap();});
 		
-		Stream.of(services.filterHeadings(services))
+		services.filterHeadings(services).stream()
 			.forEach(x -> firstLine.append(x + separator));
-		firstLine.replace(firstLine.lastIndexOf(separator), firstLine.length(), "");
-		services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append(separator + type));
-		oneLine.insert(0, firstLine);
+		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
+		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
+		String secondHeader = services.getHeadersByPosition(
+				services.getPropHeaderMap())
+						.stream()
+						.collect(Collectors.joining(separator));
+		oneLine.insert(0, firstHeaderString + secondHeader);
 		return oneLine.toString();
 	}
 	

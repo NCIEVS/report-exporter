@@ -151,7 +151,7 @@ class CommonServicesTest {
 	}
 	
 	@Test
-	void testGetFilteredListSynonym() {
+	void testGetFilteredHeadingListSynonym() {
 		List<String> props = new ArrayList<String>();
 		props.add("FULL_SYN");
 		CommonServices services = new CommonServices();
@@ -159,8 +159,93 @@ class CommonServicesTest {
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		List<String> filtered = services.filterHeadings(services);
-		System.out.println(filtered.get(0));
-		
+		assertTrue(filtered.contains("synonyms"));
+		assertFalse(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Map_To"));
+	}
+	
+	@Test
+	void testGetFilteredHeadingListMaps() {
+		List<String> props = new ArrayList<String>();
+		props.add("Maps_To");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		List<String> filtered = services.filterHeadings(services);
+		assertFalse(filtered.contains("synonyms"));
+		assertFalse(filtered.contains("definitions"));
+		assertTrue(filtered.contains("Maps_To"));
+	}
+	@Test
+	void testGetFilteredHeadingListDefinition() {
+		List<String> props = new ArrayList<String>();
+		props.add("DEFINITION");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		List<String> filtered = services.filterHeadings(services);
+		assertFalse(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Maps_To"));
+	}
+	@Test
+	void testGetFilteredHeadingListDefinitionb() {
+		List<String> props = new ArrayList<String>();
+		props.add("ALT_DEFINITION");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		List<String> filtered = services.filterHeadings(services);
+		assertFalse(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Maps_To"));
+	}
+	@Test
+	void testGetFilteredHeadingListDefinition2() {
+		List<String> props = new ArrayList<String>();
+		props.add("DEFINITION");
+		props.add("ALT_DEFINITION");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		List<String> filtered = services.filterHeadings(services);
+		assertFalse(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Maps_To"));
+	}
+	
+	@Test
+	void testGetFilteredHeadingListDefinitionNSynoyms() {
+		List<String> props = new ArrayList<String>();
+		props.add("DEFINITION");
+		props.add("FULL_SYN");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		List<String> filtered = services.filterHeadings(services);
+		assertTrue(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Maps_To"));
+	}
+	
+	@Test
+	void testGetFilteredHeadingListDefinitionNMaps() {
+		List<String> props = new ArrayList<String>();
+		props.add("DEFINITION");
+		props.add("Maps_To");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		List<String> filtered = services.filterHeadings(services);
+		assertFalse(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertTrue(filtered.contains("Maps_To"));
 	}
 
 }

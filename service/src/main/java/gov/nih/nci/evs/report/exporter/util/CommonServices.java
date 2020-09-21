@@ -164,9 +164,9 @@ public class CommonServices {
 	}
 	
 	public String fullyCuratedProperties(List<? extends PropertyPrime> x, String separator) {
-		if(x == null || ((x.get(0) instanceof Synonym) && !isNoSynonyms())) {return "";}
-		if(x == null || ((x.get(0) instanceof Definition) && !isNoDefinitions())) {return "";}
-		if(x == null || ((x.get(0) instanceof PropertyMap) && !isNoMaps())) {return "";}
+		if(x == null || ((x.get(0) instanceof Synonym) && isNoSynonyms())) {return "";}
+		if(x == null || ((x.get(0) instanceof Definition) && isNoDefinitions())) {return "";}
+		if(x == null || ((x.get(0) instanceof PropertyMap) && isNoMaps())) {return "";}
 		return separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x));
 	}
 	
