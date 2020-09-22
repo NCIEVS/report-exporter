@@ -26,19 +26,24 @@ class CSVUtilityTest {
 	CSVUtility util;
 	
 	String csvOutLineHeading = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
-	String csvOutLineHeading1 = "terminology,code,name,parents,synonyms,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
-	String csvOutLineHeading2 = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
-	String csvOutLineHeading3 = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLineHeading1 = "terminology,code,name,parents,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLineHeading1a = "terminology,code,name,parents,synonyms,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLineHeading2 = "terminology,code,name,parents,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLineHeading3 = "terminology,code,name,parents,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLineHeading4 = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLine2a = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine2ab = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
-//	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
+	String csvOutLine2ac = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2ad = "ncit,C123234,Myent,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+
+	//	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
 //	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
 //	String csvOutLine2d	= ",\"|NCI:defvalue|NOSOURCE:defvalue2|\",";
 //	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\",\"|PropType2:propvalue2|\",\r";
 	String csvOutLine3 = "ncit,C000000,0ent,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
 	String csvOutline4 = "ncit,C999999,My9,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
 	String csvOutline5 = "ncit,C2222,My2,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String csvOutline5a = "ncit,C2222,My2,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	
 	BranchResolutionService service;
 
@@ -88,7 +93,7 @@ class CSVUtilityTest {
 		assertEquals(csvLines[1],csvOutLine2ab);
 		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
-		assertEquals(csvLines[4], csvOutline5);
+		assertEquals(csvLines[4], csvOutline5a);
 	}
 	
 	@Test
@@ -96,11 +101,71 @@ class CSVUtilityTest {
 		String props = "Maps_To,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
 		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
 		String[] csvLines = csv.split(System.lineSeparator());
-		assertEquals(csvLines[0],csvOutLineHeading1);
+		assertEquals(csvLines[0],csvOutLineHeading1a);
 		assertEquals(csvLines[1],csvOutLine2ab);
 		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
 		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMap() {
+		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading3);
+		assertEquals(csvLines[1],csvOutLine2ad);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapDefinition() {
+		String props = "Maps_To,DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1);
+		assertEquals(csvLines[1],csvOutLine2ac);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapDef2() {
+		String props = "Maps_To,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1);
+		assertEquals(csvLines[1],csvOutLine2ac);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapDefBoth() {
+		String props = "Maps_To,ALT_DEFINITION,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1);
+		assertEquals(csvLines[1],csvOutLine2ac);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingDef() {
+		String props = "ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading2);
+		assertEquals(csvLines[1],csvOutLine2ac);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5a);
 	}
 	
 	private List<RestEntity> getRestEntityList() {
