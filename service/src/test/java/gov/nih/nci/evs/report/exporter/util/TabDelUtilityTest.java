@@ -23,11 +23,49 @@ class TabDelUtilityTest {
 	TabDelUtility util;
 	
 	BranchResolutionService service;
-	String csvOutLine1 = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
-	String csvOutLine2a = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
-	String csvOutLine3 = "ncit\tC000000\t0ent\t\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
-	String csvOutline4 = "ncit\tC999999\tMy9\t\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String csvOutline5 = "ncit\tC2222\tMy2\t\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String csvOutLine1 = "terminology\tcode\tname\tparents\tsynonyms\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String csvOutLine2 = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3 = "ncit\tC000000\t0ent\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4 = "ncit\tC999999\tMy9\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5 = "ncit\tC2222\tMy2\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	String csvOutLine1a = "terminology\tcode\tname\tparents\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String csvOutLine2a = "ncit\tC123234\tMyent\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3a = "ncit\tC000000\t0ent\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4a = "ncit\tC999999\tMy9\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5a = "ncit\tC2222\tMy2\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	String csvOutLine1b = "terminology\tcode\tname\tparents\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String csvOutLine2b = "ncit\tC123234\tMyent\t\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3b = "ncit\tC000000\t0ent\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4b = "ncit\tC999999\tMy9\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5b = "ncit\tC2222\tMy2\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	
+	String csvOutLine1c = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String csvOutLine2c = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3c = "ncit\tC000000\t0ent\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4c = "ncit\tC999999\tMy9\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5c = "ncit\tC2222\tMy2\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	
+	String csvOutLine1d = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String csvOutLine2d = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3d = "ncit\tC000000\t0ent\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4d = "ncit\tC999999\tMy9\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5d = "ncit\tC2222\tMy2\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	String csvOutLine1e = "terminology\tcode\tname\tparents\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String csvOutLine2e = "ncit\tC123234\tMyent\t\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3e = "ncit\tC000000\t0ent\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4e = "ncit\tC999999\tMy9\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5e = "ncit\tC2222\tMy2\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	String csvOutLine1f = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String csvOutLine2f = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String csvOutLine3f = "ncit\tC000000\t0ent\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4f = "ncit\tC999999\tMy9\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String csvOutline5f = "ncit\tC2222\tMy2\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -36,15 +74,112 @@ class TabDelUtilityTest {
 	}
 	
 	@Test
-	void testProduceCSVOutputFromListWithHeading() {
-		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList());
+	void testProduceCSVOutputFromListWithHeadingSyn() {
+		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLine1);
-		assertEquals(csvLines[1],csvOutLine2a);
+		assertEquals(csvLines[1],csvOutLine2);
 		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
 		assertEquals(csvLines[4],csvOutline5);
 	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMap() {
+		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLine1a);
+		assertEquals(csvLines[1],csvOutLine2a);
+		assertEquals(csvLines[2],csvOutLine3a);
+		assertEquals(csvLines[3],csvOutline4a);
+		assertEquals(csvLines[4],csvOutline5a);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingDef() {
+		String props = "DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLine1b);
+		assertEquals(csvLines[1],csvOutLine2b);
+		assertEquals(csvLines[2],csvOutLine3b);
+		assertEquals(csvLines[3],csvOutline4b);
+		assertEquals(csvLines[4],csvOutline5b);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingAltDef() {
+		String props = "ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLine1b);
+		assertEquals(csvLines[1],csvOutLine2b);
+		assertEquals(csvLines[2],csvOutLine3b);
+		assertEquals(csvLines[3],csvOutline4b);
+		assertEquals(csvLines[4],csvOutline5b);
+	}
+	@Test
+	void testProduceCSVOutputFromListWithHeadingBothDef() {
+		String props = "ALT_DEFINITION,DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLine1b);
+		assertEquals(csvLines[1],csvOutLine2b);
+		assertEquals(csvLines[2],csvOutLine3b);
+		assertEquals(csvLines[3],csvOutline4b);
+		assertEquals(csvLines[4],csvOutline5b);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingDefSyn() {
+		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLine1c);
+		assertEquals(csvLines[1],csvOutLine2c);
+		assertEquals(csvLines[2],csvOutLine3c);
+		assertEquals(csvLines[3],csvOutline4c);
+		assertEquals(csvLines[4],csvOutline5c);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapsSyn() {
+		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLine1d);
+		assertEquals(csvLines[1],csvOutLine2d);
+		assertEquals(csvLines[2],csvOutLine3d);
+		assertEquals(csvLines[3],csvOutline4d);
+		assertEquals(csvLines[4],csvOutline5d);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapsDef() {
+		String props = "DEFINITION,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLine1e);
+		assertEquals(csvLines[1],csvOutLine2e);
+		assertEquals(csvLines[2],csvOutLine3e);
+		assertEquals(csvLines[3],csvOutline4e);
+		assertEquals(csvLines[4],csvOutline5e);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingAll() {
+		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLine1f);
+		assertEquals(csvLines[1],csvOutLine2f);
+		assertEquals(csvLines[2],csvOutLine3f);
+		assertEquals(csvLines[3],csvOutline4f);
+		assertEquals(csvLines[4],csvOutline5f);
+	}
+	
 	
 	private List<RestEntity> getRestEntityList() {
 		List<RestEntity> list = new ArrayList<RestEntity>();

@@ -59,14 +59,14 @@ public class FormattedBranchOutPutService {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
 										service.getResolvedChildFlatListFromTopNode( 
-										codes, props, max) , props).getBytes());
+										codes, props, max) ,props).getBytes());
 	}
 	
 	public InputStream getTabDelBytesForRestParams(String codes, String props,String max) {
 		return new ByteArrayInputStream(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNode( 
-								codes, props, max)).getBytes());
+								codes, props, max), props).getBytes());
 	}
 	
 	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props, String max) {

@@ -2,6 +2,7 @@ package gov.nih.nci.evs.report.exporter.util;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -10,8 +11,11 @@ import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
 public class TabDelUtility extends FormatUtility{
 
-	public String produceTabDelOutputFromListWithHeading(List<RestEntity> list) {
+	public String produceTabDelOutputFromListWithHeading(List<RestEntity> list, String props) {
 		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
 		StringBuffer firstLine = new StringBuffer();
 		String separator = "\t";
 		StringBuffer oneLine = new StringBuffer();
@@ -23,16 +27,21 @@ public class TabDelUtility extends FormatUtility{
 				separator + x.getCode() + 
 				separator + x.getName() + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
-				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
-				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
-				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getMaps())) +
+				services.fullyCuratedProperties(x.getSynonyms(), separator) + 
+				services.fullyCuratedProperties(x.getDefinitions(), separator) + 
+				services.fullyCuratedProperties(x.getMaps(), separator) + 
 				separator + services.calculateAndProduceSpacedTerms(separator));
 
 			    services.clearPropertyListsFromHeaderMap();});
-			Stream.of(FIELDS).forEach(x -> firstLine.append(x + separator));
-			firstLine.replace(firstLine.lastIndexOf(separator), firstLine.length(), "");
-			services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append(separator + type));
-			oneLine.insert(0, firstLine);
+		services.filterHeadings(services).stream()
+		.forEach(x -> firstLine.append(x + separator));
+		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
+		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
+		String secondHeader = services.getHeadersByPosition(
+				services.getPropHeaderMap())
+						.stream()
+						.collect(Collectors.joining(separator));
+		oneLine.insert(0, firstHeaderString + secondHeader);
 		return oneLine.toString();
 	}
 	
@@ -57,7 +66,7 @@ public class TabDelUtility extends FormatUtility{
 
 	
 	public static void main(String ...args) {
-		new TabDelUtility().produceTabDelOutputFromListWithHeading(null);
+		new TabDelUtility().produceTabDelOutputFromListWithHeading(null, null);
 	}
 
 }

@@ -43,7 +43,7 @@ public class FormattedOutputService {
 				crservice.getEntitiesForPropertyNameFilter(
 				crservice.getRestEntitiesWithParents( 
 						CommonServices.splitInput(codes)), 
-						CommonServices.splitInput(props))).getBytes());
+						CommonServices.splitInput(props)), props).getBytes());
 	}
 	
 	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props) {
