@@ -35,7 +35,7 @@ class CSVUtilityTest {
 	String csvOutLine2ab = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine2ac = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine2ad = "ncit,C123234,Myent,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
-	String csvOutLine2ae = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2ae = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	
 	//	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
 //	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
@@ -175,10 +175,10 @@ class CSVUtilityTest {
 		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props);
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading4);
-		assertEquals(csvLines[1],csvOutLine2ac);
+		assertEquals(csvLines[1],csvOutLine2ae);
 		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
-		assertEquals(csvLines[4], csvOutline5a);
+		assertEquals(csvLines[4], csvOutline5);
 	}
 	
 	private List<RestEntity> getRestEntityList() {
