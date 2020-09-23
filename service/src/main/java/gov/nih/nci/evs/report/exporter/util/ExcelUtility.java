@@ -23,12 +23,15 @@ public class ExcelUtility extends FormatUtility {
 	
 
 	
-	  public ByteArrayOutputStream  produceExcelOutputFromListWithHeading(List<RestEntity> entities) throws IOException {
+	  public ByteArrayOutputStream  produceExcelOutputFromListWithHeading(List<RestEntity> entities, String props) throws IOException {
 	   
 	    //Init the workbook for Excel
 	    Workbook workbook = new XSSFWorkbook();
 	    //Init the services to maintain an instance of the prooerty cache
 	    CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
 	    //Create a sheet for the workbook
 	    Sheet sheet = workbook.createSheet("entities");
 	    //Set up the head configuration
@@ -71,20 +74,20 @@ public class ExcelUtility extends FormatUtility {
 	    	    					null)));
 	      //Process the Synonyms as a list
 	      row.createCell(4).setCellValue(
-	    		  CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(
+	    		  services.fullyCuratedPropertiesForExcel(
 	    				  entity.getSynonyms() != null?
 	    						  entity.getSynonyms():
-	    							  null)));
+	    							  null));
 	      //Process the definitions as a list
 	      row.createCell(5).setCellValue(
-	    		  CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(
+	    		  services.fullyCuratedPropertiesForExcel(
 	    				  entity.getDefinitions() != null?
 	    						  entity.getDefinitions():
-	    							  null)));	
+	    							  null));	
 	      //Process the maps as a list
 	      row.createCell(6).setCellValue(
-	    		  CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(
-	    				  entity.getMaps())));
+	    		  services.fullyCuratedPropertiesForExcel(
+	    				  entity.getMaps()));
 	      //Process the properties to rows and columns adding properties as we go
 	      		  services.setPropertyRowOutPut(
 	    				  entity.getProperties(), row, 7);

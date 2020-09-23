@@ -51,7 +51,7 @@ public class CodeReadService {
 	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
-		list.stream().filter(x -> retiredConceptsFilter(x) ).forEach(
+		list.stream().filter(x -> !retiredConceptsFilter(x) ).forEach(
 				entity -> {
 					entity.setProperties(
 						(List<Property>)filterProperties(entity.getProperties(), propList));
@@ -82,7 +82,11 @@ public class CodeReadService {
 	
 	public List<? extends PropertyPrime> filterProperties(List<? extends PropertyPrime> propList, List<String> list){
 		if(propList == null) {return null;}
-		if(propList.get(0) instanceof PropertyMap && list.contains("Maps_To")) {return propList;}
+		if(propList.get(0) instanceof PropertyMap && !list.contains("Maps_To")){ 
+		propList.clear();return propList;}
+		List<String> tempList = new ArrayList<String>(list);
+		if(propList.get(0) instanceof PropertyMap) 
+		{tempList.add("Has Synonym");}
 		if(propList.get(0) instanceof Definition && !(list.contains("DEFINITION") || list.contains("ALT_DEFINITION"))){
 			propList.clear();
 			return propList; 
@@ -90,9 +94,10 @@ public class CodeReadService {
 		if(propList.get(0) instanceof Synonym && !list.contains("FULL_SYN")){
 			propList.clear();
 			return propList; 
-		}	
+		}
+		
 		return propList.stream().filter(
-				x -> list.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
+				x -> tempList.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
 				.collect(Collectors.toList());
 	}
 	

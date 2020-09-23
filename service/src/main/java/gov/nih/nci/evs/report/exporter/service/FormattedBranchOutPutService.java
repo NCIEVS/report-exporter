@@ -74,7 +74,7 @@ public class FormattedBranchOutPutService {
 			return new ByteArrayInputStream(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
 							service.getResolvedChildFlatListFromTopNode( 
-									codes, props, max)).toByteArray());
+									codes, props, max), props).toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);
 		}

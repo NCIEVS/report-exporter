@@ -53,7 +53,7 @@ public class FormattedOutputService {
 					crservice.getEntitiesForPropertyNameFilter(
 					crservice.getRestEntitiesWithParents( 
 							CommonServices.splitInput(codes)), 
-							CommonServices.splitInput(props))).toByteArray());
+							CommonServices.splitInput(props)), props).toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);
 		}

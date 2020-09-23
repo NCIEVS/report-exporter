@@ -47,7 +47,8 @@ class EXELUtilityTest {
 
 	@Test
 	void testProduceCSVOutputFromListWithHeading() throws IOException {
-		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList()));
+		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList(), props));
 	}
 	
 	private List<RestEntity> getRestEntityList() {
