@@ -37,7 +37,7 @@ public class TabDelUtility extends FormatUtility{
 				separator + services.calculateAndProduceSpacedTerms(separator));
 			    services.clearPropertyListsFromHeaderMap();});
 		
-		services.filterHeadings(services).stream()
+		services.filterHeadings(services, flags).stream()
 			.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
 		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");

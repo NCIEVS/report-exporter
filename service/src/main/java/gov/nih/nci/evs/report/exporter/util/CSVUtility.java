@@ -39,7 +39,7 @@ public class CSVUtility extends FormatUtility {
 		// If we have any columns flagged for removal clean up the rows here. 
 		StringBuffer fullColSet = new StringBuffer(
 				services.cleanColumns(flags, oneLine, separator));
-		services.filterHeadings(services).stream()
+		services.filterHeadings(services, flags).stream()
 			.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
 		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
@@ -47,8 +47,8 @@ public class CSVUtility extends FormatUtility {
 				services.getPropHeaderMap())
 						.stream()
 						.collect(Collectors.joining(separator));
-		oneLine.insert(0, firstHeaderString + secondHeader);
-		return oneLine.toString();
+		fullColSet.insert(0, firstHeaderString + secondHeader);
+		return fullColSet.toString();
 	}
 	
 	public String produceChildCSVOutputFromListWithHeading(List<ChildEntity> list) {

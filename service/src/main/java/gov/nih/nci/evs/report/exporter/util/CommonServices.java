@@ -33,6 +33,9 @@ public class CommonServices {
 	
 	public static final String TOP_NODE = "TOP_NODE";
 	public static final String PREFERRED_NAME = "Preferred_Name";
+	public static final String SYNONYMS = "synonyms";
+	public static final String DEFINITIONS = "definitions";
+	public static final String MAPS = "Maps_To";
 	private boolean noDefinitions = false;
 	private boolean noSynonyms = false;
 	private boolean noMaps= false;
@@ -122,27 +125,33 @@ public class CommonServices {
 							(part + "|" + whole));
 	}
 	
-	public List<String> filterHeadings(CommonServices services) {
+	public List<String> filterHeadings(CommonServices services, TripleBoolean flags) {
 		return Stream.of(FormatUtility.FIELDS)
-		.filter(x -> x != getDefinitionHeaderForIndicator(services))
-		.filter(x -> x != getSynonymHeaderForIndicator(services))
-		.filter(x -> x != getMapHeaderForIndicator(services))
+		.filter(x -> x != getDefinitionHeaderForIndicator(services, flags))
+		.filter(x -> x != getSynonymHeaderForIndicator(services, flags))
+		.filter(x -> x != getMapHeaderForIndicator(services, flags))
 		.collect(Collectors.toList());
 	}
 	
-	public String getDefinitionHeaderForIndicator(CommonServices services) {
-		if(services.isNoDefinitions()) {return "definitions";}
-		return null;
+	public String getDefinitionHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+		if(services.isNoDefinitions()) {return DEFINITIONS;} 
+		else if (flags.noEntitiesHaveDefs ) {return DEFINITIONS;}
+		else
+		{return null;}
 	}
 	
-	public String getSynonymHeaderForIndicator(CommonServices services) {
-		if(services.isNoSynonyms()) {return "synonyms";}
-		return null;
+	public String getSynonymHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+		if(services.isNoSynonyms()) {return SYNONYMS;} 
+		else if(flags.noEntitiesHaveSyns) {return SYNONYMS;} 
+		else
+		{return null;}
 	}
 	
-	public String getMapHeaderForIndicator(CommonServices services) {
-		if(services.isNoMaps()) {return "Maps_To";}
-		return null;
+	public String getMapHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+		if(services.isNoMaps()) {return MAPS;} 
+		else if(flags.noEntitiesHaveMaps) {return MAPS;} 
+		else
+		{return null;}
 	}
 	
 	public static <T> String removeAllNoSourceNoTypeSynonyms(Object t) {
@@ -160,17 +169,17 @@ public class CommonServices {
 	
 	public String fullyCuratedProperties(List<? extends PropertyPrime> x,
 			String separator, String propType, TripleBoolean bools) {
-		if(propType == "synonyms"){
+		if(propType == SYNONYMS){
 			if(isNoSynonyms()){ return "";}
 			else if(existsCheck(x)){
 				bools.noEntitiesHaveSyns = true; 
 				 return "";}}
-        if(propType == "definitions") {
+        if(propType == DEFINITIONS) {
         	if(isNoDefinitions()){ return "";}
 			else if(existsCheck(x)){
 				bools.noEntitiesHaveDefs = true; 
 				 return "";}}
-        if(propType == "Maps_To") {
+        if(propType == MAPS) {
         	if(isNoMaps()){ return "";}
 			else if(existsCheck(x)){
 				bools.noEntitiesHaveMaps = true; 

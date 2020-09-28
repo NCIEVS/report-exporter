@@ -32,6 +32,8 @@ public class ExcelUtility extends FormatUtility {
 		services.setNoSynonyms(!props.contains("FULL_SYN"));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
+		//Init common flags for columns lacking values
+		TripleBoolean flags = new TripleBoolean();
 	    //Create a sheet for the workbook
 	    Sheet sheet = workbook.createSheet("entities");
 	    //Set up the head configuration
@@ -96,7 +98,7 @@ public class ExcelUtility extends FormatUtility {
 	    }
 	    
 	    // First part of the header, before we know what properties are there
-	    List<String> fields = services.filterHeadings(services);
+	    List<String> fields = services.filterHeadings(services, flags);
 	    int col = 0;
 	    for (String field: fields) {
 	      if(field.equals("properties")) {break;}
