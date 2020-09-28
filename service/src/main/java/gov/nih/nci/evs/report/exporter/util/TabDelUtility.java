@@ -16,25 +16,29 @@ public class TabDelUtility extends FormatUtility{
 		services.setNoSynonyms(!props.contains("FULL_SYN"));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
 		StringBuffer firstLine = new StringBuffer();
 		String separator = "\t";
 		StringBuffer oneLine = new StringBuffer();
-		list.stream().forEach(x -> {x.getProperties()
+		list.stream().forEach(x -> {
+//		Caching the property type for any property in any enitity;
+			x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));  
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z)); 
+
 			oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
 				separator + x.getName() + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
-				services.fullyCuratedProperties(x.getSynonyms(), separator) + 
-				services.fullyCuratedProperties(x.getDefinitions(), separator) + 
-				services.fullyCuratedProperties(x.getMaps(), separator) + 
+				services.fullyCuratedProperties(x.getSynonyms(), separator, "synonyms", flags) + 
+				services.fullyCuratedProperties(x.getDefinitions(), separator, "definitions", flags) + 
+				services.fullyCuratedProperties(x.getMaps(), separator, "Maps_To", flags) + 
 				separator + services.calculateAndProduceSpacedTerms(separator));
-
 			    services.clearPropertyListsFromHeaderMap();});
+		
 		services.filterHeadings(services).stream()
-		.forEach(x -> firstLine.append(x + separator));
+			.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
 		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
 		String secondHeader = services.getHeadersByPosition(

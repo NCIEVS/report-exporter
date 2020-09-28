@@ -14,27 +14,31 @@ public class CSVUtility extends FormatUtility {
 	
 
 	public String produceCSVOutputFromListWithHeading(List<RestEntity> list, String props) {
+
 		CommonServices services = new CommonServices();
 		services.setNoSynonyms(!props.contains("FULL_SYN"));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
 		StringBuffer firstLine = new StringBuffer();
 		String separator = ",";
 		StringBuffer oneLine = new StringBuffer();
 		list.stream().forEach(x -> { x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));       
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z)); 		
 				oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
 				separator + x.getName() +  
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
-				services.fullyCuratedProperties(x.getSynonyms(), separator) + 
-				services.fullyCuratedProperties(x.getDefinitions(), separator) + 
-				services.fullyCuratedProperties(x.getMaps(), separator) + 
+				services.fullyCuratedProperties(x.getSynonyms(), separator, "synonyms", flags) + 
+				services.fullyCuratedProperties(x.getDefinitions(), separator, "definitions", flags) + 
+				services.fullyCuratedProperties(x.getMaps(), separator, "Maps_To",flags) + 
 				separator + services.calculateAndProduceSpacedTerms(separator));				
 				services.clearPropertyListsFromHeaderMap();});
-		
+		// If we have any columns flagged for removal clean up the rows here. 
+		StringBuffer fullColSet = new StringBuffer(
+				services.cleanColumns(flags, oneLine, separator));
 		services.filterHeadings(services).stream()
 			.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
@@ -64,7 +68,6 @@ public class CSVUtility extends FormatUtility {
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getChildren()))));
 		return oneLine.toString();
 	}
-	
 	
 
 }

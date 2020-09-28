@@ -4,32 +4,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.util.MimeType;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
-import gov.nih.nci.evs.report.exporter.model.PropertyMap;
 import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
-import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 
@@ -163,21 +158,36 @@ public class CommonServices {
 		return list.replace("[", "").replace("]", "");
 	}
 	
-	public String fullyCuratedProperties(List<? extends PropertyPrime> x, String separator) {
-		if (x == null || x.size() == 0) return "";
-		if(x.get(0) instanceof Synonym && isNoSynonyms()) {return "";}
-		if(x.get(0) instanceof Definition && isNoDefinitions()) {return "";}
-		if(x.get(0) instanceof PropertyMap && isNoMaps()) {return "";}
+	public String fullyCuratedProperties(List<? extends PropertyPrime> x,
+			String separator, String propType, TripleBoolean bools) {
+		if(propType == "synonyms"){
+			if(isNoSynonyms()){ return "";}
+			else if(existsCheck(x)){
+				bools.noEntitiesHaveSyns = true; 
+				 return "";}}
+        if(propType == "definitions") {
+        	if(isNoDefinitions()){ return "";}
+			else if(existsCheck(x)){
+				bools.noEntitiesHaveDefs = true; 
+				 return "";}}
+        if(propType == "Maps_To") {
+        	if(isNoMaps()){ return "";}
+			else if(existsCheck(x)){
+				bools.noEntitiesHaveMaps = true; 
+				 return "";}}
+
 		return separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x));
 	}
 	
-	public String fullyCuratedPropertiesForExcel(List<? extends PropertyPrime> x) {
-		if (x == null || x.size() == 0) return "";
-		if(x.get(0) instanceof Synonym && isNoSynonyms()) {return "";}
-		if(x.get(0) instanceof Definition && isNoDefinitions()) {return "";}
-		if(x.get(0) instanceof PropertyMap && isNoMaps()) {return "";}
-		return CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(x));
+	public void createCellInExcelRow(List<? extends PropertyPrime> x, int index, Row row) {
+		Cell cell = row.createCell(index);
+        cell.setCellValue(CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(x)));
 	}
+	
+	public boolean existsCheck(List<? extends PropertyPrime> x) {
+		return x == null || x.size() == 0;
+	}
+	
 	
 	public Iterator<TypeListAndPositionTuple> iterateOnPostion(ConcurrentMap<String, TypeListAndPositionTuple > map) {
 		return map.values()
@@ -277,6 +287,219 @@ public class CommonServices {
 	public void setNoMaps(boolean noMaps) {
 		this.noMaps = noMaps;
 	}
+	
+	public String cleanColumns(TripleBoolean flags, StringBuffer oneLine, String separator) {
+
+		//All user valuers were entered so all columns are removed. Nothing
+		//to do here.
+		if(isNoSynonyms() && isNoDefinitions() && isNoMaps()) {return oneLine.toString();}
+		
+		String[] temp = oneLine.toString().split("/r/n");
+		String result = Stream.of(temp)
+				.map(x -> cleanColumn(x, flags, separator) + "/r/n")
+				.collect(Collectors.joining());
+		return result;
+	}
+	
+	public String cleanColumn(String line, TripleBoolean flags, String separator) {
+		List<String> listPrime = new ArrayList<String>(Arrays.asList(line.split(",")));
+
+
+		//user flag no synonyms
+		if(isNoSynonyms()) {
+
+			//Condition user flag no synonyms and no definitions
+			if(isNoDefinitions()) {
+
+				if(//User flags for removing synonyms and definitions set
+						//definitions and synonyms already removed -- do nothing
+						!flags.noEntitiesHaveMaps) 
+				{return line;}
+				if(//None of the entities have maps -- remove the mapping column 
+						//where the Synonyms used to be
+						flags.noEntitiesHaveMaps) 
+				{listPrime.remove(5);}
+			}else if(isNoMaps()) {
+
+				if(//User flags for removing synonyms and maps set
+						//synonyms and maps already removed one or 
+						//more definitions exist -- do nothing
+						!flags.noEntitiesHaveDefs) 
+				{return line;}
+				if(//None of the entities have definitions -- remove 
+						//the mapping column where the synonyms used to be
+						flags.noEntitiesHaveDefs) 
+				{listPrime.remove(5);}
+
+			}else {
+
+				//No other user flags are set
+				if (//Synonym column is already removed
+						!flags.noEntitiesHaveDefs && 
+						!flags.noEntitiesHaveMaps) {
+					//We have values here for both cols -- don't change anything
+					return line;
+				}
+				if(//Synonym column is already removed -- but no definitions
+						// exist so remove the column where synonyms usually are
+						flags.noEntitiesHaveDefs && 
+						!flags.noEntitiesHaveMaps) { 
+					listPrime.remove(5);}
+				if(//Synonym column is already removed -- but no definitions
+						// exist so remove the column where definitions usually are
+						!flags.noEntitiesHaveDefs && 
+						flags.noEntitiesHaveMaps) { 
+					listPrime.remove(6);}
+
+			}
+
+		}	
+
+		//User flag set for at least no Definitions
+		if(isNoDefinitions()) {
+
+			//Condition user flag no definitions and no synonyms
+			if(isNoSynonyms()) {
+
+				if(//User flags for removing synonyms and defintionss set
+						//synonyms and definitions already removed -- do nothing
+						!flags.noEntitiesHaveMaps) 
+							{return line;}
+				if(//None of the entities have maps -- remove the mapping column 
+						//where the Synonyms used to be
+						flags.noEntitiesHaveMaps) 
+							{listPrime.remove(5);}
+			} else
+				//Condition user flag no definitions and no maps
+				if(isNoMaps()) {
+
+					if(//User flags for removing definitions and maps set
+							//definitions and maps already removed -- do nothing
+							!flags.noEntitiesHaveSyns) 
+							{return line;}
+					if(//None of the entities have synonyms -- remove the mapping column 
+							//where the Synonyms used to be
+							flags.noEntitiesHaveSyns) 
+							{listPrime.remove(5);}
+				}else {
+
+					if (//Definition column is already removed
+							!flags.noEntitiesHaveSyns && 
+							!flags.noEntitiesHaveMaps) {
+								//We have values here for synonyms and maps
+								//don't change anything
+								return line;
+					}
+					if(//Definition column is already removed -- but no synonyms
+							// exist so remove the column where synonyms usually are
+							flags.noEntitiesHaveSyns && 
+							!flags.noEntitiesHaveMaps) { 
+								listPrime.remove(5);}
+					if(//Definitions column is already removed -- but no maps
+							// exist so remove the column where definitions usually are
+							!flags.noEntitiesHaveSyns && 
+							flags.noEntitiesHaveMaps) { 
+								listPrime.remove(6);}
+				}
+		}
+
+		//user flag for no Maps
+		if(isNoMaps()) {
+
+			//Condition user flags no maps and no synonyms
+			if(isNoSynonyms()) {
+
+				if(//User flags for removing synonyms and maps set
+						//synonyms and maps already removed -- do nothing
+						!flags.noEntitiesHaveDefs) 
+							{return line;}
+				if(//None of the entities have definitions -- remove the definitions column 
+						//by deleting where the synonyms used to be
+						flags.noEntitiesHaveDefs) 
+							{listPrime.remove(5);}
+
+			}else
+				//Condition user flag no definitions and no maps
+				if(isNoDefinitions()) {
+
+					if(//User flags for removing definitions and maps set
+							//definitions andmaps already removed -- do nothing
+							!flags.noEntitiesHaveSyns) 
+					{return line;}
+					if(//None of the entities have synonyms  -- remove the mapping column 
+							//where the Synonyms used to be
+							flags.noEntitiesHaveSyns) 
+					{listPrime.remove(5);}
+				}else {
+
+					if (//Maps column is already removed
+							!flags.noEntitiesHaveSyns && 
+							!flags.noEntitiesHaveDefs) {
+						//We have values here for synonyms and maps -- don't change anything
+						return line;
+					}
+					if(//Maps column is already removed -- but no synonyms
+							// exist so remove the column where synonyms usually are
+							flags.noEntitiesHaveSyns && 
+							!flags.noEntitiesHaveDefs) { 
+						listPrime.remove(5);}
+					if(//maps column is already removed -- but no mapss
+							// exist so remove the column where synonyms usually are
+							!flags.noEntitiesHaveSyns && 
+							flags.noEntitiesHaveDefs) { 
+						listPrime.remove(6);}
+
+				}
+		}
+		
+
+
+		if(!isNoSynonyms() && 
+				!isNoDefinitions() && !isNoMaps()) {
+		
+		if(flags.noEntitiesHaveSyns && 
+				!flags.noEntitiesHaveDefs && 
+				!flags.noEntitiesHaveMaps) { 
+			listPrime.remove(5);}
+		if(!flags.noEntitiesHaveSyns && 
+				flags.noEntitiesHaveDefs && 
+				!flags.noEntitiesHaveMaps) { 
+					listPrime.remove(6);}
+		if(!flags.noEntitiesHaveSyns && 
+				!flags.noEntitiesHaveDefs && 
+				 flags.noEntitiesHaveMaps) 
+					{listPrime.remove(7);}
+		if(!flags.noEntitiesHaveSyns && 
+				flags.noEntitiesHaveDefs && 
+				flags.noEntitiesHaveMaps) 
+					{listPrime.remove(6);
+					listPrime.remove(6);}
+		if( flags.noEntitiesHaveSyns && 
+				!flags.noEntitiesHaveDefs && 
+				flags.noEntitiesHaveMaps) 
+					{listPrime.remove(5);
+					listPrime.remove(6);}
+		if( flags.noEntitiesHaveSyns && 
+				flags.noEntitiesHaveDefs && 
+				 !flags.noEntitiesHaveMaps) 
+					{listPrime.remove(5);
+					listPrime.remove(5);}
+		if(flags.noEntitiesHaveSyns && 
+				flags.noEntitiesHaveDefs && 
+				flags.noEntitiesHaveMaps)
+					{listPrime.remove(5);
+					listPrime.remove(5);
+					listPrime.remove(5);}
+		if( !flags.noEntitiesHaveSyns && 
+				!flags.noEntitiesHaveDefs && 
+				!flags.noEntitiesHaveMaps){
+					return line;}
+	}
+		
+		return listPrime.stream().collect(Collectors.joining(separator));
+
+	}
+	
 	public static void main(String ...strings) {
 		 
 		 Property prop = new Property();
@@ -295,5 +518,6 @@ public class CommonServices {
 		 props.add(prop2);
 		 
 	 }
+
 
 }

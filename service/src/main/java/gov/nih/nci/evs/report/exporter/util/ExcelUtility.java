@@ -45,18 +45,19 @@ public class ExcelUtility extends FormatUtility {
 	    Row headerRow = sheet.createRow(0);
 	 
 	    // First part of the header, before we know what properties are there
-	    int col = 0;
-	    for (String field: FIELDS) {
-	      if(field.equals("properties")) {break;}
-	      Cell cell = headerRow.createCell(col);
-	      cell.setCellValue(FIELDS[col]);
-	      cell.setCellStyle(headerCellStyle);
-	      col++;
-	    }
+//	    int col = 0;
+//	    for (String field: FIELDS) {
+//	      if(field.equals("properties")) {break;}
+//	      Cell cell = headerRow.createCell(col);
+//	      cell.setCellValue(FIELDS[col]);
+//	      cell.setCellStyle(headerCellStyle);
+//	      col++;
+//	    }
 	 
 	    //Iterate over the list of RestEntities to designated rows and columns
 	    int i = 1;
 	    for (RestEntity entity : entities) {
+	    	Integer internalIndex = 0;
 	    //Add each property list to the cache noting the position of the property in 
 	    //the cache
 	    	entity.getProperties()
@@ -64,38 +65,47 @@ public class ExcelUtility extends FormatUtility {
 			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));
 	      Row row = sheet.createRow(i++);
 	      //Create a set of rows for the static values
-	      row.createCell(0).setCellValue(entity.getTerminology());
-	      row.createCell(1).setCellValue(entity.getCode());
-	      row.createCell(2).setCellValue(entity.getName());
-	      row.createCell(3).setCellValue(
+	      row.createCell(internalIndex++).setCellValue(entity.getTerminology());
+	      row.createCell(internalIndex++).setCellValue(entity.getCode());
+	      row.createCell(internalIndex++).setCellValue(entity.getName());
+	      row.createCell(internalIndex++).setCellValue(
 	    	    CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(
 	    	    		entity.getParents() != null?
 	    	    				entity.getParents():
 	    	    					null)));
 	      //Process the Synonyms as a list
-	      row.createCell(4).setCellValue(
-	    		  services.fullyCuratedPropertiesForExcel(
-	    				  entity.getSynonyms() != null?
-	    						  entity.getSynonyms():
-	    							  null));
+	      if(!services.isNoSynonyms() && 
+	    		  !(entity.getSynonyms() == null || entity.getSynonyms().size() == 0)) {
+	    	  			services.createCellInExcelRow(entity.getSynonyms(), internalIndex++, row);
+	      }
 	      //Process the definitions as a list
-	      row.createCell(5).setCellValue(
-	    		  services.fullyCuratedPropertiesForExcel(
-	    				  entity.getDefinitions() != null?
-	    						  entity.getDefinitions():
-	    							  null));	
+	      if(!services.isNoDefinitions() && 
+	    		  !(entity.getDefinitions() == null || entity.getDefinitions().size() == 0)) {
+	    	  			services.createCellInExcelRow(entity.getDefinitions(),internalIndex++, row);}
 	      //Process the maps as a list
-	      row.createCell(6).setCellValue(
-	    		  services.fullyCuratedPropertiesForExcel(
-	    				  entity.getMaps()));
+	      if(!services.isNoMaps() && 
+	    		  !(entity.getMaps() == null || entity.getMaps().size() == 0)) {
+	    	  			services.createCellInExcelRow(entity.getMaps(),internalIndex++, row);
+	      }
 	      //Process the properties to rows and columns adding properties as we go
 	      		  services.setPropertyRowOutPut(
-	    				  entity.getProperties(), row, 7);
+	    				  entity.getProperties(), row, internalIndex++);
 
 	      //Clearing property list for the next entity, leaving type and position metadata
 	    		  services.clearPropertyListsFromHeaderMap();		  
 	    }
 	    
+	    // First part of the header, before we know what properties are there
+	    List<String> fields = services.filterHeadings(services);
+	    int col = 0;
+	    for (String field: fields) {
+	      if(field.equals("properties")) {break;}
+	      Cell cell = headerRow.createCell(col);
+	      cell.setCellValue(fields.get(col));
+	      cell.setCellStyle(headerCellStyle);
+	      col++;
+	    }
+		
 	    //Finish setting up headers with each property type designation
 	    List<String> postHeaders = services.getHeadersByPosition(services.getPropHeaderMap());
 	    for(String s: postHeaders) {
