@@ -159,6 +159,7 @@ class CommonServicesTest {
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveSyns = false;
 		List<String> filtered = services.filterHeadings(services, flags);
 		assertTrue(filtered.contains("synonyms"));
 		assertFalse(filtered.contains("definitions"));
@@ -174,6 +175,7 @@ class CommonServicesTest {
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveMaps = false;
 		List<String> filtered = services.filterHeadings(services, flags);
 		assertFalse(filtered.contains("synonyms"));
 		assertFalse(filtered.contains("definitions"));
@@ -188,6 +190,7 @@ class CommonServicesTest {
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveDefs = false;
 		List<String> filtered = services.filterHeadings(services, flags);
 		assertFalse(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));
@@ -202,6 +205,7 @@ class CommonServicesTest {
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveDefs = false;
 		List<String> filtered = services.filterHeadings(services, flags);
 		assertFalse(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));
@@ -217,6 +221,7 @@ class CommonServicesTest {
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveDefs = false;
 		List<String> filtered = services.filterHeadings(services,flags);
 		assertFalse(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));
@@ -251,6 +256,8 @@ class CommonServicesTest {
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveDefs = false;
+		flags.noEntitiesHaveMaps = false;
 		List<String> filtered = services.filterHeadings(services,flags);
 		assertFalse(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));

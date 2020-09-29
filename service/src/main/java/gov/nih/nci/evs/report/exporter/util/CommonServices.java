@@ -169,23 +169,27 @@ public class CommonServices {
 	
 	public String fullyCuratedProperties(List<? extends PropertyPrime> x,
 			String separator, String propType, TripleBoolean bools) {
+		String list = separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x));
 		if(propType == SYNONYMS){
 			if(isNoSynonyms()){ return "";}
-			else if(existsCheck(x)){
-				bools.noEntitiesHaveSyns = true; 
-				 return "";}}
+			else if(!existsCheck(x)){
+				bools.noEntitiesHaveSyns = false; }}
+//				 return list;}}
+//		else if (existsCheck(x)) return "";
         if(propType == DEFINITIONS) {
         	if(isNoDefinitions()){ return "";}
-			else if(existsCheck(x)){
-				bools.noEntitiesHaveDefs = true; 
-				 return "";}}
+			else if(!existsCheck(x)){
+				bools.noEntitiesHaveDefs = false; }}
+//				 return list;}}
+//        else if (existsCheck(x)) return "";
         if(propType == MAPS) {
         	if(isNoMaps()){ return "";}
-			else if(existsCheck(x)){
-				bools.noEntitiesHaveMaps = true; 
-				 return "";}}
+			else if(!existsCheck(x)){
+				bools.noEntitiesHaveMaps = false; }}
+//				 return list;}}
+//        else if (existsCheck(x)) return "";
 
-		return separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x));
+		return list;
 	}
 	
 	public void createCellInExcelRow(List<? extends PropertyPrime> x, int index, Row row) {
@@ -305,7 +309,7 @@ public class CommonServices {
 		
 		String[] temp = oneLine.toString().split("/r/n");
 		String result = Stream.of(temp)
-				.map(x -> cleanColumn(x, flags, separator) + "/r/n")
+				.map(x -> cleanColumn(x, flags, separator))
 				.collect(Collectors.joining());
 		return result;
 	}
@@ -477,7 +481,7 @@ public class CommonServices {
 		if(!flags.noEntitiesHaveSyns && 
 				!flags.noEntitiesHaveDefs && 
 				 flags.noEntitiesHaveMaps) 
-					{listPrime.remove(7);}
+					{listPrime.remove(6);}
 		if(!flags.noEntitiesHaveSyns && 
 				flags.noEntitiesHaveDefs && 
 				flags.noEntitiesHaveMaps) 

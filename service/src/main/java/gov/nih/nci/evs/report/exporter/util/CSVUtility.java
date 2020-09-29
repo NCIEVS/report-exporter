@@ -43,11 +43,15 @@ public class CSVUtility extends FormatUtility {
 			.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
 		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
-		String secondHeader = services.getHeadersByPosition(
-				services.getPropHeaderMap())
-						.stream()
-						.collect(Collectors.joining(separator));
-		fullColSet.insert(0, firstHeaderString + secondHeader);
+//		String secondHeader = services.getHeadersByPosition(
+//				services.getPropHeaderMap())
+//						.stream()
+//						.collect(Collectors.joining(separator));
+		services.getHeadersByPosition(services.getPropHeaderMap())
+									.stream()
+									.forEach(type -> 
+									firstLine.append(separator + type));
+		fullColSet.insert(0, firstLine);
 		return fullColSet.toString();
 	}
 	
