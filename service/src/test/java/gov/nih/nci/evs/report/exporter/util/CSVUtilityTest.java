@@ -37,7 +37,7 @@ class CSVUtilityTest {
 	String csvOutLine2ac = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	//String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	
-	String csvOutLine2ad = "ncit,C123234,Myent,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2ad = "ncit,C123234,Myent,,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine2ae = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	
 	//	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
@@ -60,8 +60,20 @@ class CSVUtilityTest {
 	String csvOutLineHeading2 = "terminology,code,name,parents,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine3b = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
-	String csvOutline4a = "ncit,C999999,My9,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
-	String csvOutline5a = "ncit,C2222,My2,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String csvOutline4a = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline5a = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	
+	String csvOutLineHeading3e = "terminology,code,name,parents,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLine2e = "ncit,C123234,Myent,,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine3e = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4e = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline5e = "ncit,C2222,My2,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	
+	String csvOutLineHeadingf = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLine2f = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine3f = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4f = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline5f = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	
 	
 	
@@ -113,9 +125,9 @@ class CSVUtilityTest {
 		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading);
-		assertEquals(csvLines[1],csvOutLine2ab);
-		assertEquals(csvLines[2],csvOutLine3);
-		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[1],csvOutLine2f);
+		assertEquals(csvLines[2],csvOutLine3f);
+		assertEquals(csvLines[3],csvOutline4f);
 		assertEquals(csvLines[4], csvOutline5a);
 	}
 	
@@ -136,11 +148,11 @@ class CSVUtilityTest {
 		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
 		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
 		String[] csvLines = csv.split(System.lineSeparator());
-		assertEquals(csvLines[0],csvOutLineHeading3);
-		assertEquals(csvLines[1],csvOutLine2ad);
-		assertEquals(csvLines[2],csvOutLine3);
-		assertEquals(csvLines[3],csvOutline4);
-		assertEquals(csvLines[4], csvOutline5);
+		assertEquals(csvLines[0],csvOutLineHeading3e);
+		assertEquals(csvLines[1],csvOutLine2e);
+		assertEquals(csvLines[2],csvOutLine3e);
+		assertEquals(csvLines[3],csvOutline4e);
+		assertEquals(csvLines[4], csvOutline5e);
 	}
 	
 	@Test
@@ -202,7 +214,7 @@ class CSVUtilityTest {
 		assertEquals(csvLines[3],csvOutline4d);
 		assertEquals(csvLines[4], csvOutline5b);
 	}
-	
+	// Single line header matching tests
 	@Test
 	void testProduceCSVOutputFromOneListMemberWithInvalidProps() {
 		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
@@ -212,6 +224,21 @@ class CSVUtilityTest {
 		String[] csvLines = csv.split(System.lineSeparator());
 		//assertEquals(csvLines[0],singleLineHeading);
 		assertEquals(csvLines[1],singelLineCSV);}
+	
+	// Single line header matching tests
+	@Test
+	void testSingleLineMatchtoHeadingMapsTo() {
+		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+//		String[] csvLines = csv.split(System.lineSeparator());
+//		assertEquals(csvLines[0],csvOutLineHeading3);
+//		assertEquals(csvLines[1],csvOutLine2ad);
+//		assertEquals(csvLines[2],csvOutLine3);
+//		assertEquals(csvLines[3],csvOutline4);
+//		assertEquals(csvLines[4], csvOutline5);
+		System.out.print(csv);
+		System.out.flush();
+	}
 	
 	private List<RestEntity> getRestEntityList() {
 		List<RestEntity> list = new ArrayList<RestEntity>();

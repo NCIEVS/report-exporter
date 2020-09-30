@@ -21,7 +21,6 @@ public class TabDelUtility extends FormatUtility{
 		String separator = "\t";
 		StringBuffer oneLine = new StringBuffer();
 		list.stream().forEach(x -> {
-//		Caching the property type for any property in any enitity;
 			x.getProperties()
 			.stream()
 			.forEach(z -> services.addPropertyTypeAndPositionToCache(z)); 
@@ -37,16 +36,22 @@ public class TabDelUtility extends FormatUtility{
 				separator + services.calculateAndProduceSpacedTerms(separator));
 			    services.clearPropertyListsFromHeaderMap();});
 		
+		StringBuffer fullColSet = new StringBuffer(
+				services.cleanColumns(flags, oneLine, separator));
 		services.filterHeadings(services, flags).stream()
 			.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
 		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
-		String secondHeader = services.getHeadersByPosition(
-				services.getPropHeaderMap())
-						.stream()
-						.collect(Collectors.joining(separator));
-		oneLine.insert(0, firstHeaderString + secondHeader);
-		return oneLine.toString();
+//		String secondHeader = services.getHeadersByPosition(
+//				services.getPropHeaderMap())
+//						.stream()
+//						.collect(Collectors.joining(separator));
+		services.getHeadersByPosition(services.getPropHeaderMap())
+									.stream()
+									.forEach(type -> 
+									firstLine.append(separator + type));
+		fullColSet.insert(0, firstLine);
+		return fullColSet.toString();
 	}
 	
 	public String produceChildTabDelOutputFromListWithHeading(List<ChildEntity> list) {
