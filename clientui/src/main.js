@@ -28,6 +28,7 @@ import ThemifyIcon from "vue-themify-icons";
 
 // busy/loading indicator
 import Loading from 'vue-loading-overlay'
+
 Vue.use(Loading)
 
 // setup jquery
@@ -56,7 +57,8 @@ const routes = [
 const router = new VueRouter({
   routes: routes,
   mode: 'history',
-  //base: '/reportExporter/'
+  base: process.env.VUE_APP_ROOT_CONTEXT
+  //base: '/reportexporter/'
 })
 
 // global variable visible to all Vue instances

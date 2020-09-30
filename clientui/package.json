@@ -5,12 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-local": "vue-cli-service build --mode local",
+    "lint": "vue-cli-service lint",
     "build-dev": "vue-cli-service build --mode development",
-    "build-qa": "vue-cli-service build --mode qa",
-    "build-stage": "vue-cli-service build --mode stage",
+    "build-local": "vue-cli-service build --mode local",
     "build-prod": "vue-cli-service build --mode production",
-    "lint": "vue-cli-service lint"
+    "build-qa": "vue-cli-service build --mode qa",
+    "build-stage": "vue-cli-service build --mode stage"
   },
   "dependencies": {
     "@riophae/vue-treeselect": "^0.4.0",

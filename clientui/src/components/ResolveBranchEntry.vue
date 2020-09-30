@@ -365,10 +365,11 @@ export default {
       // Tree dialog user chose a tree node
       userSelectTreeBranchNode() {
         //console.log('userSelectTreeBranchNode - user selected:' + this.treeSelectedCode)
-
-        this.selectedTags = [
-          { key: this.treeSelectedCode, value: this.treeSelectedCode },
-        ]
+        if (this.treeSelectedCode !== null) {
+          this.selectedTags = [
+            { key: this.treeSelectedCode, value: this.treeSelectedCode },
+          ]
+        }
       },
 
       // tree item clicked
