@@ -5,10 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +49,52 @@ class EXELUtilityTest {
 	
 	ExcelUtility util;
 	
+	
+	String excelOutLine1 = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+	String excelOutLine2 = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine3 = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
+	String excelOutline4 = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String excelOutline5 = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+
+	String excelOutLine1a = "terminology,code,name,parents,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+	String excelOutLine2a = "ncit,C123234,Myent,,,\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine3a = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
+	String excelOutline4a = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String excelOutline5a = "ncit,C2222,My2,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+
+	String excelOutLine1b = "terminology,code,name,parents,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+	String excelOutLine2b = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine3b = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
+	String excelOutline4b = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String excelOutline5b = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+
+	
+	String excelOutLine1c = "terminology,code,name,parents,synonyms,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+	String excelOutLine2c = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine3c = "ncit,C000000,0ent,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
+	String excelOutline4c = "ncit,C999999,My9,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String excelOutline5c = "ncit,C2222,My2,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+
+	
+	String excelOutLine1d = "terminology,code,name,parents,synonyms,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+	String excelOutLine2d = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine3d = "ncit,C000000,0ent,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
+	String excelOutline4d = "ncit,C999999,My9,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String excelOutline5d = "ncit,C2222,My2,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+
+	String excelOutLine1e = "terminology,code,name,parents,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+	String excelOutLine2e = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine3e = "ncit,C000000,0ent,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
+	String excelOutline4e = "ncit,C999999,My9,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String excelOutline5e = "ncit,C2222,My2,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+
+	String excelOutLine1f = "terminology,code,name,parents,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+	String excelOutLine2f = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine3f = "ncit,C000000,0ent,,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
+	String excelOutline4f = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String excelOutline5f = "ncit,C2222,My2,,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+
+	
 	@Mock
 	BranchResolutionService service;
 	
@@ -49,6 +112,52 @@ class EXELUtilityTest {
 	void testProduceCSVOutputFromListWithHeading() throws IOException {
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
 		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList(), props));
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingStreamedToPOIObject() throws IOException {
+
+		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+//		File file = new File("file.xls");    
+//		FileOutputStream fos = new FileOutputStream(file);
+//		stream.writeTo(fos);
+//		FileInputStream in = new FileInputStream());
+		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
+		
+//		PipedInputStream in = getPipedIS(stream);
+//		POIFSFileSystem x = new POIFSFileSystem(in);
+//		HSSFWorkbook wb2 = new HSSFWorkbook(x);
+		Sheet sheet = workbook.getSheetAt(0);
+		int rows = sheet.getPhysicalNumberOfRows();
+		int cells = sheet.getRow(0).getPhysicalNumberOfCells();
+	//	assertEquals(excelOutLine1.split(",").length, cells);
+		for(int i = 0; i < rows; i ++) {
+			Row row = sheet.getRow(i);
+			System.out.println();
+			for(int index = 0;index < row.getPhysicalNumberOfCells(); index++) {
+				System.out.println(row.getCell(index).getStringCellValue());
+			};
+		}
+		stream.close();
+	}
+	
+	private PipedInputStream getPipedIS(ByteArrayOutputStream stream) {
+		PipedOutputStream out = new PipedOutputStream();
+		PipedInputStream in = null;
+		try {
+			in = new PipedInputStream(out);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		((Runnable)() -> {try {
+			stream.writeTo(out);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}}).run();  
+		return in;
 	}
 	
 	private List<RestEntity> getRestEntityList() {
@@ -212,6 +321,12 @@ class EXELUtilityTest {
 
 	@Test
 	void testProduceChildCSVOutputFromListWithHeading() throws IOException {
+		assertNotNull(util.produceChildExcelOutputFromListWithHeading(getChildEntityList()));
+	}
+	
+	
+	@Test
+	void testProduceChildCSVOutputFromListWithHeadingSingleRowTest() throws IOException {
 		assertNotNull(util.produceChildExcelOutputFromListWithHeading(getChildEntityList()));
 	}
 	

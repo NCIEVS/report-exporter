@@ -46,16 +46,6 @@ public class ExcelUtility extends FormatUtility {
 	    // Row for Header
 	    Row headerRow = sheet.createRow(0);
 	 
-	    // First part of the header, before we know what properties are there
-//	    int col = 0;
-//	    for (String field: FIELDS) {
-//	      if(field.equals("properties")) {break;}
-//	      Cell cell = headerRow.createCell(col);
-//	      cell.setCellValue(FIELDS[col]);
-//	      cell.setCellStyle(headerCellStyle);
-//	      col++;
-//	    }
-	 
 	    //Iterate over the list of RestEntities to designated rows and columns
 	    int i = 1;
 	    for (RestEntity entity : entities) {
@@ -96,7 +86,7 @@ public class ExcelUtility extends FormatUtility {
 	      //Clearing property list for the next entity, leaving type and position metadata
 	    		  services.clearPropertyListsFromHeaderMap();		  
 	    }
-	    
+	    services.cleanColumnsExcel(flags, sheet);
 	    // First part of the header, before we know what properties are there
 	    List<String> fields = services.filterHeadings(services, flags);
 	    int col = 0;
