@@ -65,9 +65,9 @@ const router = new VueRouter({
 // values come from the env.development or env.production files.
 Vue.prototype.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
 
-console.log('APP BASE URL: ' + process.env.VUE_APP_BASE_URL)
-console.log('ROOT CONTEXT: ' + process.env.VUE_APP_ROOT_CONTEXT)
-console.log('baseURL: ' + Vue.prototype.$baseURL)
+console.log('App Base URL: ' + process.env.VUE_APP_BASE_URL)
+console.log('Root Context: ' + process.env.VUE_APP_ROOT_CONTEXT)
+console.log('Base URL:     ' + Vue.prototype.$baseURL)
 
 // instatinate the vue instance
 new Vue({
