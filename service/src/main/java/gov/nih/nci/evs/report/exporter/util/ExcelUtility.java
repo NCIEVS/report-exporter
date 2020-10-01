@@ -66,19 +66,17 @@ public class ExcelUtility extends FormatUtility {
 	    	    				entity.getParents():
 	    	    					null)));
 	      //Process the Synonyms as a list
-	      if(!services.isNoSynonyms() && 
-	    		  !(entity.getSynonyms() == null || entity.getSynonyms().size() == 0)) {
-	    	  			services.createCellInExcelRow(entity.getSynonyms(), internalIndex++, row);
-	      }
+	      services.fullyCuratedPropertiesForExcel(entity.getSynonyms(),
+	    		  internalIndex++, 
+	    		  CommonServices.SYNONYMS, flags, row);
 	      //Process the definitions as a list
-	      if(!services.isNoDefinitions() && 
-	    		  !(entity.getDefinitions() == null || entity.getDefinitions().size() == 0)) {
-	    	  			services.createCellInExcelRow(entity.getDefinitions(),internalIndex++, row);}
+	      services.fullyCuratedPropertiesForExcel(entity.getDefinitions(),
+	    		  internalIndex++, 
+	    		  CommonServices.DEFINITIONS, flags, row);
 	      //Process the maps as a list
-	      if(!services.isNoMaps() && 
-	    		  !(entity.getMaps() == null || entity.getMaps().size() == 0)) {
-	    	  			services.createCellInExcelRow(entity.getMaps(),internalIndex++, row);
-	      }
+	      services.fullyCuratedPropertiesForExcel(entity.getMaps(),
+	    		  internalIndex++, 
+	    		  CommonServices.MAPS, flags, row);
 	      //Process the properties to rows and columns adding properties as we go
 	      		  services.setPropertyRowOutPut(
 	    				  entity.getProperties(), row, internalIndex++);

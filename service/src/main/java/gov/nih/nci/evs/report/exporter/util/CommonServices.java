@@ -187,6 +187,25 @@ public class CommonServices {
 		return list;
 	}
 	
+	public void fullyCuratedPropertiesForExcel(List<? extends PropertyPrime> x, int index,
+			String propType, TripleBoolean bools, Row row) {
+
+		if(propType == SYNONYMS){
+			if(isNoSynonyms()){ row.createCell(index);}
+			else if(!existsCheck(x)){
+				bools.noEntitiesHaveSyns = false; }}
+        if(propType == DEFINITIONS) {
+        	if(isNoDefinitions()){ row.createCell(index);}
+			else if(!existsCheck(x)){
+				bools.noEntitiesHaveDefs = false; }}
+        if(propType == MAPS) {
+        	if(isNoMaps()){ row.createCell(index);;}
+			else if(!existsCheck(x)){
+				bools.noEntitiesHaveMaps = false; }}
+        
+		createCellInExcelRow(x, index, row);
+	}
+	
 	public void createCellInExcelRow(List<? extends PropertyPrime> x, int index, Row row) {
 		Cell cell = row.createCell(index);
         cell.setCellValue(CommonServices.cleanListOutPut(CommonServices.getListValuesForExcel(x)));
