@@ -122,6 +122,216 @@ class EXELUtilityTest {
 		Sheet sheet = workbook.getSheetAt(0);
 		int rows = sheet.getPhysicalNumberOfRows();
 		int expected = excelOutLine1.split(",").length;
+		//String header = sheet.getHeader().toString();
+ 		int cells = sheet.getRow(0).getPhysicalNumberOfCells();
+ 		assertEquals(expected,cells);
+
+		for(int i = 0; i < rows; i ++) {
+			Row row = sheet.getRow(i);
+			System.out.println();
+			for(int index = 0;index < row.getPhysicalNumberOfCells(); index++) {
+				System.out.println(row.getCell(index) != null?row.getCell(index).getStringCellValue():"empty");
+			};
+		}
+		
+
+			Row headerRow = sheet.getRow(0);
+			Row row1 = sheet.getRow(1);
+			Row row2 = sheet.getRow(2);
+			Row row3 = sheet.getRow(3);
+			Row row4 = sheet.getRow(1);
+
+			String header0 = headerRow.getCell(0).getStringCellValue();
+			String cell0 = row1.getCell(0).getStringCellValue();	
+			assertTrue(header0.equals("terminology")  && cell0.equals("ncit"));
+			
+			String header1 = headerRow.getCell(1).getStringCellValue();
+			String cell1 = row1.getCell(1).getStringCellValue();	
+			assertTrue(header1.equals("code")  && cell1.equals("C123234"));
+			
+			String header2 = headerRow.getCell(2).getStringCellValue();
+			String cell2 = row1.getCell(2).getStringCellValue();	
+			assertTrue(header2.equals("name")  && cell2.equals("Myent"));
+			
+			String header3 = headerRow.getCell(3).getStringCellValue();
+			String cell3 = row1.getCell(3).getStringCellValue();	
+			assertTrue(header3.equals("parents")  && cell3.equals(""));
+			
+			String header4 = headerRow.getCell(4).getStringCellValue();
+			String cell4 = row1.getCell(4).getStringCellValue();	
+			assertTrue(header4.equals("synonyms")  && cell4.equals("|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |"));
+			
+			String header5 = headerRow.getCell(5).getStringCellValue();
+			String cell5 = row1.getCell(5) != null?row1.getCell(5).getStringCellValue():null;	
+			assertTrue(header5.equals("PropType")  && cell5.equals("|propvalue|propvalue1|"));
+			
+			String header6 = headerRow.getCell(6).getStringCellValue();
+			String cell6 = row1.getCell(6) != null?row1.getCell(6).getStringCellValue():null;	
+			assertTrue(header6.equals("PropType2")  && cell6.equals("|propvalue2|"));
+			
+			String header7 = headerRow.getCell(7).getStringCellValue();
+			String cell7 = row1.getCell(7) != null?row1.getCell(7).getStringCellValue():null;	
+			assertTrue(header7.equals("Prop0Type")  && cell7.equals(""));
+			
+			String header8 = headerRow.getCell(8).getStringCellValue();
+			String cell8 = row1.getCell(8) != null?row1.getCell(8).getStringCellValue():null;	
+			assertTrue(header8.equals("GO_Annotation")  && cell8.equals(""));
+			
+			String header9 = headerRow.getCell(9).getStringCellValue();
+			String cell9 = row1.getCell(9) != null?row1.getCell(9).getStringCellValue():null;	
+			assertTrue(header9.equals("Prop9Type")  && cell9.equals(""));
+			
+			String header10 = headerRow.getCell(10).getStringCellValue();
+			String cell10 = row1.getCell(10) != null?row1.getCell(10).getStringCellValue():null;	
+			assertTrue(header10.equals("Prop9Type2")  && cell10.equals(""));
+			
+			
+			String header0a = headerRow.getCell(0).getStringCellValue();
+			String cell0a = row2.getCell(0).getStringCellValue();	
+			assertTrue(header0a.equals("terminology")  && cell0a.equals("ncit"));
+			
+			String header1a = headerRow.getCell(1).getStringCellValue();
+			String cell1a = row2.getCell(1).getStringCellValue();	
+			assertTrue(header1a.equals("code")  && cell1a.equals("C000000"));
+			
+			String header2a = headerRow.getCell(2).getStringCellValue();
+			String cell2a = row2.getCell(2).getStringCellValue();	
+			assertTrue(header2a.equals("name")  && cell2a.equals("0ent"));
+			
+			String header3a = headerRow.getCell(3).getStringCellValue();
+			String cell3a = row2.getCell(3).getStringCellValue();	
+			assertTrue(header3a.equals("parents")  && cell3a.equals(""));
+			
+			String header4a = headerRow.getCell(4).getStringCellValue();
+			String cell4a = row2.getCell(4).getStringCellValue();	
+			assertTrue(header4a.equals("synonyms")  && cell4a.equals(""));
+			String header5a = headerRow.getCell(5).getStringCellValue();
+			String cell5a = row2.getCell(5).getStringCellValue();	
+			assertTrue(header5a.equals("PropType")  && cell5a.equals(""));
+			
+			String header6a = headerRow.getCell(6).getStringCellValue();
+			String cell6a = row2.getCell(6).getStringCellValue();	
+			assertTrue(header6a.equals("PropType2")  && cell6a.equals(""));
+			
+			String header7a = headerRow.getCell(7).getStringCellValue();
+			String cell7a = row2.getCell(7).getStringCellValue();	
+			assertTrue(header7a.equals("Prop0Type")  && cell7a.equals("|prop0value|"));
+			
+			String header8a = headerRow.getCell(8).getStringCellValue();
+			String cell8a = row2.getCell(8).getStringCellValue();	
+			assertTrue(header8a.equals("GO_Annotation")  && cell8a.equals("|GO:0000075 prop0value2:TAS|"));
+			
+			String header9a = headerRow.getCell(9).getStringCellValue();
+			String cell9a = row2.getCell(9) != null?row2.getCell(9).getStringCellValue():null;	
+			assertTrue(header9a.equals("Prop9Type")  && cell9a.equals(""));
+			
+			String header10a = headerRow.getCell(10).getStringCellValue();
+			String cell10a = row2.getCell(10) != null?row2.getCell(10).getStringCellValue():null;	
+			assertTrue(header10a.equals("Prop9Type2")  && cell10a.equals(""));
+
+			
+			String header0b = headerRow.getCell(0).getStringCellValue();
+			String cell0b = row3.getCell(0).getStringCellValue();	
+			assertTrue(header0b.equals("terminology")  && cell0b.equals("ncit"));
+			
+			String header1b = headerRow.getCell(1).getStringCellValue();
+			String cell1b = row3.getCell(1).getStringCellValue();	
+			assertTrue(header1b.equals("code")  && cell1b.equals("C999999"));
+			
+			String header2b = headerRow.getCell(2).getStringCellValue();
+			String cell2b = row3.getCell(2).getStringCellValue();	
+			assertTrue(header2b.equals("name")  && cell2b.equals("My9"));
+			
+			String header3b = headerRow.getCell(3).getStringCellValue();
+			String cell3b = row3.getCell(3).getStringCellValue();	
+			assertTrue(header3b.equals("parents")  && cell3b.equals(""));
+			
+			String header4b = headerRow.getCell(4).getStringCellValue();
+			String cell4b = row3.getCell(4).getStringCellValue();	
+			assertTrue(header4b.equals("synonyms")  && cell4b.equals(""));
+			String header5b = headerRow.getCell(5).getStringCellValue();
+			String cell5b = row3.getCell(5).getStringCellValue();	
+			assertTrue(header5b.equals("PropType")  && cell5b.equals(""));
+			
+			String header6b = headerRow.getCell(6).getStringCellValue();
+			String cell6b = row3.getCell(6).getStringCellValue();	
+			assertTrue(header6b.equals("PropType2")  && cell6b.equals("|prop9value3|"));
+			
+			String header7b = headerRow.getCell(7).getStringCellValue();
+			String cell7b = row3.getCell(7).getStringCellValue();	
+			assertTrue(header7b.equals("Prop0Type")  && cell7b.equals(""));
+			
+			String header8b = headerRow.getCell(8).getStringCellValue();
+			String cell8b = row3.getCell(8).getStringCellValue();	
+			assertTrue(header8b.equals("GO_Annotation")  && cell8b.equals(""));
+			
+			String header9b = headerRow.getCell(9).getStringCellValue();
+			String cell9b = row3.getCell(9) != null?row3.getCell(9).getStringCellValue():null;	
+			assertTrue(header9b.equals("Prop9Type")  && cell9b.equals("|prop9value|"));
+			
+			String header10b = headerRow.getCell(10).getStringCellValue();
+			String cell10b = row3.getCell(10) != null?row3.getCell(10).getStringCellValue():null;	
+			assertTrue(header10b.equals("Prop9Type2")  && cell10b.equals(""));
+
+			
+			String header0c = headerRow.getCell(0).getStringCellValue();
+			String cell0c = row4.getCell(0).getStringCellValue();	
+			assertTrue(header0c.equals("terminology")  && cell0c.equals("ncit"));
+			
+			String header1c = headerRow.getCell(1).getStringCellValue();
+			String cell1c = row4.getCell(1).getStringCellValue();	
+			assertTrue(header1c.equals("code")  && cell1c.equals("CC2222"));
+			
+			String header2c = headerRow.getCell(2).getStringCellValue();
+			String cell2c = row4.getCell(2).getStringCellValue();	
+			assertTrue(header2c.equals("name")  && cell2c.equals("My2"));
+			
+			String header3c = headerRow.getCell(3).getStringCellValue();
+			String cell3c = row4.getCell(3).getStringCellValue();	
+			assertTrue(header3c.equals("parents")  && cell3c.equals(""));
+			
+			String header4c = headerRow.getCell(4).getStringCellValue();
+			String cell4c = row4.getCell(4).getStringCellValue();	
+			assertTrue(header4c.equals("synonyms")  && cell4c.equals(""));
+			String header5c = headerRow.getCell(5).getStringCellValue();
+			String cell5c = row4.getCell(5).getStringCellValue();	
+			assertTrue(header5c.equals("PropType")  && cell5c.equals(""));
+			
+			String header6c = headerRow.getCell(6).getStringCellValue();
+			String cell6c = row4.getCell(6).getStringCellValue();	
+			assertTrue(header6c.equals("PropType2")  && cell6c.equals("|prop9value3|"));
+			
+			String header7c = headerRow.getCell(7).getStringCellValue();
+			String cell7c = row4.getCell(7).getStringCellValue();	
+			assertTrue(header7c.equals("Prop0Type")  && cell7c.equals(""));
+			
+			String header8c = headerRow.getCell(8).getStringCellValue();
+			String cell8c = row4.getCell(8).getStringCellValue();	
+			assertTrue(header8c.equals("GO_Annotation")  && cell8c.equals(""));
+			
+			String header9c = headerRow.getCell(9).getStringCellValue();
+			String cell9c = row4.getCell(9) != null?row4.getCell(9).getStringCellValue():null;	
+			assertTrue(header9c.equals("Prop9Type")  && cell9c.equals("|prop9value|"));
+			
+			String header10c = headerRow.getCell(10).getStringCellValue();
+			String cell10c = row4.getCell(10) != null?row4.getCell(10).getStringCellValue():null;	
+			assertTrue(header10c.equals("Prop9Type2")  && cell10c.equals(""));
+
+		stream.close();
+		workbook.close();
+	}
+	
+	@Test
+	void testProduceExcelOutputFromByteArrayHeadingMap() throws IOException {
+
+		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+
+		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
+		
+		Sheet sheet = workbook.getSheetAt(0);
+		int rows = sheet.getPhysicalNumberOfRows();
+		int expected = excelOutLine1.split(",").length;
  		int cells = sheet.getRow(0).getPhysicalNumberOfCells();
  		assertEquals(expected,cells);
 
@@ -142,184 +352,183 @@ class EXELUtilityTest {
 
 			String header0 = headerRow.getCell(0).getStringCellValue();
 			String cell0 = row1.getCell(0).getStringCellValue();	
-			assertTrue(header0.equals("terminology")  || cell0.equals("ncit"));
+			assertTrue(header0.equals("terminology")  && cell0.equals("ncit"));
 			
 			String header1 = headerRow.getCell(1).getStringCellValue();
 			String cell1 = row1.getCell(1).getStringCellValue();	
-			assertTrue(header1.equals("code")  || cell1.equals("C123234"));
+			assertTrue(header1.equals("code")  && cell1.equals("C123234"));
 			
 			String header2 = headerRow.getCell(2).getStringCellValue();
 			String cell2 = row1.getCell(2).getStringCellValue();	
-			assertTrue(header2.equals("name")  || cell2.equals("Myent"));
+			assertTrue(header2.equals("name")  && cell2.equals("Myent"));
 			
 			String header3 = headerRow.getCell(3).getStringCellValue();
 			String cell3 = row1.getCell(3).getStringCellValue();	
-			assertTrue(header3.equals("parents")  || cell3.equals(""));
+			assertTrue(header3.equals("parents")  && cell3.equals(""));
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("synonyms")  || cell4.equals("\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\""));
+			assertTrue(header4.equals("Maps_To")  && cell4.equals(""));
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
-			assertTrue(header5.equals("PropType")  || cell5.equals("\"|propvalue|propvalue1|\""));
+			assertTrue(header5.equals("PropType")  && cell5.equals("|propvalue|propvalue1|"));
 			
 			String header6 = headerRow.getCell(6).getStringCellValue();
 			String cell6 = row1.getCell(6).getStringCellValue();	
-			assertTrue(header6.equals("PropType2")  || cell6.equals("\"|propvalue2|\""));
+			assertTrue(header6.equals("PropType2")  && cell6.equals("|propvalue2|"));
 			
 			String header7 = headerRow.getCell(7).getStringCellValue();
 			String cell7 = row1.getCell(7).getStringCellValue();	
-			assertTrue(header7.equals("Prop0Type")  || cell7.equals(""));
+			assertTrue(header7.equals("Prop0Type")  && cell7.equals(""));
 			
 			String header8 = headerRow.getCell(8).getStringCellValue();
 			String cell8 = row1.getCell(8).getStringCellValue();	
-			assertTrue(header8.equals("GO_Annotation")  || cell8.equals(""));
+			assertTrue(header8.equals("GO_Annotation")  && cell8.equals(""));
 			
 			String header9 = headerRow.getCell(9).getStringCellValue();
 			String cell9 = row1.getCell(9) != null?row1.getCell(9).getStringCellValue():null;	
-			assertTrue(header9.equals("Prop9Type")  || cell9.equals(""));
+			assertTrue(header9.equals("Prop9Type")  && cell9.equals(""));
 			
 			String header10 = headerRow.getCell(10).getStringCellValue();
 			String cell10 = row1.getCell(10) != null?row1.getCell(10).getStringCellValue():null;	
-			assertTrue(header10.equals("Prop9Type2")  || cell10.equals(""));
+			assertTrue(header10.equals("Prop9Type2")  && cell10.equals(""));
 			
 			
 			String header0a = headerRow.getCell(0).getStringCellValue();
 			String cell0a = row2.getCell(0).getStringCellValue();	
-			assertTrue(header0a.equals("terminology")  || cell0a.equals("ncit"));
+			assertTrue(header0a.equals("terminology")  && cell0a.equals("ncit"));
 			
 			String header1a = headerRow.getCell(1).getStringCellValue();
 			String cell1a = row2.getCell(1).getStringCellValue();	
-			assertTrue(header1a.equals("code")  || cell1a.equals("C000000"));
+			assertTrue(header1a.equals("code")  && cell1a.equals("C000000"));
 			
 			String header2a = headerRow.getCell(2).getStringCellValue();
 			String cell2a = row2.getCell(2).getStringCellValue();	
-			assertTrue(header2a.equals("name")  || cell2a.equals("0ent"));
+			assertTrue(header2a.equals("name")  && cell2a.equals("0ent"));
 			
 			String header3a = headerRow.getCell(3).getStringCellValue();
 			String cell3a = row2.getCell(3).getStringCellValue();	
-			assertTrue(header3a.equals("parents")  || cell3a.equals(""));
+			assertTrue(header3a.equals("parents")  && cell3a.equals(""));
 			
 			String header4a = headerRow.getCell(4).getStringCellValue();
 			String cell4a = row2.getCell(4).getStringCellValue();	
-			assertTrue(header4a.equals("synonyms")  || cell4a.equals(""));
+			assertTrue(header4a.equals("synonyms")  && cell4a.equals(""));
 			String header5a = headerRow.getCell(5).getStringCellValue();
 			String cell5a = row2.getCell(5).getStringCellValue();	
-			assertTrue(header5a.equals("PropType")  || cell5a.equals(""));
+			assertTrue(header5a.equals("PropType")  && cell5a.equals(""));
 			
 			String header6a = headerRow.getCell(6).getStringCellValue();
 			String cell6a = row2.getCell(6).getStringCellValue();	
-			assertTrue(header6a.equals("PropType2")  || cell6a.equals(""));
+			assertTrue(header6a.equals("PropType2")  && cell6a.equals(""));
 			
 			String header7a = headerRow.getCell(7).getStringCellValue();
 			String cell7a = row2.getCell(7).getStringCellValue();	
-			assertTrue(header7a.equals("Prop0Type")  || cell7a.equals("\"|prop0value|\""));
+			assertTrue(header7a.equals("Prop0Type")  && cell7a.equals("|prop0value|"));
 			
 			String header8a = headerRow.getCell(8).getStringCellValue();
 			String cell8a = row2.getCell(8).getStringCellValue();	
-			assertTrue(header8a.equals("GO_Annotation")  || cell8a.equals("\"|GO:0000075 prop0value2:TAS|\""));
+			assertTrue(header8a.equals("GO_Annotation")  && cell8a.equals("|GO:0000075 prop0value2:TAS|"));
 			
 			String header9a = headerRow.getCell(9).getStringCellValue();
 			String cell9a = row2.getCell(9) != null?row2.getCell(9).getStringCellValue():null;	
-			assertTrue(header9a.equals("Prop9Type")  || cell9a.equals(""));
+			assertTrue(header9a.equals("Prop9Type")  && cell9a.equals(""));
 			
 			String header10a = headerRow.getCell(10).getStringCellValue();
 			String cell10a = row2.getCell(10) != null?row2.getCell(10).getStringCellValue():null;	
-			assertTrue(header10a.equals("Prop9Type2")  || cell10a.equals(""));
+			assertTrue(header10a.equals("Prop9Type2")  && cell10a.equals(""));
 
 			
 			String header0b = headerRow.getCell(0).getStringCellValue();
 			String cell0b = row3.getCell(0).getStringCellValue();	
-			assertTrue(header0b.equals("terminology")  || cell0b.equals("ncit"));
+			assertTrue(header0b.equals("terminology")  && cell0b.equals("ncit"));
 			
 			String header1b = headerRow.getCell(1).getStringCellValue();
 			String cell1b = row3.getCell(1).getStringCellValue();	
-			assertTrue(header1b.equals("code")  || cell1b.equals("C999999"));
+			assertTrue(header1b.equals("code")  && cell1b.equals("C999999"));
 			
 			String header2b = headerRow.getCell(2).getStringCellValue();
 			String cell2b = row3.getCell(2).getStringCellValue();	
-			assertTrue(header2b.equals("name")  || cell2b.equals("My9"));
+			assertTrue(header2b.equals("name")  && cell2b.equals("My9"));
 			
 			String header3b = headerRow.getCell(3).getStringCellValue();
 			String cell3b = row3.getCell(3).getStringCellValue();	
-			assertTrue(header3b.equals("parents")  || cell3b.equals(""));
+			assertTrue(header3b.equals("parents")  && cell3b.equals(""));
 			
 			String header4b = headerRow.getCell(4).getStringCellValue();
 			String cell4b = row3.getCell(4).getStringCellValue();	
-			assertTrue(header4b.equals("synonyms")  || cell4b.equals(""));
+			assertTrue(header4b.equals("synonyms")  && cell4b.equals(""));
 			String header5b = headerRow.getCell(5).getStringCellValue();
 			String cell5b = row3.getCell(5).getStringCellValue();	
-			assertTrue(header5b.equals("PropType")  || cell5b.equals(""));
+			assertTrue(header5b.equals("PropType")  && cell5b.equals(""));
 			
 			String header6b = headerRow.getCell(6).getStringCellValue();
 			String cell6b = row3.getCell(6).getStringCellValue();	
-			assertTrue(header6b.equals("PropType2")  || cell6b.equals("\"|prop9value3|\""));
+			assertTrue(header6b.equals("PropType2")  && cell6b.equals("|prop9value3|"));
 			
 			String header7b = headerRow.getCell(7).getStringCellValue();
 			String cell7b = row3.getCell(7).getStringCellValue();	
-			assertTrue(header7b.equals("Prop0Type")  || cell7b.equals(""));
+			assertTrue(header7b.equals("Prop0Type")  && cell7b.equals(""));
 			
 			String header8b = headerRow.getCell(8).getStringCellValue();
 			String cell8b = row3.getCell(8).getStringCellValue();	
-			assertTrue(header8b.equals("GO_Annotation")  || cell8b.equals("\""));
+			assertTrue(header8b.equals("GO_Annotation")  && cell8b.equals(""));
 			
 			String header9b = headerRow.getCell(9).getStringCellValue();
 			String cell9b = row3.getCell(9) != null?row3.getCell(9).getStringCellValue():null;	
-			assertTrue(header9b.equals("Prop9Type")  || cell9b.equals("\"|prop9value|\""));
+			assertTrue(header9b.equals("Prop9Type")  && cell9b.equals("|prop9value|"));
 			
 			String header10b = headerRow.getCell(10).getStringCellValue();
 			String cell10b = row3.getCell(10) != null?row3.getCell(10).getStringCellValue():null;	
-			assertTrue(header10b.equals("Prop9Type2")  || cell10b.equals(""));
+			assertTrue(header10b.equals("Prop9Type2")  && cell10b.equals(""));
 
 			
 			String header0c = headerRow.getCell(0).getStringCellValue();
 			String cell0c = row4.getCell(0).getStringCellValue();	
-			assertTrue(header0c.equals("terminology")  || cell0c.equals("ncit"));
+			assertTrue(header0c.equals("terminology")  && cell0c.equals("ncit"));
 			
 			String header1c = headerRow.getCell(1).getStringCellValue();
 			String cell1c = row4.getCell(1).getStringCellValue();	
-			assertTrue(header1c.equals("code")  || cell1c.equals("CC2222"));
+			assertTrue(header1c.equals("code")  && cell1c.equals("CC2222"));
 			
 			String header2c = headerRow.getCell(2).getStringCellValue();
 			String cell2c = row4.getCell(2).getStringCellValue();	
-			assertTrue(header2c.equals("name")  || cell2c.equals("My2"));
+			assertTrue(header2c.equals("name")  && cell2c.equals("My2"));
 			
 			String header3c = headerRow.getCell(3).getStringCellValue();
 			String cell3c = row4.getCell(3).getStringCellValue();	
-			assertTrue(header3c.equals("parents")  || cell3c.equals(""));
+			assertTrue(header3c.equals("parents")  && cell3c.equals(""));
 			
 			String header4c = headerRow.getCell(4).getStringCellValue();
 			String cell4c = row4.getCell(4).getStringCellValue();	
-			assertTrue(header4c.equals("synonyms")  || cell4c.equals(""));
+			assertTrue(header4c.equals("maps")  && cell4c.equals("|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|"));
 			String header5c = headerRow.getCell(5).getStringCellValue();
 			String cell5c = row4.getCell(5).getStringCellValue();	
-			assertTrue(header5c.equals("PropType")  || cell5c.equals("\"|prop9value3|\""));
+			assertTrue(header5c.equals("PropType")  && cell5c.equals(""));
 			
 			String header6c = headerRow.getCell(6).getStringCellValue();
 			String cell6c = row4.getCell(6).getStringCellValue();	
-			assertTrue(header6c.equals("PropType2")  || cell6c.equals("\"|prop9value3|\""));
+			assertTrue(header6c.equals("PropType2")  && cell6c.equals("|prop9value3|"));
 			
 			String header7c = headerRow.getCell(7).getStringCellValue();
 			String cell7c = row4.getCell(7).getStringCellValue();	
-			assertTrue(header7c.equals("Prop0Type")  || cell7c.equals(""));
+			assertTrue(header7c.equals("Prop0Type")  && cell7c.equals(""));
 			
 			String header8c = headerRow.getCell(8).getStringCellValue();
 			String cell8c = row4.getCell(8).getStringCellValue();	
-			assertTrue(header8c.equals("GO_Annotation")  || cell8c.equals("\""));
+			assertTrue(header8c.equals("GO_Annotation")  && cell8c.equals(""));
 			
 			String header9c = headerRow.getCell(9).getStringCellValue();
 			String cell9c = row4.getCell(9) != null?row4.getCell(9).getStringCellValue():null;	
-			assertTrue(header9c.equals("Prop9Type")  || cell9c.equals("\"|prop9value|\""));
+			assertTrue(header9c.equals("Prop9Type")  && cell9c.equals("\"|prop9value|"));
 			
 			String header10c = headerRow.getCell(10).getStringCellValue();
 			String cell10c = row4.getCell(10) != null?row4.getCell(10).getStringCellValue():null;	
-			assertTrue(header10c.equals("Prop9Type2")  || cell10c.equals(""));
+			assertTrue(header10c.equals("Prop9Type2")  && cell10c.equals(""));
 
 		stream.close();
 		workbook.close();
 	}
-	
 	
 	
 	private List<RestEntity> getRestEntityList() {

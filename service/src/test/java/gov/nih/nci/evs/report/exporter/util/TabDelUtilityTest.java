@@ -33,7 +33,7 @@ class TabDelUtilityTest {
 	String tabdOutLine2a = "ncit\tC123234\tMyent\t\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3a = "ncit\tC000000\t0ent\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4a = "ncit\tC999999\tMy9\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String tabdOutline5a = "ncit\tC2222\tMy2\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutline5a = "ncit\tC2222\tMy2\t\tz\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
 
 	String tabdOutLine1b = "terminology\tcode\tname\tparents\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
 	String tabdOutLine2b = "ncit\tC123234\tMyent\t\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
