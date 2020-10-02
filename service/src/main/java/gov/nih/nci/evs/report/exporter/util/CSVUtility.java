@@ -43,10 +43,6 @@ public class CSVUtility extends FormatUtility {
 			.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
 		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
-//		String secondHeader = services.getHeadersByPosition(
-//				services.getPropHeaderMap())
-//						.stream()
-//						.collect(Collectors.joining(separator));
 		services.getHeadersByPosition(services.getPropHeaderMap())
 									.stream()
 									.forEach(type -> 

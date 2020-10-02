@@ -336,7 +336,7 @@ public class CommonServices {
 	}
 	
 	public String cleanColumn(String line, TripleBoolean flags, String separator) {
-		List<String> listPrime = new ArrayList<String>(Arrays.asList(line.split(",")));
+		List<String> listPrime = new ArrayList<String>(Arrays.asList(line.split(separator)));
 
 
 		//user flag no synonyms
@@ -507,7 +507,7 @@ public class CommonServices {
 				flags.noEntitiesHaveDefs && 
 				flags.noEntitiesHaveMaps) 
 					{listPrime.remove(6);
-					listPrime.remove(6);}
+					listPrime.remove(5);}
 		if( flags.noEntitiesHaveSyns && 
 				!flags.noEntitiesHaveDefs && 
 				flags.noEntitiesHaveMaps) 
