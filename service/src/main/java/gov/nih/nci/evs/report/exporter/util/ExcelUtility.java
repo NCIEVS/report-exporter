@@ -65,21 +65,23 @@ public class ExcelUtility extends FormatUtility {
 	    	    		entity.getParents() != null?
 	    	    				entity.getParents():
 	    	    					null)));
+	      //Creating an index wrapper to pass by reference
+	      IndexWrapper indexWrapper = new IndexWrapper(internalIndex);
 	      //Process the Synonyms as a list
 	      services.fullyCuratedPropertiesForExcel(entity.getSynonyms(),
-	    		  internalIndex++, 
+	    		  indexWrapper, 
 	    		  CommonServices.SYNONYMS, flags, row);
 	      //Process the definitions as a list
 	      services.fullyCuratedPropertiesForExcel(entity.getDefinitions(),
-	    		  internalIndex++, 
+	    		  indexWrapper, 
 	    		  CommonServices.DEFINITIONS, flags, row);
 	      //Process the maps as a list
 	      services.fullyCuratedPropertiesForExcel(entity.getMaps(),
-	    		  internalIndex++, 
+	    		  indexWrapper, 
 	    		  CommonServices.MAPS, flags, row);
 	      //Process the properties to rows and columns adding properties as we go
 	      		  services.setPropertyRowOutPut(
-	    				  entity.getProperties(), row, internalIndex++);
+	    				  entity.getProperties(), row, indexWrapper.getIndex());
 
 	      //Clearing property list for the next entity, leaving type and position metadata
 	    		  services.clearPropertyListsFromHeaderMap();		  

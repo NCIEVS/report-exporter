@@ -187,7 +187,7 @@ public class CommonServices {
 		return list;
 	}
 	
-	public void fullyCuratedPropertiesForExcel(List<? extends PropertyPrime> x, int index,
+	public void fullyCuratedPropertiesForExcel(List<? extends PropertyPrime> x, IndexWrapper index,
 			String propType, TripleBoolean bools, Row row) {
 
 		if(propType == SYNONYMS){
@@ -209,7 +209,8 @@ public class CommonServices {
 			else if(!existsCheck(x)){
 				bools.noEntitiesHaveMaps = false; }}
         
-		createCellInExcelRow(x, index, row);
+		createCellInExcelRow(x, index.getIndex(), row);
+		index.increment();
 	}
 	
 	public void createCellInExcelRow(List<? extends PropertyPrime> x, int index, Row row) {
@@ -573,11 +574,11 @@ public class CommonServices {
 				if(!flags.noEntitiesHaveDefs) 
 				{//do nothing
 					}
-				if(//None of the entities have definitions -- remove 
+				//None of the entities have definitions -- remove 
 						//the mapping column where the synonyms used to be
-						flags.noEntitiesHaveDefs) 
-							{Cell cell = row.getCell(5); 
-								if(cell != null) {row.removeCell(cell);}}
+				if(flags.noEntitiesHaveDefs) 
+						{Cell cell = row.getCell(5); 
+							if(cell != null) {row.removeCell(cell);}}
 
 			}else {
 
@@ -624,9 +625,9 @@ public class CommonServices {
 				if(//None of the entities have maps -- remove the mapping column 
 						//where the Synonyms used to be
 						flags.noEntitiesHaveMaps){
-					Cell cell = row.getCell(5); 
-					if(cell != null) {
-						row.removeCell(cell);}}
+						Cell cell = row.getCell(5); 
+						if(cell != null) {
+							row.removeCell(cell);}}
 			} else
 				//Condition user flag no definitions and no maps
 				if(isNoMaps()) {
@@ -785,9 +786,23 @@ public class CommonServices {
 					//do nothing
 					}
 		}
-		//return listPrime.stream().collect(Collectors.joining(separator));
-
 	}
+	
+	public void shiftCellsToCorrectedPosition(Row row, int offset) {
+		int noOfCells = row.getPhysicalNumberOfCells();
+		int temp = offset;
+		if(noOfCells >= offset + 1) {
+			//do nothing we are at the end of the row
+			return;
+		}
+		else {
+			for(int i = 0; i < noOfCells; i++) {
+				row.getCell(temp++).setCellValue(row.getCell(offset + i).getStringCellValue());
+			}
+		}
+		
+	}
+	
 	
 	public static void main(String ...strings) {
 		 
