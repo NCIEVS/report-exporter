@@ -348,7 +348,7 @@ class EXELUtilityTest {
 			Row row1 = sheet.getRow(1);
 			Row row2 = sheet.getRow(2);
 			Row row3 = sheet.getRow(3);
-			Row row4 = sheet.getRow(1);
+			Row row4 = sheet.getRow(4);
 
 			String header0 = headerRow.getCell(0).getStringCellValue();
 			String cell0 = row1.getCell(0).getStringCellValue();	
@@ -379,20 +379,20 @@ class EXELUtilityTest {
 			assertTrue(header6.equals("PropType2")  && cell6.equals("|propvalue2|"));
 			
 			String header7 = headerRow.getCell(7).getStringCellValue();
-			String cell7 = row1.getCell(7).getStringCellValue();	
-			assertTrue(header7.equals("Prop0Type")  && cell7.equals(""));
+			String cell7 = row1.getCell(7) != null?row1.getCell(7).getStringCellValue():null;	
+			assertTrue(header7.equals("Prop0Type")  && (cell7 == null || cell7.equals("")));
 			
 			String header8 = headerRow.getCell(8).getStringCellValue();
-			String cell8 = row1.getCell(8).getStringCellValue();	
-			assertTrue(header8.equals("GO_Annotation")  && cell8.equals(""));
+			String cell8 = row1.getCell(8) != null? row1.getCell(8).getStringCellValue():null;	
+			assertTrue(header8.equals("GO_Annotation")  && (cell8 == null || cell8.equals("")));
 			
 			String header9 = headerRow.getCell(9).getStringCellValue();
 			String cell9 = row1.getCell(9) != null?row1.getCell(9).getStringCellValue():null;	
-			assertTrue(header9.equals("Prop9Type")  && cell9.equals(""));
+			assertTrue(header9.equals("Prop9Type")  && (cell9 == null || cell9.equals("")));
 			
 			String header10 = headerRow.getCell(10).getStringCellValue();
 			String cell10 = row1.getCell(10) != null?row1.getCell(10).getStringCellValue():null;	
-			assertTrue(header10.equals("Prop9Type2")  && cell10.equals(""));
+			assertTrue(header10.equals("Prop9Type2") && (cell10 == null || cell10.equals("")));
 			
 			
 			String header0a = headerRow.getCell(0).getStringCellValue();
@@ -413,7 +413,8 @@ class EXELUtilityTest {
 			
 			String header4a = headerRow.getCell(4).getStringCellValue();
 			String cell4a = row2.getCell(4).getStringCellValue();	
-			assertTrue(header4a.equals("synonyms")  && cell4a.equals(""));
+			assertTrue(header4a.equals("Maps_To")  && cell4a.equals(""));
+			
 			String header5a = headerRow.getCell(5).getStringCellValue();
 			String cell5a = row2.getCell(5).getStringCellValue();	
 			assertTrue(header5a.equals("PropType")  && cell5a.equals(""));
@@ -432,11 +433,11 @@ class EXELUtilityTest {
 			
 			String header9a = headerRow.getCell(9).getStringCellValue();
 			String cell9a = row2.getCell(9) != null?row2.getCell(9).getStringCellValue():null;	
-			assertTrue(header9a.equals("Prop9Type")  && cell9a.equals(""));
+			assertTrue(header9a.equals("Prop9Type")  && (cell9a == null || cell9a.equals("")));
 			
 			String header10a = headerRow.getCell(10).getStringCellValue();
 			String cell10a = row2.getCell(10) != null?row2.getCell(10).getStringCellValue():null;	
-			assertTrue(header10a.equals("Prop9Type2")  && cell10a.equals(""));
+			assertTrue(header10a.equals("Prop9Type2")  && (cell10a == null || cell10a.equals("")));
 
 			
 			String header0b = headerRow.getCell(0).getStringCellValue();
@@ -457,14 +458,14 @@ class EXELUtilityTest {
 			
 			String header4b = headerRow.getCell(4).getStringCellValue();
 			String cell4b = row3.getCell(4).getStringCellValue();	
-			assertTrue(header4b.equals("synonyms")  && cell4b.equals(""));
+			assertTrue(header4b.equals("Maps_To")  && cell4b.equals(""));
 			String header5b = headerRow.getCell(5).getStringCellValue();
 			String cell5b = row3.getCell(5).getStringCellValue();	
-			assertTrue(header5b.equals("PropType")  && cell5b.equals(""));
+			assertTrue(header5b.equals("PropType")  && cell5b.equals("|prop9value3|"));
 			
 			String header6b = headerRow.getCell(6).getStringCellValue();
 			String cell6b = row3.getCell(6).getStringCellValue();	
-			assertTrue(header6b.equals("PropType2")  && cell6b.equals("|prop9value3|"));
+			assertTrue(header6b.equals("PropType2")  && cell6b.equals(""));
 			
 			String header7b = headerRow.getCell(7).getStringCellValue();
 			String cell7b = row3.getCell(7).getStringCellValue();	
@@ -480,7 +481,7 @@ class EXELUtilityTest {
 			
 			String header10b = headerRow.getCell(10).getStringCellValue();
 			String cell10b = row3.getCell(10) != null?row3.getCell(10).getStringCellValue():null;	
-			assertTrue(header10b.equals("Prop9Type2")  && cell10b.equals(""));
+			assertTrue(header10b.equals("Prop9Type2")  && cell10b.equals("|prop9value2|"));
 
 			
 			String header0c = headerRow.getCell(0).getStringCellValue();
@@ -489,7 +490,7 @@ class EXELUtilityTest {
 			
 			String header1c = headerRow.getCell(1).getStringCellValue();
 			String cell1c = row4.getCell(1).getStringCellValue();	
-			assertTrue(header1c.equals("code")  && cell1c.equals("CC2222"));
+			assertTrue(header1c.equals("code")  && cell1c.equals("C2222"));
 			
 			String header2c = headerRow.getCell(2).getStringCellValue();
 			String cell2c = row4.getCell(2).getStringCellValue();	
@@ -501,14 +502,14 @@ class EXELUtilityTest {
 			
 			String header4c = headerRow.getCell(4).getStringCellValue();
 			String cell4c = row4.getCell(4).getStringCellValue();	
-			assertTrue(header4c.equals("maps")  && cell4c.equals("|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|"));
+			assertTrue(header4c.equals("Maps_To")  && cell4c.equals("|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|"));
 			String header5c = headerRow.getCell(5).getStringCellValue();
 			String cell5c = row4.getCell(5).getStringCellValue();	
-			assertTrue(header5c.equals("PropType")  && cell5c.equals(""));
+			assertTrue(header5c.equals("PropType")  && cell5c.equals("|prop9value3|"));
 			
 			String header6c = headerRow.getCell(6).getStringCellValue();
 			String cell6c = row4.getCell(6).getStringCellValue();	
-			assertTrue(header6c.equals("PropType2")  && cell6c.equals("|prop9value3|"));
+			assertTrue(header6c.equals("PropType2")  && cell6c.equals(""));
 			
 			String header7c = headerRow.getCell(7).getStringCellValue();
 			String cell7c = row4.getCell(7).getStringCellValue();	
@@ -520,11 +521,11 @@ class EXELUtilityTest {
 			
 			String header9c = headerRow.getCell(9).getStringCellValue();
 			String cell9c = row4.getCell(9) != null?row4.getCell(9).getStringCellValue():null;	
-			assertTrue(header9c.equals("Prop9Type")  && cell9c.equals("\"|prop9value|"));
+			assertTrue(header9c.equals("Prop9Type")  && cell9c.equals("|prop9value|"));
 			
 			String header10c = headerRow.getCell(10).getStringCellValue();
 			String cell10c = row4.getCell(10) != null?row4.getCell(10).getStringCellValue():null;	
-			assertTrue(header10c.equals("Prop9Type2")  && cell10c.equals(""));
+			assertTrue(header10c.equals("Prop9Type2")  && cell10c.equals("|prop9value2|"));
 
 		stream.close();
 		workbook.close();
