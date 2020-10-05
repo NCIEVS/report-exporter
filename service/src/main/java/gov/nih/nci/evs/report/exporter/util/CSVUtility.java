@@ -2,6 +2,7 @@ package gov.nih.nci.evs.report.exporter.util;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -12,30 +13,42 @@ public class CSVUtility extends FormatUtility {
 
 	
 
-	public String produceCSVOutputFromListWithHeading(List<RestEntity> list) {
+	public String produceCSVOutputFromListWithHeading(List<RestEntity> list, String props) {
+
 		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
 		StringBuffer firstLine = new StringBuffer();
 		String separator = ",";
 		StringBuffer oneLine = new StringBuffer();
 		list.stream().forEach(x -> { x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));       
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z)); 		
 				oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
 				separator + x.getName() +  
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
-				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getSynonyms())) + 
-				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getDefinitions())) + 
-				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getMaps())) +
+				services.fullyCuratedProperties(x.getSynonyms(), separator, CommonServices.SYNONYMS, flags) + 
+				services.fullyCuratedProperties(x.getDefinitions(), separator, CommonServices.DEFINITIONS, flags) + 
+				services.fullyCuratedProperties(x.getMaps(), separator, CommonServices.MAPS,flags) + 
 				separator + services.calculateAndProduceSpacedTerms(separator));				
 				services.clearPropertyListsFromHeaderMap();});
-		
-		Stream.of(FIELDS).forEach(x -> firstLine.append(x + separator));
-		firstLine.replace(firstLine.lastIndexOf(separator), firstLine.length(), "");
-		services.getHeadersByPosition(services.getPropHeaderMap()).stream().forEach(type -> firstLine.append(separator + type));
-		oneLine.insert(0, firstLine);
-		return oneLine.toString();
+		// If we have any columns flagged for removal clean up the rows here. 
+		StringBuffer fullColSet = new StringBuffer(
+				services.cleanColumns(flags, oneLine, separator));
+		services.filterHeadings(services, flags).stream()
+			.forEach(x -> firstLine.append(x + separator));
+		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
+		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
+		services.getHeadersByPosition(services.getPropHeaderMap())
+									.stream()
+									.forEach(type -> 
+									firstLine.append(separator + type));
+		fullColSet.insert(0, firstLine);
+		return fullColSet.toString();
 	}
 	
 	public String produceChildCSVOutputFromListWithHeading(List<ChildEntity> list) {
@@ -55,5 +68,6 @@ public class CSVUtility extends FormatUtility {
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getChildren()))));
 		return oneLine.toString();
 	}
+	
 
 }

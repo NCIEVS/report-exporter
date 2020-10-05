@@ -149,5 +149,119 @@ class CommonServicesTest {
 		RestTemplate t = CommonServices.getRestTemplate(new RestTemplateBuilder());
 		assertTrue(t != null);
 	}
+	
+	@Test
+	void testGetFilteredHeadingListSynonym() {
+		List<String> props = new ArrayList<String>();
+		props.add("FULL_SYN");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveSyns = false;
+		List<String> filtered = services.filterHeadings(services, flags);
+		assertTrue(filtered.contains("synonyms"));
+		assertFalse(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Map_To"));
+	}
+	
+	@Test
+	void testGetFilteredHeadingListMaps() {
+		List<String> props = new ArrayList<String>();
+		props.add("Maps_To");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveMaps = false;
+		List<String> filtered = services.filterHeadings(services, flags);
+		assertFalse(filtered.contains("synonyms"));
+		assertFalse(filtered.contains("definitions"));
+		assertTrue(filtered.contains("Maps_To"));
+	}
+	@Test
+	void testGetFilteredHeadingListDefinition() {
+		List<String> props = new ArrayList<String>();
+		props.add("DEFINITION");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveDefs = false;
+		List<String> filtered = services.filterHeadings(services, flags);
+		assertFalse(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Maps_To"));
+	}
+	@Test
+	void testGetFilteredHeadingListDefinitionb() {
+		List<String> props = new ArrayList<String>();
+		props.add("ALT_DEFINITION");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveDefs = false;
+		List<String> filtered = services.filterHeadings(services, flags);
+		assertFalse(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Maps_To"));
+	}
+	@Test
+	void testGetFilteredHeadingListDefinition2() {
+		List<String> props = new ArrayList<String>();
+		props.add("DEFINITION");
+		props.add("ALT_DEFINITION");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveDefs = false;
+		List<String> filtered = services.filterHeadings(services,flags);
+		assertFalse(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Maps_To"));
+	}
+	
+	@Test
+	void testGetFilteredHeadingListDefinitionNSynoyms() {
+		List<String> props = new ArrayList<String>();
+		props.add("DEFINITION");
+		props.add("FULL_SYN");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveSyns = false;
+		flags.noEntitiesHaveDefs = false;
+		List<String> filtered = services.filterHeadings(services, flags);
+		assertTrue(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertFalse(filtered.contains("Maps_To"));
+	}
+	
+	@Test
+	void testGetFilteredHeadingListDefinitionNMaps() {
+		List<String> props = new ArrayList<String>();
+		props.add("DEFINITION");
+		props.add("Maps_To");
+		CommonServices services = new CommonServices();
+		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
+		services.setNoMaps(!props.contains("Maps_To"));
+		TripleBoolean flags = new TripleBoolean();
+		flags.noEntitiesHaveDefs = false;
+		flags.noEntitiesHaveMaps = false;
+		List<String> filtered = services.filterHeadings(services,flags);
+		assertFalse(filtered.contains("synonyms"));
+		assertTrue(filtered.contains("definitions"));
+		assertTrue(filtered.contains("Maps_To"));
+	}
 
 }

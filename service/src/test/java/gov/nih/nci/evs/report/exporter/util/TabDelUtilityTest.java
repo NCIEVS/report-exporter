@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,9 @@ import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyMap;
 import gov.nih.nci.evs.report.exporter.model.Qualifier;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
+import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
 
 class TabDelUtilityTest {
@@ -23,11 +26,55 @@ class TabDelUtilityTest {
 	TabDelUtility util;
 	
 	BranchResolutionService service;
-	String csvOutLine1 = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
-	String csvOutLine2a = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
-	String csvOutLine3 = "ncit\tC000000\t0ent\t\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
-	String csvOutline4 = "ncit\tC999999\tMy9\t\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String csvOutline5 = "ncit\tC2222\tMy2\t\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutLine1 = "terminology\tcode\tname\tparents\tsynonyms\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String tabdOutLine2 = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine3 = "ncit\tC000000\t0ent\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String tabdOutline4 = "ncit\tC999999\tMy9\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String tabdOutline5 = "ncit\tC2222\tMy2\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	String tabdOutLine1a = "terminology\tcode\tname\tparents\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String tabdOutLine2a = "ncit\tC123234\tMyent\t\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine3a = "ncit\tC000000\t0ent\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String tabdOutline4a = "ncit\tC999999\tMy9\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String tabdOutline5a = "ncit\tC2222\tMy2\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	String tabdOutLine1b = "terminology\tcode\tname\tparents\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String tabdOutLine2b = "ncit\tC123234\tMyent\t\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine3b = "ncit\tC000000\t0ent\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String tabdOutline4b = "ncit\tC999999\tMy9\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String tabdOutline5b = "ncit\tC2222\tMy2\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	
+	String tabdOutLine1c = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String tabdOutLine2c = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine3c = "ncit\tC000000\t0ent\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String tabdOutline4c = "ncit\tC999999\tMy9\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String tabdOutline5c = "ncit\tC2222\tMy2\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	
+	String tabdOutLine1d = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String tabdOutLine2d = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine3d = "ncit\tC000000\t0ent\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String tabdOutline4d = "ncit\tC999999\tMy9\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String tabdOutline5d = "ncit\tC2222\tMy2\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	String tabdOutLine1e = "terminology\tcode\tname\tparents\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String tabdOutLine2e = "ncit\tC123234\tMyent\t\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine3e = "ncit\tC000000\t0ent\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String tabdOutline4e = "ncit\tC999999\tMy9\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String tabdOutline5e = "ncit\tC2222\tMy2\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	String tabdOutLine1f = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
+	String tabdOutLine2f = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine3f = "ncit\tC000000\t0ent\t\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
+	String tabdOutline4f = "ncit\tC999999\tMy9\t\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
+	String tabdOutline5f = "ncit\tC2222\tMy2\t\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+
+	
+	String singleLineHeading = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tSemantic_Type\tUMLS_CUI\tContributing_Source";
+	String singelLinetbd	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\"|NCI:terms relative to CDISC.|\"\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"";
+	String singelLinetbdNoDefsNoMaps	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"";
+	
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -36,15 +83,141 @@ class TabDelUtilityTest {
 	}
 	
 	@Test
-	void testProduceCSVOutputFromListWithHeading() {
-		String csv = util.produceTabDelOutputFromListWithHeading(getRestEntityList());
-		String[] csvLines = csv.split(System.lineSeparator());
-		assertEquals(csvLines[0],csvOutLine1);
-		assertEquals(csvLines[1],csvOutLine2a);
-		assertEquals(csvLines[2],csvOutLine3);
-		assertEquals(csvLines[3],csvOutline4);
-		assertEquals(csvLines[4],csvOutline5);
+	void testProduceTabDelOutputFromListWithHeadingSyn() {
+		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1);
+		assertEquals(tabdLines[1],tabdOutLine2);
+		assertEquals(tabdLines[2],tabdOutLine3);
+		assertEquals(tabdLines[3],tabdOutline4);
+		assertEquals(tabdLines[4],tabdOutline5);
 	}
+	
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingMap() {
+		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1a);
+		assertEquals(tabdLines[1],tabdOutLine2a);
+		assertEquals(tabdLines[2],tabdOutLine3a);
+		assertEquals(tabdLines[3],tabdOutline4a);
+		assertEquals(tabdLines[4],tabdOutline5a);
+	}
+	
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingDef() {
+		String props = "DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1b);
+		assertEquals(tabdLines[1],tabdOutLine2b);
+		assertEquals(tabdLines[2],tabdOutLine3b);
+		assertEquals(tabdLines[3],tabdOutline4b);
+		assertEquals(tabdLines[4],tabdOutline5b);
+	}
+	
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingAltDef() {
+		String props = "ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1b);
+		assertEquals(tabdLines[1],tabdOutLine2b);
+		assertEquals(tabdLines[2],tabdOutLine3b);
+		assertEquals(tabdLines[3],tabdOutline4b);
+		assertEquals(tabdLines[4],tabdOutline5b);
+	}
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingBothDef() {
+		String props = "ALT_DEFINITION,DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1b);
+		assertEquals(tabdLines[1],tabdOutLine2b);
+		assertEquals(tabdLines[2],tabdOutLine3b);
+		assertEquals(tabdLines[3],tabdOutline4b);
+		assertEquals(tabdLines[4],tabdOutline5b);
+	}
+	
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingDefSyn() {
+		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1c);
+		assertEquals(tabdLines[1],tabdOutLine2c);
+		assertEquals(tabdLines[2],tabdOutLine3c);
+		assertEquals(tabdLines[3],tabdOutline4c);
+		assertEquals(tabdLines[4],tabdOutline5c);
+	}
+	
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingMapsSyn() {
+		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1d);
+		assertEquals(tabdLines[1],tabdOutLine2d);
+		assertEquals(tabdLines[2],tabdOutLine3d);
+		assertEquals(tabdLines[3],tabdOutline4d);
+		assertEquals(tabdLines[4],tabdOutline5d);
+	}
+	
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingMapsDef() {
+		String props = "DEFINITION,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1e);
+		assertEquals(tabdLines[1],tabdOutLine2e);
+		assertEquals(tabdLines[2],tabdOutLine3e);
+		assertEquals(tabdLines[3],tabdOutline4e);
+		assertEquals(tabdLines[4],tabdOutline5e);
+	}
+	
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingAll() {
+		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1f);
+		assertEquals(tabdLines[1],tabdOutLine2f);
+		assertEquals(tabdLines[2],tabdOutLine3f);
+		assertEquals(tabdLines[3],tabdOutline4f);
+		assertEquals(tabdLines[4],tabdOutline5f);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromOneListMemberWithInvalidProps() {
+		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
+		List<RestEntity> entity = new ArrayList<RestEntity>();
+		entity.add(getRestEntity());
+		String csv = util.produceTabDelOutputFromListWithHeading(entity, props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		//assertEquals(csvLines[0],singleLineHeading);
+		assertEquals(csvLines[1],singelLinetbd);}
+	
+	@Test
+	void testProduceCSVOutputFromOneListMemberWithNoDefsNoMaps() {
+		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
+		List<RestEntity> entity = new ArrayList<RestEntity>();
+		entity.add(getRestEntityWNoDefsNoMaps());
+		String csv = util.produceTabDelOutputFromListWithHeading(entity, props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
+		assertEquals(csvLines[1],singelLinetbdNoDefsNoMaps);}
+	
+	
+	
+	@Test 
+	void produceOutput() {
+		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		System.out.println(tabd);
+	}
+	
 	
 	private List<RestEntity> getRestEntityList() {
 		List<RestEntity> list = new ArrayList<RestEntity>();
@@ -204,6 +377,177 @@ class TabDelUtilityTest {
 		list.add(ent2);
 		return list;
 	}
+
+
+public RestEntity getRestEntity() {
+	
+	RestEntity ent = new RestEntity();
+	
+	Synonym syn = new Synonym();
+	//syn.setCode(code);
+	syn.setName("Clinical Data Interchange Standards Consortium Terminology");
+	//syn.setSource("Preferred_Name");
+	///syn.setTermGroup(termGroup);
+	syn.setType( "Preferred_Name");
+	Synonym syn1 = new Synonym();
+//	syn1.setCode(code);
+	syn1.setName("Clinical Data Interchange Standards Consortium Terminology");
+	syn1.setSource("NCI");
+	syn1.setTermGroup("PT");
+	syn1.setType("FULL_SYN");
+	Synonym syn2 = new Synonym();
+//	syn2.setCode(code);
+	syn2.setName("CDISC Terminology");
+	syn2.setSource("NCI");
+	syn2.setTermGroup("SY");
+	syn2.setType("FULL_SYN");
+	Synonym syn3 = new Synonym();
+//	syn3.setCode(code);
+	syn3.setName("CDISC");
+	syn3.setSource("NCI");
+	syn3.setTermGroup("SY");
+	syn3.setType("FULL_SYN");
+	
+	Definition def = new Definition();
+	def.setDefinition("terms relative to CDISC.");
+	def.setSource("NCI");
+	def.setType("DEFINITION");
+	
+	Property prop = new Property();
+	//prop.setQualifiers(qualifiers);
+	prop.setType("Semantic_Type");
+	prop.setValue("Intellectual Product");
+	Property prop1 = new Property();
+	//prop1.setQualifiers(qualifiers);
+	prop1.setType("UMLS_CUI");
+	prop1.setValue("C1880104");
+	Property prop2 = new Property();
+	//prop2.setQualifiers(qualifiers);
+	prop2.setType("Contributing_Source");
+	prop2.setValue("CDISC");
+//	Property prop3 = new Property();
+	//prop3.setQualifiers(qualifiers);
+//	prop3.setType("Legacy Concept Name");
+//	prop3.setValue("Clinical_Data_Interchange_Standards_Consortium");
+//	Property prop4 = new Property();
+//	//prop4.setQualifiers(qualifiers);
+//	prop4.setType("Publish_Value_Set");
+//	prop4.setValue("Yes");
+//	Property prop5 = new Property();
+//	//prop5.setQualifiers(qualifiers);
+//	prop5.setType("Term_Browser_Value_Set_Description");
+//	prop5.setValue("tb value");
+//	Property prop6 = new Property();
+//	//prop6.setQualifiers(qualifiers);
+//	prop6.setType("Value_Set_Pair");
+//	prop6.setValue("No");
+	
+	List<Synonym> synonyms = new ArrayList<Synonym>();
+	synonyms.add(syn);
+	synonyms.add(syn1);
+	synonyms.add(syn2);
+	synonyms.add(syn3);
+	List<Definition> definitions = new ArrayList<Definition>();
+	definitions.add(def);
+	List<PropertyMap> maps = new ArrayList<PropertyMap>();
+	List<Property> props = new ArrayList<Property>();
+	List<Root>  parents = new ArrayList<Root>();
+	Root parent = new Root();
+	parent.setCode("C54443");
+	parent.setName("Terminology Subset");
+	parents.add(parent);
+	props.add(prop);
+	props.add(prop1);
+	props.add(prop2);
+//	props.add(prop3);
+//	props.add(prop4);
+//	props.add(prop5);
+//	props.add(prop6);
+	ent.setCode("C61410");
+	ent.setName("Clinical Data Interchange Standards Consortium Terminology");
+	ent.setTerminology("ncit");
+	ent.setParents(parents);
+	ent.setSynonyms(synonyms);
+	ent.setDefinitions(definitions);
+	ent.setMaps(maps);
+	ent.setProperties(props);
+	return ent;
+}
+
+public RestEntity getRestEntityWNoDefsNoMaps() {
+	
+	RestEntity ent = new RestEntity();
+	
+	Synonym syn = new Synonym();
+	//syn.setCode(code);
+	syn.setName("Clinical Data Interchange Standards Consortium Terminology");
+	//syn.setSource("Preferred_Name");
+	///syn.setTermGroup(termGroup);
+	syn.setType( "Preferred_Name");
+	Synonym syn1 = new Synonym();
+//	syn1.setCode(code);
+	syn1.setName("Clinical Data Interchange Standards Consortium Terminology");
+	syn1.setSource("NCI");
+	syn1.setTermGroup("PT");
+	syn1.setType("FULL_SYN");
+	Synonym syn2 = new Synonym();
+//	syn2.setCode(code);
+	syn2.setName("CDISC Terminology");
+	syn2.setSource("NCI");
+	syn2.setTermGroup("SY");
+	syn2.setType("FULL_SYN");
+	Synonym syn3 = new Synonym();
+//	syn3.setCode(code);
+	syn3.setName("CDISC");
+	syn3.setSource("NCI");
+	syn3.setTermGroup("SY");
+	syn3.setType("FULL_SYN");
+
+	
+	Property prop = new Property();
+	//prop.setQualifiers(qualifiers);
+	prop.setType("Semantic_Type");
+	prop.setValue("Intellectual Product");
+	Property prop1 = new Property();
+	//prop1.setQualifiers(qualifiers);
+	prop1.setType("UMLS_CUI");
+	prop1.setValue("C1880104");
+	Property prop2 = new Property();
+	//prop2.setQualifiers(qualifiers);
+	prop2.setType("Contributing_Source");
+	prop2.setValue("CDISC");
+
+	
+	List<Synonym> synonyms = new ArrayList<Synonym>();
+	synonyms.add(syn);
+	synonyms.add(syn1);
+	synonyms.add(syn2);
+	synonyms.add(syn3);
+	List<Definition> definitions = new ArrayList<Definition>();
+	List<PropertyMap> maps = new ArrayList<PropertyMap>();
+	List<Property> props = new ArrayList<Property>();
+	List<Root>  parents = new ArrayList<Root>();
+	Root parent = new Root();
+	parent.setCode("C54443");
+	parent.setName("Terminology Subset");
+	parents.add(parent);
+	props.add(prop);
+	props.add(prop1);
+	props.add(prop2);
+//	props.add(prop3);
+//	props.add(prop4);
+//	props.add(prop5);
+//	props.add(prop6);
+	ent.setCode("C61410");
+	ent.setName("Clinical Data Interchange Standards Consortium Terminology");
+	ent.setTerminology("ncit");
+	ent.setParents(parents);
+	ent.setSynonyms(synonyms);
+	ent.setDefinitions(definitions);
+	ent.setMaps(maps);
+	ent.setProperties(props);
+	return ent;
+}
 	
 	private List<ChildEntity> getChildEntityList() {
 		ChildEntity entity = new ChildEntity();

@@ -34,7 +34,7 @@ public class FormattedOutputService {
 								crservice.getEntitiesForPropertyNameFilter(
 								crservice.getRestEntitiesWithParents( 
 										CommonServices.splitInput(codes)), 
-										CommonServices.splitInput(props))).getBytes());
+										CommonServices.splitInput(props)), props).getBytes());
 	}
 	
 	public InputStream getTabDelBytesForRestParams(String codes, String props) {
@@ -43,7 +43,7 @@ public class FormattedOutputService {
 				crservice.getEntitiesForPropertyNameFilter(
 				crservice.getRestEntitiesWithParents( 
 						CommonServices.splitInput(codes)), 
-						CommonServices.splitInput(props))).getBytes());
+						CommonServices.splitInput(props)), props).getBytes());
 	}
 	
 	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props) {
@@ -53,7 +53,7 @@ public class FormattedOutputService {
 					crservice.getEntitiesForPropertyNameFilter(
 					crservice.getRestEntitiesWithParents( 
 							CommonServices.splitInput(codes)), 
-							CommonServices.splitInput(props))).toByteArray());
+							CommonServices.splitInput(props)), props).toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);
 		}

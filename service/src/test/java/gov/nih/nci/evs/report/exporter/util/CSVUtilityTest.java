@@ -17,6 +17,7 @@ import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyMap;
 import gov.nih.nci.evs.report.exporter.model.Qualifier;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
@@ -25,15 +26,62 @@ class CSVUtilityTest {
 	
 	CSVUtility util;
 	
-	String csvOutLine1 = "terminology,code,name,parents,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
-	String csvOutLine2a = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
-//	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
+	String csvOutLineHeading = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLineHeading1 = "terminology,code,name,parents,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLineHeading1a = "terminology,code,name,parents,synonyms,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	//String csvOutLineHeading2 = "terminology,code,name,parents,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLineHeading3 = "terminology,code,name,parents,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLineHeading4 = "terminology,code,name,parents,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLine2a = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2ab = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2ac = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	//String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	
+	String csvOutLine2ad = "ncit,C123234,Myent,,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2ae = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	
+	//	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
 //	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
 //	String csvOutLine2d	= ",\"|NCI:defvalue|NOSOURCE:defvalue2|\",";
 //	String csvOutLine2e = "\"|PropType:propvalue|PropType:propvalue1|\",\"|PropType2:propvalue2|\",\r";
-	String csvOutLine3 = "ncit,C000000,0ent,,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
-	String csvOutline4 = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
-	String csvOutline5 = "ncit,C2222,My2,,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String csvOutLine3 = "ncit,C000000,0ent,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutLine3a = "ncit,C000000,0ent,,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	//String csvOutLine3b = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4 = "ncit,C999999,My9,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	//String csvOutline4a = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline4b = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline4c = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline4d = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	
+	String csvOutline5 = "ncit,C2222,My2,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String csvOutline5b = "ncit,C2222,My2,,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	//String csvOutline5a = "ncit,C2222,My2,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	
+	String csvOutLineHeading2 = "terminology,code,name,parents,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine3b = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4a = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline5a = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	
+	String csvOutLineHeading3e = "terminology,code,name,parents,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLine2e = "ncit,C123234,Myent,,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine3e = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4e = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline5e = "ncit,C2222,My2,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	
+	String csvOutLineHeadingf = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
+	String csvOutLine2f = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine3f = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
+	String csvOutline4f = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
+	String csvOutline5f = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	
+	
+	
+	String singleLineHeading = "terminology,code,name,parents,synonyms,definitions,Semantic_Type,UMLS_CUI,Contributing_Source";
+	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|NCI:terms relative to CDISC.|\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	
+	String singleLineHeadingNoDefsNoMaps = "terminology,code,name,parents,synonyms,Semantic_Type,UMLS_CUI,Contributing_Source";
+	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
 	
 	BranchResolutionService service;
 
@@ -75,14 +123,135 @@ class CSVUtilityTest {
 	}
 
 	@Test
-	void testProduceCSVOutputFromListWithHeading() {
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList());
+	void testProduceCSVOutputFromListWithHeadingSyn() {
+		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
 		String[] csvLines = csv.split(System.lineSeparator());
-		assertEquals(csvLines[0],csvOutLine1);
-		assertEquals(csvLines[1],csvOutLine2a);
+		assertEquals(csvLines[0],csvOutLineHeading);
+		assertEquals(csvLines[1],csvOutLine2f);
+		assertEquals(csvLines[2],csvOutLine3f);
+		assertEquals(csvLines[3],csvOutline4f);
+		assertEquals(csvLines[4], csvOutline5a);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapSyn() {
+		String props = "Maps_To,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1a);
+		assertEquals(csvLines[1],csvOutLine2ab);
 		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
 		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMap() {
+		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading3e);
+		assertEquals(csvLines[1],csvOutLine2e);
+		assertEquals(csvLines[2],csvOutLine3e);
+		assertEquals(csvLines[3],csvOutline4e);
+		assertEquals(csvLines[4], csvOutline5e);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapDefinition() {
+		String props = "Maps_To,DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1);
+		assertEquals(csvLines[1],csvOutLine2ac);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapDef2() {
+		String props = "Maps_To,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1);
+		assertEquals(csvLines[1],csvOutLine2ac);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapDefBoth() {
+		String props = "Maps_To,ALT_DEFINITION,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1);
+		assertEquals(csvLines[1],csvOutLine2ac);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingDef() {
+		String props = "ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading2);
+		assertEquals(csvLines[1],csvOutLine2aca);
+		assertEquals(csvLines[2],csvOutLine3b);
+		assertEquals(csvLines[3],csvOutline4a);
+		assertEquals(csvLines[4], csvOutline5a);
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingAll() {
+		String props = "Maps_To,FULL_SYN,DEFINITION,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading4);
+		assertEquals(csvLines[1],csvOutLine2ae);
+		assertEquals(csvLines[2],csvOutLine3a);
+		assertEquals(csvLines[3],csvOutline4d);
+		assertEquals(csvLines[4], csvOutline5b);
+	}
+	// Single line header matching tests
+	@Test
+	void testProduceCSVOutputFromOneListMemberWithInvalidProps() {
+		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
+		List<RestEntity> entity = new ArrayList<RestEntity>();
+		entity.add(getRestEntity());
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		//assertEquals(csvLines[0],singleLineHeading);
+		assertEquals(csvLines[1],singelLineCSV);}
+	
+	@Test
+	void testProduceCSVOutputFromOneListMemberWithNoDefsNoMaps() {
+		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
+		List<RestEntity> entity = new ArrayList<RestEntity>();
+		entity.add(getRestEntityWNoDefsNoMaps());
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
+		assertEquals(csvLines[1],singelLineCSVNoDefsNoMaps);}
+	
+	
+	// Single line header matching tests
+	@Test
+	void testSingleLineMatchtoHeadingMapsTo() {
+		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+//		String[] csvLines = csv.split(System.lineSeparator());
+//		assertEquals(csvLines[0],csvOutLineHeading3);
+//		assertEquals(csvLines[1],csvOutLine2ad);
+//		assertEquals(csvLines[2],csvOutLine3);
+//		assertEquals(csvLines[3],csvOutline4);
+//		assertEquals(csvLines[4], csvOutline5);
+		System.out.print(csv);
+		System.out.flush();
 	}
 	
 	private List<RestEntity> getRestEntityList() {
@@ -347,6 +516,179 @@ class CSVUtilityTest {
 		while(itr.hasNext()) {System.out.println(itr.next().getPos());}
 		
 	}
+	
+	
+	public RestEntity getRestEntity() {
+		
+		RestEntity ent = new RestEntity();
+		
+		Synonym syn = new Synonym();
+		//syn.setCode(code);
+		syn.setName("Clinical Data Interchange Standards Consortium Terminology");
+		//syn.setSource("Preferred_Name");
+		///syn.setTermGroup(termGroup);
+		syn.setType( "Preferred_Name");
+		Synonym syn1 = new Synonym();
+//		syn1.setCode(code);
+		syn1.setName("Clinical Data Interchange Standards Consortium Terminology");
+		syn1.setSource("NCI");
+		syn1.setTermGroup("PT");
+		syn1.setType("FULL_SYN");
+		Synonym syn2 = new Synonym();
+//		syn2.setCode(code);
+		syn2.setName("CDISC Terminology");
+		syn2.setSource("NCI");
+		syn2.setTermGroup("SY");
+		syn2.setType("FULL_SYN");
+		Synonym syn3 = new Synonym();
+//		syn3.setCode(code);
+		syn3.setName("CDISC");
+		syn3.setSource("NCI");
+		syn3.setTermGroup("SY");
+		syn3.setType("FULL_SYN");
+		
+		Definition def = new Definition();
+		def.setDefinition("terms relative to CDISC.");
+		def.setSource("NCI");
+		def.setType("DEFINITION");
+		
+		Property prop = new Property();
+		//prop.setQualifiers(qualifiers);
+		prop.setType("Semantic_Type");
+		prop.setValue("Intellectual Product");
+		Property prop1 = new Property();
+		//prop1.setQualifiers(qualifiers);
+		prop1.setType("UMLS_CUI");
+		prop1.setValue("C1880104");
+		Property prop2 = new Property();
+		//prop2.setQualifiers(qualifiers);
+		prop2.setType("Contributing_Source");
+		prop2.setValue("CDISC");
+//		Property prop3 = new Property();
+		//prop3.setQualifiers(qualifiers);
+//		prop3.setType("Legacy Concept Name");
+//		prop3.setValue("Clinical_Data_Interchange_Standards_Consortium");
+//		Property prop4 = new Property();
+//		//prop4.setQualifiers(qualifiers);
+//		prop4.setType("Publish_Value_Set");
+//		prop4.setValue("Yes");
+//		Property prop5 = new Property();
+//		//prop5.setQualifiers(qualifiers);
+//		prop5.setType("Term_Browser_Value_Set_Description");
+//		prop5.setValue("tb value");
+//		Property prop6 = new Property();
+//		//prop6.setQualifiers(qualifiers);
+//		prop6.setType("Value_Set_Pair");
+//		prop6.setValue("No");
+		
+		List<Synonym> synonyms = new ArrayList<Synonym>();
+		synonyms.add(syn);
+		synonyms.add(syn1);
+		synonyms.add(syn2);
+		synonyms.add(syn3);
+		List<Definition> definitions = new ArrayList<Definition>();
+		definitions.add(def);
+		List<PropertyMap> maps = new ArrayList<PropertyMap>();
+		List<Property> props = new ArrayList<Property>();
+		List<Root>  parents = new ArrayList<Root>();
+		Root parent = new Root();
+		parent.setCode("C54443");
+		parent.setName("Terminology Subset");
+		parents.add(parent);
+		props.add(prop);
+		props.add(prop1);
+		props.add(prop2);
+//		props.add(prop3);
+//		props.add(prop4);
+//		props.add(prop5);
+//		props.add(prop6);
+		ent.setCode("C61410");
+		ent.setName("Clinical Data Interchange Standards Consortium Terminology");
+		ent.setTerminology("ncit");
+		ent.setParents(parents);
+		ent.setSynonyms(synonyms);
+		ent.setDefinitions(definitions);
+		ent.setMaps(maps);
+		ent.setProperties(props);
+		return ent;
+	}
+	
+public RestEntity getRestEntityWNoDefsNoMaps() {
+		
+		RestEntity ent = new RestEntity();
+		
+		Synonym syn = new Synonym();
+		//syn.setCode(code);
+		syn.setName("Clinical Data Interchange Standards Consortium Terminology");
+		//syn.setSource("Preferred_Name");
+		///syn.setTermGroup(termGroup);
+		syn.setType( "Preferred_Name");
+		Synonym syn1 = new Synonym();
+//		syn1.setCode(code);
+		syn1.setName("Clinical Data Interchange Standards Consortium Terminology");
+		syn1.setSource("NCI");
+		syn1.setTermGroup("PT");
+		syn1.setType("FULL_SYN");
+		Synonym syn2 = new Synonym();
+//		syn2.setCode(code);
+		syn2.setName("CDISC Terminology");
+		syn2.setSource("NCI");
+		syn2.setTermGroup("SY");
+		syn2.setType("FULL_SYN");
+		Synonym syn3 = new Synonym();
+//		syn3.setCode(code);
+		syn3.setName("CDISC");
+		syn3.setSource("NCI");
+		syn3.setTermGroup("SY");
+		syn3.setType("FULL_SYN");
+
+		
+		Property prop = new Property();
+		//prop.setQualifiers(qualifiers);
+		prop.setType("Semantic_Type");
+		prop.setValue("Intellectual Product");
+		Property prop1 = new Property();
+		//prop1.setQualifiers(qualifiers);
+		prop1.setType("UMLS_CUI");
+		prop1.setValue("C1880104");
+		Property prop2 = new Property();
+		//prop2.setQualifiers(qualifiers);
+		prop2.setType("Contributing_Source");
+		prop2.setValue("CDISC");
+
+		
+		List<Synonym> synonyms = new ArrayList<Synonym>();
+		synonyms.add(syn);
+		synonyms.add(syn1);
+		synonyms.add(syn2);
+		synonyms.add(syn3);
+		List<Definition> definitions = new ArrayList<Definition>();
+		List<PropertyMap> maps = new ArrayList<PropertyMap>();
+		List<Property> props = new ArrayList<Property>();
+		List<Root>  parents = new ArrayList<Root>();
+		Root parent = new Root();
+		parent.setCode("C54443");
+		parent.setName("Terminology Subset");
+		parents.add(parent);
+		props.add(prop);
+		props.add(prop1);
+		props.add(prop2);
+//		props.add(prop3);
+//		props.add(prop4);
+//		props.add(prop5);
+//		props.add(prop6);
+		ent.setCode("C61410");
+		ent.setName("Clinical Data Interchange Standards Consortium Terminology");
+		ent.setTerminology("ncit");
+		ent.setParents(parents);
+		ent.setSynonyms(synonyms);
+		ent.setDefinitions(definitions);
+		ent.setMaps(maps);
+		ent.setProperties(props);
+		return ent;
+	}
+
+
 	
 //	private String getCSVRestEntityOutput() {
 //		return "code,name,terminology,parent,synonyms,definitions,properties" +
