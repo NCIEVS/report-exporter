@@ -192,19 +192,16 @@ public class CommonServices {
 
 		if(propType == SYNONYMS){
 			if(isNoSynonyms()){ 
-				//row.createCell(index).setCellValue(""); 
 				return;}
 			else if(!existsCheck(x)){
 				bools.noEntitiesHaveSyns = false; }}
         if(propType == DEFINITIONS) {
         	if(isNoDefinitions()){ 
-        		//row.createCell(index).setCellValue(""); 
         		return;}
 			else if(!existsCheck(x)){
 				bools.noEntitiesHaveDefs = false; }}
         if(propType == MAPS) {
         	if(isNoMaps()){ 
-        		//row.createCell(index).setCellValue(""); 
         		return;}
 			else if(!existsCheck(x)){
 				bools.noEntitiesHaveMaps = false; }}

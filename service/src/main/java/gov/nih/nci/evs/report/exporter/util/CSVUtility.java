@@ -31,9 +31,9 @@ public class CSVUtility extends FormatUtility {
 				separator + x.getCode() + 
 				separator + x.getName() +  
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
-				services.fullyCuratedProperties(x.getSynonyms(), separator, "synonyms", flags) + 
-				services.fullyCuratedProperties(x.getDefinitions(), separator, "definitions", flags) + 
-				services.fullyCuratedProperties(x.getMaps(), separator, "Maps_To",flags) + 
+				services.fullyCuratedProperties(x.getSynonyms(), separator, CommonServices.SYNONYMS, flags) + 
+				services.fullyCuratedProperties(x.getDefinitions(), separator, CommonServices.DEFINITIONS, flags) + 
+				services.fullyCuratedProperties(x.getMaps(), separator, CommonServices.MAPS,flags) + 
 				separator + services.calculateAndProduceSpacedTerms(separator));				
 				services.clearPropertyListsFromHeaderMap();});
 		// If we have any columns flagged for removal clean up the rows here. 
