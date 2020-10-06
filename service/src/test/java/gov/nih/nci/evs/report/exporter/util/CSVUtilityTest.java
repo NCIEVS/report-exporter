@@ -82,6 +82,9 @@ class CSVUtilityTest {
 	
 	String singleLineHeadingNoDefsNoMaps = "terminology,code,name,parents,synonyms,Semantic_Type,UMLS_CUI,Contributing_Source";
 	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singelLineCSVNoSynsEmptyDefsEmptyMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singelLineCSVNoDefsEmptySynsEmptyMaps = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singleLineCSVNoMapsEmptySynsEmptyDevs = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
 	
 	BranchResolutionService service;
 
@@ -238,6 +241,35 @@ class CSVUtilityTest {
 		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
 		assertEquals(csvLines[1],singelLineCSVNoDefsNoMaps);}
 	
+	@Test
+	void testProduceCSVOutputFromOneListMemberWithNoNoSynsEmptyDefsEmptyMaps() {
+		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
+		List<RestEntity> entity = new ArrayList<RestEntity>();
+		entity.add(getRestEntityWNoDefsNoMaps());
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
+		assertEquals(csvLines[1],singelLineCSVNoSynsEmptyDefsEmptyMaps);}
+	
+	@Test
+	void testProduceCSVOutputFromOneListMemberWithNoNoDefsEmptySynsEmptyMaps() {
+		String props = "Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
+		List<RestEntity> entity = new ArrayList<RestEntity>();
+		entity.add(this.getRestEntityWNoDefsEmptySynsEmptyMaps());
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
+		assertEquals(csvLines[1],singelLineCSVNoDefsEmptySynsEmptyMaps);}
+	
+	@Test
+	void testProduceCSVOutputFromOneListMemberWithNoMapsEmptySynsEmptyMaps() {
+		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
+		List<RestEntity> entity = new ArrayList<RestEntity>();
+		entity.add(this.getRestEntityWNoMapsEmptySynsEmptyDefs());
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String[] csvLines = csv.split(System.lineSeparator());
+		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
+		assertEquals(csvLines[1],singleLineCSVNoMapsEmptySynsEmptyDevs);}
 	
 	// Single line header matching tests
 	@Test
@@ -688,6 +720,103 @@ public RestEntity getRestEntityWNoDefsNoMaps() {
 		return ent;
 	}
 
+public RestEntity getRestEntityWNoMapsEmptySynsEmptyDefs() {
+	
+	RestEntity ent = new RestEntity();
+	
+	
+	Property prop = new Property();
+	//prop.setQualifiers(qualifiers);
+	prop.setType("Semantic_Type");
+	prop.setValue("Intellectual Product");
+	Property prop1 = new Property();
+	//prop1.setQualifiers(qualifiers);
+	prop1.setType("UMLS_CUI");
+	prop1.setValue("C1880104");
+	Property prop2 = new Property();
+	//prop2.setQualifiers(qualifiers);
+	prop2.setType("Contributing_Source");
+	prop2.setValue("CDISC");
+	
+	PropertyMap map = new PropertyMap();
+	map.setType("Has Synonym");
+	map.setTargetName("Acute myeloid leukemia, NOS");
+	map.setTargetTermGroup("PT");
+	map.setTargetCode("PD");
+	map.setTargetTerminology("GDC");
+	
+	List<Synonym> synonyms = new ArrayList<Synonym>();
+	List<Definition> definitions = new ArrayList<Definition>();
+	List<PropertyMap> maps = new ArrayList<PropertyMap>();
+	List<Property> props = new ArrayList<Property>();
+	List<Root>  parents = new ArrayList<Root>();
+	Root parent = new Root();
+	parent.setCode("C54443");
+	parent.setName("Terminology Subset");
+	parents.add(parent);
+	props.add(prop);
+	props.add(prop1);
+	props.add(prop2);
+	ent.setCode("C61410");
+	ent.setName("Clinical Data Interchange Standards Consortium Terminology");
+	ent.setTerminology("ncit");
+	ent.setParents(parents);
+	ent.setSynonyms(synonyms);
+	ent.setDefinitions(definitions);
+	ent.setMaps(maps);
+	ent.setProperties(props);
+	return ent;
+}
+
+
+public RestEntity getRestEntityWNoDefsEmptySynsEmptyMaps() {
+	
+	RestEntity ent = new RestEntity();
+	
+	Definition def = new Definition();
+	def.setDefinition("terms relative to CDISC.");
+	def.setSource("NCI");
+	def.setType("DEFINITION");
+
+	
+	Property prop = new Property();
+	//prop.setQualifiers(qualifiers);
+	prop.setType("Semantic_Type");
+	prop.setValue("Intellectual Product");
+	Property prop1 = new Property();
+	//prop1.setQualifiers(qualifiers);
+	prop1.setType("UMLS_CUI");
+	prop1.setValue("C1880104");
+	Property prop2 = new Property();
+	//prop2.setQualifiers(qualifiers);
+	prop2.setType("Contributing_Source");
+	prop2.setValue("CDISC");
+
+	
+	List<Synonym> synonyms = new ArrayList<Synonym>();
+	List<Definition> definitions = new ArrayList<Definition>();
+	definitions.add(def);
+	List<PropertyMap> maps = new ArrayList<PropertyMap>();
+	List<Property> props = new ArrayList<Property>();
+	List<Root>  parents = new ArrayList<Root>();
+	Root parent = new Root();
+	parent.setCode("C54443");
+	parent.setName("Terminology Subset");
+	parents.add(parent);
+	props.add(prop);
+	props.add(prop1);
+	props.add(prop2);
+
+	ent.setCode("C61410");
+	ent.setName("Clinical Data Interchange Standards Consortium Terminology");
+	ent.setTerminology("ncit");
+	ent.setParents(parents);
+	ent.setSynonyms(synonyms);
+	ent.setDefinitions(definitions);
+	ent.setMaps(maps);
+	ent.setProperties(props);
+	return ent;
+}
 
 	
 //	private String getCSVRestEntityOutput() {

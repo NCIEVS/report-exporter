@@ -381,6 +381,13 @@ public class CommonServices {
 						!flags.noEntitiesHaveDefs && 
 						flags.noEntitiesHaveMaps) { 
 					listPrime.remove(6);}
+				if(//Synonym column is already removed -- but no definitions
+						// exist so remove the column where definitions usually are
+						flags.noEntitiesHaveDefs && 
+						flags.noEntitiesHaveMaps) { 
+					listPrime.remove(4);
+					listPrime.remove(4);
+					}
 
 			}
 
@@ -431,6 +438,12 @@ public class CommonServices {
 							!flags.noEntitiesHaveSyns && 
 							flags.noEntitiesHaveMaps) { 
 								listPrime.remove(6);}
+					if(//Definitions column is already removed -- but no maps
+							// exist so remove the column where definitions usually are
+							flags.noEntitiesHaveSyns && 
+							flags.noEntitiesHaveMaps) { 
+								listPrime.remove(4);
+								listPrime.remove(4);}
 				}
 		}
 
@@ -479,6 +492,12 @@ public class CommonServices {
 							!flags.noEntitiesHaveSyns && 
 							flags.noEntitiesHaveDefs) { 
 						listPrime.remove(6);}
+					if(//maps column is already removed -- but no mapss
+							// exist so remove the column where synonyms usually are
+							flags.noEntitiesHaveSyns && 
+							flags.noEntitiesHaveDefs) { 
+							listPrime.remove(4);
+							listPrime.remove(4);}
 
 				}
 		}
