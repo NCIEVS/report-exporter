@@ -396,18 +396,18 @@ public class CommonServices {
 		//User flag set for at least no Definitions
 		if(isNoDefinitions()) {
 
-			//Condition user flag no definitions and no synonyms
-			if(isNoSynonyms()) {
-
-				if(//User flags for removing synonyms and defintionss set
-						//synonyms and definitions already removed -- do nothing
-						!flags.noEntitiesHaveMaps) 
-							{return line;}
-				if(//None of the entities have maps -- remove the mapping column 
-						//where the Synonyms used to be
-						flags.noEntitiesHaveMaps) 
-							{listPrime.remove(5);}
-			} else
+//			//Condition user flag no definitions and no synonyms
+//			if(isNoSynonyms()) {
+//
+//				if(//User flags for removing synonyms and defintionss set
+//						//synonyms and definitions already removed -- do nothing
+//						!flags.noEntitiesHaveMaps) 
+//							{return line;}
+//				if(//None of the entities have maps -- remove the mapping column 
+//						//where the Synonyms used to be
+//						flags.noEntitiesHaveMaps) 
+//							{listPrime.remove(5);}
+//			} else
 				//Condition user flag no definitions and no maps
 				if(isNoMaps()) {
 
@@ -451,18 +451,18 @@ public class CommonServices {
 		if(isNoMaps()) {
 
 			//Condition user flags no maps and no synonyms
-			if(isNoSynonyms()) {
-
-				if(//User flags for removing synonyms and maps set
-						//synonyms and maps already removed -- do nothing
-						!flags.noEntitiesHaveDefs) 
-							{return line;}
-				if(//None of the entities have definitions -- remove the definitions column 
-						//by deleting where the synonyms used to be
-						flags.noEntitiesHaveDefs) 
-							{listPrime.remove(5);}
-
-			}else
+//			if(isNoSynonyms()) {
+//
+//				if(//User flags for removing synonyms and maps set
+//						//synonyms and maps already removed -- do nothing
+//						!flags.noEntitiesHaveDefs) 
+//							{return line;}
+//				if(//None of the entities have definitions -- remove the definitions column 
+//						//by deleting where the synonyms used to be
+//						flags.noEntitiesHaveDefs) 
+//							{listPrime.remove(5);}
+//
+//			}else
 				//Condition user flag no definitions and no maps
 				if(isNoDefinitions()) {
 
