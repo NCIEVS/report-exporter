@@ -319,14 +319,14 @@ public class CommonServices {
 		this.noMaps = noMaps;
 	}
 	
-	public String cleanColumns(TripleBoolean flags, StringBuffer oneLine, String separator) {
+	public String cleanColumns(TripleBoolean flags, List<String> oneLine, String separator) {
 
 		//All user valuers were entered so all columns are removed. Nothing
 		//to do here.
 		if(isNoSynonyms() && isNoDefinitions() && isNoMaps()) {return oneLine.toString();}
 		
-		String[] temp = oneLine.toString().split("/r/n");
-		String result = Stream.of(temp)
+		//String[] temp = oneLine.toString().split("/r/n");
+		String result = oneLine.stream()
 				.map(x -> cleanColumn(x, flags, separator))
 				.collect(Collectors.joining());
 		return result;
@@ -398,11 +398,19 @@ public class CommonServices {
 		//User flag set for at least no Definitions
 		if(isNoDefinitions()) {
 
-			//Condition user flag no definitions and no synonyms
-			//This condition is already covered in the code path and
-			//does not need to be covered here again
-			
-				//Condition No Definitions and No Maps by user request
+//			//Condition user flag no definitions and no synonyms
+			if(isNoSynonyms()) {
+
+				if(//User flags for removing synonyms and defintionss set
+						//synonyms and definitions already removed -- do nothing
+						!flags.noEntitiesHaveMaps) 
+							{return line;}
+				if(//None of the entities have maps -- remove the mapping column 
+						//where the Synonyms used to be
+						flags.noEntitiesHaveMaps) 
+							{listPrime.remove(5);}
+			} else
+				//Condition user flag no definitions and no maps
 				if(isNoMaps()) {
 
 					//User flags for removing definitions and maps set
@@ -445,8 +453,30 @@ public class CommonServices {
 		if(isNoMaps()) {
 
 			//Condition user flags no maps and no synonyms
-			//or no maps and no definitions.  These are covered 
-			// in this code path.  No need to check here again.
+			if(isNoSynonyms()) {
+
+				if(//User flags for removing synonyms and maps set
+						//synonyms and maps already removed -- do nothing
+						!flags.noEntitiesHaveDefs) 
+							{return line;}
+				if(//None of the entities have definitions -- remove the definitions column 
+						//by deleting where the synonyms used to be
+						flags.noEntitiesHaveDefs) 
+							{listPrime.remove(5);}
+
+			}else
+				//Condition user flag no definitions and no maps
+				if(isNoDefinitions()) {
+
+					if(//User flags for removing definitions and maps set
+							//definitions andmaps already removed -- do nothing
+							!flags.noEntitiesHaveSyns) 
+					{return line;}
+					if(//None of the entities have synonyms  -- remove the mapping column 
+							//where the Synonyms used to be
+							flags.noEntitiesHaveSyns) 
+					{listPrime.remove(5);}
+				}else {
 
 					//Maps column is already removed
 					if (!flags.noEntitiesHaveSyns && 
@@ -470,6 +500,7 @@ public class CommonServices {
 							flags.noEntitiesHaveDefs) { 
 							listPrime.remove(4);
 							listPrime.remove(4);}
+				}
 		}
 		
 
@@ -551,7 +582,8 @@ public class CommonServices {
 				if(flags.noEntitiesHaveMaps) 
 						{Cell cell = row.getCell(5); 
 							if(cell != null) {
-								row.removeCell(cell);}}
+								row.removeCell(cell);
+								shiftCellsToCorrectedPosition(row,5);}}
 			}else if(isNoMaps()) {
 
 				//User flags for removing synonyms and maps set
@@ -564,7 +596,8 @@ public class CommonServices {
 						//the mapping column where the synonyms used to be
 				if(flags.noEntitiesHaveDefs) 
 						{Cell cell = row.getCell(5); 
-							if(cell != null) {row.removeCell(cell);}}
+							if(cell != null) {row.removeCell(cell);
+							shiftCellsToCorrectedPosition(row,5);}}
 
 			}else {
 
@@ -581,14 +614,16 @@ public class CommonServices {
 						!flags.noEntitiesHaveMaps) 
 					{Cell cell = row.getCell(5); 
 						if(cell != null) {
-					row.removeCell(cell);}}
+					row.removeCell(cell);
+					shiftCellsToCorrectedPosition(row,5);}}
 				//Synonym column is already removed -- but no definitions
 						// exist so remove the column where definitions usually are
 				if(!flags.noEntitiesHaveDefs && 
 						flags.noEntitiesHaveMaps) { 
 					{Cell cell = row.getCell(6); 
 						if(cell != null) {
-					row.removeCell(cell);}}
+					row.removeCell(cell);
+					shiftCellsToCorrectedPosition(row,6);}}
 
 			}
 			}
@@ -613,7 +648,8 @@ public class CommonServices {
 						flags.noEntitiesHaveMaps){
 						Cell cell = row.getCell(5); 
 						if(cell != null) {
-							row.removeCell(cell);}}
+							row.removeCell(cell);
+							shiftCellsToCorrectedPosition(row,5);}}
 			} else
 				//Condition user flag no definitions and no maps
 				if(isNoMaps()) {
@@ -629,7 +665,8 @@ public class CommonServices {
 							if(flags.noEntitiesHaveSyns) 
 							{Cell cell = row.getCell(5); 
 								if(cell != null) {
-									row.removeCell(cell);}}
+									row.removeCell(cell);
+									shiftCellsToCorrectedPosition(row,5);}}
 				}else {
 
 					if (//Definition column is already removed
@@ -645,14 +682,16 @@ public class CommonServices {
 							!flags.noEntitiesHaveMaps)  
 							{Cell cell = row.getCell(5); 
 								if(cell != null) {
-									row.removeCell(cell);}}
+									row.removeCell(cell);
+									shiftCellsToCorrectedPosition(row,5);}}
 					if(//Definitions column is already removed -- but no maps
 							// exist so remove the column where definitions usually are
 							!flags.noEntitiesHaveSyns && 
 							flags.noEntitiesHaveMaps)  
 							{Cell cell = row.getCell(6); 
 								if(cell != null) {
-									row.removeCell(cell);}}
+									row.removeCell(cell);
+									shiftCellsToCorrectedPosition(row,6);}}
 				}
 		}
 
@@ -671,7 +710,9 @@ public class CommonServices {
 						//by deleting where the synonyms used to be
 				if(flags.noEntitiesHaveDefs) 
 						{Cell cell = row.getCell(5); 
-							if(cell != null) {row.removeCell(cell);}}
+							if(cell != null) 
+							{row.removeCell(cell);
+							shiftCellsToCorrectedPosition(row,5);}}
 
 			}else
 				//Condition user flag no definitions and no maps
@@ -701,17 +742,19 @@ public class CommonServices {
 							// exist so remove the column where synonyms usually are
 							flags.noEntitiesHaveSyns && 
 							!flags.noEntitiesHaveDefs) 
-						{Cell cell = row.getCell(5); 
+						{Cell cell = row.getCell(4); 
 						if(cell != null) {
-							row.removeCell(cell);}}
+							row.removeCell(cell);
+							shiftCellsToCorrectedPosition(row,4);}}
 					if(//maps column is already removed -- but no mapss
 							// exist so remove the column where synonyms usually are
 							!flags.noEntitiesHaveSyns && 
 							flags.noEntitiesHaveDefs)
 							{Cell cell = row.getCell(6); 
 								if(cell != null) {
-									row.removeCell(cell);}}
-
+									row.removeCell(cell);
+									shiftCellsToCorrectedPosition(row,6);
+									shiftCellsToCorrectedPosition(row,6);}}
 				}
 		}
 		
@@ -724,47 +767,63 @@ public class CommonServices {
 				!flags.noEntitiesHaveDefs && 
 				!flags.noEntitiesHaveMaps) 
 			{Cell cell = row.getCell(5); 
-				if(cell != null){row.removeCell(cell);}}
+				if(cell != null){row.removeCell(cell);
+				shiftCellsToCorrectedPosition(row,5);}}
 		if(!flags.noEntitiesHaveSyns && 
 				flags.noEntitiesHaveDefs && 
 				!flags.noEntitiesHaveMaps) 
 			{Cell cell = row.getCell(6); 
-				if(cell != null){row.removeCell(cell);}}
+				if(cell != null){row.removeCell(cell);
+				shiftCellsToCorrectedPosition(row,6);}}
 		if(!flags.noEntitiesHaveSyns && 
 				!flags.noEntitiesHaveDefs && 
 				 flags.noEntitiesHaveMaps) 
 			{Cell cell = row.getCell(6); 
-				if(cell != null) {row.removeCell(cell);}}
+				if(cell != null) 
+				{row.removeCell(cell); 
+				shiftCellsToCorrectedPosition(row, 6);}}
 		if(!flags.noEntitiesHaveSyns && 
 				flags.noEntitiesHaveDefs && 
 				flags.noEntitiesHaveMaps) 
 			{Cell cell = row.getCell(6);
-		 		if(cell != null) {row.removeCell(cell);}
+		 		if(cell != null) {row.removeCell(cell);
+		 		shiftCellsToCorrectedPosition(row,6);}
 		 	Cell cell1 = row.getCell(6); 
-		 		if(cell1 != null) {row.removeCell(cell1);}}
+		 		if(cell1 != null) {row.removeCell(cell1);
+		 		shiftCellsToCorrectedPosition(row,6);}}
 		if( flags.noEntitiesHaveSyns && 
 				!flags.noEntitiesHaveDefs && 
 				flags.noEntitiesHaveMaps) 
 			{Cell cell = row.getCell(5); 
-				if(cell != null) {row.removeCell(cell);}
+				if(cell != null) 
+				{row.removeCell(cell);
+				shiftCellsToCorrectedPosition(row,5);}
 			Cell cell1 = row.getCell(6);
-				if(cell1 != null) {row.removeCell(cell1);}}
+				if(cell1 != null) 
+				{row.removeCell(cell1);
+				shiftCellsToCorrectedPosition(row,6);}}
 		if( flags.noEntitiesHaveSyns && 
 				flags.noEntitiesHaveDefs && 
 				 !flags.noEntitiesHaveMaps) 
 			{Cell cell = row.getCell(5); 
-				if(cell != null){row.removeCell(cell);}
+				if(cell != null){row.removeCell(cell);
+				shiftCellsToCorrectedPosition(row,5);}
 				Cell cell1 = row.getCell(5);
-					if(cell1 != null) {row.removeCell(cell1);}}
+					if(cell1 != null) {row.removeCell(cell1);
+					shiftCellsToCorrectedPosition(row,5);}}
 		if(flags.noEntitiesHaveSyns && 
 				flags.noEntitiesHaveDefs && 
 				flags.noEntitiesHaveMaps)
 			{Cell cell = row.getCell(5); 
-				if(cell != null){row.removeCell(cell);}
+				if(cell != null){
+					row.removeCell(cell);
+					shiftCellsToCorrectedPosition(row,5);}
 			Cell cell1 = row.getCell(5);
-				if(cell1 != null) {row.removeCell(cell1);}
+				if(cell1 != null) {row.removeCell(cell1);
+				shiftCellsToCorrectedPosition(row,5);}
 			Cell cell2 = row.getCell(5);
-				if(cell2 != null) {row.removeCell(cell2);}}
+				if(cell2 != null) {row.removeCell(cell2);
+				shiftCellsToCorrectedPosition(row,5);}}
 		if( !flags.noEntitiesHaveSyns && 
 				!flags.noEntitiesHaveDefs && 
 				!flags.noEntitiesHaveMaps)
@@ -777,16 +836,18 @@ public class CommonServices {
 	public void shiftCellsToCorrectedPosition(Row row, int offset) {
 		int noOfCells = row.getPhysicalNumberOfCells();
 		int temp = offset;
-		if(noOfCells >= offset + 1) {
+		if(noOfCells == offset + 1) {
 			//do nothing we are at the end of the row
 			return;
 		}
 		else {
-			for(int i = 0; i < noOfCells; i++) {
-				row.getCell(temp++).setCellValue(row.getCell(offset + i).getStringCellValue());
+			for(;temp <= noOfCells; temp++) {
+				row.createCell(temp).setCellValue( temp != noOfCells?
+								row.getCell(temp + 1).getStringCellValue()
+								: "");
 			}
 		}
-		
+	
 	}
 	
 	

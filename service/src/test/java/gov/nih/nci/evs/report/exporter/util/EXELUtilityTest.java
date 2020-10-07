@@ -335,14 +335,14 @@ class EXELUtilityTest {
  		int cells = sheet.getRow(0).getPhysicalNumberOfCells();
  		assertEquals(expected,cells);
 
-		for(int i = 0; i < rows; i ++) {
-			Row row = sheet.getRow(i);
-			System.out.println();
-			for(int index = 0;index < row.getPhysicalNumberOfCells(); index++) {
-				System.out.println(row.getCell(index).getStringCellValue());
-			};
-		}
-		
+//		for(int i = 0; i < rows; i ++) {
+//			Row row = sheet.getRow(i);
+//			System.out.println();
+//			for(int index = 0;index < row.getPhysicalNumberOfCells(); index++) {
+//				System.out.println(row.getCell(index).getStringCellValue());
+//			};
+//		}
+//		
 
 			Row headerRow = sheet.getRow(0);
 			Row row1 = sheet.getRow(1);

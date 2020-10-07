@@ -1,6 +1,7 @@
 package gov.nih.nci.evs.report.exporter.util;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,13 +20,14 @@ public class TabDelUtility extends FormatUtility{
 		TripleBoolean flags = new TripleBoolean();
 		StringBuffer firstLine = new StringBuffer();
 		String separator = "\t";
-		StringBuffer oneLine = new StringBuffer();
+		//StringBuffer oneLine = new StringBuffer();
+		List<String> oneLine = new ArrayList<String>();
 		list.stream().forEach(x -> {
 			x.getProperties()
 			.stream()
 			.forEach(z -> services.addPropertyTypeAndPositionToCache(z)); 
 
-			oneLine.append(
+			oneLine.add(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
 				separator + x.getName() + 
