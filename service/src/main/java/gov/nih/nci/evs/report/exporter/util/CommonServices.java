@@ -342,48 +342,50 @@ public class CommonServices {
 			//Condition user flag no synonyms and no definitions
 			if(isNoDefinitions()) {
 
-				if(//User flags for removing synonyms and definitions set
+				//User flags for removing synonyms and definitions set
 						//definitions and synonyms already removed -- do nothing
-						!flags.noEntitiesHaveMaps) 
+				if(!flags.noEntitiesHaveMaps) 
 				{return line;}
-				if(//None of the entities have maps -- remove the mapping column 
+				//None of the entities have maps -- remove the mapping column 
 						//where the Synonyms used to be
-						flags.noEntitiesHaveMaps) 
+				if(flags.noEntitiesHaveMaps) 
 				{listPrime.remove(5);}
-			}else if(isNoMaps()) {
+			}
+			//Condition user flag no synonyms and no maps
+			else if(isNoMaps()) {
 
-				if(//User flags for removing synonyms and maps set
+				//User flags for removing synonyms and maps set
 						//synonyms and maps already removed one or 
 						//more definitions exist -- do nothing
-						!flags.noEntitiesHaveDefs) 
+				if(!flags.noEntitiesHaveDefs) 
 				{return line;}
-				if(//None of the entities have definitions -- remove 
+				//None of the entities have definitions -- remove 
 						//the mapping column where the synonyms used to be
-						flags.noEntitiesHaveDefs) 
+				if(flags.noEntitiesHaveDefs) 
 				{listPrime.remove(5);}
 
 			}else {
 
 				//No other user flags are set
-				if (//Synonym column is already removed
-						!flags.noEntitiesHaveDefs && 
+				//Synonym column is already removed
+				if (!flags.noEntitiesHaveDefs && 
 						!flags.noEntitiesHaveMaps) {
 					//We have values here for both cols -- don't change anything
 					return line;
 				}
-				if(//Synonym column is already removed -- but no definitions
+				//Synonym column is already removed -- but no definitions
 						// exist so remove the column where synonyms usually are
-						flags.noEntitiesHaveDefs && 
+				if(flags.noEntitiesHaveDefs && 
 						!flags.noEntitiesHaveMaps) { 
 					listPrime.remove(5);}
-				if(//Synonym column is already removed -- but no definitions
+				//Synonym column is already removed -- but no definitions
 						// exist so remove the column where definitions usually are
-						!flags.noEntitiesHaveDefs && 
+				if(!flags.noEntitiesHaveDefs && 
 						flags.noEntitiesHaveMaps) { 
 					listPrime.remove(6);}
-				if(//Synonym column is already removed -- but no definitions
-						// exist so remove the column where definitions usually are
-						flags.noEntitiesHaveDefs && 
+				//Synonym column is already removed -- but no definitions and no maps
+				// exist so remove the columns where synonyms usually are twice
+				if(flags.noEntitiesHaveDefs && 
 						flags.noEntitiesHaveMaps) { 
 					listPrime.remove(4);
 					listPrime.remove(4);
@@ -396,51 +398,43 @@ public class CommonServices {
 		//User flag set for at least no Definitions
 		if(isNoDefinitions()) {
 
-//			//Condition user flag no definitions and no synonyms
-//			if(isNoSynonyms()) {
-//
-//				if(//User flags for removing synonyms and defintionss set
-//						//synonyms and definitions already removed -- do nothing
-//						!flags.noEntitiesHaveMaps) 
-//							{return line;}
-//				if(//None of the entities have maps -- remove the mapping column 
-//						//where the Synonyms used to be
-//						flags.noEntitiesHaveMaps) 
-//							{listPrime.remove(5);}
-//			} else
-				//Condition user flag no definitions and no maps
+			//Condition user flag no definitions and no synonyms
+			//This condition is already covered in the code path and
+			//does not need to be covered here again
+			
+				//Condition No Definitions and No Maps by user request
 				if(isNoMaps()) {
 
-					if(//User flags for removing definitions and maps set
-							//definitions and maps already removed -- do nothing
-							!flags.noEntitiesHaveSyns) 
+					//User flags for removing definitions and maps set
+					//definitions and maps already removed -- do nothing
+					if(!flags.noEntitiesHaveSyns) 
 							{return line;}
-					if(//None of the entities have synonyms -- remove the mapping column 
-							//where the Synonyms used to be
-							flags.noEntitiesHaveSyns) 
+					//None of the entities have synonyms -- remove the mapping column 
+					//where the definitions used to be
+					if(flags.noEntitiesHaveSyns) 
 							{listPrime.remove(5);}
 				}else {
 
-					if (//Definition column is already removed
-							!flags.noEntitiesHaveSyns && 
+					//Definition column is already removed
+					if(!flags.noEntitiesHaveSyns && 
 							!flags.noEntitiesHaveMaps) {
 								//We have values here for synonyms and maps
 								//don't change anything
 								return line;
 					}
-					if(//Definition column is already removed -- but no synonyms
+					//Definition column is already removed -- but no synonyms
 							// exist so remove the column where synonyms usually are
-							flags.noEntitiesHaveSyns && 
+					if(flags.noEntitiesHaveSyns && 
 							!flags.noEntitiesHaveMaps) { 
 								listPrime.remove(5);}
-					if(//Definitions column is already removed -- but no maps
-							// exist so remove the column where definitions usually are
-							!flags.noEntitiesHaveSyns && 
+					//Definitions column is already removed -- but no maps
+					// exist so remove the column where maps usually are
+					if(!flags.noEntitiesHaveSyns && 
 							flags.noEntitiesHaveMaps) { 
 								listPrime.remove(6);}
-					if(//Definitions column is already removed -- but no maps
-							// exist so remove the column where definitions usually are
-							flags.noEntitiesHaveSyns && 
+					//Definitions column is already removed -- but no maps and no synonyms
+					// exist so remove the columns where synonyms usually are twice
+					if(flags.noEntitiesHaveSyns && 
 							flags.noEntitiesHaveMaps) { 
 								listPrime.remove(4);
 								listPrime.remove(4);}
@@ -451,59 +445,35 @@ public class CommonServices {
 		if(isNoMaps()) {
 
 			//Condition user flags no maps and no synonyms
-//			if(isNoSynonyms()) {
-//
-//				if(//User flags for removing synonyms and maps set
-//						//synonyms and maps already removed -- do nothing
-//						!flags.noEntitiesHaveDefs) 
-//							{return line;}
-//				if(//None of the entities have definitions -- remove the definitions column 
-//						//by deleting where the synonyms used to be
-//						flags.noEntitiesHaveDefs) 
-//							{listPrime.remove(5);}
-//
-//			}else
-				//Condition user flag no definitions and no maps
-				if(isNoDefinitions()) {
+			//or no maps and no definitions.  These are covered 
+			// in this code path.  No need to check here again.
 
-					if(//User flags for removing definitions and maps set
-							//definitions andmaps already removed -- do nothing
-							!flags.noEntitiesHaveSyns) 
-					{return line;}
-					if(//None of the entities have synonyms  -- remove the mapping column 
-							//where the Synonyms used to be
-							flags.noEntitiesHaveSyns) 
-					{listPrime.remove(5);}
-				}else {
-
-					if (//Maps column is already removed
-							!flags.noEntitiesHaveSyns && 
+					//Maps column is already removed
+					if (!flags.noEntitiesHaveSyns && 
 							!flags.noEntitiesHaveDefs) {
 						//We have values here for synonyms and maps -- don't change anything
 						return line;
 					}
-					if(//Maps column is already removed -- but no synonyms
-							// exist so remove the column where synonyms usually are
-							flags.noEntitiesHaveSyns && 
+					//Maps column is already removed -- but no synonyms
+					// exist so remove the column where definitions usually are
+					if(flags.noEntitiesHaveSyns && 
 							!flags.noEntitiesHaveDefs) { 
 						listPrime.remove(5);}
-					if(//maps column is already removed -- but no mapss
-							// exist so remove the column where synonyms usually are
-							!flags.noEntitiesHaveSyns && 
+					//maps column is already removed -- but no definitions
+					// exist so remove the column where maps usually are
+					if(!flags.noEntitiesHaveSyns && 
 							flags.noEntitiesHaveDefs) { 
 						listPrime.remove(6);}
-					if(//maps column is already removed -- but no mapss
-							// exist so remove the column where synonyms usually are
-							flags.noEntitiesHaveSyns && 
+					//maps column is already removed -- but no synonyms or definitions
+					// exist so remove the column where synonyms usually are twice
+					if(flags.noEntitiesHaveSyns && 
 							flags.noEntitiesHaveDefs) { 
 							listPrime.remove(4);
 							listPrime.remove(4);}
-
-				}
 		}
 		
 
-
+		// User flags all special property groups for inclusion
 		if(!isNoSynonyms() && 
 				!isNoDefinitions() && !isNoMaps()) {
 		
