@@ -404,6 +404,13 @@ export default {
         this.showSummary = !this.showSummary;
       },
 
+      // clear the entitiy code in the input selection
+      clearSelection() {
+        this.userEnteredCodes = []
+        this.selectedTags = []
+        this.entityList = []
+      },
+
       setCurratedTags() {
         this.curratedTopNodesUI = []
         //console.log ("length: " + Object.keys(this.curratedTopNodes).length);
@@ -468,6 +475,13 @@ export default {
         var tempCode = ''
         var tempStatus = ''
 
+        // show the busy indicator
+        let loader = this.$loading.show({
+            container: this.$refs.formSelectCodes,
+            loader: 'dots',
+            isFullPage: false,
+          });
+
         //console.log(this.selectedTags[0].key +" --- " + this.selectedTags[0].value)
         api.getCodes(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
@@ -503,22 +517,23 @@ export default {
               this.updateSelectedTopNodeDescription(data);
             }
             else {
-              console.log("Error retrieving top node code");
-              //alert("Invalid Top Node");
-
+              // There was a failure making the REST call.
+              this.clearSelection()
               this.$notify({
                 group: 'app',
-                title: 'Invalid Top Node',
-                text: 'The top node code <b>' + this.userEnteredCodes[0] +'</b> is not valid. It has been removed.',
+                title: 'Validation Failure',
+                text: 'Could not verify top node.  Possible network issue.',
                 type: 'error',
                 duration: 4000,
-                position: 'bottom left'
+                position: "left bottom"
               });
 
               this.selectedTags = [];
-              this.getPropertyError=true;
+              //this.getPropertyError=true;
             }
-          })
+          }).catch(function(error) {
+            console.error("Error retrieving branch: " + error);
+          }).finally(function() { loader.hide()});
       },
 
       downloadFile() {
