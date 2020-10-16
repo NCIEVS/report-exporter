@@ -78,13 +78,13 @@ class CSVUtilityTest {
 	
 	
 	String singleLineHeading = "terminology,code,name,parents,synonyms,definitions,Semantic_Type,UMLS_CUI,Contributing_Source";
-	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|NCI:terms relative to CDISC.|\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|NCI:terms relative to CDISC.|\",,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
 	
 	String singleLineHeadingNoDefsNoMaps = "terminology,code,name,parents,synonyms,Semantic_Type,UMLS_CUI,Contributing_Source";
-	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
-	String singelLineCSVNoSynsEmptyDefsEmptyMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
-	String singelLineCSVNoDefsEmptySynsEmptyMaps = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
-	String singleLineCSVNoMapsEmptySynsEmptyDevs = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singelLineCSVNoSynsEmptyDefsEmptyMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singelLineCSVNoDefsEmptySynsEmptyMaps = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singleLineCSVNoMapsEmptySynsEmptyDevs = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
 	
 	BranchResolutionService service;
 
