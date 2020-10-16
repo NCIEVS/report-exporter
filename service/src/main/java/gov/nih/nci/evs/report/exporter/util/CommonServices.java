@@ -126,31 +126,31 @@ public class CommonServices {
 							(part + "|" + whole));
 	}
 	
-	public List<String> filterHeadings(CommonServices services, TripleBoolean flags) {
+	public List<String> filterHeadings(CommonServices services) {
 		return Stream.of(FormatUtility.FIELDS)
-		.filter(x -> x != getDefinitionHeaderForIndicator(services, flags))
-		.filter(x -> x != getSynonymHeaderForIndicator(services, flags))
-		.filter(x -> x != getMapHeaderForIndicator(services, flags))
+		.filter(x -> x != getDefinitionHeaderForIndicator(services))
+		.filter(x -> x != getSynonymHeaderForIndicator(services))
+		.filter(x -> x != getMapHeaderForIndicator(services))
 		.collect(Collectors.toList());
 	}
 	
-	public String getDefinitionHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+	public String getDefinitionHeaderForIndicator(CommonServices services) {
 		if(services.isNoDefinitions()) {return DEFINITIONS;} 
-		else if (flags.noEntitiesHaveDefs ) {return DEFINITIONS;}
+//		else if (flags.noEntitiesHaveDefs ) {return DEFINITIONS;}
 		else
 		{return null;}
 	}
 	
-	public String getSynonymHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+	public String getSynonymHeaderForIndicator(CommonServices services) {
 		if(services.isNoSynonyms()) {return SYNONYMS;} 
-		else if(flags.noEntitiesHaveSyns) {return SYNONYMS;} 
+//		else if(flags.noEntitiesHaveSyns) {return SYNONYMS;} 
 		else
 		{return null;}
 	}
 	
-	public String getMapHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+	public String getMapHeaderForIndicator(CommonServices services) {
 		if(services.isNoMaps()) {return MAPS;} 
-		else if(flags.noEntitiesHaveMaps) {return MAPS;} 
+//		else if(flags.noEntitiesHaveMaps) {return MAPS;} 
 		else
 		{return null;}
 	}
@@ -169,42 +169,42 @@ public class CommonServices {
 	}
 	
 	public String fullyCuratedProperties(List<? extends PropertyPrime> x,
-			String separator, String propType, TripleBoolean bools) {
+			String separator, String propType) {
 		String list = separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x));
 		if(propType == SYNONYMS){
-			if(isNoSynonyms()){ return "";}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveSyns = false; }}
+			if(isNoSynonyms()){ return "";}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveSyns = false; }}
         if(propType == DEFINITIONS) {
-        	if(isNoDefinitions()){ return "";}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveDefs = false; }}
+        	if(isNoDefinitions()){ return "";}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveDefs = false; }}
         if(propType == MAPS) {
-        	if(isNoMaps()){ return "";}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveMaps = false; }}
+        	if(isNoMaps()){ return "";}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveMaps = false; }}
 
 		return list;
 	}
 	
 	public void fullyCuratedPropertiesForExcel(List<? extends PropertyPrime> x, IndexWrapper index,
-			String propType, TripleBoolean bools, Row row) {
+			String propType, Row row) {
 
 		if(propType == SYNONYMS){
 			if(isNoSynonyms()){ 
-				return;}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveSyns = false; }}
+				return;}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveSyns = false; }}
         if(propType == DEFINITIONS) {
         	if(isNoDefinitions()){ 
-        		return;}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveDefs = false; }}
+        		return;}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveDefs = false; }}
         if(propType == MAPS) {
         	if(isNoMaps()){ 
-        		return;}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveMaps = false; }}
+        		return;}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveMaps = false; }}
         
 		createCellInExcelRow(x, index.getIndex(), row);
 		index.increment();

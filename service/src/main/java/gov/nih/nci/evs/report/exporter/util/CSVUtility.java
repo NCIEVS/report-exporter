@@ -23,34 +23,31 @@ public class CSVUtility extends FormatUtility {
 		TripleBoolean flags = new TripleBoolean();
 		StringBuffer firstLine = new StringBuffer();
 		String separator = ",";
-		//StringBuffer oneLine = new StringBuffer();
-		List<String> oneLine = new ArrayList<String>();
+		StringBuffer oneLine = new StringBuffer();
 		list.stream().forEach(x -> { x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z)); 		
-				oneLine.add(
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));       
+				oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
 				separator + x.getName() +  
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
-				services.fullyCuratedProperties(x.getSynonyms(), separator, CommonServices.SYNONYMS, flags) + 
-				services.fullyCuratedProperties(x.getDefinitions(), separator, CommonServices.DEFINITIONS, flags) + 
-				services.fullyCuratedProperties(x.getMaps(), separator, CommonServices.MAPS,flags) + 
+				services.fullyCuratedProperties(x.getSynonyms(), separator, CommonServices.SYNONYMS) + 
+				services.fullyCuratedProperties(x.getDefinitions(), separator, CommonServices.DEFINITIONS) + 
+				services.fullyCuratedProperties(x.getMaps(), separator, CommonServices.MAPS) + 
 				separator + services.calculateAndProduceSpacedTerms(separator));				
 				services.clearPropertyListsFromHeaderMap();});
-		// If we have any columns flagged for removal clean up the rows here. 
-		StringBuffer fullColSet = new StringBuffer(
-				services.cleanColumns(flags, oneLine, separator));
-		services.filterHeadings(services, flags).stream()
+		
+		services.filterHeadings(services).stream()
 			.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
 		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
-		services.getHeadersByPosition(services.getPropHeaderMap())
-									.stream()
-									.forEach(type -> 
-									firstLine.append(separator + type));
-		fullColSet.insert(0, firstLine);
-		return fullColSet.toString();
+		String secondHeader = services.getHeadersByPosition(
+				services.getPropHeaderMap())
+						.stream()
+						.collect(Collectors.joining(separator));
+		oneLine.insert(0, firstHeaderString + secondHeader);
+		return oneLine.toString();
 	}
 	
 	public String produceChildCSVOutputFromListWithHeading(List<ChildEntity> list) {

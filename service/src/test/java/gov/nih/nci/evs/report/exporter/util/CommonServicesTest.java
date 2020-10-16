@@ -160,7 +160,7 @@ class CommonServicesTest {
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
 		flags.noEntitiesHaveSyns = false;
-		List<String> filtered = services.filterHeadings(services, flags);
+		List<String> filtered = services.filterHeadings(services);
 		assertTrue(filtered.contains("synonyms"));
 		assertFalse(filtered.contains("definitions"));
 		assertFalse(filtered.contains("Map_To"));
@@ -176,7 +176,7 @@ class CommonServicesTest {
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
 		flags.noEntitiesHaveMaps = false;
-		List<String> filtered = services.filterHeadings(services, flags);
+		List<String> filtered = services.filterHeadings(services);
 		assertFalse(filtered.contains("synonyms"));
 		assertFalse(filtered.contains("definitions"));
 		assertTrue(filtered.contains("Maps_To"));
@@ -191,7 +191,7 @@ class CommonServicesTest {
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
 		flags.noEntitiesHaveDefs = false;
-		List<String> filtered = services.filterHeadings(services, flags);
+		List<String> filtered = services.filterHeadings(services);
 		assertFalse(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));
 		assertFalse(filtered.contains("Maps_To"));
@@ -206,7 +206,7 @@ class CommonServicesTest {
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
 		flags.noEntitiesHaveDefs = false;
-		List<String> filtered = services.filterHeadings(services, flags);
+		List<String> filtered = services.filterHeadings(services);
 		assertFalse(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));
 		assertFalse(filtered.contains("Maps_To"));
@@ -222,7 +222,7 @@ class CommonServicesTest {
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
 		flags.noEntitiesHaveDefs = false;
-		List<String> filtered = services.filterHeadings(services,flags);
+		List<String> filtered = services.filterHeadings(services);
 		assertFalse(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));
 		assertFalse(filtered.contains("Maps_To"));
@@ -240,7 +240,7 @@ class CommonServicesTest {
 		TripleBoolean flags = new TripleBoolean();
 		flags.noEntitiesHaveSyns = false;
 		flags.noEntitiesHaveDefs = false;
-		List<String> filtered = services.filterHeadings(services, flags);
+		List<String> filtered = services.filterHeadings(services);
 		assertTrue(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));
 		assertFalse(filtered.contains("Maps_To"));
@@ -258,7 +258,7 @@ class CommonServicesTest {
 		TripleBoolean flags = new TripleBoolean();
 		flags.noEntitiesHaveDefs = false;
 		flags.noEntitiesHaveMaps = false;
-		List<String> filtered = services.filterHeadings(services,flags);
+		List<String> filtered = services.filterHeadings(services);
 		assertFalse(filtered.contains("synonyms"));
 		assertTrue(filtered.contains("definitions"));
 		assertTrue(filtered.contains("Maps_To"));
