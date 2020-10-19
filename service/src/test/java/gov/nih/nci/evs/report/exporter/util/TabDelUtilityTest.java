@@ -72,8 +72,8 @@ class TabDelUtilityTest {
 
 	
 	String singleLineHeading = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tSemantic_Type\tUMLS_CUI\tContributing_Source";
-	String singelLinetbd	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\"|NCI:terms relative to CDISC.|\"\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"";
-	String singelLinetbdNoDefsNoMaps	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"";
+	String singelLinetbd	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\"|NCI:terms relative to CDISC.|\"\t\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"";
+	String singelLinetbdNoDefsNoMaps	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\t\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"";
 	
 
 	@BeforeEach

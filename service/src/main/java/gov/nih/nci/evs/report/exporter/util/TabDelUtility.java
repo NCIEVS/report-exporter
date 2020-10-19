@@ -1,6 +1,7 @@
 package gov.nih.nci.evs.report.exporter.util;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,38 +17,33 @@ public class TabDelUtility extends FormatUtility{
 		services.setNoSynonyms(!props.contains("FULL_SYN"));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
-		TripleBoolean flags = new TripleBoolean();
 		StringBuffer firstLine = new StringBuffer();
 		String separator = "\t";
 		StringBuffer oneLine = new StringBuffer();
-		list.stream().forEach(x -> {
-			x.getProperties()
+		list.stream().forEach(x -> {x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z)); 
-
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));  
 			oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
 				separator + x.getName() + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
-				services.fullyCuratedProperties(x.getSynonyms(), separator, CommonServices.SYNONYMS, flags) + 
-				services.fullyCuratedProperties(x.getDefinitions(), separator, CommonServices.DEFINITIONS, flags) + 
-				services.fullyCuratedProperties(x.getMaps(), separator, CommonServices.MAPS , flags) + 
+				services.fullyCuratedProperties(x.getSynonyms(), separator, CommonServices.SYNONYMS) + 
+				services.fullyCuratedProperties(x.getDefinitions(), separator, CommonServices.DEFINITIONS) + 
+				services.fullyCuratedProperties(x.getMaps(), separator, CommonServices.MAPS) + 
 				separator + services.calculateAndProduceSpacedTerms(separator));
+
 			    services.clearPropertyListsFromHeaderMap();});
-		
-		StringBuffer fullColSet = new StringBuffer(
-				services.cleanColumns(flags, oneLine, separator));
-		services.filterHeadings(services, flags).stream()
-			.forEach(x -> firstLine.append(x + separator));
+		services.filterHeadings(services).stream()
+		.forEach(x -> firstLine.append(x + separator));
 		String firstHeaderString = CommonServices.cleanListOutPut(firstLine.toString());
 		firstLine.replace(firstHeaderString.lastIndexOf(separator), firstHeaderString.length(), "");
-		services.getHeadersByPosition(services.getPropHeaderMap())
-									.stream()
-									.forEach(type -> 
-									firstLine.append(separator + type));
-		fullColSet.insert(0, firstLine);
-		return fullColSet.toString();
+		String secondHeader = services.getHeadersByPosition(
+				services.getPropHeaderMap())
+						.stream()
+						.collect(Collectors.joining(separator));
+		oneLine.insert(0, firstHeaderString + secondHeader);
+		return oneLine.toString();
 	}
 	
 	public String produceChildTabDelOutputFromListWithHeading(List<ChildEntity> list) {

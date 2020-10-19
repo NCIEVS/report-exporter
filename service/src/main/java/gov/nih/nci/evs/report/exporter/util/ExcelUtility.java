@@ -70,15 +70,15 @@ public class ExcelUtility extends FormatUtility {
 	      //Process the Synonyms as a list
 	      services.fullyCuratedPropertiesForExcel(entity.getSynonyms(),
 	    		  indexWrapper, 
-	    		  CommonServices.SYNONYMS, flags, row);
+	    		  CommonServices.SYNONYMS, row);
 	      //Process the definitions as a list
 	      services.fullyCuratedPropertiesForExcel(entity.getDefinitions(),
 	    		  indexWrapper, 
-	    		  CommonServices.DEFINITIONS, flags, row);
+	    		  CommonServices.DEFINITIONS,row);
 	      //Process the maps as a list
 	      services.fullyCuratedPropertiesForExcel(entity.getMaps(),
 	    		  indexWrapper, 
-	    		  CommonServices.MAPS, flags, row);
+	    		  CommonServices.MAPS, row);
 	      //Process the properties to rows and columns adding properties as we go
 	      		  services.setPropertyRowOutPut(
 	    				  entity.getProperties(), row, indexWrapper.getIndex());
@@ -86,9 +86,9 @@ public class ExcelUtility extends FormatUtility {
 	      //Clearing property list for the next entity, leaving type and position metadata
 	    		  services.clearPropertyListsFromHeaderMap();		  
 	    }
-	    services.cleanColumnsExcel(flags, sheet);
+	    //services.cleanColumnsExcel(flags, sheet);
 	    // First part of the header, before we know what properties are there
-	    List<String> fields = services.filterHeadings(services, flags);
+	    List<String> fields = services.filterHeadings(services);
 	    int col = 0;
 	    for (String field: fields) {
 	      if(field.equals("properties")) {break;}

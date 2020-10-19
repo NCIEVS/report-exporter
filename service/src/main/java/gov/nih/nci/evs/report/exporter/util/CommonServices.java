@@ -126,31 +126,31 @@ public class CommonServices {
 							(part + "|" + whole));
 	}
 	
-	public List<String> filterHeadings(CommonServices services, TripleBoolean flags) {
+	public List<String> filterHeadings(CommonServices services) {
 		return Stream.of(FormatUtility.FIELDS)
-		.filter(x -> x != getDefinitionHeaderForIndicator(services, flags))
-		.filter(x -> x != getSynonymHeaderForIndicator(services, flags))
-		.filter(x -> x != getMapHeaderForIndicator(services, flags))
+		.filter(x -> x != getDefinitionHeaderForIndicator(services))
+		.filter(x -> x != getSynonymHeaderForIndicator(services))
+		.filter(x -> x != getMapHeaderForIndicator(services))
 		.collect(Collectors.toList());
 	}
 	
-	public String getDefinitionHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+	public String getDefinitionHeaderForIndicator(CommonServices services) {
 		if(services.isNoDefinitions()) {return DEFINITIONS;} 
-		else if (flags.noEntitiesHaveDefs ) {return DEFINITIONS;}
+//		else if (flags.noEntitiesHaveDefs ) {return DEFINITIONS;}
 		else
 		{return null;}
 	}
 	
-	public String getSynonymHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+	public String getSynonymHeaderForIndicator(CommonServices services) {
 		if(services.isNoSynonyms()) {return SYNONYMS;} 
-		else if(flags.noEntitiesHaveSyns) {return SYNONYMS;} 
+//		else if(flags.noEntitiesHaveSyns) {return SYNONYMS;} 
 		else
 		{return null;}
 	}
 	
-	public String getMapHeaderForIndicator(CommonServices services, TripleBoolean flags) {
+	public String getMapHeaderForIndicator(CommonServices services) {
 		if(services.isNoMaps()) {return MAPS;} 
-		else if(flags.noEntitiesHaveMaps) {return MAPS;} 
+//		else if(flags.noEntitiesHaveMaps) {return MAPS;} 
 		else
 		{return null;}
 	}
@@ -169,42 +169,42 @@ public class CommonServices {
 	}
 	
 	public String fullyCuratedProperties(List<? extends PropertyPrime> x,
-			String separator, String propType, TripleBoolean bools) {
+			String separator, String propType) {
 		String list = separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x));
 		if(propType == SYNONYMS){
-			if(isNoSynonyms()){ return "";}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveSyns = false; }}
+			if(isNoSynonyms()){ return "";}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveSyns = false; }}
         if(propType == DEFINITIONS) {
-        	if(isNoDefinitions()){ return "";}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveDefs = false; }}
+        	if(isNoDefinitions()){ return "";}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveDefs = false; }}
         if(propType == MAPS) {
-        	if(isNoMaps()){ return "";}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveMaps = false; }}
+        	if(isNoMaps()){ return "";}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveMaps = false; }}
 
 		return list;
 	}
 	
 	public void fullyCuratedPropertiesForExcel(List<? extends PropertyPrime> x, IndexWrapper index,
-			String propType, TripleBoolean bools, Row row) {
+			String propType, Row row) {
 
 		if(propType == SYNONYMS){
 			if(isNoSynonyms()){ 
-				return;}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveSyns = false; }}
+				return;}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveSyns = false; }}
         if(propType == DEFINITIONS) {
         	if(isNoDefinitions()){ 
-        		return;}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveDefs = false; }}
+        		return;}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveDefs = false; }}
         if(propType == MAPS) {
         	if(isNoMaps()){ 
-        		return;}
-			else if(!existsCheck(x)){
-				bools.noEntitiesHaveMaps = false; }}
+        		return;}}
+//			else if(!existsCheck(x)){
+//				bools.noEntitiesHaveMaps = false; }}
         
 		createCellInExcelRow(x, index.getIndex(), row);
 		index.increment();
@@ -319,475 +319,6 @@ public class CommonServices {
 		this.noMaps = noMaps;
 	}
 	
-	public String cleanColumns(TripleBoolean flags, StringBuffer oneLine, String separator) {
-
-		//All user valuers were entered so all columns are removed. Nothing
-		//to do here.
-		if(isNoSynonyms() && isNoDefinitions() && isNoMaps()) {return oneLine.toString();}
-		
-		String[] temp = oneLine.toString().split("/r/n");
-		String result = Stream.of(temp)
-				.map(x -> cleanColumn(x, flags, separator))
-				.collect(Collectors.joining());
-		return result;
-	}
-	
-	public String cleanColumn(String line, TripleBoolean flags, String separator) {
-		List<String> listPrime = new ArrayList<String>(Arrays.asList(line.split(separator)));
-
-
-		//user flag no synonyms
-		if(isNoSynonyms()) {
-
-			//Condition user flag no synonyms and no definitions
-			if(isNoDefinitions()) {
-
-				//User flags for removing synonyms and definitions set
-						//definitions and synonyms already removed -- do nothing
-				if(!flags.noEntitiesHaveMaps) 
-				{return line;}
-				//None of the entities have maps -- remove the mapping column 
-						//where the Synonyms used to be
-				if(flags.noEntitiesHaveMaps) 
-				{listPrime.remove(5);}
-			}
-			//Condition user flag no synonyms and no maps
-			else if(isNoMaps()) {
-
-				//User flags for removing synonyms and maps set
-						//synonyms and maps already removed one or 
-						//more definitions exist -- do nothing
-				if(!flags.noEntitiesHaveDefs) 
-				{return line;}
-				//None of the entities have definitions -- remove 
-						//the mapping column where the synonyms used to be
-				if(flags.noEntitiesHaveDefs) 
-				{listPrime.remove(5);}
-
-			}else {
-
-				//No other user flags are set
-				//Synonym column is already removed
-				if (!flags.noEntitiesHaveDefs && 
-						!flags.noEntitiesHaveMaps) {
-					//We have values here for both cols -- don't change anything
-					return line;
-				}
-				//Synonym column is already removed -- but no definitions
-						// exist so remove the column where synonyms usually are
-				if(flags.noEntitiesHaveDefs && 
-						!flags.noEntitiesHaveMaps) { 
-					listPrime.remove(5);}
-				//Synonym column is already removed -- but no definitions
-						// exist so remove the column where definitions usually are
-				if(!flags.noEntitiesHaveDefs && 
-						flags.noEntitiesHaveMaps) { 
-					listPrime.remove(6);}
-				//Synonym column is already removed -- but no definitions and no maps
-				// exist so remove the columns where synonyms usually are twice
-				if(flags.noEntitiesHaveDefs && 
-						flags.noEntitiesHaveMaps) { 
-					listPrime.remove(4);
-					listPrime.remove(4);
-					}
-
-			}
-
-		}	
-
-		//User flag set for at least no Definitions
-		if(isNoDefinitions()) {
-
-			//Condition user flag no definitions and no synonyms
-			//This condition is already covered in the code path and
-			//does not need to be covered here again
-			
-				//Condition No Definitions and No Maps by user request
-				if(isNoMaps()) {
-
-					//User flags for removing definitions and maps set
-					//definitions and maps already removed -- do nothing
-					if(!flags.noEntitiesHaveSyns) 
-							{return line;}
-					//None of the entities have synonyms -- remove the mapping column 
-					//where the definitions used to be
-					if(flags.noEntitiesHaveSyns) 
-							{listPrime.remove(5);}
-				}else {
-
-					//Definition column is already removed
-					if(!flags.noEntitiesHaveSyns && 
-							!flags.noEntitiesHaveMaps) {
-								//We have values here for synonyms and maps
-								//don't change anything
-								return line;
-					}
-					//Definition column is already removed -- but no synonyms
-							// exist so remove the column where synonyms usually are
-					if(flags.noEntitiesHaveSyns && 
-							!flags.noEntitiesHaveMaps) { 
-								listPrime.remove(5);}
-					//Definitions column is already removed -- but no maps
-					// exist so remove the column where maps usually are
-					if(!flags.noEntitiesHaveSyns && 
-							flags.noEntitiesHaveMaps) { 
-								listPrime.remove(6);}
-					//Definitions column is already removed -- but no maps and no synonyms
-					// exist so remove the columns where synonyms usually are twice
-					if(flags.noEntitiesHaveSyns && 
-							flags.noEntitiesHaveMaps) { 
-								listPrime.remove(4);
-								listPrime.remove(4);}
-				}
-		}
-
-		//user flag for no Maps
-		if(isNoMaps()) {
-
-			//Condition user flags no maps and no synonyms
-			//or no maps and no definitions.  These are covered 
-			// in this code path.  No need to check here again.
-
-					//Maps column is already removed
-					if (!flags.noEntitiesHaveSyns && 
-							!flags.noEntitiesHaveDefs) {
-						//We have values here for synonyms and maps -- don't change anything
-						return line;
-					}
-					//Maps column is already removed -- but no synonyms
-					// exist so remove the column where definitions usually are
-					if(flags.noEntitiesHaveSyns && 
-							!flags.noEntitiesHaveDefs) { 
-						listPrime.remove(5);}
-					//maps column is already removed -- but no definitions
-					// exist so remove the column where maps usually are
-					if(!flags.noEntitiesHaveSyns && 
-							flags.noEntitiesHaveDefs) { 
-						listPrime.remove(6);}
-					//maps column is already removed -- but no synonyms or definitions
-					// exist so remove the column where synonyms usually are twice
-					if(flags.noEntitiesHaveSyns && 
-							flags.noEntitiesHaveDefs) { 
-							listPrime.remove(4);
-							listPrime.remove(4);}
-		}
-		
-
-		// User flags all special property groups for inclusion
-		if(!isNoSynonyms() && 
-				!isNoDefinitions() && !isNoMaps()) {
-		
-		if(flags.noEntitiesHaveSyns && 
-				!flags.noEntitiesHaveDefs && 
-				!flags.noEntitiesHaveMaps) { 
-			listPrime.remove(5);}
-		if(!flags.noEntitiesHaveSyns && 
-				flags.noEntitiesHaveDefs && 
-				!flags.noEntitiesHaveMaps) { 
-					listPrime.remove(6);}
-		if(!flags.noEntitiesHaveSyns && 
-				!flags.noEntitiesHaveDefs && 
-				 flags.noEntitiesHaveMaps) 
-					{listPrime.remove(6);}
-		if(!flags.noEntitiesHaveSyns && 
-				flags.noEntitiesHaveDefs && 
-				flags.noEntitiesHaveMaps) 
-					{listPrime.remove(6);
-					listPrime.remove(5);}
-		if( flags.noEntitiesHaveSyns && 
-				!flags.noEntitiesHaveDefs && 
-				flags.noEntitiesHaveMaps) 
-					{listPrime.remove(5);
-					listPrime.remove(6);}
-		if( flags.noEntitiesHaveSyns && 
-				flags.noEntitiesHaveDefs && 
-				 !flags.noEntitiesHaveMaps) 
-					{listPrime.remove(5);
-					listPrime.remove(5);}
-		if(flags.noEntitiesHaveSyns && 
-				flags.noEntitiesHaveDefs && 
-				flags.noEntitiesHaveMaps)
-					{listPrime.remove(5);
-					listPrime.remove(5);
-					listPrime.remove(5);}
-		if( !flags.noEntitiesHaveSyns && 
-				!flags.noEntitiesHaveDefs && 
-				!flags.noEntitiesHaveMaps){
-					return line;}
-	}
-		
-		return listPrime.stream().collect(Collectors.joining(separator));
-
-	}
-	
-	public Sheet cleanColumnsExcel(TripleBoolean flags, Sheet sheet) {
-
-		//All user valuers were entered so all columns are removed. Nothing
-		//to do here.
-		if(isNoSynonyms() && isNoDefinitions() && isNoMaps()) {return sheet;}
-		
-		for(int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-			cleanColumnExcel(flags,sheet.getRow(i));}
-		return sheet;
-	}
-	
-	public void cleanColumnExcel(TripleBoolean flags, Row row) {
-		
-
-		//user flag no synonyms
-		if(isNoSynonyms()) {
-
-			//Condition user flag no synonyms and no definitions
-			if(isNoDefinitions()) {
-
-				//User flags for removing synonyms and definitions set
-						//definitions and synonyms already removed -- do nothing
-				if(!flags.noEntitiesHaveMaps) 
-				{
-					//do nothing
-				}
-				//None of the entities have maps -- remove the mapping column 
-						//where the Synonyms used to be
-				if(flags.noEntitiesHaveMaps) 
-						{Cell cell = row.getCell(5); 
-							if(cell != null) {
-								row.removeCell(cell);}}
-			}else if(isNoMaps()) {
-
-				//User flags for removing synonyms and maps set
-						//synonyms and maps already removed one or 
-						//more definitions exist -- do nothing
-				if(!flags.noEntitiesHaveDefs) 
-				{//do nothing
-					}
-				//None of the entities have definitions -- remove 
-						//the mapping column where the synonyms used to be
-				if(flags.noEntitiesHaveDefs) 
-						{Cell cell = row.getCell(5); 
-							if(cell != null) {row.removeCell(cell);}}
-
-			}else {
-
-				//No other user flags are set
-				//Synonym column is already removed
-				if (!flags.noEntitiesHaveDefs && 
-						!flags.noEntitiesHaveMaps) {
-					//We have values here for both cols -- don't change anything
-					//do nothing
-				}
-				//Synonym column is already removed -- but no definitions
-						// exist so remove the column where synonyms usually are
-				if(flags.noEntitiesHaveDefs && 
-						!flags.noEntitiesHaveMaps) 
-					{Cell cell = row.getCell(5); 
-						if(cell != null) {
-					row.removeCell(cell);}}
-				//Synonym column is already removed -- but no definitions
-						// exist so remove the column where definitions usually are
-				if(!flags.noEntitiesHaveDefs && 
-						flags.noEntitiesHaveMaps) { 
-					{Cell cell = row.getCell(6); 
-						if(cell != null) {
-					row.removeCell(cell);}}
-
-			}
-			}
-
-		}	
-
-		//User flag set for at least no Definitions
-		if(isNoDefinitions()) {
-
-			//Condition user flag no definitions and no synonyms
-			if(isNoSynonyms()) {
-
-				if(//User flags for removing synonyms and defintionss set
-						//synonyms and definitions already removed -- do nothing
-						!flags.noEntitiesHaveMaps) 
-							{
-								//do nothing
-							}
-
-				if(//None of the entities have maps -- remove the mapping column 
-						//where the Synonyms used to be
-						flags.noEntitiesHaveMaps){
-						Cell cell = row.getCell(5); 
-						if(cell != null) {
-							row.removeCell(cell);}}
-			} else
-				//Condition user flag no definitions and no maps
-				if(isNoMaps()) {
-
-					//User flags for removing definitions and maps set
-							//definitions and maps already removed -- do nothing
-							if(!flags.noEntitiesHaveSyns) 
-							{//do nothing
-						
-							}
-					//None of the entities have synonyms -- remove the mapping column 
-							//where the Synonyms used to be
-							if(flags.noEntitiesHaveSyns) 
-							{Cell cell = row.getCell(5); 
-								if(cell != null) {
-									row.removeCell(cell);}}
-				}else {
-
-					if (//Definition column is already removed
-							!flags.noEntitiesHaveSyns && 
-							!flags.noEntitiesHaveMaps) {
-								//We have values here for synonyms and maps
-								//don't change anything
-								//do nothing
-					}
-					if(//Definition column is already removed -- but no synonyms
-							// exist so remove the column where synonyms usually are
-							flags.noEntitiesHaveSyns && 
-							!flags.noEntitiesHaveMaps)  
-							{Cell cell = row.getCell(5); 
-								if(cell != null) {
-									row.removeCell(cell);}}
-					if(//Definitions column is already removed -- but no maps
-							// exist so remove the column where definitions usually are
-							!flags.noEntitiesHaveSyns && 
-							flags.noEntitiesHaveMaps)  
-							{Cell cell = row.getCell(6); 
-								if(cell != null) {
-									row.removeCell(cell);}}
-				}
-		}
-
-		//user flag for no Maps
-		if(isNoMaps()) {
-
-			//Condition user flags no maps and no synonyms
-			if(isNoSynonyms()) {
-				//User flags for removing synonyms and maps set
-						//synonyms and maps already removed -- do nothing
-				if(!flags.noEntitiesHaveDefs) 
-							{
-								//do nothing
-							}
-				//None of the entities have definitions -- remove the definitions column 
-						//by deleting where the synonyms used to be
-				if(flags.noEntitiesHaveDefs) 
-						{Cell cell = row.getCell(5); 
-							if(cell != null) {row.removeCell(cell);}}
-
-			}else
-				//Condition user flag no definitions and no maps
-				if(isNoDefinitions()) {
-
-					//User flags for removing definitions and maps set
-							//definitions andmaps already removed -- do nothing
-					if(!flags.noEntitiesHaveSyns) 
-					{
-						//do nothing
-					}
-					//None of the entities have synonyms  -- remove the mapping column 
-							//where the Synonyms used to be
-					if(flags.noEntitiesHaveSyns) 
-							{Cell cell = row.getCell(5); 
-								if(cell != null) {
-									row.removeCell(cell);}}
-				}else {
-
-					if (//Maps column is already removed
-							!flags.noEntitiesHaveSyns && 
-							!flags.noEntitiesHaveDefs) {
-						//We have values here for synonyms and maps -- don't change anything
-						//do nothing
-					}
-					if(//Maps column is already removed -- but no synonyms
-							// exist so remove the column where synonyms usually are
-							flags.noEntitiesHaveSyns && 
-							!flags.noEntitiesHaveDefs) 
-						{Cell cell = row.getCell(5); 
-						if(cell != null) {
-							row.removeCell(cell);}}
-					if(//maps column is already removed -- but no mapss
-							// exist so remove the column where synonyms usually are
-							!flags.noEntitiesHaveSyns && 
-							flags.noEntitiesHaveDefs)
-							{Cell cell = row.getCell(6); 
-								if(cell != null) {
-									row.removeCell(cell);}}
-
-				}
-		}
-		
-
-
-		if(!isNoSynonyms() && 
-				!isNoDefinitions() && !isNoMaps()) {
-		
-		if(flags.noEntitiesHaveSyns && 
-				!flags.noEntitiesHaveDefs && 
-				!flags.noEntitiesHaveMaps) 
-			{Cell cell = row.getCell(5); 
-				if(cell != null){row.removeCell(cell);}}
-		if(!flags.noEntitiesHaveSyns && 
-				flags.noEntitiesHaveDefs && 
-				!flags.noEntitiesHaveMaps) 
-			{Cell cell = row.getCell(6); 
-				if(cell != null){row.removeCell(cell);}}
-		if(!flags.noEntitiesHaveSyns && 
-				!flags.noEntitiesHaveDefs && 
-				 flags.noEntitiesHaveMaps) 
-			{Cell cell = row.getCell(6); 
-				if(cell != null) {row.removeCell(cell);}}
-		if(!flags.noEntitiesHaveSyns && 
-				flags.noEntitiesHaveDefs && 
-				flags.noEntitiesHaveMaps) 
-			{Cell cell = row.getCell(6);
-		 		if(cell != null) {row.removeCell(cell);}
-		 	Cell cell1 = row.getCell(6); 
-		 		if(cell1 != null) {row.removeCell(cell1);}}
-		if( flags.noEntitiesHaveSyns && 
-				!flags.noEntitiesHaveDefs && 
-				flags.noEntitiesHaveMaps) 
-			{Cell cell = row.getCell(5); 
-				if(cell != null) {row.removeCell(cell);}
-			Cell cell1 = row.getCell(6);
-				if(cell1 != null) {row.removeCell(cell1);}}
-		if( flags.noEntitiesHaveSyns && 
-				flags.noEntitiesHaveDefs && 
-				 !flags.noEntitiesHaveMaps) 
-			{Cell cell = row.getCell(5); 
-				if(cell != null){row.removeCell(cell);}
-				Cell cell1 = row.getCell(5);
-					if(cell1 != null) {row.removeCell(cell1);}}
-		if(flags.noEntitiesHaveSyns && 
-				flags.noEntitiesHaveDefs && 
-				flags.noEntitiesHaveMaps)
-			{Cell cell = row.getCell(5); 
-				if(cell != null){row.removeCell(cell);}
-			Cell cell1 = row.getCell(5);
-				if(cell1 != null) {row.removeCell(cell1);}
-			Cell cell2 = row.getCell(5);
-				if(cell2 != null) {row.removeCell(cell2);}}
-		if( !flags.noEntitiesHaveSyns && 
-				!flags.noEntitiesHaveDefs && 
-				!flags.noEntitiesHaveMaps)
-					{
-					//do nothing
-					}
-		}
-	}
-	
-	public void shiftCellsToCorrectedPosition(Row row, int offset) {
-		int noOfCells = row.getPhysicalNumberOfCells();
-		int temp = offset;
-		if(noOfCells >= offset + 1) {
-			//do nothing we are at the end of the row
-			return;
-		}
-		else {
-			for(int i = 0; i < noOfCells; i++) {
-				row.getCell(temp++).setCellValue(row.getCell(offset + i).getStringCellValue());
-			}
-		}
-		
-	}
 	
 	
 	public static void main(String ...strings) {
