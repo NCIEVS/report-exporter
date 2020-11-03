@@ -96,9 +96,15 @@ public class CodeReadService {
 			return propList; 
 		}
 		
-		return propList.stream().filter(
-				x -> tempList.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
-				.collect(Collectors.toList());
+		return propList.stream()
+				.filter(
+				x -> tempList
+					.stream()
+					.anyMatch(y -> 
+					x.getType() == null?
+							true:
+							x.getType().equals(y)))
+					.collect(Collectors.toList());
 	}
 	
 	public  boolean retiredConceptsFilter(RestEntity entity){
