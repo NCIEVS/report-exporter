@@ -64,6 +64,33 @@ class JSONUtilityTest {
 		assertTrue(ent1.getSynonyms() != null);
 		assertTrue(ent1.getSynonyms().size() > 0);
 		}
+	
+	@Test 
+	void testMaps(){
+		List<RestEntity> list = new GsonBuilder().create().fromJson(
+				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+				CommonServices.splitInput(
+						"Maps_To"))), 
+				new TypeToken<List<RestEntity>>(){}.getType());
+		
+		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C2222")).findAny().get();
+		assertTrue(ent1.getMaps() != null);
+		assertTrue(ent1.getMaps().size() > 0);
+		}
+	
+	@Test
+	void testProps() {
+		List<RestEntity> list = new GsonBuilder().create().fromJson(
+				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+				CommonServices.splitInput(
+						"PropType"))), 
+				new TypeToken<List<RestEntity>>(){}.getType());
+		
+		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C2222")).findAny().get();
+		assertTrue(ent1.getProperties() != null);
+		assertTrue(ent1.getProperties().size() > 0);
+	
+	}
 
 	@Test
 	void testSynsAndOnePropType() {
