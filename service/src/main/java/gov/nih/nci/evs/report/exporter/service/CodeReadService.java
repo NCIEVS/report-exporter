@@ -86,7 +86,7 @@ public class CodeReadService {
 		propList.clear();return propList;}
 		List<String> tempList = new ArrayList<String>(list);
 		if(propList.get(0) instanceof PropertyMap) 
-		{tempList.add("Has Synonym");}
+		{tempList.add("Has Synonym"); tempList.add("Related To");}
 		if(propList.get(0) instanceof Definition && !(list.contains("DEFINITION") || list.contains("ALT_DEFINITION"))){
 			propList.clear();
 			return propList; 
