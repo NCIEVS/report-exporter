@@ -121,9 +121,11 @@ public class CommonServices {
 		if(list == null || list.size() == 0) {return "";}
 		return list.stream().map(x -> removeAllNoSourceNoTypeSynonyms(x))
 				.reduce("", (part, whole)-> 
-				(whole == null)?
+				(whole == null 
+				&& part == null
+				)?
 						(""):
-							(part + "|" + whole));
+							(part + (whole == null?"":"|" + whole)));
 	}
 	
 	public List<String> filterHeadings(CommonServices services) {
