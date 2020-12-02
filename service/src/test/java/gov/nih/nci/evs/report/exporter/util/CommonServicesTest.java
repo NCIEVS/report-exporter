@@ -134,7 +134,7 @@ class CommonServicesTest {
 		list.add(syn3);
 		String csvList = CommonServices.getListValuesWithPipeDelimiter(list);
 		System.out.println(csvList);
-		assertEquals("|CDISC GAIA PT:syn1 234|NCI BAD SY:syn2 435|", csvList);
+		assertEquals("|CDISC GAIA PT:syn1 234|NCI BAD SY:syn2 435", csvList);
 		String cleanedList = CommonServices.cleanListOutPut(csvList);
 		assertFalse(cleanedList.contains("["));
 		assertFalse(cleanedList.contains("]"));

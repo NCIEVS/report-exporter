@@ -125,7 +125,7 @@ public class CommonServices {
 				&& part == null
 				)?
 						(""):
-							(part + "|" + (whole == null?"":whole)));
+							(part + (whole == null?"":"|" + whole)));
 	}
 	
 	public List<String> filterHeadings(CommonServices services) {
