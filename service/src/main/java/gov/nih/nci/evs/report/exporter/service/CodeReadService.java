@@ -86,7 +86,7 @@ public class CodeReadService {
 		propList.clear();return propList;}
 		List<String> tempList = new ArrayList<String>(list);
 		if(propList.get(0) instanceof PropertyMap) 
-		{tempList.add("Has Synonym");}
+		{tempList.add("Has Synonym"); tempList.add("Related To");}
 		if(propList.get(0) instanceof Definition && !(list.contains("DEFINITION") || list.contains("ALT_DEFINITION"))){
 			propList.clear();
 			return propList; 
@@ -96,9 +96,15 @@ public class CodeReadService {
 			return propList; 
 		}
 		
-		return propList.stream().filter(
-				x -> tempList.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
-				.collect(Collectors.toList());
+		return propList.stream()
+				.filter(
+				x -> tempList
+					.stream()
+					.anyMatch(y -> 
+					x.getType() == null?
+							true:
+							x.getType().equals(y)))
+					.collect(Collectors.toList());
 	}
 	
 	public  boolean retiredConceptsFilter(RestEntity entity){
