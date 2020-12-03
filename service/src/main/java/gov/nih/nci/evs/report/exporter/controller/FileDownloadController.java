@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.nih.nci.evs.report.exporter.model.Format;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutService;
+import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutServiceDeferredWrapper;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
@@ -45,6 +46,9 @@ public class FileDownloadController {
 	
 	@Autowired
 	FormattedBranchOutPutService branchService;
+	
+	@Autowired
+	FormattedBranchOutPutServiceDeferredWrapper deferredBranchService;
 	
 	@Autowired
 	CodeReadService codeReadService;
@@ -176,6 +180,33 @@ public class FileDownloadController {
 			            	return IOUtils.toByteArray(
 			            			branchService.getJsonBytesForRestParams(id, props, max));
 					}
+
+				}
+		
+		@GetMapping(
+				  value = "deferred/get-file-for-resolved-branch/{id}/{props}/{max}/{format}/{filename}",
+				  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+				)
+				public @ResponseBody byte[] getFileByFormatForBranchDeferred(@PathVariable String id,
+						@PathVariable String props,
+						@PathVariable String max,
+//						@PathVariable String format,
+						@PathVariable String filename) throws IOException {
+//					Formats fmt = Formats.valueOf(format);
+//					switch(fmt) {
+//			            case JSON: 
+//			            	return IOUtils.toByteArray(
+//			         			    branchService.getJsonBytesForRestParams(id, props, max));
+//			            case CSV:
+						    return IOUtils.toByteArray(
+						    		deferredBranchService.getCSVBytesForRestParams(id, props, max));
+//			            case TABD: 
+//						    return IOUtils.toByteArray(
+//						    		branchService.getTabDelBytesForRestParams(id, props, max));
+//			            default:
+//			            	return IOUtils.toByteArray(
+//			            			branchService.getJsonBytesForRestParams(id, props, max));
+//					}
 
 				}
 		
