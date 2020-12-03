@@ -3,7 +3,9 @@ package gov.nih.nci.evs.report.exporter.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,10 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.context.request.async.DeferredResult.DeferredResultHandler;
 
 import gov.nih.nci.evs.report.exporter.model.Format;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
@@ -53,6 +57,8 @@ public class FileDownloadController {
 	
 	@Autowired
 	CodeReadService codeReadService;
+
+	private ConcurrentHashMap<Integer, DeferredResult<byte[]>> dRHash = new ConcurrentHashMap<Integer, DeferredResult<byte[]>>();
 	
 	@GetMapping(
 			  value = "/get-file/{id}/JsonFile.json",
@@ -209,7 +215,47 @@ public class FileDownloadController {
 //					}
 
 				}
+				
+				
+				@RequestMapping(
+						  value = "deferred/getURLHashForDeferredResult/{id}/{props}/{max}/{format}/{filename}" 
+						)
+						public @ResponseBody String getUrlForAsyncProcess(@PathVariable String id,
+								@PathVariable String props,
+								@PathVariable String max,
+//								@PathVariable String format,
+								@PathVariable String filename) throws IOException {
+//							Formats fmt = Formats.valueOf(format);
+//							switch(fmt) {
+//					            case JSON: 
+//					            	return IOUtils.toByteArray(
+//					         			    branchService.getJsonBytesForRestParams(id, props, max));
+//					            case CSV:
+								    DeferredResult<byte[]> deferredResult = 
+								    		deferredBranchService.getChildCSVBytesForRestParams(id, props, max);
+									//					            case TABD: 
+//								    return IOUtils.toByteArray(
+//								    		branchService.getTabDelBytesForRestParams(id, props, max));
+//					            default:
+//					            	return IOUtils.toByteArray(
+//					            			branchService.getJsonBytesForRestParams(id, props, max));
+//							}
+								    dRHash.put(deferredResult.hashCode(), deferredResult);
+								    return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
+
+						}
 		
+		@GetMapping("deferred/checkURLHashForDeferredStatus/{hash}")
+				public String checkURLHashForDeferredStatus(@PathVariable String hash){
+					return String.valueOf(dRHash.get(new Integer(hash)).hasResult());
+				}
+		
+		
+		@GetMapping("deferred/checkFileForHashFormat/{hash}/{format}")
+		public byte[] getDeferredResult(@PathVariable String hash, @PathVariable String format){
+			return (byte[]) dRHash.get(new Integer(hash)).getResult();
+		}
+				
 		@GetMapping("/get-file-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
 		public ResponseEntity<InputStreamResource> fileReportForExcelBranch(@PathVariable String id, 
 				@PathVariable String props, @PathVariable String max, @PathVariable String filename)  throws IOException {
@@ -218,6 +264,8 @@ public class FileDownloadController {
 		    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
 		    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 		}
+		
+		
 		
 		@GetMapping(
 				  value = "/get-minfile-for-resolved-branch/{id}/{props}/{max}/{format}/{filename}",
