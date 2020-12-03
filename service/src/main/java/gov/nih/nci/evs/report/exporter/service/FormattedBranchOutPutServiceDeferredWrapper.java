@@ -36,7 +36,6 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	public DeferredResult<InputStream> getChildCSVBytesForRestParams(String code, String max) {
 		final DeferredResult<InputStream> deferredStream = new DeferredResult<InputStream>();
 
-
 			startThread(deferredStream, code, max);
 
 			log.info("Request processing finished");
