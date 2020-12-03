@@ -7,6 +7,8 @@ import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -33,22 +35,23 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 									code, max)).getBytes());
 	}
 	
-	public DeferredResult<InputStream> getChildCSVBytesForRestParams(String code, String max) {
-		final DeferredResult<InputStream> deferredStream = new DeferredResult<InputStream>();
+	public DeferredResult<byte[]> getChildCSVBytesForRestParams(String code, String props, String max) {
+		final DeferredResult<byte[]> deferredStream = new DeferredResult<byte[]>();
 
-			startThread(deferredStream, code, max);
+			startThread(deferredStream, code, props, max);
 
 			log.info("Request processing finished");
 
 			return deferredStream;
 	}
 	
-	private void startThread(DeferredResult<InputStream> deferredStream, String code, String max){
+	private void startThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
 	new Thread(() -> {
 		log.info("Stream processing thread started");
-		deferredStream.setResult(new ByteArrayInputStream(new CSVUtility()
-				.produceChildCSVOutputFromListWithHeading(service.getAllChildrenForBranchTopNode(
-						code, max)).getBytes()));
+		deferredStream.setResult(new CSVUtility()
+				.produceCSVOutputFromListWithHeading(
+						service.getResolvedChildFlatListFromTopNode( 
+						code, props, max) ,props).getBytes());
 	}).start();
 	log.info("Stream processing thread complete");
 	}
