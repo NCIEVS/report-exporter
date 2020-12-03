@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutService;
+import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutServiceDeferredWrapper;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
 
 @WebMvcTest(FileDownloadController.class)
@@ -42,6 +43,10 @@ public class FileDownloadControllerMockTest {
 	
 	@MockBean
 	private FormattedBranchOutPutService branchoutputservice;
+
+	
+	@MockBean
+	private FormattedBranchOutPutServiceDeferredWrapper deferredbranchoutputservice;
 
 	
 	@Test
