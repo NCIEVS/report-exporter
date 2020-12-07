@@ -251,9 +251,9 @@ public class FileDownloadController {
 				}
 		
 		
-		@GetMapping("deferred/checkFileForHashFormat/{hash}/{format}")
-		public byte[] getDeferredResult(@PathVariable String hash, @PathVariable String format){
-			return (byte[]) dRHash.remove(new Integer(hash)).getResult();
+		@GetMapping(value = "deferred/checkFileForHashFormat/{hash}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+		public @ResponseBody byte[] getDeferredResult(@PathVariable String hash, @PathVariable String fileName){
+			return(byte[]) dRHash.remove(new Integer(hash)).getResult();
 		}
 				
 		@GetMapping("/get-file-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
