@@ -223,26 +223,34 @@ public class FileDownloadController {
 						public @ResponseBody String getUrlForAsyncProcess(@PathVariable String id,
 								@PathVariable String props,
 								@PathVariable String max,
-//								@PathVariable String format,
+								@PathVariable String format,
 								@PathVariable String filename) throws IOException {
-//							Formats fmt = Formats.valueOf(format);
-//							switch(fmt) {
-//					            case JSON: 
-//					            	return IOUtils.toByteArray(
-//					         			    branchService.getJsonBytesForRestParams(id, props, max));
-//					            case CSV:
-								    DeferredResult<byte[]> deferredResult = 
+					DeferredResult<byte[]> deferredResult;
+							Formats fmt = Formats.valueOf(format);
+							switch(fmt) {
+					            case JSON: 
+					            	 deferredResult = 
+					            			deferredBranchService.getJsonBytesForRestParams(id, props, max);
+										    dRHash.put(deferredResult.hashCode(), deferredResult);
+										    return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
+					            case CSV:
+								   deferredResult = 
 								    		deferredBranchService.getChildCSVBytesForRestParams(id, props, max);
-									//					            case TABD: 
-//								    return IOUtils.toByteArray(
-//								    		branchService.getTabDelBytesForRestParams(id, props, max));
-//					            default:
-//					            	return IOUtils.toByteArray(
-//					            			branchService.getJsonBytesForRestParams(id, props, max));
-//							}
-								    dRHash.put(deferredResult.hashCode(), deferredResult);
-								    return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
+								    		dRHash.put(deferredResult.hashCode(), deferredResult);
+								    		return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
 
+								 case TABD: 
+									 deferredResult = 
+								    		deferredBranchService.getTabDelBytesForRestParams(id, props, max);
+										    dRHash.put(deferredResult.hashCode(), deferredResult);
+										    return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
+					            default:
+					            	 deferredResult = 
+					            			deferredBranchService.getJsonBytesForRestParams(id, props, max);
+										    dRHash.put(deferredResult.hashCode(), deferredResult);
+										    return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
+							}
+								   
 						}
 		
 		@GetMapping("deferred/checkURLHashForDeferredStatus/{hash}")
@@ -251,7 +259,8 @@ public class FileDownloadController {
 				}
 		
 		
-		@GetMapping(value = "deferred/checkFileForHashFormat/{hash}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+		@GetMapping(value = "deferred/checkFileForHashFormat/{hash}/{fileName}",
+				produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 		public @ResponseBody byte[] getDeferredResult(@PathVariable String hash, @PathVariable String fileName){
 			return(byte[]) dRHash.remove(new Integer(hash)).getResult();
 		}

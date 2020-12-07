@@ -35,17 +35,19 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 									code, max)).getBytes());
 	}
 	
+	
+	
 	public DeferredResult<byte[]> getChildCSVBytesForRestParams(String code, String props, String max) {
 		final DeferredResult<byte[]> deferredStream = new DeferredResult<byte[]>();
 
-			startThread(deferredStream, code, props, max);
+			startCSVThread(deferredStream, code, props, max);
 
 			log.info("Request processing finished");
 
 			return deferredStream;
 	}
 	
-	private void startThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
+	private void startCSVThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
 	new Thread(() -> {
 		log.info("Stream processing thread started");
 		deferredStream.setResult(new CSVUtility()
@@ -72,11 +74,25 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		}
 	}
 	
-	public InputStream getJsonBytesForRestParams(String codes, String props, String max) {
-		return new ByteArrayInputStream(
-				CommonServices.getGsonForPrettyPrint().toJson(
-								service.getResolvedChildFlatListFromTopNode( 
-									codes, props, max)).getBytes());
+	public DeferredResult<byte[]> getJsonBytesForRestParams(String code, String props, String max) {
+		final DeferredResult<byte[]> deferredStream = new DeferredResult<byte[]>();
+		
+		startJSONThread(deferredStream, code, props, max);
+
+		log.info("Request processing finished");
+		
+		return deferredStream;
+
+	}
+	
+	private void startJSONThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
+	new Thread(() -> {
+		log.info("Stream processing JSON thread started");
+		deferredStream.setResult(CommonServices.getGsonForPrettyPrint().toJson(
+				service.getResolvedChildFlatListFromTopNode( 
+						code, props, max)).getBytes());
+	}).start();
+	log.info("Stream processing JSON thread complete");
 	}
 	
 	public InputStream getCSVBytesForRestParams(String codes, String props, String max) {
@@ -86,11 +102,27 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 										codes, props, max) ,props).getBytes());
 	}
 	
-	public InputStream getTabDelBytesForRestParams(String codes, String props,String max) {
-		return new ByteArrayInputStream(new TabDelUtility()
+	public DeferredResult<byte[]> getTabDelBytesForRestParams(String code, String props,String max) {
+		
+		final DeferredResult<byte[]> deferredStream = new DeferredResult<byte[]>();
+		
+		startTABDelThread(deferredStream, code, props, max);
+
+		log.info("Request processing finished");
+		
+		return deferredStream;
+		
+	}
+	
+	private void startTABDelThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
+	new Thread(() -> {
+		log.info("Stream processing TAB Delimited thread started");
+		deferredStream.setResult(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNode( 
-								codes, props, max), props).getBytes());
+								code, props, max), props).getBytes());
+	}).start();
+	log.info("Stream processing TAB Delimited  complete");
 	}
 	
 	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props, String max) {
