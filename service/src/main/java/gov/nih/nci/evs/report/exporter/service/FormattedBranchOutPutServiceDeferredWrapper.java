@@ -125,15 +125,32 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	log.info("Stream processing TAB Delimited  complete");
 	}
 	
-	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props, String max) {
+	public DeferredResult<byte[]> getXSLBytesForRestParams(String code, String props, String max) {
+		
+		final DeferredResult<byte[]> deferredStream = new DeferredResult<byte[]>();
+		
+		startExcelThread(deferredStream, code, props, max);
+
+		log.info("Request processing finished");
+		
+		return deferredStream;
+
+	}
+	
+	private void startExcelThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
+	new Thread(() -> {
+		log.info("Stream processing Excel thread started");
 		try {
-			return new ByteArrayInputStream(new ExcelUtility()
+			deferredStream.setResult(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
 							service.getResolvedChildFlatListFromTopNode( 
-									codes, props, max), props).toByteArray());
+									code, props, max), props).toByteArray());
 		} catch (IOException e) {
-			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}).start();
+	log.info("Stream processing Excel complete");
 	}
 
 }

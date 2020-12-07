@@ -189,32 +189,6 @@ public class FileDownloadController {
 					}
 
 				}
-		
-		@RequestMapping(
-				  value = "deferred/get-file-for-resolved-branch/{id}/{props}/{max}/{format}/{filename}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
-				)
-				public @ResponseBody DeferredResult<byte[]> getFileByFormatForBranchDeferred(@PathVariable String id,
-						@PathVariable String props,
-						@PathVariable String max,
-//						@PathVariable String format,
-						@PathVariable String filename) throws IOException {
-//					Formats fmt = Formats.valueOf(format);
-//					switch(fmt) {
-//			            case JSON: 
-//			            	return IOUtils.toByteArray(
-//			         			    branchService.getJsonBytesForRestParams(id, props, max));
-//			            case CSV:
-						    return 
-						    		deferredBranchService.getChildCSVBytesForRestParams(id, props, max);
-//			            case TABD: 
-//						    return IOUtils.toByteArray(
-//						    		branchService.getTabDelBytesForRestParams(id, props, max));
-//			            default:
-//			            	return IOUtils.toByteArray(
-//			            			branchService.getJsonBytesForRestParams(id, props, max));
-//					}
-
-				}
 				
 				
 				@RequestMapping(
@@ -244,7 +218,13 @@ public class FileDownloadController {
 								    		deferredBranchService.getTabDelBytesForRestParams(id, props, max);
 										    dRHash.put(deferredResult.hashCode(), deferredResult);
 										    return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
-					            default:
+								 case EXCEL: 
+									 deferredResult = 
+								    		deferredBranchService.getXSLBytesForRestParams(id, props, max);
+										    dRHash.put(deferredResult.hashCode(), deferredResult);
+										    return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
+					            
+								 default:
 					            	 deferredResult = 
 					            			deferredBranchService.getJsonBytesForRestParams(id, props, max);
 										    dRHash.put(deferredResult.hashCode(), deferredResult);
@@ -259,58 +239,19 @@ public class FileDownloadController {
 				}
 		
 		
-		@GetMapping(value = "deferred/checkFileForHashFormat/{hash}/{fileName}",
+		@GetMapping(value = "deferred/checkFileForHashFormat/{hash}/{format}/{fileName}",
 				produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-		public @ResponseBody byte[] getDeferredResult(@PathVariable String hash, @PathVariable String fileName){
+		public @ResponseBody byte[] getDeferredResult(@PathVariable String hash, @PathVariable String format, @PathVariable String fileName){
 			return(byte[]) dRHash.remove(new Integer(hash)).getResult();
 		}
-				
-		@GetMapping("/get-file-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
-		public ResponseEntity<InputStreamResource> fileReportForExcelBranch(@PathVariable String id, 
-				@PathVariable String props, @PathVariable String max, @PathVariable String filename)  throws IOException {
-		    ByteArrayInputStream in = branchService.getXSLBytesForRestParams(id, props, max);
+		
+		@GetMapping(value = "deferred/checkFileForHashFormat/{hash}/EXCEL/{fileName}",
+				produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+		public ResponseEntity<InputStreamResource> getDeferredExcelResult(@PathVariable String hash, @PathVariable String fileName){
+			ByteArrayInputStream in = new ByteArrayInputStream((byte[]) dRHash.remove(new Integer(hash)).getResult());
 		    HttpHeaders headers = new HttpHeaders();
-		    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+		    headers.add("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 		}
-		
-		
-		
-		@GetMapping(
-				  value = "/get-minfile-for-resolved-branch/{id}/{props}/{max}/{format}/{filename}",
-				  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
-				)
-				public @ResponseBody byte[] getMinimalFileByFormatForBranch(@PathVariable String id,
-						@PathVariable String props,
-						@PathVariable String max,
-						@PathVariable String format,
-						@PathVariable String filename) throws IOException {
-					Formats fmt = Formats.valueOf(format);
-					switch(fmt) {
-			            case JSON: 
-			            	return IOUtils.toByteArray(
-			         			    branchService.getJsonBytesForRestChildParams(id, max));
-			            case CSV:
-						    return IOUtils.toByteArray(
-						    		branchService.getChildCSVBytesForRestParams(id, max));
-			            case TABD: 
-						    return IOUtils.toByteArray(
-						    		branchService.getChildTabDelBytesForRestParams(id, max));
-			            default:
-			            	return IOUtils.toByteArray(
-			            			branchService.getJsonBytesForRestChildParams(id, max));
-					}
-
-				}
-		
-		@GetMapping("/get-minfile-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
-		public ResponseEntity<InputStreamResource> minimalFileReportForExcelBranch(@PathVariable String id, 
-				@PathVariable String props, @PathVariable String max, @PathVariable String filename)  throws IOException {
-		    ByteArrayInputStream in = branchService.getChildXSLBytesForRestParams(id, max);
-		    HttpHeaders headers = new HttpHeaders();
-		    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
-		    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
-		}
-		
 
 }
