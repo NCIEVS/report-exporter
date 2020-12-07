@@ -192,13 +192,12 @@ public class FileDownloadController {
 				
 				
 				@RequestMapping(
-						  value = "deferred/getURLHashForDeferredResult/{id}/{props}/{max}/{format}/{filename}" 
+						  value = "deferred/getURLHashForDeferredResult/{id}/{props}/{max}/{format}" 
 						)
 						public @ResponseBody String getUrlForAsyncProcess(@PathVariable String id,
 								@PathVariable String props,
 								@PathVariable String max,
-								@PathVariable String format,
-								@PathVariable String filename) throws IOException {
+								@PathVariable String format) throws IOException {
 					DeferredResult<byte[]> deferredResult;
 							Formats fmt = Formats.valueOf(format);
 							switch(fmt) {
@@ -245,13 +244,31 @@ public class FileDownloadController {
 			return(byte[]) dRHash.remove(new Integer(hash)).getResult();
 		}
 		
-		@GetMapping(value = "deferred/checkFileForHashFormat/{hash}/EXCEL/{fileName}",
+		@GetMapping(value = "deferred/checkFileForHashFormatResponseEntity/{hash}/{format}/{fileName}", 
 				produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-		public ResponseEntity<InputStreamResource> getDeferredExcelResult(@PathVariable String hash, @PathVariable String fileName){
+		public ResponseEntity<InputStreamResource> getDeferredResponseEntityResult(@PathVariable String hash,
+				@PathVariable String format, @PathVariable String fileName) {
 			ByteArrayInputStream in = new ByteArrayInputStream((byte[]) dRHash.remove(new Integer(hash)).getResult());
-		    HttpHeaders headers = new HttpHeaders();
-		    headers.add("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+			HttpHeaders headers = new HttpHeaders();
+
+			Formats fmt = Formats.valueOf(format);
+			switch (fmt) {
+			case JSON:
+				headers.add("Content-Disposition", "attachment; filename=" + fileName + ".json");
+				break;
+			case CSV:
+				headers.add("Content-Disposition", "attachment; filename=" + fileName + ".csv");
+				break;
+			case TABD:
+				headers.add("Content-Disposition", "attachment; filename=" + fileName + ".txt");
+				break;
+			case EXCEL:
+				headers.add("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+				break;
+			default:
+				headers.add("Content-Disposition", "attachment; filename=" + fileName + ".json");
+			}
+			return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 		}
 
 }
