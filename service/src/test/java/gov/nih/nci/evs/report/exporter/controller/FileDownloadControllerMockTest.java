@@ -88,7 +88,7 @@ public class FileDownloadControllerMockTest {
 		.thenReturn(new ByteArrayInputStream(output.getBytes()));
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/download/get-file-for-props/C44444/Semqntic_Type/file.json").accept(
+				"/download//get-file-for-readCodes/C44444/Semqntic_Type/JSON/file.json").accept(
 				MediaType.ALL);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -110,7 +110,7 @@ public class FileDownloadControllerMockTest {
 		Mockito.when(outputservice.getCSVBytesForRestParams(Mockito.anyString(), Mockito.anyString())).thenReturn(new ByteArrayInputStream(output.getBytes()));
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/download/get-file-for-csv/C33333/PROP/file.csv").accept(
+				"/download//get-file-for-readCodes/C33333/PROP/CSV/file.csv").accept(
 				MediaType.ALL);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -135,7 +135,7 @@ public class FileDownloadControllerMockTest {
 				new ByteArrayInputStream(output.getBytes()));
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/download/get-file-for-tabdel/C33333/PROP/file.csv").accept(
+				"/download//get-file-for-readCodes/C33333/PROP/TABD/file.txt").accept(
 				MediaType.ALL);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
