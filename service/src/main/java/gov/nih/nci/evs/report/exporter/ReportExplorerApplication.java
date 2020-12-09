@@ -41,8 +41,6 @@ public class ReportExplorerApplication extends SpringBootServletInitializer{
 			return new WebMvcConfigurer() {
 				@Override
 				public void addCorsMappings(CorsRegistry registry) {
-				   	System.out.println("Running EVSREPEXP-220 codebase");
-				   	log.warn("Running EVSREPEXP-220 codebase in log");
 					registry.addMapping("/properties")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url,ui_client_co_url);
 					registry.addMapping("/resolve-children-for-codes/**")
