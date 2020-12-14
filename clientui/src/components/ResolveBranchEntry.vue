@@ -79,7 +79,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                                 <label for="levelSelection">Select how many levels to retrieve</label>
-                                <select v-model="selectedLevel" id="levelSelection" class="form-control">
+                                <select v-model="selectedLevel" id="levelSelection" class="form-control" v-on:change="onLevelChange()">
                                   <option v-for="level in levels"
                                     :value="level.id"
                                     :key="level.name">
@@ -178,6 +178,9 @@
                       <li>
                         Levels to Export: {{ selectedLevel }}
                       </li>
+                      <li>
+                        Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -264,6 +267,7 @@ export default {
       curratedTopNodesUI:[],
       getPropertyError: false,
       selectedLevel: 0,
+      childrenToResolve: 0,
       levels:[
         { id: 1, name: '1 Level' },
         { id: 2, name: '2 Levels' },
@@ -276,6 +280,11 @@ export default {
         { id: 9, name: '9 Levels' },
         { id: 10, name: '10 Levels' },
       ],
+      childrenToResolveObj: {
+        selectedLevel:0,
+        selectedTag:"",
+        childrenCount:0
+      },
 
       showTree: true,
       asyncData: [],
@@ -326,7 +335,7 @@ export default {
 
           // Id was not null, get the children
           else {
-            api.getChildren(this.$baseURL, id)
+            api.getChildren(this.$baseURL, id, 1)
             .then((children)=>{
               if (children != null) {
                 for (let x=0; x < children.length; x++){
@@ -380,8 +389,10 @@ export default {
 
       // Wizard methods
       validateFirstStep() {
-        // make sure the user has a code entered
-        return Object.keys(this.selectedTags).length>0
+        // make sure the user has a code entered and level.
+        // if they did, then get number of children
+        var stepIsValid = Object.keys(this.selectedTags).length>0 && this.selectedLevel>0
+        return stepIsValid
       },
 
       validatePropertyStep() {
@@ -428,6 +439,41 @@ export default {
         console.log("Added tag: " + newCode)
         // When a top node is entered/selected, verify it.
         this.getEntities();
+        this.updateChildrenToResolve()
+      },
+
+      onLevelChange() {
+        this.updateChildrenToResolve()
+      },
+
+      updateChildrenToResolve() {
+        // if the selectedTag and selectLevel have changed, set them in the
+        // object and get the NEW childrenCount
+        if ((this.childrenToResolveObj.selectedTag != this.selectedTags[0].key) ||
+            (this.childrenToResolveObj.selectedLevel != this.selectedLevel))
+          {
+            this.childrenToResolveObj.selectedTag = this.selectedTags[0].key
+            this.childrenToResolveObj.selectedLevel = this.selectedLevel
+
+            // show the busy indicator
+            let loader = this.$loading.show({
+                container: this.$refs.formSelectCodes,
+                loader: 'dots',
+                isFullPage: false,
+              });
+
+            api.getChildren(this.$baseURL, this.selectedTags[0].key, this.selectedLevel)
+            .then((children)=>{
+              if (children != null) {
+                this.childrenToResolveObj.childrenCount = children.length
+              }
+              else {
+                this.childrenToResolveObj.childrenCount = 0
+              }
+            }).catch(function(error) {
+              console.error("Error retrieving children to resolve: " + error);
+            }).finally(function() { loader.hide()});
+          }
       },
 
       setSelectedTags() {
@@ -594,7 +640,7 @@ export default {
       },
 
       getChildren(){
-        api.getChildren(this.$baseURL, this.userEnteredCodes)
+        api.getChildren(this.$baseURL, this.userEnteredCodes, 1)
         .then((data)=>{
           if (data != null) {
             //console.log("got children : " + data);
