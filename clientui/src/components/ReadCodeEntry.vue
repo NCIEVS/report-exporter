@@ -66,10 +66,10 @@
       <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
       <tab-content icon="ti-download" title="Select Format and Export"
         :before-change="validateExportStep">
-        <div class="container">
+        <div ref="formContainer" class="container">
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
-                <form ref="formContainer">
+                <form>
                   <div class="form-group">
                     <label for="downloadFormat">Select format for export</label>
                     <select v-model="userSelectedFormat"

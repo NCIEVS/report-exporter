@@ -120,10 +120,10 @@
        <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
        <tab-content icon="ti-download" title="Select Format and Export"
           :before-change="validateExportStep">
-         <div class="container">
+         <div ref="formContainer" class="container">
              <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
-                 <form ref="formContainer">
+                 <form>
                    <div class="form-group">
                      <label for="downloadFormat">Select format for export</label>
 
@@ -285,7 +285,8 @@ export default {
         selectedTag:"",
         childrenCount:0
       },
-
+      deferredStatusUrl: '',
+      deferredStatus: false,
       showTree: true,
       asyncData: [],
       treeSelectedCode: null,
@@ -406,7 +407,36 @@ export default {
       },
 
       onComplete: function() {
-        this.downloadFile();
+        //this.downloadFile();
+        this.initiateDeferredDownload()
+        //this.pollForStatus()
+      },
+
+      async pollForStatus(hashId) {
+
+         // show the busy indicator
+         let loader = this.$loading.show({
+             container: this.$refs.formContainer,
+             loader: 'dots',
+             isFullPage: false,
+           });
+
+        // check if a polling url was returned.
+        if (this.deferredStatusUrl != null && this.deferredStatusUrl.length >0) {
+
+          // loop and wait until the status comes back as true
+          while (this.deferredStatus != null && !this.deferredStatus) {
+            this.pollDeferredStatus()
+            await this.sleep(500);
+          }
+          loader.hide()
+          this.clearDeferredData()
+          // verify status is good and we can download
+          this.downloadDeferredResult(hashId)
+        }
+        else {
+          console.log("deferredStatusUrl not good")
+        }
       },
 
       // Toggle the Show/Hide Selection Summary title
@@ -602,30 +632,100 @@ export default {
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
+        axios({
+          url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
+              this.userEnteredCodes + '/' +
+              this.userSelectedProperyNames + '/' +
+              this.selectedLevel + '/' +
+              this.userSelectedFormat.name + '/' +
+              this.filename + '.' + this.userSelectedFormat.extension,
+          method: 'GET',
+          responseType: 'blob',
+        }).then((response) => {
+              var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+              var fileLink = document.createElement('a');
 
-          axios({
-                url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
-                    this.userEnteredCodes + '/' +
-                    this.userSelectedProperyNames + '/' +
-                    this.selectedLevel + '/' +
-                    this.userSelectedFormat.name + '/' +
-                    this.filename + '.' + this.userSelectedFormat.extension,
-                method: 'GET',
-                responseType: 'blob',
-            }).then((response) => {
-                  var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-                  var fileLink = document.createElement('a');
-
-                  fileLink.href = fileURL;
-                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
-                  document.body.appendChild(fileLink);
-                  fileLink.click();
-              }).catch(function(error) {
-                  console.error("Download Error: " + error);
-                  alert("Error Downloading file");
-              }).finally(function() { loader.hide()});
+              fileLink.href = fileURL;
+              fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+              document.body.appendChild(fileLink);
+              fileLink.click();
+          }).catch(function(error) {
+              console.error("Download Error: " + error);
+              alert("Error Downloading file");
+          }).finally(function() { loader.hide()});
       },
 
+      async initiateDeferredDownload() {
+        this.$notify({
+          group: 'download',
+          title: 'Export in Progress',
+          text: 'Your export is running.  Please wait.',
+          type: 'success',
+          duration: 2000,
+          position: "bottom left"
+        });
+
+        // set the user selected tags and properties
+        this.setSelectedTags()
+        this.setSelectedPropertyNames()
+
+        api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
+            this.userSelectedProperyNames, this.selectedLevel,
+            this.userSelectedFormat.name)
+        .then((data)=>{
+          if (data != null) {
+            this.deferredStatusUrl = data
+            //console.log("Deferred Call made.  return: " + data);
+            const hashId = this.getHashFromURL(this.deferredStatusUrl)
+            this.pollForStatus(hashId)
+          }
+          else {
+            this.deferredStatusUrl = null
+            console.log("Error making Deferred call");
+          }
+        })
+      },
+
+      pollDeferredStatus: function() {
+        api.pollDeferredDownloadStatus(this.$baseURL, this.deferredStatusUrl)
+        .then((data)=>{
+          if (data != null) {
+            this.deferredStatus = data
+          }
+          else {
+            this.clearDeferredData()
+          }
+        }).catch(function(error) {
+            this.clearDeferredData()
+            console.error("Polling Deferred Status Error: " + error)
+        });
+      },
+
+      downloadDeferredResult(hashId) {
+        axios({
+          url:this.$baseURL +
+              'download/deferred/checkFileForHashFormatResponseEntity/'  +
+              hashId + '/' +
+              this.userSelectedFormat.name + '/' +
+              this.filename,
+          method: 'GET',
+          responseType: 'blob',
+        }).then((response) => {
+              var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+              var fileLink = document.createElement('a');
+
+              fileLink.href = fileURL;
+              fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+              document.body.appendChild(fileLink);
+              fileLink.click();
+          }).catch(function(error) {
+              console.error("Deferred Download Error: " + error);
+              alert("Error Downloading file");
+          }).finally(function() {
+            //this.clearDeferredData()
+          });
+
+      },
 
       getRoots(){
         api.getRoots(this.$baseURL)
@@ -644,17 +744,33 @@ export default {
         .then((data)=>{
           if (data != null) {
             //console.log("got children : " + data);
-        }
-        else {
-            console.log("Error retrieving children");
+          }
+          else {
+              console.log("Error retrieving children");
           }
         })
       },
+
+      clearDeferredData() {
+        this.deferredStatusUrl = ''
+        this.deferredStatus = false
+      },
+
+      getHashFromURL(hash) {
+        const startIndex = hash.lastIndexOf('/') + 1
+        return hash.substring(startIndex)
+      },
+
+      sleep: function(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
   },
     created() {
       // scroll to the top of the page
       window.scrollTo(0,0);
-      
+
       this.updateShowSummary();
 
       // load properties after the page is loaded.
