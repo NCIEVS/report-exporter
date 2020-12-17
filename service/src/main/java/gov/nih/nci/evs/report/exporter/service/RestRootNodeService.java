@@ -1,5 +1,7 @@
 package gov.nih.nci.evs.report.exporter.service;
 
+import java.util.stream.Stream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +16,9 @@ public class RestRootNodeService {
 
 	
 	public Root[] getRestRoots(RestTemplate template){
-		return service.getRestRoots(template);
+		return Stream.of(service.getRestRoots(template))
+				.filter(x -> !x.getCode().equals("C28428"))
+				.toArray(Root[]::new);
 	}
 
 }
