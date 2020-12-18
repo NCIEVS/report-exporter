@@ -42,7 +42,7 @@ public class FileDownloadController {
 	public enum Formats{JSON,CSV,TABD,EXCEL};
 	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
 	
-	@Value("${RESULT_TIME_OUT:1200000}")
+	@Value("${RESULT_TIME_OUT:1800000}")
 	public int resultTimeOut;
 	
 	
@@ -159,7 +159,6 @@ public class FileDownloadController {
 			timedDeferredResult = new TimedDeferredResultWrapper(false, deferredResult, resultTimeOut);
 			TimedEvictionConcurrentMap.getdRHash().put(String.valueOf(deferredResult.hashCode()), timedDeferredResult);
 			return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
-
 		case TABD:
 			deferredResult = deferredBranchService.getTabDelBytesForRestParams(id, props, max);
 			timedDeferredResult = new TimedDeferredResultWrapper(false, deferredResult, resultTimeOut);
