@@ -76,21 +76,21 @@
                       </div>
                   </div>
                   <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group">
-                                <label for="levelSelection">Select how many levels to retrieve</label>
-                                <select v-model="selectedLevel" id="levelSelection" class="form-control">
-                                  <option v-for="level in levels"
-                                    :value="level.id"
-                                    :key="level.name">
-                                    {{ level.name }}
-                                  </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
-              </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                              <label for="levelSelection">Select how many levels to retrieve</label>
+                              <select v-model="selectedLevel" id="levelSelection" class="form-control" v-on:change="onLevelChange()">
+                                <option v-for="level in levels"
+                                  :value="level.id"
+                                  :key="level.name">
+                                  {{ level.name }}
+                                </option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+            </div>
 
         </div>
       </tab-content>
@@ -120,10 +120,10 @@
        <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
        <tab-content icon="ti-download" title="Select Format and Export"
           :before-change="validateExportStep">
-         <div class="container">
+         <div ref="formContainer" class="container">
              <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
-                 <form ref="formContainer">
+                 <form>
                    <div class="form-group">
                      <label for="downloadFormat">Select format for export</label>
 
@@ -143,10 +143,43 @@
                  </form>
               </div>
             </div>
+            <div class="row justify-content-center">
+               <div class="col-12 col-md-6">
+                   <div class="alert alert-dark" role="alert">
+                     This report will resolve {{ selectedLevel}} level(s)
+                     with a total of {{ this.childrenToResolveObj.childrenCount }} children.
+                     <h6 v-if="this.childrenToResolveObj.childrenCount < 500">This report should take less than 30 seconds.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 1000">This report should take less than 1 minute.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 5000">This report should take less than 5 minutes.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 10000">This report should take less than 10 minutes.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 20000">This report should take less than 15 minutes.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 40000">This report should take less than 25 minutes.</h6>
+                     <h6 v-else>This report should take less than 30 minutes.</h6>
+                  </div>
+
+                  <label for="exportRadio">Select how to export</label>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" v-model="exportType" value="exportNow" id="exportNow" checked="" name="exportRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="exportNow">Export and wait</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" v-model="exportType" value="exportDeferred" id="exportDeferred" name="exportRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="exportDeferred">Export and get a link for download later</label>
+                  </div>
+
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+               <div class="col-12 col-md-6">
+                <div v-if="exportType == 'exportDeferred'">
+                  Export Link: {{ this.deferredStatusUrl }}
+                </div>
+              </div>
+          </div>
          </div>
        </tab-content>
     </form-wizard>
-
 
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
@@ -177,6 +210,9 @@
                       </li>
                       <li>
                         Levels to Export: {{ selectedLevel }}
+                      </li>
+                      <li>
+                        Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
                       </li>
                     </ul>
                   </div>
@@ -218,7 +254,6 @@
         </div>
       </div>
     </div>
-
  </div>
 </template>
 
@@ -264,6 +299,7 @@ export default {
       curratedTopNodesUI:[],
       getPropertyError: false,
       selectedLevel: 0,
+      childrenToResolve: 0,
       levels:[
         { id: 1, name: '1 Level' },
         { id: 2, name: '2 Levels' },
@@ -276,12 +312,19 @@ export default {
         { id: 9, name: '9 Levels' },
         { id: 10, name: '10 Levels' },
       ],
-
+      childrenToResolveObj: {
+        selectedLevel:0,
+        selectedTag:"",
+        childrenCount:0
+      },
+      deferredStatusUrl: '',
+      deferredStatus: false,
       showTree: true,
       asyncData: [],
       treeSelectedCode: null,
       showSummary: true,
       showSummaryText: '',
+      exportType: 'exportNow',
 
       // function to get tree data
       loadData: function (oriNode, resolve) {
@@ -326,7 +369,7 @@ export default {
 
           // Id was not null, get the children
           else {
-            api.getChildren(this.$baseURL, id)
+            api.getChildren(this.$baseURL, id, 1)
             .then((children)=>{
               if (children != null) {
                 for (let x=0; x < children.length; x++){
@@ -380,8 +423,10 @@ export default {
 
       // Wizard methods
       validateFirstStep() {
-        // make sure the user has a code entered
-        return Object.keys(this.selectedTags).length>0
+        // make sure the user has a code entered and level.
+        // if they did, then get number of children
+        var stepIsValid = Object.keys(this.selectedTags).length>0 && this.selectedLevel>0
+        return stepIsValid
       },
 
       validatePropertyStep() {
@@ -395,7 +440,47 @@ export default {
       },
 
       onComplete: function() {
-        this.downloadFile();
+        //this.downloadFile();
+
+        // set the user selected tags and properties
+        this.setSelectedTags()
+        this.setSelectedPropertyNames()
+
+        if (this.exportType == 'exportNow') {
+          // export and wait for it to complete
+          this.initiateDeferredDownloadAndWait()
+        }
+        else {
+          // export and get a URL to go to later
+          this.initiateDeferredDownloadAndReturn()
+        }
+      },
+
+      async pollForStatus(hashId) {
+
+         // show the busy indicator
+         let loader = this.$loading.show({
+             container: this.$refs.formContainer,
+             loader: 'dots',
+             isFullPage: false,
+           });
+
+        // check if a polling url was returned.
+        if (this.deferredStatusUrl != null && this.deferredStatusUrl.length >0) {
+
+          // loop and wait until the status comes back as true
+          while (this.deferredStatus != null && !this.deferredStatus) {
+            this.pollDeferredStatus()
+            await this.sleep(500);
+          }
+          loader.hide()
+          this.clearDeferredData()
+          // verify status is good and we can download
+          this.downloadDeferredResult(hashId)
+        }
+        else {
+          console.log("deferredStatusUrl not good")
+        }
       },
 
       // Toggle the Show/Hide Selection Summary title
@@ -428,6 +513,41 @@ export default {
         console.log("Added tag: " + newCode)
         // When a top node is entered/selected, verify it.
         this.getEntities();
+        this.updateChildrenToResolve()
+      },
+
+      onLevelChange() {
+        this.updateChildrenToResolve()
+      },
+
+      updateChildrenToResolve() {
+        // if the selectedTag and selectLevel have changed, set them in the
+        // object and get the NEW childrenCount
+        if ((this.childrenToResolveObj.selectedTag != this.selectedTags[0].key) ||
+            (this.childrenToResolveObj.selectedLevel != this.selectedLevel))
+          {
+            this.childrenToResolveObj.selectedTag = this.selectedTags[0].key
+            this.childrenToResolveObj.selectedLevel = this.selectedLevel
+
+            // show the busy indicator
+            let loader = this.$loading.show({
+                container: this.$refs.formSelectCodes,
+                loader: 'dots',
+                isFullPage: false,
+              });
+
+            api.getChildren(this.$baseURL, this.selectedTags[0].key, this.selectedLevel)
+            .then((children)=>{
+              if (children != null) {
+                this.childrenToResolveObj.childrenCount = children.length
+              }
+              else {
+                this.childrenToResolveObj.childrenCount = 0
+              }
+            }).catch(function(error) {
+              console.error("Error retrieving children to resolve: " + error);
+            }).finally(function() { loader.hide()});
+          }
       },
 
       setSelectedTags() {
@@ -556,30 +676,116 @@ export default {
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
+        axios({
+          url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
+              this.userEnteredCodes + '/' +
+              this.userSelectedProperyNames + '/' +
+              this.selectedLevel + '/' +
+              this.userSelectedFormat.name + '/' +
+              this.filename + '.' + this.userSelectedFormat.extension,
+          method: 'GET',
+          responseType: 'blob',
+        }).then((response) => {
+              var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+              var fileLink = document.createElement('a');
 
-          axios({
-                url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
-                    this.userEnteredCodes + '/' +
-                    this.userSelectedProperyNames + '/' +
-                    this.selectedLevel + '/' +
-                    this.userSelectedFormat.name + '/' +
-                    this.filename + '.' + this.userSelectedFormat.extension,
-                method: 'GET',
-                responseType: 'blob',
-            }).then((response) => {
-                  var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-                  var fileLink = document.createElement('a');
-
-                  fileLink.href = fileURL;
-                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
-                  document.body.appendChild(fileLink);
-                  fileLink.click();
-              }).catch(function(error) {
-                  console.error("Download Error: " + error);
-                  alert("Error Downloading file");
-              }).finally(function() { loader.hide()});
+              fileLink.href = fileURL;
+              fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+              document.body.appendChild(fileLink);
+              fileLink.click();
+          }).catch(function(error) {
+              console.error("Download Error: " + error);
+              alert("Error Downloading file");
+          }).finally(function() { loader.hide()});
       },
 
+      async initiateDeferredDownloadAndWait() {
+        this.$notify({
+          group: 'download',
+          title: 'Export in Progress',
+          text: 'Your export is running.  Please wait.',
+          type: 'success',
+          duration: 2000,
+          position: "bottom left"
+        });
+
+        api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
+            this.userSelectedProperyNames, this.selectedLevel,
+            this.userSelectedFormat.name)
+        .then((data)=>{
+          if (data != null) {
+            this.deferredStatusUrl = data
+            //console.log("Deferred Call made.  return: " + data);
+            const hashId = this.getHashFromURL(this.deferredStatusUrl)
+            this.pollForStatus(hashId)
+          }
+          else {
+            this.deferredStatusUrl = null
+            console.log("Error making Deferred call");
+          }
+        })
+      },
+
+      async initiateDeferredDownloadAndReturn() {
+
+        api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
+            this.userSelectedProperyNames, this.selectedLevel,
+            this.userSelectedFormat.name)
+        .then((data)=>{
+          if (data != null) {
+            this.deferredStatusUrl = data
+
+            const hashId = this.getHashFromURL(this.deferredStatusUrl)
+            console.log("Deferred Call made.  return: " + data);
+            console.log("Deferred Call - Hash " + hashId);
+          }
+          else {
+            this.deferredStatusUrl = null
+            console.log("Error making Deferred call");
+          }
+        })
+      },
+
+      pollDeferredStatus: function() {
+        api.pollDeferredDownloadStatus(this.$baseURL, this.deferredStatusUrl)
+        .then((data)=>{
+          if (data != null) {
+            this.deferredStatus = data
+          }
+          else {
+            this.clearDeferredData()
+          }
+        }).catch(function(error) {
+            this.clearDeferredData()
+            console.error("Polling Deferred Status Error: " + error)
+        });
+      },
+
+      downloadDeferredResult(hashId) {
+        axios({
+          url:this.$baseURL +
+              'download/deferred/checkFileForHashFormatResponseEntity/'  +
+              hashId + '/' +
+              this.userSelectedFormat.name + '/' +
+              this.filename,
+          method: 'GET',
+          responseType: 'blob',
+        }).then((response) => {
+              var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+              var fileLink = document.createElement('a');
+
+              fileLink.href = fileURL;
+              fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+              document.body.appendChild(fileLink);
+              fileLink.click();
+          }).catch(function(error) {
+              console.error("Deferred Download Error: " + error);
+              alert("Error Downloading file");
+          }).finally(function() {
+            //this.clearDeferredData()
+          });
+
+      },
 
       getRoots(){
         api.getRoots(this.$baseURL)
@@ -594,21 +800,37 @@ export default {
       },
 
       getChildren(){
-        api.getChildren(this.$baseURL, this.userEnteredCodes)
+        api.getChildren(this.$baseURL, this.userEnteredCodes, 1)
         .then((data)=>{
           if (data != null) {
             //console.log("got children : " + data);
-        }
-        else {
-            console.log("Error retrieving children");
+          }
+          else {
+              console.log("Error retrieving children");
           }
         })
       },
+
+      clearDeferredData() {
+        this.deferredStatusUrl = ''
+        this.deferredStatus = false
+      },
+
+      getHashFromURL(hash) {
+        const startIndex = hash.lastIndexOf('/') + 1
+        return hash.substring(startIndex)
+      },
+
+      sleep: function(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
   },
     created() {
       // scroll to the top of the page
       window.scrollTo(0,0);
-      
+
       this.updateShowSummary();
 
       // load properties after the page is loaded.
