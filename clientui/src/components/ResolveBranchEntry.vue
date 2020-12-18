@@ -76,21 +76,21 @@
                       </div>
                   </div>
                   <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group">
-                                <label for="levelSelection">Select how many levels to retrieve</label>
-                                <select v-model="selectedLevel" id="levelSelection" class="form-control" v-on:change="onLevelChange()">
-                                  <option v-for="level in levels"
-                                    :value="level.id"
-                                    :key="level.name">
-                                    {{ level.name }}
-                                  </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
-              </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                              <label for="levelSelection">Select how many levels to retrieve</label>
+                              <select v-model="selectedLevel" id="levelSelection" class="form-control" v-on:change="onLevelChange()">
+                                <option v-for="level in levels"
+                                  :value="level.id"
+                                  :key="level.name">
+                                  {{ level.name }}
+                                </option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+            </div>
 
         </div>
       </tab-content>
@@ -143,10 +143,43 @@
                  </form>
               </div>
             </div>
+            <div class="row justify-content-center">
+               <div class="col-12 col-md-6">
+                   <div class="alert alert-dark" role="alert">
+                     This report will resolve {{ selectedLevel}} level(s)
+                     with a total of {{ this.childrenToResolveObj.childrenCount }} children.
+                     <h6 v-if="this.childrenToResolveObj.childrenCount < 500">This report should take less than 30 seconds.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 1000">This report should take less than 1 minute.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 5000">This report should take less than 5 minutes.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 10000">This report should take less than 10 minutes.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 20000">This report should take less than 15 minutes.</h6>
+                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 40000">This report should take less than 25 minutes.</h6>
+                     <h6 v-else>This report should take less than 30 minutes.</h6>
+                  </div>
+
+                  <label for="exportRadio">Select how to export</label>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" v-model="exportType" value="exportNow" id="exportNow" checked="" name="exportRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="exportNow">Export and wait</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" v-model="exportType" value="exportDeferred" id="exportDeferred" name="exportRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="exportDeferred">Export and get a link for download later</label>
+                  </div>
+
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+               <div class="col-12 col-md-6">
+                <div v-if="exportType == 'exportDeferred'">
+                  Export Link: {{ this.deferredStatusUrl }}
+                </div>
+              </div>
+          </div>
          </div>
        </tab-content>
     </form-wizard>
-
 
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
@@ -221,7 +254,6 @@
         </div>
       </div>
     </div>
-
  </div>
 </template>
 
@@ -292,6 +324,7 @@ export default {
       treeSelectedCode: null,
       showSummary: true,
       showSummaryText: '',
+      exportType: 'exportNow',
 
       // function to get tree data
       loadData: function (oriNode, resolve) {
@@ -408,8 +441,19 @@ export default {
 
       onComplete: function() {
         //this.downloadFile();
-        this.initiateDeferredDownload()
-        //this.pollForStatus()
+
+        // set the user selected tags and properties
+        this.setSelectedTags()
+        this.setSelectedPropertyNames()
+
+        if (this.exportType == 'exportNow') {
+          // export and wait for it to complete
+          this.initiateDeferredDownloadAndWait()
+        }
+        else {
+          // export and get a URL to go to later
+          this.initiateDeferredDownloadAndReturn()
+        }
       },
 
       async pollForStatus(hashId) {
@@ -655,7 +699,7 @@ export default {
           }).finally(function() { loader.hide()});
       },
 
-      async initiateDeferredDownload() {
+      async initiateDeferredDownloadAndWait() {
         this.$notify({
           group: 'download',
           title: 'Export in Progress',
@@ -664,10 +708,6 @@ export default {
           duration: 2000,
           position: "bottom left"
         });
-
-        // set the user selected tags and properties
-        this.setSelectedTags()
-        this.setSelectedPropertyNames()
 
         api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
             this.userSelectedProperyNames, this.selectedLevel,
@@ -678,6 +718,26 @@ export default {
             //console.log("Deferred Call made.  return: " + data);
             const hashId = this.getHashFromURL(this.deferredStatusUrl)
             this.pollForStatus(hashId)
+          }
+          else {
+            this.deferredStatusUrl = null
+            console.log("Error making Deferred call");
+          }
+        })
+      },
+
+      async initiateDeferredDownloadAndReturn() {
+
+        api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
+            this.userSelectedProperyNames, this.selectedLevel,
+            this.userSelectedFormat.name)
+        .then((data)=>{
+          if (data != null) {
+            this.deferredStatusUrl = data
+
+            const hashId = this.getHashFromURL(this.deferredStatusUrl)
+            console.log("Deferred Call made.  return: " + data);
+            console.log("Deferred Call - Hash " + hashId);
           }
           else {
             this.deferredStatusUrl = null
