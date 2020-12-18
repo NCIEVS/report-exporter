@@ -18,7 +18,7 @@ public class TimedEvictionConcurrentMap {
 
 	public static ConcurrentHashMap<String, TimedDeferredResultWrapper> dRHash = new ConcurrentHashMap<String, TimedDeferredResultWrapper>();
 	
-	@Scheduled(fixedRate = 30000, initialDelay = 30000)
+	@Scheduled(fixedRate = 300000, initialDelay = 300000)
 	public void pollandCleanMap() {
 		log.info("Running Cache Cleanup Thread");
 		dRHash.forEach((x,y) -> {if(y.isStale()) {
