@@ -42,7 +42,7 @@ public class FileDownloadController {
 	public enum Formats{JSON,CSV,TABD,EXCEL};
 	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
 	
-	@Value("${RESULT_TIME_OUT:1800000}")
+	@Value("${RESULT_TIME_OUT:3600000}")
 	public int resultTimeOut;
 	
 	
