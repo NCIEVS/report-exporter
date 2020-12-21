@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -30,7 +31,9 @@ import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutServiceDeferredWrapper;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
+import gov.nih.nci.evs.report.exporter.service.TimedDeferredResultWrapper;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
+import gov.nih.nci.evs.report.exporter.util.TimedEvictionConcurrentMap;
 
 @RestController
 @RequestMapping("/download")
@@ -38,6 +41,9 @@ public class FileDownloadController {
 	
 	public enum Formats{JSON,CSV,TABD,EXCEL};
 	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
+	
+	@Value("${RESULT_TIME_OUT:3600000}")
+	public int resultTimeOut;
 	
 	
 	public Format[] formats = new Format[]
@@ -58,8 +64,6 @@ public class FileDownloadController {
 	@Autowired
 	CodeReadService codeReadService;
 
-	private ConcurrentHashMap<Integer, DeferredResult<byte[]>> dRHash = new ConcurrentHashMap<Integer, DeferredResult<byte[]>>();
-	
 	@GetMapping(
 			  value = "/get-file/{id}/JsonFile.json",
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
@@ -142,29 +146,34 @@ public class FileDownloadController {
 	public @ResponseBody String getUrlForAsyncProcess(@PathVariable String id, @PathVariable String props,
 			@PathVariable String max, @PathVariable String format) throws IOException {
 		DeferredResult<byte[]> deferredResult;
+		TimedDeferredResultWrapper timedDeferredResult;
 		Formats fmt = Formats.valueOf(format);
 		switch (fmt) {
 		case JSON:
 			deferredResult = deferredBranchService.getJsonBytesForRestParams(id, props, max);
-			dRHash.put(deferredResult.hashCode(), deferredResult);
+			timedDeferredResult = new TimedDeferredResultWrapper(false, deferredResult, resultTimeOut);
+			TimedEvictionConcurrentMap.getdRHash().put(String.valueOf(deferredResult.hashCode()), timedDeferredResult);
 			return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
 		case CSV:
 			deferredResult = deferredBranchService.getChildCSVBytesForRestParams(id, props, max);
-			dRHash.put(deferredResult.hashCode(), deferredResult);
+			timedDeferredResult = new TimedDeferredResultWrapper(false, deferredResult, resultTimeOut);
+			TimedEvictionConcurrentMap.getdRHash().put(String.valueOf(deferredResult.hashCode()), timedDeferredResult);
 			return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
-
 		case TABD:
 			deferredResult = deferredBranchService.getTabDelBytesForRestParams(id, props, max);
-			dRHash.put(deferredResult.hashCode(), deferredResult);
+			timedDeferredResult = new TimedDeferredResultWrapper(false, deferredResult, resultTimeOut);
+			TimedEvictionConcurrentMap.getdRHash().put(String.valueOf(deferredResult.hashCode()), timedDeferredResult);
 			return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
 		case EXCEL:
 			deferredResult = deferredBranchService.getXSLBytesForRestParams(id, props, max);
-			dRHash.put(deferredResult.hashCode(), deferredResult);
+			timedDeferredResult = new TimedDeferredResultWrapper(false, deferredResult, resultTimeOut);
+			TimedEvictionConcurrentMap.getdRHash().put(String.valueOf(deferredResult.hashCode()), timedDeferredResult);
 			return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
 
 		default:
 			deferredResult = deferredBranchService.getJsonBytesForRestParams(id, props, max);
-			dRHash.put(deferredResult.hashCode(), deferredResult);
+			timedDeferredResult = new TimedDeferredResultWrapper(false, deferredResult, resultTimeOut);
+			TimedEvictionConcurrentMap.getdRHash().put(String.valueOf(deferredResult.hashCode()), timedDeferredResult);
 			return "deferred/checkURLHashForDeferredStatus/" + Integer.toString(deferredResult.hashCode());
 		}
 
@@ -172,13 +181,16 @@ public class FileDownloadController {
 
 	@GetMapping("deferred/checkURLHashForDeferredStatus/{hash}")
 	public String checkURLHashForDeferredStatus(@PathVariable String hash) {
-		return String.valueOf(dRHash.get(new Integer(hash)).hasResult());
+		if(TimedEvictionConcurrentMap.getdRHash().get(hash) == null) {
+			return "EXPIRED";
+		}
+		return String.valueOf(TimedEvictionConcurrentMap.getdRHash().get(hash).getResult().hasResult());
 	}
 
 	@GetMapping(value = "deferred/checkFileForHashFormatResponseEntity/{hash}/{format}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<InputStreamResource> getDeferredResponseEntityResult(@PathVariable String hash,
 			@PathVariable String format, @PathVariable String fileName) {
-		ByteArrayInputStream in = new ByteArrayInputStream((byte[]) dRHash.remove(new Integer(hash)).getResult());
+		ByteArrayInputStream in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash().remove(hash).getResult().getResult());
 		HttpHeaders headers = new HttpHeaders();
 
 		Formats fmt = Formats.valueOf(format);
@@ -200,5 +212,42 @@ public class FileDownloadController {
 		}
 		return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 	}
+	
+	@GetMapping(
+			  value = "/get-minfile-for-resolved-branch/{id}/{props}/{max}/{format}/{filename}",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+			)
+			public @ResponseBody byte[] getMinimalFileByFormatForBranch(@PathVariable String id,
+					@PathVariable String props,
+					@PathVariable String max,
+					@PathVariable String format,
+					@PathVariable String filename) throws IOException {
+				Formats fmt = Formats.valueOf(format);
+				switch(fmt) {
+		            case JSON: 
+		            	return IOUtils.toByteArray(
+		         			    branchService.getJsonBytesForRestChildParams(id, max));
+		            case CSV:
+					    return IOUtils.toByteArray(
+					    		branchService.getChildCSVBytesForRestParams(id, max));
+		            case TABD: 
+					    return IOUtils.toByteArray(
+					    		branchService.getChildTabDelBytesForRestParams(id, max));
+		            default:
+		            	return IOUtils.toByteArray(
+		            			branchService.getJsonBytesForRestChildParams(id, max));
+				}
+
+			}
+	
+	@GetMapping("/get-minfile-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
+	public ResponseEntity<InputStreamResource> minimalFileReportForExcelBranch(@PathVariable String id, 
+			@PathVariable String props, @PathVariable String max, @PathVariable String filename)  throws IOException {
+	    ByteArrayInputStream in = branchService.getChildXSLBytesForRestParams(id, max);
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+	    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+	}
+	
 
 }
