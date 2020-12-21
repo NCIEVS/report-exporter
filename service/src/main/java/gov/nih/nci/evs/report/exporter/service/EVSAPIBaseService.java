@@ -47,7 +47,9 @@ public class EVSAPIBaseService {
 	
 	@Value("${REST_PROP_FILTER_LIST}")
 	private String filterList;
-    
+	
+	@Value("${REST_ROOT_FILTER_LIST:C28428}")
+	private String rootFilterList;
     
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
 		return 
@@ -145,8 +147,10 @@ public class EVSAPIBaseService {
 	public String getFilterList() {
 		return filterList;
 	}
-	
-	
-    
+
+	public String getRootFilterList() {
+		return rootFilterList;
+	}
+
 
 }
