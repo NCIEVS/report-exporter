@@ -81,6 +81,12 @@ class TerminologyPropertyServiceTest {
 		r9.setName("FULL_SYN");
 		r9.setTerminology("ncit");
 		r9.setVersion("20.19d");
+		
+		RestPropertyMetadata r10 = new RestPropertyMetadata();
+		r10.setCode("p108");
+		r10.setName("Preferred_Name");
+		r10.setTerminology("ncit");
+		r10.setVersion("20.19d");
 
 		
 		props = new RestPropertyMetadata[] { 
@@ -92,8 +98,9 @@ class TerminologyPropertyServiceTest {
 				r6,
 				r7,
 				r8,
-				r9};
-		when(baseservice.getFilterList()).thenReturn("BioCarta_ID,Extensible_List,FDA_Table");
+				r9,
+				r10};
+		when(baseservice.getFilterList()).thenReturn("BioCarta_ID,Extensible_List,FDA_Table,Preferred_Name");
 	}
 
 	@Test
@@ -108,6 +115,7 @@ class TerminologyPropertyServiceTest {
 		assertFalse(Stream.of(results).anyMatch(x -> x.getName().equals("Extensible_List")));
 		assertFalse(Stream.of(results).anyMatch(x -> x.getName().equals("FDA_Table")));
 		assertTrue(Stream.of(results).anyMatch(x -> x.getName().equals("FULL_SYN")));
+		assertFalse(Stream.of(results).anyMatch(x -> x.getName().equals("Preferred_Name")));
 	}
 
 }
