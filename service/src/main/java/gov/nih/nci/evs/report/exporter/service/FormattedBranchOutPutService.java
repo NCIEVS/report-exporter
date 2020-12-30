@@ -58,7 +58,7 @@ public class FormattedBranchOutPutService {
 	public InputStream getCSVBytesForRestParams(String codes, String props, String max) {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
-										service.getResolvedChildFlatListFromTopNode( 
+										service.getResolvedChildFlatListFromTopNodeBatch( 
 										codes, props, max) ,props).getBytes());
 	}
 	
