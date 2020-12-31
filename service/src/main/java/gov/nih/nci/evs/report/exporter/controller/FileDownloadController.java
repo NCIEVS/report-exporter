@@ -79,26 +79,38 @@ public class FileDownloadController {
 			  value = "/get-file-for-readCodes/{id}/{props}/{format}/{filename}",
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 			)
-			public @ResponseBody byte[] getFileByFormat(@PathVariable String id,
+			public ResponseEntity<InputStreamResource>  getFileByFormat(@PathVariable String id,
 					@PathVariable String props,
 					@PathVariable String format, 
-					@PathVariable String filename) throws IOException {
-				Formats fmt = Formats.valueOf(format);
+					@PathVariable String filename) {
+						ByteArrayInputStream in;
+						HttpHeaders headers = new HttpHeaders();
+						Formats fmt = Formats.valueOf(format);
 				switch(fmt) {
 		            case JSON: 
-		            	return IOUtils.toByteArray(
-		         			    		service.getJsonBytesForRestParams(id, props));
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) service.getJsonBytesForRestParams(id, props);
+		    			break;
 		            case CSV:
-					    return IOUtils.toByteArray(
-					    		service.getCSVBytesForRestParams(id, props));
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".csv");
+		            	in = (ByteArrayInputStream)
+					    		service.getCSVBytesForRestParams(id, props);
+		            	break;
 		            case TABD: 
-					    return IOUtils.toByteArray(
-					    		service.getTabDelBytesForRestParams(id, props));
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".txt");
+		            	in = (ByteArrayInputStream)
+					    		service.getTabDelBytesForRestParams(id, props);
+		    			break;
+		            case EXCEL:
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+		            	in = service.getXSLBytesForRestParams(id, props);
+		    			break;
 		            default:
-		            	return IOUtils.toByteArray(new ByteArrayInputStream(CommonServices.getGsonForPrettyPrint().toJson(
-					    		codeReadService.getRestEntities( 
-					    				CommonServices.splitInput(id))).getBytes()));
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) service.getJsonBytesForRestParams(id, props);
 				}
+		            	return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+
 	}
 
 	@GetMapping("/output-formats")
