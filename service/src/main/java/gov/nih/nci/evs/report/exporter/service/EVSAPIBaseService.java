@@ -101,13 +101,7 @@ public class EVSAPIBaseService {
 	
 	public RestEntity[] getEntities(String codes) {	
 		
-		WebClient client = WebClient.builder().
-				  exchangeStrategies(ExchangeStrategies.builder()
-						    .codecs(configurer -> configurer
-						      .defaultCodecs()
-						      .maxInMemorySize(16 * 1024 * 1024))
-						    .build())
-						  .build();
+		WebClient client = getNewWebClientWithBuffer();
 		try {
 			return client
 					.get()
@@ -178,5 +172,15 @@ public class EVSAPIBaseService {
 		return rootFilterList;
 	}
 
+	public WebClient getNewWebClientWithBuffer() {
+		
+		return WebClient.builder().
+		  exchangeStrategies(ExchangeStrategies.builder()
+				    .codecs(configurer -> configurer
+				      .defaultCodecs()
+				      .maxInMemorySize(16 * 1024 * 1024))
+				    .build())
+				  .build();
+	}
 
 }
