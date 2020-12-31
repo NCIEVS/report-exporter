@@ -33,7 +33,7 @@ public class BranchResolutionService {
 		List<ChildEntity> entityList = new ArrayList<ChildEntity>();
 		getUnprocessedChildrenForBranchTopNode(code, max)
 		.stream()
-		.forEach(x -> resolveChildEntityGraph(code + ":" + CommonServices.TOP_NODE, x, entityList));
+		.forEach(x -> resolveChildEntityGraph( x, entityList));
 		return entityList;
 	}
 	
@@ -42,13 +42,13 @@ public class BranchResolutionService {
 	}
 
 	  
-	public void resolveChildEntityGraph(String parent, ChildEntity child, List<ChildEntity> list){
+	public void resolveChildEntityGraph(ChildEntity child, List<ChildEntity> list){
 		  
 		  if(child != null &&!child.isLeaf() && child.getChildren() != null) {
 			  child.getChildren()
 			  .stream()
 			  .forEach(x ->
-			  resolveChildEntityGraph(child.getCode() + ":" + child.getName(), x, list));}
+			  resolveChildEntityGraph( x, list));}
 		 
 		if(!child.isLeaf()){child.setChildren(null);}
 //		if(CommonServices.isChildParent(parent,child.getCode())) {

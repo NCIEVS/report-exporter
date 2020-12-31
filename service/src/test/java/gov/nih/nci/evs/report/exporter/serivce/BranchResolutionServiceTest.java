@@ -88,6 +88,7 @@ class BranchResolutionServiceTest {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
+
 		
 		List<Root> roots = new ArrayList<Root>();
 		Root r1 = new Root();
@@ -102,13 +103,32 @@ class BranchResolutionServiceTest {
 		roots.add(r1);
 		roots.add(r2);
 		roots.add(r3);
+		entity.setParents(roots);
 		when(baseservice.getRestParents(Mockito.anyString())).thenReturn(roots);
 		service.setService(baseservice);
-		service.resolveChildEntityGraph(CommonServices.TOP_NODE, entity, list);
+		service.resolveChildEntityGraph( entity, list);
 		assertEquals(7, list.size());
-		list.get(0).getParents().stream().anyMatch(x -> x.getCode().equals("C23423"));
-		list.get(0).getParents().stream().anyMatch(x -> x.getName().equals("dog"));
-		list.get(0).getParents().stream().anyMatch(x -> x.getCode().equals("C534"));
+		list.stream()
+		.filter(x -> x.getCode().equals("C00000"))
+		.findAny()
+		.get()
+		.getParents()
+		.stream()
+		.filter(z -> z.getCode().equals("C23423"));
+		list.stream()
+		.filter(x -> x.getCode().equals("C00000"))
+		.findAny()
+		.get()
+		.getParents()
+		.stream()
+		.filter(z -> z.getCode().equals("C534"));
+		list.stream()
+		.filter(x -> x.getCode().equals("C00000"))
+		.findAny()
+		.get()
+		.getParents()
+		.stream()
+		.filter(z -> z.getName().equals("dog"));
 	}
 
 

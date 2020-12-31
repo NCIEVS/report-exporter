@@ -603,7 +603,7 @@ public RestEntity getRestEntityWNoDefsNoMaps() {
 		entity.setLeaf(false);
 		entity.setLevel("0");
 		entity.setChildren(children);
-		service.resolveChildEntityGraph(CommonServices.TOP_NODE, entity, list);
+		service.resolveChildEntityGraph( entity, list);
 		return list;
 	}
 	
