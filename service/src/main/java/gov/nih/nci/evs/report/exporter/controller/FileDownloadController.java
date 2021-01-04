@@ -202,7 +202,11 @@ public class FileDownloadController {
 	@GetMapping(value = "deferred/checkFileForHashFormatResponseEntity/{hash}/{format}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<InputStreamResource> getDeferredResponseEntityResult(@PathVariable String hash,
 			@PathVariable String format, @PathVariable String fileName) {
-		ByteArrayInputStream in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash().remove(hash).getResult().getResult());
+		ByteArrayInputStream in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash()
+				.remove(hash)
+				.getResult()
+				.getResult());
+		
 		HttpHeaders headers = new HttpHeaders();
 
 		Formats fmt = Formats.valueOf(format);
