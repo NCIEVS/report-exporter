@@ -210,9 +210,9 @@ public class FileDownloadController {
 		log.info("Result wrapper exists? " + TimedEvictionConcurrentMap.getdRHash().containsKey(hash));
 		log.info("DeferredResult exists? " + (TimedEvictionConcurrentMap.getdRHash().get(hash) != null));
 		log.info("Result exists? " + TimedEvictionConcurrentMap.getdRHash().get(hash).getResult().hasResult());
-		
+		ByteArrayInputStream in = null;
 		try {
-		ByteArrayInputStream in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash()
+		 in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash()
 				.remove(hash)
 				.getResult()
 				.getResult());
