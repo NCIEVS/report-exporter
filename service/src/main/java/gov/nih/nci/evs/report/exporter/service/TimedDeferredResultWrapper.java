@@ -22,9 +22,10 @@ public class TimedDeferredResultWrapper {
 	public boolean isStale() {
 		log.info("deferredTimeOut: " + this.deferredTimeOut);
 		log.info("System current time mill: " + System.currentTimeMillis());
+		log.info("Result Exists?: " + result.hasResult());
 		if(result.hasResult() && deferredTimeOut < System.currentTimeMillis())
-		{return stale = true; }
-		else {return stale;}
+		{return true; }
+		else {return false;}
 	}
 	
 	public void setStale(boolean stale) {

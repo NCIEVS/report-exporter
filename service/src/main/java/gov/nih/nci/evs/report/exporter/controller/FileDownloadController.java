@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -38,6 +40,8 @@ import gov.nih.nci.evs.report.exporter.util.TimedEvictionConcurrentMap;
 @RestController
 @RequestMapping("/download")
 public class FileDownloadController {
+	
+	private static final Logger log = LoggerFactory.getLogger(FileDownloadController.class);
 	
 	public enum Formats{JSON,CSV,TABD,EXCEL};
 	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
@@ -202,10 +206,19 @@ public class FileDownloadController {
 	@GetMapping(value = "deferred/checkFileForHashFormatResponseEntity/{hash}/{format}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<InputStreamResource> getDeferredResponseEntityResult(@PathVariable String hash,
 			@PathVariable String format, @PathVariable String fileName) {
+		log.info("Hash for download: " + hash);
+		log.info("Result wrapper exists? " + TimedEvictionConcurrentMap.getdRHash().containsKey(hash));
+		log.info("DeferredResult exists? " + (TimedEvictionConcurrentMap.getdRHash().get(hash) != null));
+		log.info("Result exists? " + TimedEvictionConcurrentMap.getdRHash().get(hash).getResult().hasResult());
+		
+		try {
 		ByteArrayInputStream in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash()
 				.remove(hash)
 				.getResult()
 				.getResult());
+		}catch(NullPointerException n) {
+			log.info("Failed on null pointer exception for: " + hash);
+		}
 		
 		HttpHeaders headers = new HttpHeaders();
 
