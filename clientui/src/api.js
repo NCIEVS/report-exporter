@@ -104,5 +104,19 @@ const api = {
 						})
 				})
 			},
+
+			async pollDeferredDownloadStatus1(baseUrl, id){
+				return new Promise((resolve)=>{
+					//console.log("Polling URL: " + baseUrl + 'download/deferred/checkURLHashForDeferredStatus/' + id)
+					axios.get(baseUrl + 'download/deferred/checkURLHashForDeferredStatus/' + id)
+							.then((response) =>{
+									resolve(response.data);
+							})
+							.catch(error => {
+									console.log("Error polling Deferred Download: " + error);
+									resolve(null)
+							})
+					})
+				},
 }
 export default api

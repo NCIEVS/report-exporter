@@ -9,6 +9,9 @@
 
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">
+              <router-link class="nav-link" v-bind:to="'/downloads'" title="Link to Downloads">Downloads</router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" v-bind:to="'/documentation'" title="Link to Documentation">Documentation</router-link>
             </li>
             <li class="nav-item">

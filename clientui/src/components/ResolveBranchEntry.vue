@@ -148,13 +148,6 @@
                    <div class="alert alert-dark" role="alert">
                      This report will resolve {{ selectedLevel}} level(s)
                      with a total of {{ this.childrenToResolveObj.childrenCount }} children.
-                     <h6 v-if="this.childrenToResolveObj.childrenCount < 500">This report should take less than 30 seconds.</h6>
-                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 1000">This report should take less than 1 minute.</h6>
-                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 5000">This report should take less than 5 minutes.</h6>
-                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 10000">This report should take less than 10 minutes.</h6>
-                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 20000">This report should take less than 15 minutes.</h6>
-                     <h6 v-else-if="this.childrenToResolveObj.childrenCount < 40000">This report should take less than 25 minutes.</h6>
-                     <h6 v-else>This report should take less than 30 minutes.</h6>
                   </div>
 
                   <label for="exportRadio">Select how to export</label>
@@ -172,8 +165,9 @@
 
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
-                <div v-if="exportType == 'exportDeferred'">
-                  Export Link: {{ this.deferredStatusUrl }}
+                <!--div v-if="exportType == 'exportDeferred'"-->
+                <div v-if="exportType == 'exportDeferred'  && this.deferredStatusHash != ''">
+                  <b>Use this Export ID in the Download page to retrieve your report: {{ this.deferredStatusHash }} </b>
                 </div>
               </div>
           </div>
@@ -279,7 +273,7 @@ export default {
     //'v-select': vSelect,
     FormWizard,
     TabContent,
-   'v-jstree': VJstree
+   'v-jstree': VJstree,
   },
   data(){
     return {
@@ -318,6 +312,7 @@ export default {
         childrenCount:0
       },
       deferredStatusUrl: '',
+      deferredStatusHash: '',
       deferredStatus: false,
       showTree: true,
       asyncData: [],
@@ -469,14 +464,23 @@ export default {
         if (this.deferredStatusUrl != null && this.deferredStatusUrl.length >0) {
 
           // loop and wait until the status comes back as true
-          while (this.deferredStatus != null && !this.deferredStatus) {
+          while (this.deferredStatus != null &&
+            this.deferredStatus != "ERROR" &&
+            !this.deferredStatus) {
             this.pollDeferredStatus()
             await this.sleep(500);
           }
           loader.hide()
+
+          if (this.deferredStatus === "ERROR") {
+              alert("Error downloading deferred file");
+          }
+          else {
+            //this.clearDeferredData()
+            // verify status is good and we can download
+            this.downloadDeferredResult(hashId)
+          }
           this.clearDeferredData()
-          // verify status is good and we can download
-          this.downloadDeferredResult(hashId)
         }
         else {
           console.log("deferredStatusUrl not good")
@@ -708,6 +712,12 @@ export default {
           duration: 2000,
           position: "bottom left"
         });
+        // show the busy indicator
+        let loader = this.$loading.show({
+            container: this.$refs.formContainer,
+            loader: 'dots',
+            isFullPage: false,
+          });
 
         api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
             this.userSelectedProperyNames, this.selectedLevel,
@@ -716,34 +726,50 @@ export default {
           if (data != null) {
             this.deferredStatusUrl = data
             //console.log("Deferred Call made.  return: " + data);
-            const hashId = this.getHashFromURL(this.deferredStatusUrl)
-            this.pollForStatus(hashId)
+            //const hashId = this.getHashFromURL(this.deferredStatusUrl)
+            this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
+            this.pollForStatus(this.deferredStatusHash)
           }
           else {
             this.deferredStatusUrl = null
             console.log("Error making Deferred call");
+            alert("Error downloading deferred file");
           }
-        })
+        }).finally(function() { loader.hide()});
       },
 
       async initiateDeferredDownloadAndReturn() {
-
+        this.$notify({
+          group: 'download',
+          title: 'Export ID',
+          text: 'Retrieving your Export ID.',
+          type: 'success',
+          duration: 2000,
+          position: "bottom left"
+        });
+        // show the busy indicator
+        let loader = this.$loading.show({
+            container: this.$refs.formContainer,
+            loader: 'dots',
+            isFullPage: false,
+          });
         api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
             this.userSelectedProperyNames, this.selectedLevel,
             this.userSelectedFormat.name)
         .then((data)=>{
           if (data != null) {
             this.deferredStatusUrl = data
+            this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
+            //console.log("Deferred Call made.  return: " + data);
+            //console.log("Deferred Call - Hash " + this.deferredStatusHash);
 
-            const hashId = this.getHashFromURL(this.deferredStatusUrl)
-            console.log("Deferred Call made.  return: " + data);
-            console.log("Deferred Call - Hash " + hashId);
+            this.addHashToLocalStorage(this.deferredStatusHash)
           }
           else {
             this.deferredStatusUrl = null
             console.log("Error making Deferred call");
           }
-        })
+        }).finally(function() { loader.hide()});
       },
 
       pollDeferredStatus: function() {
@@ -753,7 +779,7 @@ export default {
             this.deferredStatus = data
           }
           else {
-            this.clearDeferredData()
+            this.deferredStatus = "ERROR"
           }
         }).catch(function(error) {
             this.clearDeferredData()
@@ -811,8 +837,33 @@ export default {
         })
       },
 
+      // Add to local storage
+      addHashToLocalStorage() {
+        // ensure there is a hashID
+        if (!this.deferredStatusHash) {
+          return;
+        }
+
+        this.saveDeferredDownloads();
+      },
+
+      // save to local storage
+      saveDeferredDownloads() {
+        this.$storage.set(this.deferredStatusHash,
+          {
+            key: this.deferredStatusHash,
+            format: this.userSelectedFormat.name,
+            date: new Date().toLocaleString(),
+            status: "Unknown"
+          },
+          { ttl: 60 * 60 * 1000 })
+
+        localStorage.name = "Cory"
+      },
+
       clearDeferredData() {
         this.deferredStatusUrl = ''
+        this.deferredStatusHash = ''
         this.deferredStatus = false
       },
 
