@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -38,6 +40,8 @@ import gov.nih.nci.evs.report.exporter.util.TimedEvictionConcurrentMap;
 @RestController
 @RequestMapping("/download")
 public class FileDownloadController {
+	
+	private static final Logger log = LoggerFactory.getLogger(FileDownloadController.class);
 	
 	public enum Formats{JSON,CSV,TABD,EXCEL};
 	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
@@ -79,26 +83,38 @@ public class FileDownloadController {
 			  value = "/get-file-for-readCodes/{id}/{props}/{format}/{filename}",
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 			)
-			public @ResponseBody byte[] getFileByFormat(@PathVariable String id,
+			public ResponseEntity<InputStreamResource>  getFileByFormat(@PathVariable String id,
 					@PathVariable String props,
 					@PathVariable String format, 
-					@PathVariable String filename) throws IOException {
-				Formats fmt = Formats.valueOf(format);
+					@PathVariable String filename) {
+						ByteArrayInputStream in;
+						HttpHeaders headers = new HttpHeaders();
+						Formats fmt = Formats.valueOf(format);
 				switch(fmt) {
 		            case JSON: 
-		            	return IOUtils.toByteArray(
-		         			    		service.getJsonBytesForRestParams(id, props));
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) service.getJsonBytesForRestParams(id, props);
+		    			break;
 		            case CSV:
-					    return IOUtils.toByteArray(
-					    		service.getCSVBytesForRestParams(id, props));
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".csv");
+		            	in = (ByteArrayInputStream)
+					    		service.getCSVBytesForRestParams(id, props);
+		            	break;
 		            case TABD: 
-					    return IOUtils.toByteArray(
-					    		service.getTabDelBytesForRestParams(id, props));
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".txt");
+		            	in = (ByteArrayInputStream)
+					    		service.getTabDelBytesForRestParams(id, props);
+		    			break;
+		            case EXCEL:
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+		            	in = service.getXSLBytesForRestParams(id, props);
+		    			break;
 		            default:
-		            	return IOUtils.toByteArray(new ByteArrayInputStream(CommonServices.getGsonForPrettyPrint().toJson(
-					    		codeReadService.getRestEntities( 
-					    				CommonServices.splitInput(id))).getBytes()));
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) service.getJsonBytesForRestParams(id, props);
 				}
+		            	return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+
 	}
 
 	@GetMapping("/output-formats")
@@ -190,7 +206,20 @@ public class FileDownloadController {
 	@GetMapping(value = "deferred/checkFileForHashFormatResponseEntity/{hash}/{format}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<InputStreamResource> getDeferredResponseEntityResult(@PathVariable String hash,
 			@PathVariable String format, @PathVariable String fileName) {
-		ByteArrayInputStream in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash().remove(hash).getResult().getResult());
+//		log.info("Hash for download: " + hash);
+//		log.info("Result wrapper exists? " + TimedEvictionConcurrentMap.getdRHash().containsKey(hash));
+//		log.info("DeferredResult exists? " + (TimedEvictionConcurrentMap.getdRHash().get(hash) != null));
+//		log.info("Result exists? " + TimedEvictionConcurrentMap.getdRHash().get(hash).getResult().hasResult());
+		ByteArrayInputStream in = null;
+		try {
+		 in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash()
+				.remove(hash)
+				.getResult()
+				.getResult());
+		}catch(NullPointerException n) {
+			log.info("Failed on null pointer exception for: " + hash);
+		}
+		
 		HttpHeaders headers = new HttpHeaders();
 
 		Formats fmt = Formats.valueOf(format);

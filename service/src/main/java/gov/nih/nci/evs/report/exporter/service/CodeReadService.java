@@ -48,6 +48,11 @@ public class CodeReadService {
 		return entity;
 	}
 	
+	public RestEntity[] getRestEntitiesWithParent(String codes){
+		RestEntity[] entities = service.getEntities(codes);
+		return entities;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){

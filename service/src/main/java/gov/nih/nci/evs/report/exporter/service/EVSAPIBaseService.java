@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -41,6 +42,9 @@ public class EVSAPIBaseService {
 	
 	@Value("${PARENTS}")
 	private String parents;
+	
+	@Value("${PARENTS_PARAM}")
+	private String parentsParam;
 	
 	@Value("${REST_PROP_URL}")
 	private String propURL;
@@ -88,6 +92,22 @@ public class EVSAPIBaseService {
 					.uri(new URI(baseURL + code + summary + "," + maps))
 					.retrieve()
 					.bodyToMono(RestEntity.class)
+					.block();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public RestEntity[] getEntities(String codes) {	
+		
+		WebClient client = getNewWebClientWithBuffer();
+		try {
+			return client
+					.get()
+					.uri(new URI(baseURL + summary + "," + maps + "," + parentsParam + "&list=" + codes))
+					.retrieve()
+					.bodyToMono(RestEntity[].class)
 					.block();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
@@ -152,5 +172,15 @@ public class EVSAPIBaseService {
 		return rootFilterList;
 	}
 
+	public WebClient getNewWebClientWithBuffer() {
+		
+		return WebClient.builder().
+		  exchangeStrategies(ExchangeStrategies.builder()
+				    .codecs(configurer -> configurer
+				      .defaultCodecs()
+				      .maxInMemorySize(16 * 1024 * 1024))
+				    .build())
+				  .build();
+	}
 
 }

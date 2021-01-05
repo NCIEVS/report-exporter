@@ -52,7 +52,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		log.info("Stream processing thread started");
 		deferredStream.setResult(new CSVUtility()
 				.produceCSVOutputFromListWithHeading(
-						service.getResolvedChildFlatListFromTopNode( 
+						service.getResolvedChildFlatListFromTopNodeBatch( 
 						code, props, max) ,props).getBytes());
 	}).start();
 	log.info("Stream processing thread complete");
@@ -85,12 +85,12 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 
 	}
 	
-	private void startJSONThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
+	private void startJSONThread(DeferredResult<byte[]> deferredStream, String codes, String props, String max){
 	new Thread(() -> {
 		log.info("Stream processing JSON thread started");
 		deferredStream.setResult(CommonServices.getGsonForPrettyPrint().toJson(
-				service.getResolvedChildFlatListFromTopNode( 
-						code, props, max)).getBytes());
+				service.getResolvedChildFlatListFromTopNodeBatch( 
+						codes, props, max)).getBytes());
 	}).start();
 	log.info("Stream processing JSON thread complete");
 	}
@@ -98,7 +98,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	public InputStream getCSVBytesForRestParams(String codes, String props, String max) {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
-										service.getResolvedChildFlatListFromTopNode( 
+										service.getResolvedChildFlatListFromTopNodeBatch( 
 										codes, props, max) ,props).getBytes());
 	}
 	
@@ -114,13 +114,13 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		
 	}
 	
-	private void startTABDelThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
+	private void startTABDelThread(DeferredResult<byte[]> deferredStream, String codes, String props, String max){
 	new Thread(() -> {
 		log.info("Stream processing TAB Delimited thread started");
 		deferredStream.setResult(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
-						service.getResolvedChildFlatListFromTopNode( 
-								code, props, max), props).getBytes());
+						service.getResolvedChildFlatListFromTopNodeBatch( 
+								codes, props, max), props).getBytes());
 	}).start();
 	log.info("Stream processing TAB Delimited  complete");
 	}
@@ -137,14 +137,14 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 
 	}
 	
-	private void startExcelThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
+	private void startExcelThread(DeferredResult<byte[]> deferredStream, String codes, String props, String max){
 	new Thread(() -> {
 		log.info("Stream processing Excel thread started");
 		try {
 			deferredStream.setResult(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
-							service.getResolvedChildFlatListFromTopNode( 
-									code, props, max), props).toByteArray());
+							service.getResolvedChildFlatListFromTopNodeBatch( 
+									codes, props, max), props).toByteArray());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
