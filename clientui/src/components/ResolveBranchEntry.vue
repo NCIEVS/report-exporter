@@ -1,5 +1,5 @@
 <template>
-  <div id="resolve-branch-entry" class="container">
+  <div id="resolve-branch-entry" class="container" ref="formContainer">
 
     <!-- Modal -->
     <div class="modal fade" id="treeModal" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
@@ -120,7 +120,7 @@
        <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
        <tab-content icon="ti-download" title="Select Format and Export"
           :before-change="validateExportStep">
-         <div ref="formContainer" class="container">
+         <div class="container">
              <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
                  <form>
