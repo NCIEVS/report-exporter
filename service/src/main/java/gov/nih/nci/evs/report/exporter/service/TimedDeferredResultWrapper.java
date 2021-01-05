@@ -14,15 +14,15 @@ public class TimedDeferredResultWrapper {
 		this.stale = stale;
 		this.result = result;
 		this.deferredTimeOut = deferredTimeOut + System.currentTimeMillis();
-		System.out.print("Time to expire: " + this.deferredTimeOut);
+		//System.out.print("Time to expire: " + this.deferredTimeOut);
 	}
 	private boolean stale = false;
 	private DeferredResult<byte[]> result;
 	private long deferredTimeOut;
 	public boolean isStale() {
-		log.info("deferredTimeOut: " + this.deferredTimeOut);
-		log.info("System current time mill: " + System.currentTimeMillis());
-		log.info("Result Exists?: " + result.hasResult());
+//		log.info("deferredTimeOut: " + this.deferredTimeOut);
+//		log.info("System current time mill: " + System.currentTimeMillis());
+//		log.info("Result Exists?: " + result.hasResult());
 		if(result.hasResult() && deferredTimeOut < System.currentTimeMillis())
 		{return true; }
 		else {return false;}
