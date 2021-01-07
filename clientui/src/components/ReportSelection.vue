@@ -95,7 +95,7 @@
     data(){
       return {
         isModalVisible: false,
-        warningCookie: "warningAcknowledgement",
+        warningCookie: "NCIWarningAcknowledgement",
       }
     },
     methods: {
