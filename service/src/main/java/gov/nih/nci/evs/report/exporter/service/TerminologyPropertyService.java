@@ -26,7 +26,15 @@ public class TerminologyPropertyService {
 	public RestPropertyMetadata[] getRestProperties(RestTemplate template){
 		RestPropertyMetadata[] propMeta = 
 				getFilteredList(service.getRestProperties(template));
-		return propMeta;
+		RestPropertyMetadata[] synMeta = 
+				getFilteredList(service.getRestSynonyms(template));
+		RestPropertyMetadata[] defMeta = 
+				getFilteredList(service.getRestDefinitions(template));
+		
+		return Stream
+				.of(propMeta,synMeta,defMeta)
+				.flatMap(Stream::of)
+				.toArray(RestPropertyMetadata[]::new);
 	}
 	
 	public RestPropertyMetadata[] getFilteredList(RestPropertyMetadata[] propMeta) {
