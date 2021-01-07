@@ -2,7 +2,7 @@
   <div id="resolve-branch-entry" class="container" ref="formContainer">
 
     <!-- Modal -->
-    <div class="modal fade" id="treeModal" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
+    <div class="modal fade" id="treeModal" style="display:none" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
           <div class="modal-header">

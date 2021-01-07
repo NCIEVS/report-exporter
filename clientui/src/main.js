@@ -38,6 +38,9 @@ Vue.use(Vue2Storage, {
   ttl: 60 * 60 * 24 * 1000 // 24 hours
 })
 
+import VueCookies from 'vue-cookies';
+Vue.use(VueCookies);
+
 // setup jquery
 window.$ = window.jQuery = jQuery
 
