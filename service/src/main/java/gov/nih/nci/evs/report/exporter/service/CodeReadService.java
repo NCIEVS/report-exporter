@@ -133,6 +133,14 @@ public class CodeReadService {
 				entity.setQueryStatus(NOTFOUND);
 				return entity;
 		}
+		if(entity == null) {
+			entity = new RestEntity();
+			entity.setName("");
+			entity.setCode(code);
+			entity.setQueryCode(-1);
+			entity.setQueryStatus(NOTFOUND);
+			return entity;
+		}
 		if(retiredConceptsFilter(entity)) {
 			entity = new RestEntity();
 			entity.setName("");
