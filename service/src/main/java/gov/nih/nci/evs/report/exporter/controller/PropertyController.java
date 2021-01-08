@@ -1,5 +1,7 @@
 package gov.nih.nci.evs.report.exporter.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +23,9 @@ public class PropertyController {
 
 	@GetMapping("/properties")
 	public RestPropertyMetadata[] getPropertyMeta(Model model){
-		return service.getRestProperties(CommonServices.getRestTemplate());
+		RestPropertyMetadata[] props = service.getRestProperties(CommonServices.getRestTemplate());
+		Arrays.sort(props);
+		return props;
 	}
 	
 	@PostMapping("/properties")

@@ -28,6 +28,9 @@ public class EVSAPIBaseService {
     @Value("${BASE_URL}")
     private String baseURL;
     
+    @Value("${BASE_METAD_URL}")
+    private String baseMetaURL;
+    
     @Value("${CHILDREN}")
     private String children;
     
@@ -48,6 +51,12 @@ public class EVSAPIBaseService {
 	
 	@Value("${REST_PROP_URL}")
 	private String propURL;
+	
+	@Value("${REST_SYN_URL}")
+	private String synURL;
+	
+	@Value("${REST_DEF_URL}")
+	private String defURL;
 	
 	@Value("${REST_PROP_FILTER_LIST}")
 	private String filterList;
@@ -127,7 +136,23 @@ public class EVSAPIBaseService {
 	public RestPropertyMetadata[] getRestProperties(RestTemplate template){
 		return template
 		.getForObject(
-		 propURL
+		 baseMetaURL + propURL
+				,RestPropertyMetadata[].class);
+
+	}
+	
+	public RestPropertyMetadata[] getRestSynonyms(RestTemplate template){
+		return template
+		.getForObject(
+		 baseMetaURL + synURL
+				,RestPropertyMetadata[].class);
+
+	}
+	
+	public RestPropertyMetadata[] getRestDefinitions(RestTemplate template){
+		return template
+		.getForObject(
+		 baseMetaURL + defURL
 				,RestPropertyMetadata[].class);
 
 	}
