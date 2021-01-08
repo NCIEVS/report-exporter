@@ -5,7 +5,7 @@ const api = {
 
 	getCodes(baseUrl, codes){
       return new Promise((resolve)=>{
-          axios.get(baseUrl + 'codereadrest/' + codes)
+          axios.get(baseUrl + 'codereadrest/' + encodeURIComponent(codes))
               .then((response) =>{
                   resolve(response.data);
               })

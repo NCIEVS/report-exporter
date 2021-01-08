@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +23,8 @@ import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @Service
 public class EVSAPIBaseService {
+	
+	private Logger log = LoggerFactory.getLogger(TimedDeferredResultWrapper.class);
 	
     @Value("${NODE_LIST}")
 	private String curatedTopNodeList;
@@ -103,9 +107,9 @@ public class EVSAPIBaseService {
 					.bodyToMono(RestEntity.class)
 					.block();
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			log.info("Bad Resource Request, check the URL for special characters: ", e);
+			return null;
 		}
-		return null;
 	}
 	
 	public RestEntity[] getEntities(String codes) {	
@@ -119,9 +123,9 @@ public class EVSAPIBaseService {
 					.bodyToMono(RestEntity[].class)
 					.block();
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			log.info("Bad Resource Request, check the URL for special characters: ", e);
+			return null;
 		}
-		return null;
 	}
 	
 	public Root[] getRestRoots(RestTemplate template){
