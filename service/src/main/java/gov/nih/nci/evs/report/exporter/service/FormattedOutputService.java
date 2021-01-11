@@ -24,7 +24,7 @@ public class FormattedOutputService {
 				CommonServices.getGsonForPrettyPrint().toJson(
 						crservice.getEntitiesForPropertyNameFilter(
 								crservice.getRestEntitiesWithParents( 
-									CommonServices.splitInput(codes)), 
+									CommonServices.splitInput(codes), props), 
 									CommonServices.splitInput(props))).getBytes());
 	}
 	
@@ -33,7 +33,7 @@ public class FormattedOutputService {
 								.produceCSVOutputFromListWithHeading(
 								crservice.getEntitiesForPropertyNameFilter(
 								crservice.getRestEntitiesWithParents( 
-										CommonServices.splitInput(codes)), 
+										CommonServices.splitInput(codes), props), 
 										CommonServices.splitInput(props)), props).getBytes());
 	}
 	
@@ -42,7 +42,7 @@ public class FormattedOutputService {
 				.produceTabDelOutputFromListWithHeading(
 				crservice.getEntitiesForPropertyNameFilter(
 				crservice.getRestEntitiesWithParents( 
-						CommonServices.splitInput(codes)), 
+						CommonServices.splitInput(codes), props), 
 						CommonServices.splitInput(props)), props).getBytes());
 	}
 	
@@ -52,7 +52,7 @@ public class FormattedOutputService {
 					.produceExcelOutputFromListWithHeading(
 					crservice.getEntitiesForPropertyNameFilter(
 					crservice.getRestEntitiesWithParents( 
-							CommonServices.splitInput(codes)), 
+							CommonServices.splitInput(codes), props), 
 							CommonServices.splitInput(props)), props).toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);

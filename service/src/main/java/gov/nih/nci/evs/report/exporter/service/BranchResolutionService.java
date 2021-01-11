@@ -96,9 +96,9 @@ public class BranchResolutionService {
 //		curatedEntities.add( new RestEntity());
 //		curatedEntities.add( new RestEntity());
 		RestEntity queryParamEntity = new RestEntity();
-		queryParamEntity.setTerminology("Query");
-		queryParamEntity.setCode("QueryParameters");
-		queryParamEntity.setName("|Code(s): " + code + "|Properties: " + props + "|Resolution depth: " + maximum + "|");
+		queryParamEntity.setTerminology("Branch Resolution Query Parameters");
+		queryParamEntity.setCode("|Codes: |" + code);
+		queryParamEntity.setName("|Properties: " + props + "|Resolution depth: " + maximum + "|");
 		curatedEntities.add( queryParamEntity);
 		return curatedEntities;
 	}

@@ -52,9 +52,10 @@ public class ExcelUtility extends FormatUtility {
 	    	Integer internalIndex = 0;
 	    //Add each property list to the cache noting the position of the property in 
 	    //the cache
+	    	if(entity.getProperties() != null) {
 	    	entity.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));}
 	      Row row = sheet.createRow(i++);
 	      //Create a set of rows for the static values
 	      row.createCell(internalIndex++).setCellValue(entity.getTerminology());

@@ -20,9 +20,9 @@ public class TabDelUtility extends FormatUtility{
 		StringBuffer firstLine = new StringBuffer();
 		String separator = "\t";
 		StringBuffer oneLine = new StringBuffer();
-		list.stream().forEach(x -> {x.getProperties()
+		list.stream().forEach(x -> {if(x.getProperties() != null) {x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));  
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));} 
 			oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 

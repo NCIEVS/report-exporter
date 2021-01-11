@@ -26,14 +26,6 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	
 	@Autowired
 	BranchResolutionService service;
-
-	
-	public InputStream getJsonBytesForRestChildParams(String code, String max) {
-		return new ByteArrayInputStream(
-				CommonServices.getGsonForPrettyPrint().toJson(
-								service.getAllChildrenForBranchTopNode(
-									code, max)).getBytes());
-	}
 	
 	
 	
