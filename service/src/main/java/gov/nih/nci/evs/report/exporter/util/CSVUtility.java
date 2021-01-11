@@ -24,9 +24,9 @@ public class CSVUtility extends FormatUtility {
 		StringBuffer firstLine = new StringBuffer();
 		String separator = ",";
 		StringBuffer oneLine = new StringBuffer();
-		list.stream().forEach(x -> { x.getProperties()
+		list.stream().forEach(x -> { if(x.getProperties() != null) {x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));       
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));}    
 				oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 

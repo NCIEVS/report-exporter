@@ -89,9 +89,18 @@ public class BranchResolutionService {
 						.stream())
 				.collect(Collectors.toList());
 		//return a list of entities with curated property set
-		return entities.stream().map(entity -> 
+		List<RestEntity> curatedEntities = entities.stream().map(entity -> 
 		readService.getEntityForPropertyNameFilter(entity,
 								CommonServices.splitInput(props))).collect(Collectors.toList());
+//		curatedEntities.add( new RestEntity());
+//		curatedEntities.add( new RestEntity());
+//		curatedEntities.add( new RestEntity());
+		RestEntity queryParamEntity = new RestEntity();
+		queryParamEntity.setTerminology("Query");
+		queryParamEntity.setCode("QueryParameters");
+		queryParamEntity.setName("|Code(s): " + code + "|Properties: " + props + "|Resolution depth: " + maximum + "|");
+		curatedEntities.add( queryParamEntity);
+		return curatedEntities;
 	}
 	
 	public List<CuratedTopNode> getCuratedTopNodeList(){
