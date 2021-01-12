@@ -108,14 +108,14 @@ class EXELUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeading() throws IOException {
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList(), props));
+		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 ));
 	}
 	
 	@Test
 	void testProduceCSVOutputFromListWithHeadingStreamedToPOIObject() throws IOException {
 
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -325,7 +325,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingMap() throws IOException {
 
 		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -535,7 +535,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingDefinition() throws IOException {
 
 		String props = "DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -745,7 +745,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingBothDefinitions() throws IOException {
 
 		String props = "ALT_DEFINITION,DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -955,7 +955,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingAltDefinition() throws IOException {
 
 		String props = "ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1165,7 +1165,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingAltDefSyn() throws IOException {
 
 		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1395,7 +1395,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingAltMapsDef() throws IOException {
 
 		String props = "DEFINITION,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1624,7 +1624,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingAltMapsSyn() throws IOException {
 
 		String props = "FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1853,7 +1853,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingHeadingAll() throws IOException {
 
 		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		

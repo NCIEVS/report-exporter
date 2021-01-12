@@ -45,7 +45,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		deferredStream.setResult(new CSVUtility()
 				.produceCSVOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNodeBatch( 
-						code, props, max) ,props).getBytes());
+						code, props, max) ,props, code, Integer.valueOf(max)).getBytes());
 	}).start();
 	log.info("Stream processing thread complete");
 	}
@@ -91,7 +91,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
 										service.getResolvedChildFlatListFromTopNodeBatch( 
-										codes, props, max) ,props).getBytes());
+										codes, props, max) ,props, codes, Integer.valueOf(max)).getBytes());
 	}
 	
 	public DeferredResult<byte[]> getTabDelBytesForRestParams(String code, String props,String max) {
@@ -112,7 +112,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		deferredStream.setResult(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNodeBatch( 
-								codes, props, max), props).getBytes());
+								codes, props, max), props, codes, Integer.valueOf(max)).getBytes());
 	}).start();
 	log.info("Stream processing TAB Delimited  complete");
 	}
@@ -136,7 +136,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 			deferredStream.setResult(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
 							service.getResolvedChildFlatListFromTopNodeBatch( 
-									codes, props, max), props).toByteArray());
+									codes, props, max), props, codes, Integer.valueOf(max)).toByteArray());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

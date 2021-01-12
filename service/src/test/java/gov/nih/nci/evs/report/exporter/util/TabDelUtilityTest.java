@@ -85,7 +85,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingSyn() {
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1);
 		assertEquals(tabdLines[1],tabdOutLine2);
@@ -97,7 +97,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingMap() {
 		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1a);
 		assertEquals(tabdLines[1],tabdOutLine2a);
@@ -109,7 +109,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingDef() {
 		String props = "DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1b);
 		assertEquals(tabdLines[1],tabdOutLine2b);
@@ -121,7 +121,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingAltDef() {
 		String props = "ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1b);
 		assertEquals(tabdLines[1],tabdOutLine2b);
@@ -132,7 +132,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingBothDef() {
 		String props = "ALT_DEFINITION,DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1b);
 		assertEquals(tabdLines[1],tabdOutLine2b);
@@ -144,7 +144,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingDefSyn() {
 		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1c);
 		assertEquals(tabdLines[1],tabdOutLine2c);
@@ -156,7 +156,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingMapsSyn() {
 		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1d);
 		assertEquals(tabdLines[1],tabdOutLine2d);
@@ -168,7 +168,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingMapsDef() {
 		String props = "DEFINITION,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1e);
 		assertEquals(tabdLines[1],tabdOutLine2e);
@@ -180,7 +180,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingAll() {
 		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1f);
 		assertEquals(tabdLines[1],tabdOutLine2f);
@@ -194,7 +194,7 @@ class TabDelUtilityTest {
 		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
 		List<RestEntity> entity = new ArrayList<RestEntity>();
 		entity.add(getRestEntity());
-		String csv = util.produceTabDelOutputFromListWithHeading(entity, props);
+		String csv = util.produceTabDelOutputFromListWithHeading(entity, props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		//assertEquals(csvLines[0],singleLineHeading);
 		assertEquals(csvLines[1],singelLinetbd);}
@@ -204,7 +204,7 @@ class TabDelUtilityTest {
 		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
 		List<RestEntity> entity = new ArrayList<RestEntity>();
 		entity.add(getRestEntityWNoDefsNoMaps());
-		String csv = util.produceTabDelOutputFromListWithHeading(entity, props);
+		String csv = util.produceTabDelOutputFromListWithHeading(entity, props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
 		assertEquals(csvLines[1],singelLinetbdNoDefsNoMaps);}
@@ -214,7 +214,7 @@ class TabDelUtilityTest {
 	@Test 
 	void produceOutput() {
 		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props);
+		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		System.out.println(tabd);
 	}
 	

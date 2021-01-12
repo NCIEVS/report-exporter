@@ -128,7 +128,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingSyn() {
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading);
 		assertEquals(csvLines[1],csvOutLine2f);
@@ -140,7 +140,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingMapSyn() {
 		String props = "Maps_To,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading1a);
 		assertEquals(csvLines[1],csvOutLine2ab);
@@ -152,7 +152,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingMap() {
 		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading3e);
 		assertEquals(csvLines[1],csvOutLine2e);
@@ -164,7 +164,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingMapDefinition() {
 		String props = "Maps_To,DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading1);
 		assertEquals(csvLines[1],csvOutLine2ac);
@@ -176,7 +176,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingMapDef2() {
 		String props = "Maps_To,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading1);
 		assertEquals(csvLines[1],csvOutLine2ac);
@@ -188,7 +188,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingMapDefBoth() {
 		String props = "Maps_To,ALT_DEFINITION,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading1);
 		assertEquals(csvLines[1],csvOutLine2ac);
@@ -200,7 +200,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingDef() {
 		String props = "ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading2);
 		assertEquals(csvLines[1],csvOutLine2aca);
@@ -212,7 +212,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingAll() {
 		String props = "Maps_To,FULL_SYN,DEFINITION,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props);
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading4);
 		assertEquals(csvLines[1],csvOutLine2ae);
@@ -226,7 +226,7 @@ class CSVUtilityTest {
 		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
 		List<RestEntity> entity = new ArrayList<RestEntity>();
 		entity.add(getRestEntity());
-		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		//assertEquals(csvLines[0],singleLineHeading);
 		assertEquals(csvLines[1],singelLineCSV);}
@@ -236,7 +236,7 @@ class CSVUtilityTest {
 		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
 		List<RestEntity> entity = new ArrayList<RestEntity>();
 		entity.add(getRestEntityWNoDefsNoMaps());
-		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
 		assertEquals(csvLines[1],singelLineCSVNoDefsNoMaps);}
@@ -246,7 +246,7 @@ class CSVUtilityTest {
 		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
 		List<RestEntity> entity = new ArrayList<RestEntity>();
 		entity.add(getRestEntityWNoDefsNoMaps());
-		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
 		assertEquals(csvLines[1],singelLineCSVNoSynsEmptyDefsEmptyMaps);}
@@ -256,7 +256,7 @@ class CSVUtilityTest {
 		String props = "Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
 		List<RestEntity> entity = new ArrayList<RestEntity>();
 		entity.add(this.getRestEntityWNoDefsEmptySynsEmptyMaps());
-		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
 		assertEquals(csvLines[1],singelLineCSVNoDefsEmptySynsEmptyMaps);}
@@ -266,7 +266,7 @@ class CSVUtilityTest {
 		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,FULL_SYN,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
 		List<RestEntity> entity = new ArrayList<RestEntity>();
 		entity.add(this.getRestEntityWNoMapsEmptySynsEmptyDefs());
-		String csv = util.produceCSVOutputFromListWithHeading(entity, props);
+		String csv = util.produceCSVOutputFromListWithHeading(entity, props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		//assertEquals(csvLines[0],singleLineHeadingNoDefsNoMaps);
 		assertEquals(csvLines[1],singleLineCSVNoMapsEmptySynsEmptyDevs);}
@@ -275,7 +275,7 @@ class CSVUtilityTest {
 	@Test
 	void testSingleLineMatchtoHeadingMapsTo() {
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props );
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 //		String[] csvLines = csv.split(System.lineSeparator());
 //		assertEquals(csvLines[0],csvOutLineHeading3);
 //		assertEquals(csvLines[1],csvOutLine2ad);

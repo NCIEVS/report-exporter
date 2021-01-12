@@ -33,11 +33,6 @@ public class CodeReadService {
 					getRestEntityWithParent(
 							x, service.getRestParents(x)))
 				.collect(Collectors.toList());
-		RestEntity queryParamEntity = new RestEntity();
-		queryParamEntity.setTerminology("Code Read Query Parameters");
-		queryParamEntity.setCode("|Code(s): |" + codes.stream().collect(Collectors.joining("|")) + "|");
-		queryParamEntity.setName("|Properties: " + props + "|");
-		propMeta.add( queryParamEntity);
 		return propMeta;
 	}
 	
