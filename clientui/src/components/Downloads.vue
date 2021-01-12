@@ -1,51 +1,112 @@
 <template>
-  <div id="downloads">
+  <div id="downloads" ref="formContainer">
+
     <div class="container">
-      <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-6">Report Exporter Downloads</h1>
-        <p class="lead">The table below has list of deferred downlods that have been requested.
-          If the download is not here, it may have expired.</p>
+      <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h3>Report Exporter Downloads</h3>
+        <p class="lead">If your Download ID is not in the <b>Download List</b>,
+          you can search for it in the <b>Download Search</b> tab.</p>
       </div>
 
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Format</th>
-            <th scope="col">Submitted Timestamp</th>
-            <th scope="col">Status</th>
-            <th scope="col">Download</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="data in this.deferredData" v-bind:key="data.key">
-            <td>{{ data.key}} </td>
-            <td>{{ data.format}}</td>
-            <td>{{ data.date}}</td>
-            <td>{{ data.status==true ? "Complete" : "In Process"}}</td>
-            <td>
-              <div v-show="data.status==true">
-                <button type="button" v-on:click="downloadDeferredResult(data.key, data.format)"
-                    class="btn btn-primary btn-sm">Download
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr v-if="this.deferredData.length==0" class="table-secondary">
-            <td colspan="5" class="text-center">
-              <H6> No Deferred Exports Available</H6>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <div class="tabContainer">
+        <ul class="nav nav-tabs" id="exportTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="downloadTable-tab" data-toggle="tab" href="#downloadTable" role="tab" aria-controls="downloadTable" aria-selected="true">Download List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="downloadSearch-tab" data-toggle="tab" href="#downloadSearch" role="tab" aria-controls="downloadSearch" aria-selected="false">Download Search</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="downloadTable" role="tabpanel" aria-labelledby="downloadTable-tab">
 
-    <div class="container" style="text-align: right;">
-      <span >
-        <button type="button" v-on:click="refreshDataRequestedFromUser()"
-            class="btn btn-primary">Refresh
-        </button>
-      </span>
+            <!--  DOWNLOAD TABLE TAB START -->
+            <div class="downloadContainer">
+                <p class="lead">The table below has list of deferred downlods that have been requested.
+                  If the download is not here, it may have expired.</p>
+
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Format</th>
+                    <th scope="col">Submitted Timestamp</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Download</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="data in this.deferredData" v-bind:key="data.key">
+                    <td>{{ data.key}} </td>
+                    <td>{{ data.format}}</td>
+                    <td>{{ data.date}}</td>
+                    <td>{{ data.status=='TRUE' ? "Complete" : "In Process"}}</td>
+                    <td>
+                      <div v-show="data.status=='TRUE'">
+                        <button type="button" v-on:click="downloadDeferredResult(data.key, data.format)"
+                          class="btn btn-primary btn-sm">Download
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-if="this.deferredData.length==0" class="table-secondary">
+                    <td colspan="5" class="text-center">
+                      <H6> No Deferred Exports Available</H6>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="refreshContainer">
+                <span >
+                  <button type="button" v-on:click="refreshDataRequestedFromUser()"
+                      class="btn btn-primary">Refresh
+                  </button>
+                </span>
+              </div>
+            </div>
+            <!--  DOWNLOAD TABLE TAB END -->
+          </div>
+          <div class="tab-pane fade" id="downloadSearch" role="tabpanel" aria-labelledby="downloadSearch-tab">
+            <!--  DOWNLOAD SEARCH TAB START -->
+            <div class="downloadContainer">
+              <p class="lead">Enter the Download ID that was created when the the report was exported.</p>
+              <form class="row form-group">
+                  <div class="col-3 col-sm pr-sm-2">
+                    <input class="form-control" v-model="searchId"
+                      type="text" placeholder="Search for your Download ID">
+                  </div>
+                  <div class="col-3 col-sm-auto pl-sm-2">
+                    <button type="button" v-on:click="downloadSearch"
+                      class="btn btn-primary mb-5" :disabled="searchId.length<4" >Find Download</button>
+                  </div>
+              </form>
+
+              <div v-if="downloadSearchResult.status=='TRUE'">
+                <p class="lead">Your download with an ID of <b>{{ downloadSearchResult.downloadId }}</b> is ready.
+                  <button
+                    type="button"
+                    v-on:click="downloadDeferredResult(downloadSearchResult.downloadId, downloadSearchResult.format)"
+                    class="btn btn-primary btn-sm">
+                    Download
+                  </button>
+                </p>
+              </div>
+              <div v-if="downloadSearchResult.status=='FALSE'">
+                <p class="lead">
+                  Your download with ID of <b>{{ downloadSearchResult.downloadId }}</b> is still processing.
+                </p>
+              </div>
+              <div v-if="downloadSearchResult.status=='EXPIRED'">
+                <p class="lead">
+                  Your download with ID of <b>{{ downloadSearchResult.downloadId }}</b> was not found.  The export may have been downloaded already or it may have expired.
+                </p>
+              </div>
+            </div>
+            <!--  DOWNLOAD SEARCH TAB END -->
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -63,7 +124,13 @@
         deferredKeys: [],
         deferredData: [],
         keyPrefix: "app_",
-        filename: "branch"
+        filename: "branch",
+        searchId: "",
+        downloadSearchResult: {
+            downloadId: '',
+            status: 'none',
+            format: 'JSON'
+        }
       }
     },
 
@@ -165,7 +232,7 @@
         var data = this.getData(key)
         if (data) {
           //console.log("Updating status for " + key + " to " + status)
-          data.value.status = status
+          data.value.status = status.status
           var updatedStatus = JSON.stringify(data)
           localStorage.setItem(key, updatedStatus)
         }
@@ -191,8 +258,6 @@
 
         let result = await promise1; // wait until the promise resolves (*)
         this.updateLocalStorageStatus(id, result)
-
-        //console.log("status returned (promise) = " + result)
         return result
       },
 
@@ -219,7 +284,16 @@
       },
 
       async refreshData() {
+        // show the busy indicator
+        let loader = this.$loading.show({
+            container: this.$refs.formContainer,
+            loader: 'dots',
+            isFullPage: false,
+        });
+
         this.removeExpiredDownloads()
+        // clear the deferred keys
+        this.deferredKeys = []
         this.getKeys()
 
         let promise1 = new Promise((resolve) => {
@@ -233,9 +307,17 @@
         // values
         await promise1;
         this.setLocalValues()
+        loader.hide()
       },
 
       downloadDeferredResult(id, format) {
+        // show the busy indicator
+        let loader = this.$loading.show({
+            container: this.$refs.formContainer,
+            loader: 'dots',
+            isFullPage: false,
+        });
+
         let here = this
         var extension = this.getFileExtension(format)
         axios({
@@ -258,7 +340,9 @@
               console.error("Deferred Download Error: " + error);
               alert("Error Downloading file");
           }).finally(function() {
+            loader.hide()
             here.removeDeferredDownload(id)
+            here.downloadSearchResult.status = 'none'
           });
       },
 
@@ -286,8 +370,27 @@
       removeDeferredDownload(id) {
          localStorage.removeItem(this.keyPrefix + id)
          this.refreshData()
-      }
+      },
 
+      downloadSearch() {
+        // show the busy indicator
+        let loader = this.$loading.show({
+            container: this.$refs.formContainer,
+            loader: 'dots',
+            isFullPage: false,
+          });
+
+        api.pollDeferredDownloadStatus(this.$baseURL, "deferred/checkURLHashForDeferredStatus/" + this.searchId)
+        .then((response)=>{
+          //console.log("download status  - "  + response)
+          this.downloadSearchResult.downloadId = this.searchId
+          this.downloadSearchResult.status = response.status
+          this.downloadSearchResult.format = response.format
+        }).finally(function() {
+          // hide the busy indicator
+          loader.hide()
+        });
+      }
     },
 
     created () {
@@ -307,9 +410,28 @@
       font-size: 16px;
     }
   }
+  .nav-tabs > li > a {
+    color: black;
+  }
+  .downloadContainer {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: black;
+  }
+  .refreshContainer {
+    padding-top: 20px;
+    text-align: right;
+    border-top: 1px solid lightgray;
+  }
   .container {
     max-width: 960px;
     padding-bottom: 40px;
+  }
+  .tabContainer {
+    padding-bottom: 40px;
+
   }
 
 </style>

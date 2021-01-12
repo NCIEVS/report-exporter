@@ -153,11 +153,11 @@
                   <label for="exportRadio">Select how to export</label>
                   <div class="custom-control custom-radio">
                     <input type="radio" v-model="exportType" value="exportNow" id="exportNow" checked="" name="exportRadio" class="custom-control-input">
-                    <label class="custom-control-label" for="exportNow">Export and wait</label>
+                    <label class="custom-control-label" for="exportNow">Export now</label>
                   </div>
                   <div class="custom-control custom-radio">
                     <input type="radio" v-model="exportType" value="exportDeferred" id="exportDeferred" name="exportRadio" class="custom-control-input">
-                    <label class="custom-control-label" for="exportDeferred">Export and get a link for download later</label>
+                    <label class="custom-control-label" for="exportDeferred">Export and download later</label>
                   </div>
 
                 </div>
@@ -167,7 +167,7 @@
                <div class="col-12 col-md-6">
                 <!--div v-if="exportType == 'exportDeferred'"-->
                 <div v-if="exportType == 'exportDeferred'  && this.deferredStatusHash != ''">
-                  <b>Use this Export ID in the Download page to retrieve your report: {{ this.deferredStatusHash }} </b>
+                  <b>Use this Download ID on the Download page to retrieve your report: {{ this.deferredStatusHash }} </b>
                 </div>
               </div>
           </div>
@@ -466,9 +466,9 @@ export default {
           // loop and wait until the status comes back as true
           while (this.deferredStatus != null &&
             this.deferredStatus != "ERROR" &&
-            !this.deferredStatus) {
-            this.pollDeferredStatus()
-            await this.sleep(500);
+            this.deferredStatus != 'TRUE') {
+              this.pollDeferredStatus()
+              await this.sleep(500);
           }
           loader.hide()
 
@@ -513,8 +513,8 @@ export default {
         }
       },
 
-      onTagAdded(newCode) {
-        console.log("Added tag: " + newCode)
+      onTagAdded() {
+        //console.log("Added tag: " + newCode)
         // When a top node is entered/selected, verify it.
         this.getEntities();
         this.updateChildrenToResolve()
@@ -725,7 +725,6 @@ export default {
         .then((data)=>{
           if (data != null) {
             this.deferredStatusUrl = data
-            //console.log("Deferred Call made.  return: " + data);
             //const hashId = this.getHashFromURL(this.deferredStatusUrl)
             this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
             this.pollForStatus(this.deferredStatusHash)
@@ -776,7 +775,7 @@ export default {
         api.pollDeferredDownloadStatus(this.$baseURL, this.deferredStatusUrl)
         .then((data)=>{
           if (data != null) {
-            this.deferredStatus = data
+            this.deferredStatus = data.status
           }
           else {
             this.deferredStatus = "ERROR"
