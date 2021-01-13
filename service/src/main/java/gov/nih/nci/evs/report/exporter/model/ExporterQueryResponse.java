@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ExporterQueryResponse {
 	
-	public static final String REPORT_SEARCH_PARAMETERS = "Public Search Parameters";
+	public static final String REPORT_SEARCH_PARAMETERS = "Report Search Parameters";
 	private List<RestEntity> entities;
 	private String input;
 	private String propertiesSelected;

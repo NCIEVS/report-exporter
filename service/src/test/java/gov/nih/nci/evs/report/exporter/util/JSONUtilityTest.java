@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.Definition;
+import gov.nih.nci.evs.report.exporter.model.ExporterQueryResponse;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyMap;
 import gov.nih.nci.evs.report.exporter.model.Qualifier;
@@ -29,7 +30,11 @@ import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
 
 class JSONUtilityTest {
-
+	
+	String codes = "C423423,C23423,C5546456,C5645";
+	String props = "DEFINITION,ALT_DEFINITION";
+	int level = 6;
+	
 	private CodeReadService service;
 	FormattedOutputService ouputService;
 
@@ -41,25 +46,34 @@ class JSONUtilityTest {
 	
 	@Test 
 	void testDefinitions(){
-		List<RestEntity> list = new GsonBuilder().create().fromJson(
-				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+		ExporterQueryResponse response = new GsonBuilder().create().fromJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
+						service.getEntitiesForPropertyNameFilter(getRestEntityList(),
 				CommonServices.splitInput(
-						"DEFINITION,ALT_DEFINITION"))), 
-				new TypeToken<List<RestEntity>>(){}.getType());
+						props)),props,codes,level),  
+				new TypeToken<ExporterQueryResponse>(){}.getType());
+		
+		List<RestEntity> list = response.getEntities();
 		
 		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C123234")).findAny().get();
 		assertTrue(ent1.getDefinitions() != null);
 		assertTrue(ent1.getDefinitions().size() > 0);
+		
+		assertEquals(response.getInput(),"C423423,C23423,C5546456,C5645");
+		assertEquals(response.getPropertiesSelected(),"DEFINITION,ALT_DEFINITION");
+		assertEquals(response.getHierarchyLevel(), 6);
+		assertEquals(ExporterQueryResponse.REPORT_SEARCH_PARAMETERS,"Report Search Parameters");
 	}
 	
 	@Test 
 	void testSynonyms(){
-		List<RestEntity> list = new GsonBuilder().create().fromJson(
-				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+		ExporterQueryResponse response = new GsonBuilder().create().fromJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
+						service.getEntitiesForPropertyNameFilter(getRestEntityList(),
 				CommonServices.splitInput(
-						"FULL_SYN"))), 
-				new TypeToken<List<RestEntity>>(){}.getType());
-		
+						"FULL_SYN")),"FULL_SYN",codes,level),  
+				new TypeToken<ExporterQueryResponse>(){}.getType());
+		List<RestEntity> list = response.getEntities();
 		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C123234")).findAny().get();
 		assertTrue(ent1.getSynonyms() != null);
 		assertTrue(ent1.getSynonyms().size() > 0);
@@ -67,11 +81,13 @@ class JSONUtilityTest {
 	
 	@Test 
 	void testMaps(){
-		List<RestEntity> list = new GsonBuilder().create().fromJson(
-				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+		ExporterQueryResponse response = new GsonBuilder().create().fromJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
+						service.getEntitiesForPropertyNameFilter(getRestEntityList(),
 				CommonServices.splitInput(
-						"Maps_To"))), 
-				new TypeToken<List<RestEntity>>(){}.getType());
+						"Maps_To")),"Maps_To",codes,level),  
+				new TypeToken<ExporterQueryResponse>(){}.getType());
+		List<RestEntity> list = response.getEntities();
 		
 		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C2222")).findAny().get();
 		assertTrue(ent1.getMaps() != null);
@@ -80,11 +96,14 @@ class JSONUtilityTest {
 	
 	@Test
 	void testProps() {
-		List<RestEntity> list = new GsonBuilder().create().fromJson(
-				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+		ExporterQueryResponse response = new GsonBuilder().create().fromJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
+						service.getEntitiesForPropertyNameFilter(getRestEntityList(),
 				CommonServices.splitInput(
-						"PropType"))), 
-				new TypeToken<List<RestEntity>>(){}.getType());
+						"PropType")),"PropType",codes,level),  
+				new TypeToken<ExporterQueryResponse>(){}.getType());
+		List<RestEntity> list = response.getEntities();
+
 		
 		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C2222")).findAny().get();
 		assertTrue(ent1.getProperties() != null);
@@ -94,11 +113,14 @@ class JSONUtilityTest {
 
 	@Test
 	void testSynsAndOnePropType() {
-		List<RestEntity> list = new GsonBuilder().create().fromJson(
-				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+		ExporterQueryResponse response = new GsonBuilder().create().fromJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
+						service.getEntitiesForPropertyNameFilter(getRestEntityList(),
 				CommonServices.splitInput(
-						"FULL_SYN,PropType"
-								))), new TypeToken<List<RestEntity>>(){}.getType());
+						"FULL_SYN,PropType")),"FULL_SYN,PropType",codes,level),  
+				new TypeToken<ExporterQueryResponse>(){}.getType());
+		List<RestEntity> list = response.getEntities();
+
 		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C123234")).findAny().get();
 		assertTrue(ent1.getSynonyms() != null);
 		assertTrue(ent1.getSynonyms().size() > 0);
@@ -207,14 +229,19 @@ RestEntity ent4 = list.stream().filter(x -> x.getCode().equals("C2222")).findAny
 	
 	@Test 
 	void testAllProps(){
-		List<RestEntity> list = new GsonBuilder().create().fromJson(
-				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+		ExporterQueryResponse response = new GsonBuilder().create().fromJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
+						service.getEntitiesForPropertyNameFilter(getRestEntityList(),
 				CommonServices.splitInput(
 						"Maps_To,FULL_SYN,DEFINITION,"
-						+ "ALT_DEFINITION,PropType,PropType2,"
-						+ "Prop0Type,GO_Annotation,"
-						+ "Prop9Type,Prop9Type2"))), 
-				new TypeToken<List<RestEntity>>(){}.getType());
+								+ "ALT_DEFINITION,PropType,PropType2,"
+								+ "Prop0Type,GO_Annotation,"
+								+ "Prop9Type,Prop9Type2")),	"Maps_To,FULL_SYN,DEFINITION,"
+										+ "ALT_DEFINITION,PropType,PropType2,"
+										+ "Prop0Type,GO_Annotation,"
+										+ "Prop9Type,Prop9Type2",codes,level),  
+				new TypeToken<ExporterQueryResponse>(){}.getType());
+		List<RestEntity> list = response.getEntities();
 		
 		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C123234")).findAny().get();
 		assertTrue(ent1.getSynonyms() != null);
@@ -325,12 +352,16 @@ RestEntity ent4 = list.stream().filter(x -> x.getCode().equals("C2222")).findAny
 	
 	@Test 
 	void testAllClassPropsNoProps(){
-		List<RestEntity> list = new GsonBuilder().create().fromJson(
-				CommonServices.getGsonForPrettyPrint().toJson(service.getEntitiesForPropertyNameFilter(getRestEntityList(), 
+		
+		ExporterQueryResponse response = new GsonBuilder().create().fromJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
+						service.getEntitiesForPropertyNameFilter(getRestEntityList(),
 				CommonServices.splitInput(
 						"Maps_To,FULL_SYN,DEFINITION,"
-						+ "ALT_DEFINITION"))), 
-				new TypeToken<List<RestEntity>>(){}.getType());
+								+ "ALT_DEFINITION")),"Maps_To,FULL_SYN,DEFINITION,"
+										+ "ALT_DEFINITION",codes,level),  
+				new TypeToken<ExporterQueryResponse>(){}.getType());
+		List<RestEntity> list = response.getEntities();
 		
 		RestEntity ent1 = list.stream().filter(x -> x.getCode().equals("C123234")).findAny().get();
 		assertTrue(ent1.getSynonyms() != null);
