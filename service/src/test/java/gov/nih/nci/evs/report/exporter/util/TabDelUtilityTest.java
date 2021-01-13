@@ -30,50 +30,50 @@ class TabDelUtilityTest {
 	String tabdOutLine2 = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3 = "ncit\tC000000\t0ent\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4 = "ncit\tC999999\tMy9\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String tabdOutline5 = "ncit\tC2222\tMy2\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutline5 = "ncit\tC2222\tMy2\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 
 	String tabdOutLine1a = "terminology\tcode\tname\tparents\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
 	String tabdOutLine2a = "ncit\tC123234\tMyent\t\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3a = "ncit\tC000000\t0ent\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4a = "ncit\tC999999\tMy9\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String tabdOutline5a = "ncit\tC2222\tMy2\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutline5a = "ncit\tC2222\tMy2\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 
 	String tabdOutLine1b = "terminology\tcode\tname\tparents\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
 	String tabdOutLine2b = "ncit\tC123234\tMyent\t\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3b = "ncit\tC000000\t0ent\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4b = "ncit\tC999999\tMy9\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String tabdOutline5b = "ncit\tC2222\tMy2\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutline5b = "ncit\tC2222\tMy2\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 
 	
 	String tabdOutLine1c = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
 	String tabdOutLine2c = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3c = "ncit\tC000000\t0ent\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4c = "ncit\tC999999\tMy9\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String tabdOutline5c = "ncit\tC2222\tMy2\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutline5c = "ncit\tC2222\tMy2\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 
 	
 	String tabdOutLine1d = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
 	String tabdOutLine2d = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3d = "ncit\tC000000\t0ent\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4d = "ncit\tC999999\tMy9\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String tabdOutline5d = "ncit\tC2222\tMy2\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutline5d = "ncit\tC2222\tMy2\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 
 	String tabdOutLine1e = "terminology\tcode\tname\tparents\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
 	String tabdOutLine2e = "ncit\tC123234\tMyent\t\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3e = "ncit\tC000000\t0ent\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4e = "ncit\tC999999\tMy9\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String tabdOutline5e = "ncit\tC2222\tMy2\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutline5e = "ncit\tC2222\tMy2\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 
 	String tabdOutLine1f = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tMaps_To\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
 	String tabdOutLine2f = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3f = "ncit\tC000000\t0ent\t\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4f = "ncit\tC999999\tMy9\t\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
-	String tabdOutline5f = "ncit\tC2222\tMy2\t\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"";
+	String tabdOutline5f = "ncit\tC2222\tMy2\t\t\t\t\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\"\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 
 	
 	String singleLineHeading = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tSemantic_Type\tUMLS_CUI\tContributing_Source";
-	String singelLinetbd	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\"|NCI:terms relative to CDISC.|\"\t\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"";
-	String singelLinetbdNoDefsNoMaps	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\t\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"";
+	String singelLinetbd	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\"|NCI:terms relative to CDISC.|\"\t\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"\r";
+	String singelLinetbdNoDefsNoMaps	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\t\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"\r";
 	
 
 	@BeforeEach

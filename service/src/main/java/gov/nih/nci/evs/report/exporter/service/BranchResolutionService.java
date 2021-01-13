@@ -92,16 +92,6 @@ public class BranchResolutionService {
 		List<RestEntity> curatedEntities = entities.stream().map(entity -> 
 		readService.getEntityForPropertyNameFilter(entity,
 								CommonServices.splitInput(props))).collect(Collectors.toList());
-//		curatedEntities.add( new RestEntity());
-//		curatedEntities.add( new RestEntity());
-//		curatedEntities.add( new RestEntity());
-//		RestEntity queryParamEntity = new RestEntity();
-//		queryParamEntity.setTerminology("Branch Resolution Query Parameters");
-//		queryParamEntity.setCode("|Codes: |" + code + "|");
-//		queryParamEntity.setName("|Properties: " + props + "|Resolution depth: " + maximum + "|");
-//		queryParamEntity.setQueryCode(2);
-//		queryParamEntity.setQueryStatus("Not Data");
-//		curatedEntities.add( queryParamEntity);
 		return curatedEntities;
 	}
 	

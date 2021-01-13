@@ -53,21 +53,21 @@ class CSVUtilityTest {
 	String csvOutline4c = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
 	String csvOutline4d = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
 	
-	String csvOutline5 = "ncit,C2222,My2,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|ICDO3 3.2 PT 9861/3 Acute myeloid leukemia, NOS:Related To|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
-	String csvOutline5b = "ncit,C2222,My2,,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|ICDO3 3.2 PT 9861/3 Acute myeloid leukemia, NOS:Related To|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String csvOutline5 = "ncit,C2222,My2,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|ICDO3 3.2 PT 9861/3 Acute myeloid leukemia, NOS:Related To|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"" + "\r";
+	String csvOutline5b = "ncit,C2222,My2,,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|ICDO3 3.2 PT 9861/3 Acute myeloid leukemia, NOS:Related To|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\""+ "\r";
 	//String csvOutline5a = "ncit,C2222,My2,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	
 	String csvOutLineHeading2 = "terminology,code,name,parents,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine3b = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
 	String csvOutline4a = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
-	String csvOutline5a = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String csvOutline5a = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
 	
 	String csvOutLineHeading3e = "terminology,code,name,parents,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLine2e = "ncit,C123234,Myent,,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine3e = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
 	String csvOutline4e = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
-	String csvOutline5e = "ncit,C2222,My2,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|ICDO3 3.2 PT 9861/3 Acute myeloid leukemia, NOS:Related To|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
+	String csvOutline5e = "ncit,C2222,My2,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|ICDO3 3.2 PT 9861/3 Acute myeloid leukemia, NOS:Related To|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
 	
 	String csvOutLineHeadingf = "terminology,code,name,parents,synonyms,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLine2f = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
@@ -78,13 +78,13 @@ class CSVUtilityTest {
 	
 	
 	String singleLineHeading = "terminology,code,name,parents,synonyms,definitions,Semantic_Type,UMLS_CUI,Contributing_Source";
-	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|NCI:terms relative to CDISC.|\",,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|NCI:terms relative to CDISC.|\",,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
 	
 	String singleLineHeadingNoDefsNoMaps = "terminology,code,name,parents,synonyms,Semantic_Type,UMLS_CUI,Contributing_Source";
-	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
-	String singelLineCSVNoSynsEmptyDefsEmptyMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
-	String singelLineCSVNoDefsEmptySynsEmptyMaps = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
-	String singleLineCSVNoMapsEmptySynsEmptyDevs = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"";
+	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"" + "\r";
+	String singelLineCSVNoSynsEmptyDefsEmptyMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
+	String singelLineCSVNoDefsEmptySynsEmptyMaps = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
+	String singleLineCSVNoMapsEmptySynsEmptyDevs = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
 	
 	BranchResolutionService service;
 

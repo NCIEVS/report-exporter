@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
+import gov.nih.nci.evs.report.exporter.util.JSONUtility;
 import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 
 @Service
@@ -21,11 +22,11 @@ public class FormattedOutputService {
 	
 	public InputStream getJsonBytesForRestParams(String codes, String props) {
 		return new ByteArrayInputStream(
-				CommonServices.getGsonForPrettyPrint().toJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
 						crservice.getEntitiesForPropertyNameFilter(
 								crservice.getRestEntitiesWithParents( 
 									CommonServices.splitInput(codes), props), 
-									CommonServices.splitInput(props))).getBytes());
+									CommonServices.splitInput(props)),props,codes, 0).getBytes());
 	}
 	
 	public InputStream getCSVBytesForRestParams(String codes, String props) {

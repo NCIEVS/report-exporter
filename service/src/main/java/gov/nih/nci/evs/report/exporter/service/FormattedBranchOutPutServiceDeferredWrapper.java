@@ -17,6 +17,7 @@ import gov.nih.nci.evs.report.exporter.util.CSVUtility;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
 import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
+import gov.nih.nci.evs.report.exporter.util.JSONUtility;
 
 @Service
 public class FormattedBranchOutPutServiceDeferredWrapper {
@@ -80,9 +81,9 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	private void startJSONThread(DeferredResult<byte[]> deferredStream, String codes, String props, String max){
 	new Thread(() -> {
 		log.info("Stream processing JSON thread started");
-		deferredStream.setResult(CommonServices.getGsonForPrettyPrint().toJson(
+		deferredStream.setResult(new JSONUtility().produceJsonOutputFromListWithHeading(
 				service.getResolvedChildFlatListFromTopNodeBatch( 
-						codes, props, max)).getBytes());
+						codes, props, max),props, codes, Integer.valueOf(max)).getBytes());
 	}).start();
 	log.info("Stream processing JSON thread complete");
 	}
