@@ -89,10 +89,9 @@ public class BranchResolutionService {
 						.stream())
 				.collect(Collectors.toList());
 		//return a list of entities with curated property set
-		List<RestEntity> curatedEntities = entities.stream().map(entity -> 
+		return entities.stream().map(entity -> 
 		readService.getEntityForPropertyNameFilter(entity,
 								CommonServices.splitInput(props))).collect(Collectors.toList());
-		return curatedEntities;
 	}
 	
 	public List<CuratedTopNode> getCuratedTopNodeList(){

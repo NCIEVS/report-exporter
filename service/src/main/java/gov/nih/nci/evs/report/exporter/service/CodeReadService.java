@@ -56,7 +56,7 @@ public class CodeReadService {
 	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
-		list.stream().filter(x -> !(x.getProperties() == null || retiredConceptsFilter(x))).forEach(
+		list.stream().filter(x -> !retiredConceptsFilter(x)).forEach(
 				entity -> {
 					entity.setProperties(
 						(List<Property>)filterProperties(entity.getProperties(), propList));
