@@ -58,15 +58,15 @@ public class FormattedBranchOutPutService {
 	public InputStream getCSVBytesForRestParams(String codes, String props, String max) {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
-										service.getResolvedChildFlatListFromTopNode( 
-										codes, props, max) ,props).getBytes());
+										service.getResolvedChildFlatListFromTopNodeBatch( 
+										codes, props, max) ,props, codes, Integer.valueOf(max)).getBytes());
 	}
 	
 	public InputStream getTabDelBytesForRestParams(String codes, String props,String max) {
 		return new ByteArrayInputStream(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNode( 
-								codes, props, max), props).getBytes());
+								codes, props, max), props, codes, Integer.valueOf(max)).getBytes());
 	}
 	
 	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props, String max) {
@@ -74,7 +74,7 @@ public class FormattedBranchOutPutService {
 			return new ByteArrayInputStream(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
 							service.getResolvedChildFlatListFromTopNode( 
-									codes, props, max), props).toByteArray());
+									codes, props, max), props, codes, Integer.valueOf(max)).toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);
 		}

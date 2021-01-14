@@ -3,7 +3,7 @@ package gov.nih.nci.evs.report.exporter.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties
-public class RestPropertyMetadata {
+public class RestPropertyMetadata implements Comparable<RestPropertyMetadata>{ 
 /**
  * This is a property id
  */
@@ -60,6 +60,11 @@ public String getVersion() {
 }
 public void setVersion(String version) {
 	this.version = version;
+}
+
+@Override
+public int compareTo(RestPropertyMetadata o) {
+	return this.getName().compareTo(o.getName());
 }
 
 

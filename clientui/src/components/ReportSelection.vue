@@ -1,6 +1,28 @@
 <template>
   <div class="report-selection">
 
+    <nciWarningModal v-show="isModalVisible" @close="closeModal">
+        <div slot="header">
+          <h4 class="modal-title">Warning</h4>
+        </div>
+        <div slot="body">
+          <p>You are accessing a US Government web site which may
+            contain information that must be protected under the US Privacy Act
+            or other sensitive information and is intended for Government
+            authorized use only.</p>
+          <p>Unauthorized attempts to upload information, change information,
+            or use of this web site may result in disciplinary action, civil,
+            and/or criminal penalties. Unauthorized users of this website
+            should have no expectation of privacy regarding any communications
+            or data processed by this website.</p>
+          <p>Anyone accessing this website expressly consents to monitoring of
+            their actions and all communications or data transiting or stored
+            on related to this website and is advised that if such monitoring
+            reveals possible evidence of criminal activity, NIH may provide
+            that evidence to law enforcement officials.</p>
+        </div>
+    </nciWarningModal>
+
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">NCI Report Exporter</h1>
       <p class="lead">The NCI Thesaurus (NCIt) provides reference terminology services for the National Cancer Institute and other institutional users. The Report Exporter provides curated, filtered, and formatted output from the NCI Thesaurus in file types designed for typical research and development purposes.</p>
@@ -17,11 +39,11 @@
             <ul class="list-unstyled mt-3 mb-4">
               <li>Export entities and selected properties from concept code matches</li>
             </ul>
-			<router-link v-bind:to="'/readCodeEntry'">
-        <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Start Selecting Concepts</button>
-			</router-link>
-    </div>
-  </div>
+          <router-link v-bind:to="'/readCodeEntry'">
+            <button type="button" class="btn btn-lg btn-block btn-primary selectButton">Start Selecting Concepts</button>
+          </router-link>
+        </div>
+      </div>
     <!--div class="card mb-4 box-shadow">
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Search Terms</h4>
@@ -53,22 +75,49 @@
           </div>
         </div>
       </div>
-</div>
-
+    </div>
 
   </div>
 </template>
 
 <script>
-  export default {
+ import nciWarningModal from './NCIWarning.vue';
+
+ export default {
     name: 'ReportSelection',
     props: {
       msg: String
     },
 
+    components: {
+      nciWarningModal
+    },
+    data(){
+      return {
+        isModalVisible: false,
+        warningCookie: "NCIWarningAcknowledgement",
+      }
+    },
+    methods: {
+      showModal() {
+        var warningCookie = this.$cookies.get(this.warningCookie);
+        if (!warningCookie) {
+          this.isModalVisible = true;
+        }
+      },
+      closeModal() {
+        this.isModalVisible = false;
+        this.setWarningCookie()
+      },
+      setWarningCookie() {
+        this.$cookies.set(this.warningCookie,"true");
+      }
+    },
+
     created() {
       // scroll to the top of the page
       window.scrollTo(0,0);
+      this.showModal()
     }
   }
 </script>

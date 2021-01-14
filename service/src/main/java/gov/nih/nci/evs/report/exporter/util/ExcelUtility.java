@@ -23,7 +23,9 @@ public class ExcelUtility extends FormatUtility {
 	
 
 	
-	  public ByteArrayOutputStream  produceExcelOutputFromListWithHeading(List<RestEntity> entities, String props) throws IOException {
+	  public ByteArrayOutputStream  produceExcelOutputFromListWithHeading(
+			  List<RestEntity> entities, String props, String codes, int level) 
+					  throws IOException {
 	   
 	    //Init the workbook for Excel
 	    Workbook workbook = new XSSFWorkbook();
@@ -106,6 +108,8 @@ public class ExcelUtility extends FormatUtility {
 	      cell.setCellValue(s);
 	      cell.setCellStyle(headerCellStyle);
 	      col++;}
+	    
+	    produceQueryRecordExcel(sheet, codes, level, props, i);
 
 	   //Setup the output stream for download
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -162,6 +166,17 @@ public class ExcelUtility extends FormatUtility {
 		   workbook.close();
 		   return stream;
 		  }
+	  
+		public void produceQueryRecordExcel(Sheet sheet,String codes, int level, String props, int rowNumber) {
+		
+					sheet.createRow(rowNumber++);
+					sheet.createRow(rowNumber++);
+					sheet.createRow(rowNumber++);
+					sheet.createRow(rowNumber++).createCell(0).setCellValue("Report Search Parameters: ");
+					sheet.createRow(rowNumber++).createCell(0).setCellValue("Input:  " + codes );
+					sheet.createRow(rowNumber++).createCell(0).setCellValue("Hierarchy level: " + level);
+					sheet.createRow(rowNumber++).createCell(0).setCellValue("Properties Selected: " + props);
+		}
 
 
 }

@@ -68,6 +68,78 @@ class CommonServicesTest {
 	}
 	
 	@Test
+	void TestGetListValuesWithPipeDelimiter3() {
+		List<String> list = new ArrayList<String>();
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		String csvList = CommonServices.getListValuesWithPipeDelimiter(list);
+		System.out.println(csvList);
+		assertEquals("|one|two|three", csvList);
+		String cleanedList = CommonServices.cleanListOutPut(csvList);
+		assertFalse(cleanedList.contains("["));
+		assertFalse(cleanedList.contains("]"));
+	}
+	
+	@Test
+	void TestGetListValuesWithPipeDelimiter2() {
+		List<String> list = new ArrayList<String>();
+		list.add("one");
+		list.add("two");
+		String csvList = CommonServices.getListValuesWithPipeDelimiter(list);
+		System.out.println(csvList);
+		assertEquals("|one|two", csvList);
+		String cleanedList = CommonServices.cleanListOutPut(csvList);
+		assertFalse(cleanedList.contains("["));
+		assertFalse(cleanedList.contains("]"));
+	}
+	
+	@Test
+	void TestGetListValuesWithPipeDelimiter1() {
+		List<String> list = new ArrayList<String>();
+		list.add("one");
+		String csvList = CommonServices.getListValuesWithPipeDelimiter(list);
+		System.out.println(csvList);
+		assertEquals("|one", csvList);
+		String cleanedList = CommonServices.cleanListOutPut(csvList);
+		assertFalse(cleanedList.contains("["));
+		assertFalse(cleanedList.contains("]"));
+	}
+	
+	@Test
+	void TestGetListValuesWithPipeDelimiterSyns() {
+		List<Synonym> list = new ArrayList<Synonym>();
+		Synonym syn1 = new Synonym();
+		syn1.setCode("234");
+		syn1.setName("syn1");
+		syn1.setSource("CDISC");
+		syn1.setSubSource("GAIA");
+		syn1.setTermGroup("PT");
+		syn1.setType("FULL_SYN");
+		Synonym syn2 = new Synonym();
+		syn2.setCode("435");
+		syn2.setName("syn2");
+		syn2.setSource("NCI");
+		syn2.setSubSource("BAD");
+		syn2.setTermGroup("SY");
+		Synonym syn3 = new Synonym();
+		syn3.setCode("234");
+		syn3.setName("syn3");
+		syn3.setSource("CSYN");
+		syn3.setSubSource("FULLS");
+		syn3.setTermGroup("PT");
+		syn3.setType("Preferred_Name");
+		list.add(syn1);
+		list.add(syn2);
+		list.add(syn3);
+		String csvList = CommonServices.getListValuesWithPipeDelimiter(list);
+		System.out.println(csvList);
+		assertEquals("|CDISC GAIA PT:syn1 234|NCI BAD SY:syn2 435", csvList);
+		String cleanedList = CommonServices.cleanListOutPut(csvList);
+		assertFalse(cleanedList.contains("["));
+		assertFalse(cleanedList.contains("]"));
+	}
+	@Test
 	void TestRemoveAllNonSourceTypeSynonyms() {
 		Synonym syn = new Synonym();
 		syn.setCode("C1232");

@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -24,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import gov.nih.nci.evs.report.exporter.model.Format;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
@@ -40,6 +40,14 @@ public class CommonServices {
 	private boolean noDefinitions = false;
 	private boolean noSynonyms = false;
 	private boolean noMaps= false;
+	
+	public enum Formats{JSON,CSV,TABD,EXCEL};
+	
+	public static Format[] formats = new Format[]
+			{new Format(Formats.JSON.name(), "JavaScript Object Notation Format", "json" ),
+			 new Format(Formats.CSV.name(), "Comma Separated Value Format", "csv" ),
+			 new Format(Formats.TABD.name(), "Tab Delimited Value Format", "txt" ),
+			 new Format(Formats.EXCEL.name(), "Microsoft Excel Format", "xlsx" )};
 	
 	private ConcurrentMap<String, TypeListAndPositionTuple> propHeaderMap;
 	public CommonServices() {
@@ -121,9 +129,11 @@ public class CommonServices {
 		if(list == null || list.size() == 0) {return "";}
 		return list.stream().map(x -> removeAllNoSourceNoTypeSynonyms(x))
 				.reduce("", (part, whole)-> 
-				(whole == null)?
+				(whole == null 
+				&& part == null
+				)?
 						(""):
-							(part + "|" + whole));
+							(part + (whole == null?"":"|" + whole)));
 	}
 	
 	public List<String> filterHeadings(CommonServices services) {

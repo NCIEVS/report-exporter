@@ -9,6 +9,7 @@ import VueRouter from 'vue-router'
 
 import './assets/app.scss'
 import About from './components/About'
+import Downloads from './components/Downloads'
 import Documentation from './components/Documentation'
 // import ErrorPage from './components/ErrorPage.vue'
 import ReportSelection from './components/ReportSelection.vue'
@@ -28,8 +29,17 @@ import ThemifyIcon from "vue-themify-icons";
 
 // busy/loading indicator
 import Loading from 'vue-loading-overlay'
-
 Vue.use(Loading)
+
+import {Vue2Storage} from 'vue2-storage'
+Vue.use(Vue2Storage, {
+  prefix: 'app_',
+  driver: 'local',  // localStorage
+  ttl: 60 * 60 * 24 * 1000 // 24 hours
+})
+
+import VueCookies from 'vue-cookies';
+Vue.use(VueCookies);
 
 // setup jquery
 window.$ = window.jQuery = jQuery
@@ -48,6 +58,7 @@ const routes = [
   { path: '/resolveBranchEntry', component: ResolveBranchEntry },
   { path: '/about', component: About },
   { path: '/documentation', component: Documentation },
+  { path: '/downloads', component: Downloads },
   // if page is unknown, show main selection page.
   { path: '*', component: ReportSelection }
 ]
@@ -81,9 +92,11 @@ new Vue({
     App,
     'tags-input': VoerroTagsInput,
      vMultiselectListbox,
-     ThemifyIcon
+     ThemifyIcon,
+     Vue2Storage
   },
+
   // pass in the router to the Vue instance
   router
-  // mount the router on the app
+
 }).$mount('#app')

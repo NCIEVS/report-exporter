@@ -66,10 +66,10 @@
       <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
       <tab-content icon="ti-download" title="Select Format and Export"
         :before-change="validateExportStep">
-        <div class="container">
+        <div ref="formContainer" class="container">
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
-                <form ref="formContainer">
+                <form>
                   <div class="form-group">
                     <label for="downloadFormat">Select format for export</label>
                     <select v-model="userSelectedFormat"
@@ -365,7 +365,7 @@ export default {
                     this.$notify({
                       group: 'app',
                       title: 'Invalid Concept Code',
-                      text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.  <b>' +tempCode+'</b> has been removed.',
+                      text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.',
                       type: 'error',
                       duration: 6000,
                       position: "left bottom"
@@ -481,6 +481,12 @@ export default {
   top: 60;
 } */
 
+.container{
+  padding: 5px 15px 5px 15px;
+}
+.wizard-tab-container {
+  padding: 5px 5px 5px 5px;
+}
 /* Summary list box formatting */
 .list-group{
     max-height: 150px;
