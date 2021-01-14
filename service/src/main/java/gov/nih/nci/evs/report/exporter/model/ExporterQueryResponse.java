@@ -5,6 +5,10 @@ import java.util.List;
 public class ExporterQueryResponse {
 	
 	public static final String REPORT_SEARCH_PARAMETERS = "Report Search Parameters";
+	public static String getReportSearchParameters() {
+		return REPORT_SEARCH_PARAMETERS;
+	}
+
 	private List<RestEntity> entities;
 	private String input;
 	private String propertiesSelected;
