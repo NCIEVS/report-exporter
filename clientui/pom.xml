@@ -8,7 +8,7 @@
   <parent>
 	<groupId>gov.nih.nci.evs</groupId>
 	<artifactId>report.exporter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
     <relativePath>
       ../pom.xml
     </relativePath>
@@ -89,4 +89,3 @@
   </build>
 
 </project>
-
