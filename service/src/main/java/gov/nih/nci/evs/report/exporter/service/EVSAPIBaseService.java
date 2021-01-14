@@ -102,7 +102,7 @@ public class EVSAPIBaseService {
 			return WebClient
 					.create()
 					.get()
-					.uri(new URI(baseURL + code + summary + "," + maps))
+					.uri(new URI(baseURL + code + summary + "," + maps + "," + parentsParam))
 					.retrieve()
 					.bodyToMono(RestEntity.class)
 					.block();

@@ -104,7 +104,7 @@ class BranchResolutionServiceTest {
 		roots.add(r2);
 		roots.add(r3);
 		entity.setParents(roots);
-		when(baseservice.getRestParents(Mockito.anyString())).thenReturn(roots);
+		//when(baseservice.getRestParents(Mockito.anyString())).thenReturn(roots);
 		service.setService(baseservice);
 		service.resolveChildEntityGraph( entity, list);
 		assertEquals(7, list.size());

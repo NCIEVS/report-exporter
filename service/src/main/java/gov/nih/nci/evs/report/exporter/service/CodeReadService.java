@@ -27,7 +27,7 @@ public class CodeReadService {
 	public static final String RETIRED = "Concept Code Retired";
 	public static final String VALID = "SUCCESS";
 	
-	public List<RestEntity> getRestEntitiesWithParents(List<String> codes){
+	public List<RestEntity> getRestEntitiesWithParents(List<String> codes, String props ){
 		List<RestEntity> propMeta = 
 				codes.stream().map(x -> 
 					getRestEntityWithParent(
@@ -56,7 +56,7 @@ public class CodeReadService {
 	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
-		list.stream().filter(x -> !retiredConceptsFilter(x) ).forEach(
+		list.stream().filter(x -> !retiredConceptsFilter(x)).forEach(
 				entity -> {
 					entity.setProperties(
 						(List<Property>)filterProperties(entity.getProperties(), propList));

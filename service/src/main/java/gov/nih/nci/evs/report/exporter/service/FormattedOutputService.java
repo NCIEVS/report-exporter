@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import gov.nih.nci.evs.report.exporter.util.CSVUtility;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
+import gov.nih.nci.evs.report.exporter.util.JSONUtility;
 import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
 
 @Service
@@ -21,11 +22,11 @@ public class FormattedOutputService {
 	
 	public InputStream getJsonBytesForRestParams(String codes, String props) {
 		return new ByteArrayInputStream(
-				CommonServices.getGsonForPrettyPrint().toJson(
+				new JSONUtility().produceJsonOutputFromListWithHeading(
 						crservice.getEntitiesForPropertyNameFilter(
 								crservice.getRestEntitiesWithParents( 
-									CommonServices.splitInput(codes)), 
-									CommonServices.splitInput(props))).getBytes());
+									CommonServices.splitInput(codes), props), 
+									CommonServices.splitInput(props)),props,codes, 0).getBytes());
 	}
 	
 	public InputStream getCSVBytesForRestParams(String codes, String props) {
@@ -33,8 +34,8 @@ public class FormattedOutputService {
 								.produceCSVOutputFromListWithHeading(
 								crservice.getEntitiesForPropertyNameFilter(
 								crservice.getRestEntitiesWithParents( 
-										CommonServices.splitInput(codes)), 
-										CommonServices.splitInput(props)), props).getBytes());
+										CommonServices.splitInput(codes), props), 
+										CommonServices.splitInput(props)), props , codes, 0).getBytes());
 	}
 	
 	public InputStream getTabDelBytesForRestParams(String codes, String props) {
@@ -42,8 +43,8 @@ public class FormattedOutputService {
 				.produceTabDelOutputFromListWithHeading(
 				crservice.getEntitiesForPropertyNameFilter(
 				crservice.getRestEntitiesWithParents( 
-						CommonServices.splitInput(codes)), 
-						CommonServices.splitInput(props)), props).getBytes());
+						CommonServices.splitInput(codes), props), 
+						CommonServices.splitInput(props)), props, codes, 0).getBytes());
 	}
 	
 	public ByteArrayInputStream getXSLBytesForRestParams(String codes, String props) {
@@ -52,8 +53,8 @@ public class FormattedOutputService {
 					.produceExcelOutputFromListWithHeading(
 					crservice.getEntitiesForPropertyNameFilter(
 					crservice.getRestEntitiesWithParents( 
-							CommonServices.splitInput(codes)), 
-							CommonServices.splitInput(props)), props).toByteArray());
+							CommonServices.splitInput(codes), props), 
+							CommonServices.splitInput(props)), props, codes, 0).toByteArray());
 		} catch (IOException e) {
 			throw new RuntimeException("Input/Output failure in Excel formatted output: ",e);
 		}

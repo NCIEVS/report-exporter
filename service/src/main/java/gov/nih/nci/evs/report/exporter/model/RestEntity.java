@@ -111,6 +111,4 @@ public class RestEntity {
 		return "Code: " + code + " name: " + name;
 	}
 	
-	
-
 }

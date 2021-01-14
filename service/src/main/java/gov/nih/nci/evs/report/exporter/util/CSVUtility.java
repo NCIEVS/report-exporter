@@ -14,7 +14,7 @@ public class CSVUtility extends FormatUtility {
 
 	
 
-	public String produceCSVOutputFromListWithHeading(List<RestEntity> list, String props) {
+	public String produceCSVOutputFromListWithHeading(List<RestEntity> list, String props, String searchCodes, int level) {
 
 		CommonServices services = new CommonServices();
 		services.setNoSynonyms(!props.contains("FULL_SYN"));
@@ -24,9 +24,9 @@ public class CSVUtility extends FormatUtility {
 		StringBuffer firstLine = new StringBuffer();
 		String separator = ",";
 		StringBuffer oneLine = new StringBuffer();
-		list.stream().forEach(x -> { x.getProperties()
+		list.stream().forEach(x -> {x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));       
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));   
 				oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
@@ -47,6 +47,7 @@ public class CSVUtility extends FormatUtility {
 						.stream()
 						.collect(Collectors.joining(separator));
 		oneLine.insert(0, firstHeaderString + secondHeader);
+		oneLine.append(produceDelimitedQueryRecord(separator,searchCodes,level,props));
 		return oneLine.toString();
 	}
 	
@@ -65,8 +66,7 @@ public class CSVUtility extends FormatUtility {
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getParents())) +
 				separator + x.isLeaf() + 
 				separator + CommonServices.cleanListOutPut(CommonServices.getListValues(x.getChildren()))));
-		return oneLine.toString();
+				return oneLine.toString();
 	}
-	
 
 }

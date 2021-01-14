@@ -17,6 +17,7 @@ import gov.nih.nci.evs.report.exporter.util.CSVUtility;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
 import gov.nih.nci.evs.report.exporter.util.TabDelUtility;
+import gov.nih.nci.evs.report.exporter.util.JSONUtility;
 
 @Service
 public class FormattedBranchOutPutServiceDeferredWrapper {
@@ -26,14 +27,6 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	
 	@Autowired
 	BranchResolutionService service;
-
-	
-	public InputStream getJsonBytesForRestChildParams(String code, String max) {
-		return new ByteArrayInputStream(
-				CommonServices.getGsonForPrettyPrint().toJson(
-								service.getAllChildrenForBranchTopNode(
-									code, max)).getBytes());
-	}
 	
 	
 	
@@ -53,7 +46,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		deferredStream.setResult(new CSVUtility()
 				.produceCSVOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNodeBatch( 
-						code, props, max) ,props).getBytes());
+						code, props, max) ,props, code, Integer.valueOf(max)).getBytes());
 	}).start();
 	log.info("Stream processing thread complete");
 	}
@@ -88,9 +81,9 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	private void startJSONThread(DeferredResult<byte[]> deferredStream, String codes, String props, String max){
 	new Thread(() -> {
 		log.info("Stream processing JSON thread started");
-		deferredStream.setResult(CommonServices.getGsonForPrettyPrint().toJson(
+		deferredStream.setResult(new JSONUtility().produceJsonOutputFromListWithHeading(
 				service.getResolvedChildFlatListFromTopNodeBatch( 
-						codes, props, max)).getBytes());
+						codes, props, max),props, codes, Integer.valueOf(max)).getBytes());
 	}).start();
 	log.info("Stream processing JSON thread complete");
 	}
@@ -99,7 +92,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 						return new ByteArrayInputStream(new CSVUtility()
 								.produceCSVOutputFromListWithHeading(
 										service.getResolvedChildFlatListFromTopNodeBatch( 
-										codes, props, max) ,props).getBytes());
+										codes, props, max) ,props, codes, Integer.valueOf(max)).getBytes());
 	}
 	
 	public DeferredResult<byte[]> getTabDelBytesForRestParams(String code, String props,String max) {
@@ -120,7 +113,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		deferredStream.setResult(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNodeBatch( 
-								codes, props, max), props).getBytes());
+								codes, props, max), props, codes, Integer.valueOf(max)).getBytes());
 	}).start();
 	log.info("Stream processing TAB Delimited  complete");
 	}
@@ -144,7 +137,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 			deferredStream.setResult(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
 							service.getResolvedChildFlatListFromTopNodeBatch( 
-									codes, props, max), props).toByteArray());
+									codes, props, max), props, codes, Integer.valueOf(max)).toByteArray());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
