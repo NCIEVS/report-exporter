@@ -74,9 +74,9 @@ const api = {
 		initiateDeferredDownload(baseUrl, userEnteredCodes,
 			userSelectedProperyNames, selectedLevel, userSelectedFormatName){
         return new Promise((resolve)=>{
-						console.log("URL: " + baseUrl + 'download/deferred/getURLHashForDeferredResult/' +
-							userEnteredCodes + '/' + userSelectedProperyNames + '/' +
-							selectedLevel + '/' + userSelectedFormatName)
+						//console.log("URL: " + baseUrl + 'download/deferred/getURLHashForDeferredResult/' +
+							// userEnteredCodes + '/' + userSelectedProperyNames + '/' +
+							// selectedLevel + '/' + userSelectedFormatName)
 
             axios.get(baseUrl + 'download/deferred/getURLHashForDeferredResult/' +
 							userEnteredCodes + '/' + userSelectedProperyNames + '/' +
