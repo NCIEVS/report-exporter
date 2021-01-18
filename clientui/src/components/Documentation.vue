@@ -171,7 +171,9 @@
                               </div>
                               <div class="collapse show" id="accordion-tab-3-content-1" aria-labelledby="accordion-tab-3-heading-1" data-parent="#accordion-tab-3">
                                   <div class="card-body">
+                                    <p>
                                       A top node is a node that has at least one level of child concept codes.
+                                    </p>
                                   </div>
                               </div>
                           </div>
