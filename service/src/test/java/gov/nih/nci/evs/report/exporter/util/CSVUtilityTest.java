@@ -78,7 +78,7 @@ class CSVUtilityTest {
 	
 	
 	String singleLineHeading = "terminology,code,name,parents,synonyms,definitions,Semantic_Type,UMLS_CUI,Contributing_Source";
-	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",\"|NCI:terms relative to CDISC.|\",,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
+	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |NOSOURCE  NOTYPE:CDISC |\",\"|NCI:terms relative to CDISC.|\",,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
 	
 	String singleLineHeadingNoDefsNoMaps = "terminology,code,name,parents,synonyms,Semantic_Type,UMLS_CUI,Contributing_Source";
 	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"" + "\r";
@@ -161,6 +161,25 @@ class CSVUtilityTest {
 		assertEquals(csvLines[9], "Input:  C123456\r");
 		assertEquals(csvLines[10], "Hierarchy level: 0\r");
 		assertEquals(csvLines[11], "Properties Selected: Maps_To,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapDisplayName() {
+		String props = "Maps_To,Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1a);
+		assertEquals(csvLines[1],csvOutLine2ab);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+		assertEquals(csvLines[5], "\r");
+		assertEquals(csvLines[6], "\r");
+		assertEquals(csvLines[7], "\r");
+		assertEquals(csvLines[8], "Report Search Parameters: \r");
+		assertEquals(csvLines[9], "Input:  C123456\r");
+		assertEquals(csvLines[10], "Hierarchy level: 0\r");
+		assertEquals(csvLines[11], "Properties Selected: Maps_To,Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
 	}
 	
 	@Test
@@ -257,7 +276,7 @@ class CSVUtilityTest {
 	
 	@Test
 	void testProduceCSVOutputFromOneListMemberWithNoNoSynsEmptyDefsEmptyMaps() {
-		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,Display_Name,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
+		String props = "ALT_DEFINITION,Accepted_Therapeutic_Use_For,CAS_Registry,CHEBI_ID,Chemical_Formula,Concept_Status,Contributing_Source,DEFINITION,EntrezGene_ID,Essential_Amino_Acid,Essential_Fatty_Acid,FDA_UNII_Code,GO_Annotation,GenBank_Accession_Number,HGNC_ID,ICD-O-3_Code,INFOODS,KEGG_ID,MGI_Accession_ID,Macronutrient,Maps_To,Micronutrient,NCBI_Taxon_ID,NCI_META_CUI,NSC Number,Neoplastic_Status,Nutrient,OID,OMIM_Number,PDQ_Closed_Trial_Search_ID,PDQ_Open_Trial_Search_ID,PID_ID,Preferred_Name,PubMedID_Primary_Reference,SNP_ID,Semantic_Type,Subsource,Swiss_Prot,Tolerable_Level,UMLS_CUI,USDA_ID,US_Recommended_Intake,Unit,code,miRBase_ID";
 		List<RestEntity> entity = new ArrayList<RestEntity>();
 		entity.add(getRestEntityWNoDefsNoMaps());
 		String csv = util.produceCSVOutputFromListWithHeading(entity, props, "C123456", 0 );
@@ -593,6 +612,10 @@ class CSVUtilityTest {
 		syn3.setTermGroup("SY");
 		syn3.setType("FULL_SYN");
 		
+		Synonym syn4 = new Synonym();
+		syn4.setName("CDISC");
+		syn4.setType("Display_Name");
+		
 		Definition def = new Definition();
 		def.setDefinition("terms relative to CDISC.");
 		def.setSource("NCI");
@@ -632,6 +655,7 @@ class CSVUtilityTest {
 		synonyms.add(syn1);
 		synonyms.add(syn2);
 		synonyms.add(syn3);
+		synonyms.add(syn4);
 		List<Definition> definitions = new ArrayList<Definition>();
 		definitions.add(def);
 		List<PropertyMap> maps = new ArrayList<PropertyMap>();

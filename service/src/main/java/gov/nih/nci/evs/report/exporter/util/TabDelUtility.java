@@ -14,7 +14,7 @@ public class TabDelUtility extends FormatUtility{
 
 	public String produceTabDelOutputFromListWithHeading(List<RestEntity> list, String props, String searchCodes, int level)  {
 		CommonServices services = new CommonServices();
-		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoSynonyms(!(props.contains("FULL_SYN") || props.contains("Display_Name")));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		StringBuffer firstLine = new StringBuffer();
