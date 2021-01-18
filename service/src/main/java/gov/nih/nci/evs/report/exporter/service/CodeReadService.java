@@ -96,7 +96,7 @@ public class CodeReadService {
 			propList.clear();
 			return propList; 
 		}
-		if(propList.get(0) instanceof Synonym && !list.contains("FULL_SYN")){
+		if(propList.get(0) instanceof Synonym && !(list.contains("FULL_SYN") || list.contains("Display_Name"))){
 			propList.clear();
 			return propList; 
 		}
