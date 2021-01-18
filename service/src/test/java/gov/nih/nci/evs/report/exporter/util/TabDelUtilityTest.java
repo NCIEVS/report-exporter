@@ -92,6 +92,13 @@ class TabDelUtilityTest {
 		assertEquals(tabdLines[2],tabdOutLine3);
 		assertEquals(tabdLines[3],tabdOutline4);
 		assertEquals(tabdLines[4],tabdOutline5);
+		assertEquals(tabdLines[5], "\r");
+		assertEquals(tabdLines[6], "\r");
+		assertEquals(tabdLines[7], "\r");
+		assertEquals(tabdLines[8], "Report Search Parameters: \r");
+		assertEquals(tabdLines[9], "Input:  C123456\r");
+		assertEquals(tabdLines[10], "Hierarchy level: 0\r");
+		assertEquals(tabdLines[11], "Properties Selected: FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
 	}
 	
 	@Test
@@ -104,7 +111,14 @@ class TabDelUtilityTest {
 		assertEquals(tabdLines[2],tabdOutLine3a);
 		assertEquals(tabdLines[3],tabdOutline4a);
 		assertEquals(tabdLines[4],tabdOutline5a);
-	}
+		assertEquals(tabdLines[5], "\r");
+		assertEquals(tabdLines[6], "\r");
+		assertEquals(tabdLines[7], "\r");
+		assertEquals(tabdLines[8], "Report Search Parameters: \r");
+		assertEquals(tabdLines[9], "Input:  C123456\r");
+		assertEquals(tabdLines[10], "Hierarchy level: 0\r");
+		assertEquals(tabdLines[11], "Properties Selected: Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
+		}
 	
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingDef() {

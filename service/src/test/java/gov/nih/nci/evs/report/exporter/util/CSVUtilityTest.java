@@ -135,6 +135,13 @@ class CSVUtilityTest {
 		assertEquals(csvLines[2],csvOutLine3f);
 		assertEquals(csvLines[3],csvOutline4f);
 		assertEquals(csvLines[4], csvOutline5a);
+		assertEquals(csvLines[5], "\r");
+		assertEquals(csvLines[6], "\r");
+		assertEquals(csvLines[7], "\r");
+		assertEquals(csvLines[8], "Report Search Parameters: \r");
+		assertEquals(csvLines[9], "Input:  C123456\r");
+		assertEquals(csvLines[10], "Hierarchy level: 0\r");
+		assertEquals(csvLines[11], "Properties Selected: FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
 	}
 	
 	@Test
@@ -147,6 +154,13 @@ class CSVUtilityTest {
 		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
 		assertEquals(csvLines[4], csvOutline5);
+		assertEquals(csvLines[5], "\r");
+		assertEquals(csvLines[6], "\r");
+		assertEquals(csvLines[7], "\r");
+		assertEquals(csvLines[8], "Report Search Parameters: \r");
+		assertEquals(csvLines[9], "Input:  C123456\r");
+		assertEquals(csvLines[10], "Hierarchy level: 0\r");
+		assertEquals(csvLines[11], "Properties Selected: Maps_To,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
 	}
 	
 	@Test

@@ -349,6 +349,13 @@ class EXELUtilityTest {
 			Row row2 = sheet.getRow(2);
 			Row row3 = sheet.getRow(3);
 			Row row4 = sheet.getRow(4);
+			Row row5 = sheet.getRow(5);
+			Row row6 = sheet.getRow(6);
+			Row row7 = sheet.getRow(7);
+			Row row8 = sheet.getRow(8);
+			Row row9 = sheet.getRow(9);
+			Row row10 = sheet.getRow(10);
+			Row row11 = sheet.getRow(11);
 
 			String header0 = headerRow.getCell(0).getStringCellValue();
 			String cell0 = row1.getCell(0).getStringCellValue();	
@@ -526,6 +533,23 @@ class EXELUtilityTest {
 			String header10c = headerRow.getCell(10).getStringCellValue();
 			String cell10c = row4.getCell(10) != null?row4.getCell(10).getStringCellValue():null;	
 			assertTrue(header10c.equals("Prop9Type2")  && cell10c.equals("|prop9value2|"));
+			
+
+			String cell11c = row5.getCell(0) != null?row5.getCell(0).getStringCellValue():null;	
+			assertEquals(cell11c,null);			
+			String cell12c = row6.getCell(0) != null?row5.getCell(0).getStringCellValue():null;	
+			assertEquals(cell12c,null);
+			String cell13c = row7.getCell(0) != null?row5.getCell(0).getStringCellValue():null;	
+			assertEquals(cell13c,null);
+			
+			String cell14c = row9.getCell(0) != null?row8.getCell(0).getStringCellValue():null;	
+			assertEquals(cell14c,"Report Search Parameters: ");		
+			String cell15c = row9.getCell(0) != null?row9.getCell(0).getStringCellValue():null;	
+			assertEquals(cell15c,"Input:  C123456");
+			String cell16c = row10.getCell(0) != null?row10.getCell(0).getStringCellValue():null;	
+			assertEquals(cell16c,"Hierarchy level: 0");
+			String cell17c = row11.getCell(0) != null?row11.getCell(0).getStringCellValue():null;	
+			assertEquals(cell17c,"Properties Selected: Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");		
 
 		stream.close();
 		workbook.close();
