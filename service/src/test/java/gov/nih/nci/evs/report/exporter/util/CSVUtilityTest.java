@@ -21,6 +21,7 @@ import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
+import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 
 class CSVUtilityTest {
 	
@@ -34,6 +35,7 @@ class CSVUtilityTest {
 	String csvOutLineHeading4 = "terminology,code,name,parents,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLine2a = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine2ab = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2az = "ncit,C123234,Myent,,\"|synSource2 NCI atermgrp:synName2 |NOSOURCE  NOTYPE:synNamedn |\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine2ac = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	//String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	
@@ -87,10 +89,12 @@ class CSVUtilityTest {
 	String singleLineCSVNoMapsEmptySynsEmptyDevs = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
 	
 	BranchResolutionService service;
+	CodeReadService crsvc;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		service = new BranchResolutionService();
+		crsvc = new CodeReadService();
 		util = new CSVUtility();
 	}
 	
@@ -128,7 +132,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingSyn() {
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String csv = util.produceCSVOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading);
 		assertEquals(csvLines[1],csvOutLine2f);
@@ -147,7 +151,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingMapSyn() {
 		String props = "Maps_To,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String csv = util.produceCSVOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading1a);
 		assertEquals(csvLines[1],csvOutLine2ab);
@@ -164,12 +168,31 @@ class CSVUtilityTest {
 	}
 	
 	@Test
-	void testProduceCSVOutputFromListWithHeadingMapDisplayName() {
+	void testProduceCSVOutputFromListWithHeadingMapDispName() {
 		String props = "Maps_To,Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String csv = util.produceCSVOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading1a);
-		assertEquals(csvLines[1],csvOutLine2ab);
+		assertEquals(csvLines[1],csvOutLine2az);
+		assertEquals(csvLines[2],csvOutLine3);
+		assertEquals(csvLines[3],csvOutline4);
+		assertEquals(csvLines[4], csvOutline5);
+		assertEquals(csvLines[5], "\r");
+		assertEquals(csvLines[6], "\r");
+		assertEquals(csvLines[7], "\r");
+		assertEquals(csvLines[8], "Report Search Parameters: \r");
+		assertEquals(csvLines[9], "Input:  C123456\r");
+		assertEquals(csvLines[10], "Hierarchy level: 0\r");
+		assertEquals(csvLines[11], "Properties Selected: Maps_To,Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
+	}
+	
+	@Test
+	void testProduceCSVOutputFromListWithHeadingMapDisplayName() {
+		String props = "Maps_To,Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String csv = util.produceCSVOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
+		String[] csvLines = csv.split(System.lineSeparator());
+		assertEquals(csvLines[0],csvOutLineHeading1a);
+		assertEquals(csvLines[1],csvOutLine2az);
 		assertEquals(csvLines[2],csvOutLine3);
 		assertEquals(csvLines[3],csvOutline4);
 		assertEquals(csvLines[4], csvOutline5);
@@ -245,7 +268,7 @@ class CSVUtilityTest {
 	@Test
 	void testProduceCSVOutputFromListWithHeadingAll() {
 		String props = "Maps_To,FULL_SYN,DEFINITION,ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String csv = util.produceCSVOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String csv = util.produceCSVOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 		String[] csvLines = csv.split(System.lineSeparator());
 		assertEquals(csvLines[0],csvOutLineHeading4);
 		assertEquals(csvLines[1],csvOutLine2ae);
@@ -329,7 +352,7 @@ class CSVUtilityTest {
 		
 		List<Synonym> syns = new ArrayList<Synonym>();
 		Synonym syn = new Synonym();
-		syn.setType("synType");
+		syn.setType("FULL_SYN");
 		syn.setName("synName");
 		syn.setSource("NCIt");
 		syn.setSubSource("CDISC");
@@ -339,17 +362,21 @@ class CSVUtilityTest {
 		syn2.setSubSource("NCI");
 		syn2.setTermGroup("atermgrp");
 		syn2.setName("synName2");
+		Synonym syn3 = new Synonym();
+		syn3.setType("Display_Name");
+		syn3.setName("synNamedn");
 		syns.add(syn);
 		syns.add(syn2);
+		syns.add(syn3);
 		ent.setSynonyms(syns);
 		
 		List<Definition> defs = new ArrayList<Definition>();
 		Definition def = new Definition();
-		def.setType("defType");
+		def.setType("DEFINITION");
 		def.setDefinition("defvalue");
 		def.setSource("NCI");
 		Definition def2 = new Definition();
-		def2.setType("defType2");
+		def2.setType("ALT_DEFINITION");
 		def2.setDefinition("defvalue2");
 		defs.add(def);
 		defs.add(def2);
