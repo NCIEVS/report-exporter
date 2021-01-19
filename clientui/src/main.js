@@ -9,7 +9,7 @@ import VueRouter from 'vue-router'
 
 import './assets/app.scss'
 import About from './components/About'
-import Downloads from './components/Downloads'
+import Exports from './components/Exports'
 import Documentation from './components/Documentation'
 // import ErrorPage from './components/ErrorPage.vue'
 import ReportSelection from './components/ReportSelection.vue'
@@ -58,7 +58,7 @@ const routes = [
   { path: '/resolveBranchEntry', component: ResolveBranchEntry },
   { path: '/about', component: About },
   { path: '/documentation', component: Documentation },
-  { path: '/downloads', component: Downloads },
+  { path: '/exports', component: Exports },
   // if page is unknown, show main selection page.
   { path: '*', component: ReportSelection }
 ]
