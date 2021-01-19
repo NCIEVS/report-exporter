@@ -20,6 +20,7 @@ import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
+import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 
 class TabDelUtilityTest {
 	
@@ -28,6 +29,7 @@ class TabDelUtilityTest {
 	BranchResolutionService service;
 	String tabdOutLine1 = "terminology\tcode\tname\tparents\tsynonyms\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
 	String tabdOutLine2 = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine2z = "ncit\tC123234\tMyent\t\t\"|synSource2 NCI atermgrp:synName2 |NOSOURCE  NOTYPE:synName |\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3 = "ncit\tC000000\t0ent\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4 = "ncit\tC999999\tMy9\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 	String tabdOutline5 = "ncit\tC2222\tMy2\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
@@ -46,14 +48,14 @@ class TabDelUtilityTest {
 
 	
 	String tabdOutLine1c = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
-	String tabdOutLine2c = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine2c = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3c = "ncit\tC000000\t0ent\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4c = "ncit\tC999999\tMy9\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 	String tabdOutline5c = "ncit\tC2222\tMy2\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 
 	
 	String tabdOutLine1d = "terminology\tcode\tname\tparents\tsynonyms\tdefinitions\tPropType\tPropType2\tProp0Type\tGO_Annotation\tProp9Type\tProp9Type2\r";
-	String tabdOutLine2d = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|NOSOURCE:defvalue2|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
+	String tabdOutLine2d = "ncit\tC123234\tMyent\t\t\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\"\t\"|NCI:defvalue|\"\t\"|propvalue|propvalue1|\"\t\"|propvalue2|\"\r";
 	String tabdOutLine3d = "ncit\tC000000\t0ent\t\t\t\t\t\t\"|prop0value|\"\t\"|GO:0000075 prop0value2:TAS|\"\r";
 	String tabdOutline4d = "ncit\tC999999\tMy9\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
 	String tabdOutline5d = "ncit\tC2222\tMy2\t\t\t\t\"|prop9value3|\"\t\t\t\t\"|prop9value|\"\t\"|prop9value2|\"\r";
@@ -75,17 +77,19 @@ class TabDelUtilityTest {
 	String singelLinetbd	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\"|NCI:terms relative to CDISC.|\"\t\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"\r";
 	String singelLinetbdNoDefsNoMaps	 = "ncit\tC61410\tClinical Data Interchange Standards Consortium Terminology\t\"|C54443:Terminology Subset|\"\t\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\"\t\t\t\"|Intellectual Product|\"\t\"|C1880104|\"\t\"|CDISC|\"\r";
 	
-
+	CodeReadService crsvc;
+	
 	@BeforeEach
 	void setUp() throws Exception {
 		service = new BranchResolutionService();
+		crsvc = new CodeReadService();
 		util = new TabDelUtility();
 	}
 	
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingSyn() {
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String tabd = util.produceTabDelOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1);
 		assertEquals(tabdLines[1],tabdOutLine2);
@@ -99,6 +103,25 @@ class TabDelUtilityTest {
 		assertEquals(tabdLines[9], "Input:  C123456\r");
 		assertEquals(tabdLines[10], "Hierarchy level: 0\r");
 		assertEquals(tabdLines[11], "Properties Selected: FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
+	}
+	
+	@Test
+	void testProduceTabDelOutputFromListWithHeadingSynDn() {
+		String props = "Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
+		String[] tabdLines = tabd.split(System.lineSeparator());
+		assertEquals(tabdLines[0],tabdOutLine1);
+		assertEquals(tabdLines[1],tabdOutLine2z);
+		assertEquals(tabdLines[2],tabdOutLine3);
+		assertEquals(tabdLines[3],tabdOutline4);
+		assertEquals(tabdLines[4],tabdOutline5);
+		assertEquals(tabdLines[5], "\r");
+		assertEquals(tabdLines[6], "\r");
+		assertEquals(tabdLines[7], "\r");
+		assertEquals(tabdLines[8], "Report Search Parameters: \r");
+		assertEquals(tabdLines[9], "Input:  C123456\r");
+		assertEquals(tabdLines[10], "Hierarchy level: 0\r");
+		assertEquals(tabdLines[11], "Properties Selected: Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
 	}
 	
 	@Test
@@ -158,7 +181,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingDefSyn() {
 		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String tabd = util.produceTabDelOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1c);
 		assertEquals(tabdLines[1],tabdOutLine2c);
@@ -170,7 +193,7 @@ class TabDelUtilityTest {
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingMapsSyn() {
 		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String tabd = util.produceTabDelOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1d);
 		assertEquals(tabdLines[1],tabdOutLine2d);
@@ -193,8 +216,8 @@ class TabDelUtilityTest {
 	
 	@Test
 	void testProduceTabDelOutputFromListWithHeadingAll() {
-		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		String tabd = util.produceTabDelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String props = "DEFINITION,ALT_DEFINITION,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		String tabd = util.produceTabDelOutputFromListWithHeading(crsvc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 		String[] tabdLines = tabd.split(System.lineSeparator());
 		assertEquals(tabdLines[0],tabdOutLine1f);
 		assertEquals(tabdLines[1],tabdOutLine2f);
@@ -243,7 +266,7 @@ class TabDelUtilityTest {
 		
 		List<Synonym> syns = new ArrayList<Synonym>();
 		Synonym syn = new Synonym();
-		syn.setType("synType");
+		syn.setType("FULL_SYN");
 		syn.setName("synName");
 		syn.setSource("NCIt");
 		syn.setSubSource("CDISC");
@@ -253,17 +276,21 @@ class TabDelUtilityTest {
 		syn2.setSubSource("NCI");
 		syn2.setTermGroup("atermgrp");
 		syn2.setName("synName2");
+		Synonym syn3 = new Synonym();
+		syn3.setType("Display_Name");
+		syn3.setName("synName");
 		syns.add(syn);
 		syns.add(syn2);
+		syns.add(syn3);
 		ent.setSynonyms(syns);
 		
 		List<Definition> defs = new ArrayList<Definition>();
 		Definition def = new Definition();
-		def.setType("defType");
+		def.setType("DEFINITION");
 		def.setDefinition("defvalue");
 		def.setSource("NCI");
 		Definition def2 = new Definition();
-		def2.setType("defType2");
+		def2.setType("ALT_DEFINITION");
 		def2.setDefinition("defvalue2");
 		defs.add(def);
 		defs.add(def2);

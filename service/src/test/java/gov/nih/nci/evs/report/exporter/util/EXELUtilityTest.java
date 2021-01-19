@@ -45,6 +45,7 @@ import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
+import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 
 class EXELUtilityTest {
 	
@@ -98,11 +99,14 @@ class EXELUtilityTest {
 	
 	Workbook wb;
 	
+	CodeReadService svc;
+	
 	@Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
 	@BeforeEach
 	void setUp() throws Exception {
 		util = new ExcelUtility();
+		svc = new CodeReadService();
 	}
 
 	@Test
@@ -115,7 +119,7 @@ class EXELUtilityTest {
 	void testProduceCSVOutputFromListWithHeadingStreamedToPOIObject() throws IOException {
 
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(svc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1188,8 +1192,8 @@ class EXELUtilityTest {
 	@Test
 	void testProduceExcelOutputFromByteArrayHeadingAltDefSyn() throws IOException {
 
-		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String props = "DEFINITION,Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(svc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)),props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1232,11 +1236,13 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("synonyms")  && cell4.equals("|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |"));
+			assertEquals(header4,"synonyms");
+			assertEquals(cell4,"|synSource2 NCI atermgrp:synName2 |NOSOURCE  NOTYPE:CDISC |");
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
-			assertTrue(header5.equals("definitions")  && cell5.equals("|NCI:defvalue|NOSOURCE:defvalue2|"));
+			assertEquals(header5,"definitions");
+			assertEquals(cell5,"|NCI:defvalue|");
 			
 			String header6 = headerRow.getCell(6).getStringCellValue();
 			String cell6 = row1.getCell(6).getStringCellValue();	
@@ -1691,7 +1697,8 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("synonyms")  && cell4.equals("|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |"));
+			assertEquals(header4,"synonyms");
+			assertEquals(cell4,"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |NOSOURCE  NOTYPE:CDISC |");
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
@@ -1876,8 +1883,8 @@ class EXELUtilityTest {
 	@Test
 	void testProduceExcelOutputFromByteArrayHeadingHeadingAll() throws IOException {
 
-		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
+		String props = "DEFINITION,ALT_DEFINITION,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(svc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1920,11 +1927,13 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("synonyms")  && cell4.equals("|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |"));
+			assertEquals(header4,"synonyms");  
+			assertEquals(cell4,"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |");
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
-			assertTrue(header5.equals("definitions")  && cell5.equals("|NCI:defvalue|NOSOURCE:defvalue2|"));
+			assertEquals(header5,"definitions");  
+			assertEquals(cell5,"|NCI:defvalue|NOSOURCE:defvalue2|");
 			
 			String header6 = headerRow.getCell(6).getStringCellValue();
 			String cell6 = row1.getCell(6).getStringCellValue();	
@@ -2128,7 +2137,7 @@ class EXELUtilityTest {
 		
 		List<Synonym> syns = new ArrayList<Synonym>();
 		Synonym syn = new Synonym();
-		syn.setType("synType");
+		syn.setType("FULL_SYN");
 		syn.setName("synName");
 		syn.setSource("NCIt");
 		syn.setSubSource("CDISC");
@@ -2138,17 +2147,21 @@ class EXELUtilityTest {
 		syn2.setSubSource("NCI");
 		syn2.setTermGroup("atermgrp");
 		syn2.setName("synName2");
+		Synonym syn3 = new Synonym();
+		syn3.setName("CDISC");
+		syn3.setType("Display_Name");
 		syns.add(syn);
 		syns.add(syn2);
+		syns.add(syn3);
 		ent.setSynonyms(syns);
 		
 		List<Definition> defs = new ArrayList<Definition>();
 		Definition def = new Definition();
-		def.setType("defType");
+		def.setType("DEFINITION");
 		def.setDefinition("defvalue");
 		def.setSource("NCI");
 		Definition def2 = new Definition();
-		def2.setType("defType2");
+		def2.setType("ALT_DEFINITION");
 		def2.setDefinition("defvalue2");
 		defs.add(def);
 		defs.add(def2);

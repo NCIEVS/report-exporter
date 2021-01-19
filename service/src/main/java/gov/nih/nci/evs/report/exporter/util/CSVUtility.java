@@ -17,7 +17,7 @@ public class CSVUtility extends FormatUtility {
 	public String produceCSVOutputFromListWithHeading(List<RestEntity> list, String props, String searchCodes, int level) {
 
 		CommonServices services = new CommonServices();
-		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoSynonyms(!(props.contains("FULL_SYN") || props.contains("Display_Name")));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		TripleBoolean flags = new TripleBoolean();
