@@ -31,7 +31,7 @@ public class ExcelUtility extends FormatUtility {
 	    Workbook workbook = new XSSFWorkbook();
 	    //Init the services to maintain an instance of the prooerty cache
 	    CommonServices services = new CommonServices();
-		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoSynonyms(!(props.contains("FULL_SYN") || props.contains("Display_Name")));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		//Init common flags for columns lacking values
