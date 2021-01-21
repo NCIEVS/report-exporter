@@ -29,10 +29,10 @@ public class EVSAPIBaseService {
     @Value("${NODE_LIST}")
 	private String curatedTopNodeList;
     
-    @Value("${BASE_URL}")
+    @Value("${evs.api.url.baseurl}")
     private String baseURL;
     
-    @Value("${BASE_METAD_URL}")
+    @Value("${evs.api.url.metadataurl}")
     private String baseMetaURL;
     
     @Value("${CHILDREN}")
@@ -138,6 +138,7 @@ public class EVSAPIBaseService {
 	}
 	
 	public RestPropertyMetadata[] getRestProperties(RestTemplate template){
+		System.out.println("Environment URL: " + baseMetaURL);
 		return template
 		.getForObject(
 		 baseMetaURL + propURL
