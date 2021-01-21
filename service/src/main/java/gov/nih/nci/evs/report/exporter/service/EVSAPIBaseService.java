@@ -138,7 +138,6 @@ public class EVSAPIBaseService {
 	}
 	
 	public RestPropertyMetadata[] getRestProperties(RestTemplate template){
-		System.out.println("Environment URL: " + baseMetaURL);
 		return template
 		.getForObject(
 		 baseMetaURL + propURL
