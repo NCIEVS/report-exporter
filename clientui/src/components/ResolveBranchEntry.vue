@@ -145,7 +145,7 @@
             </div>
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
-                   <div class="alert alert-dark" role="alert">
+                   <div class="alert alert-secondary" role="alert">
                      This report will resolve {{ selectedLevel}} level(s)
                      with a total of {{ this.childrenToResolveObj.childrenCount }} children.
                   </div>
@@ -165,9 +165,10 @@
 
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
-                <!--div v-if="exportType == 'exportDeferred'"-->
-                <div v-if="exportType == 'exportDeferred'  && this.deferredStatusHash != ''">
-                  <b>Use this Download ID on the Download page to retrieve your report: {{ this.deferredStatusHash }} </b>
+                <div class="alert alert-light" role="alert" v-if="exportType == 'exportDeferred'  && this.deferredStatusHash != ''">
+                  Use this Download ID on the
+                  <b><router-link v-bind:to="'/exports'" title="Link to Downloads">Downloads page</router-link> </b>
+                  to retrieve your report: <b>{{ this.deferredStatusHash }} </b>
                 </div>
               </div>
           </div>

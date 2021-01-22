@@ -83,6 +83,8 @@
     justify-content: flex-end;
   }
   .modal-body {
+    height: 500px;
+    overflow-y: auto;
     position: relative;
     padding: 20px 10px;
   }
