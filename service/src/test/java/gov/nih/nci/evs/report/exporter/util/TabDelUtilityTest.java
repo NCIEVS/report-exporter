@@ -100,9 +100,9 @@ class TabDelUtilityTest {
 		assertEquals(tabdLines[6], "\r");
 		assertEquals(tabdLines[7], "\r");
 		assertEquals(tabdLines[8], "Report Search Parameters: \r");
-		assertEquals(tabdLines[9], "Input:  C123456\r");
+		assertEquals(tabdLines[9], "\"|Input:  C123456|\"\r");
 		assertEquals(tabdLines[10], "Hierarchy level: 0\r");
-		assertEquals(tabdLines[11], "Properties Selected: FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
+		assertEquals(tabdLines[11], "\"|Properties Selected: FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2|\"");
 	}
 	
 	@Test
@@ -119,9 +119,9 @@ class TabDelUtilityTest {
 		assertEquals(tabdLines[6], "\r");
 		assertEquals(tabdLines[7], "\r");
 		assertEquals(tabdLines[8], "Report Search Parameters: \r");
-		assertEquals(tabdLines[9], "Input:  C123456\r");
+		assertEquals(tabdLines[9], "\"|Input:  C123456|\"\r");
 		assertEquals(tabdLines[10], "Hierarchy level: 0\r");
-		assertEquals(tabdLines[11], "Properties Selected: Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
+		assertEquals(tabdLines[11], "\"|Properties Selected: Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2|\"");
 	}
 	
 	@Test
@@ -138,9 +138,9 @@ class TabDelUtilityTest {
 		assertEquals(tabdLines[6], "\r");
 		assertEquals(tabdLines[7], "\r");
 		assertEquals(tabdLines[8], "Report Search Parameters: \r");
-		assertEquals(tabdLines[9], "Input:  C123456\r");
+		assertEquals(tabdLines[9], "\"|Input:  C123456|\"\r");
 		assertEquals(tabdLines[10], "Hierarchy level: 0\r");
-		assertEquals(tabdLines[11], "Properties Selected: Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");
+		assertEquals(tabdLines[11], "\"|Properties Selected: Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2|\"");
 		}
 	
 	@Test

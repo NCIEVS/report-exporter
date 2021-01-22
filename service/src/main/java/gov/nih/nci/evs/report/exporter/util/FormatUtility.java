@@ -8,9 +8,9 @@ public class FormatUtility {
 	public String produceDelimitedQueryRecord(String separator, String codes, int level, String props) {
 		String appendedQuery = "\r\n" + "\r\n" + "\r\n" +
 				"\r\n" + "Report Search Parameters: " + 
-				"\r\n" + "Input:  " + codes +
+				"\r\n" +  "\"|Input:  " + codes + "|\"" +
 				"\r\n" + "Hierarchy level: " + level +
-				"\r\n" + "Properties Selected: " + props;
+				"\r\n" +  "\"|Properties Selected: " + props + "|\"";
 		return appendedQuery;
 	}
 }
