@@ -16,6 +16,9 @@
                   <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4" aria-selected="false">
                       <i class="mdi mdi-account-settings"></i> Downloads
                   </a>
+                  <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5" aria-selected="false">
+                      <i class="mdi mdi-account-settings"></i> Programmatic JSON Use
+                  </a>
               </div>
           </div>
           <div class="col-lg-8">
@@ -329,8 +332,36 @@
                         </div>
                     </div>
 
-                </div>
-
+                    </div>
+                     <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="tab5">
+                        <div class="accordion" id="accordion-tab-5">
+                            <div class="card">
+                                <div class="card-header" id="accordion-tab-5-heading-1">
+                                    <h5>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-1" aria-expanded="false" aria-controls="accordion-tab-4-content-1">
+                                          What is programmatic access using JSON?
+                                        </button>
+                                    </h5>
+                                </div>
+                                  <div class="collapse show" id="accordion-tab-4-content-1" aria-labelledby="accordion-tab-4-heading-1" data-parent="#accordion-tab-4">
+                                  <div class="card-body">
+                                    <p>
+                                      The JSON representation of output is a model that can be transformed into model objects for use in computer programs.  
+                                    </p>
+                                    <p>
+                                      The model includes a wrapper object that contains metadata about the search parameters used to generate the JSON output.
+                                      </p>
+                                    <p>
+                                      The wrapper object also contains the list of objects which can be processed by a program as well.
+                                    </p>
+                                    <p>
+                                      The attributes names of the objects correspond to headings you would see in the EXCEL and character delimited files.
+                                    </p>
+                                  </div>
+                              </div>
+                            </div>
+                           </div>
+                    </div>
               </div>
           </div>
       </div>
