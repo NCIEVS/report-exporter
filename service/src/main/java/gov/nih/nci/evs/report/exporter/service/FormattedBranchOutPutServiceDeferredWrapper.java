@@ -35,20 +35,20 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 
 			startCSVThread(deferredStream, code, props, max);
 
-			log.info("Request processing finished");
+			log.debug("Request processing finished");
 
 			return deferredStream;
 	}
 	
 	private void startCSVThread(DeferredResult<byte[]> deferredStream, String code, String props, String max){
 	new Thread(() -> {
-		log.info("Stream processing thread started");
+		log.debug("Stream processing thread started");
 		deferredStream.setResult(new CSVUtility()
 				.produceCSVOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNodeBatch( 
 						code, props, max) ,props, code, Integer.valueOf(max)).getBytes());
 	}).start();
-	log.info("Stream processing thread complete");
+	   log.debug("Stream processing thread complete");
 	}
 	
 	public InputStream getChildTabDelBytesForRestParams(String code, String max) {
@@ -72,7 +72,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		
 		startJSONThread(deferredStream, code, props, max);
 
-		log.info("Request processing finished");
+		log.debug("Request processing finished");
 		
 		return deferredStream;
 
@@ -80,12 +80,12 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	
 	private void startJSONThread(DeferredResult<byte[]> deferredStream, String codes, String props, String max){
 	new Thread(() -> {
-		log.info("Stream processing JSON thread started");
+		log.debug("Stream processing JSON thread started");
 		deferredStream.setResult(new JSONUtility().produceJsonOutputFromListWithHeading(
 				service.getResolvedChildFlatListFromTopNodeBatch( 
 						codes, props, max),props, codes, Integer.valueOf(max)).getBytes());
 	}).start();
-	log.info("Stream processing JSON thread complete");
+	log.debug("Stream processing JSON thread complete");
 	}
 	
 	public InputStream getCSVBytesForRestParams(String codes, String props, String max) {
@@ -101,7 +101,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		
 		startTABDelThread(deferredStream, code, props, max);
 
-		log.info("Request processing finished");
+		log.debug("Request processing finished");
 		
 		return deferredStream;
 		
@@ -109,13 +109,13 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	
 	private void startTABDelThread(DeferredResult<byte[]> deferredStream, String codes, String props, String max){
 	new Thread(() -> {
-		log.info("Stream processing TAB Delimited thread started");
+		log.debug("Stream processing TAB Delimited thread started");
 		deferredStream.setResult(new TabDelUtility()
 				.produceTabDelOutputFromListWithHeading(
 						service.getResolvedChildFlatListFromTopNodeBatch( 
 								codes, props, max), props, codes, Integer.valueOf(max)).getBytes());
 	}).start();
-	log.info("Stream processing TAB Delimited  complete");
+	log.debug("Stream processing TAB Delimited  complete");
 	}
 	
 	public DeferredResult<byte[]> getXSLBytesForRestParams(String code, String props, String max) {
@@ -124,7 +124,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 		
 		startExcelThread(deferredStream, code, props, max);
 
-		log.info("Request processing finished");
+		log.debug("Request processing finished");
 		
 		return deferredStream;
 
@@ -132,7 +132,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 	
 	private void startExcelThread(DeferredResult<byte[]> deferredStream, String codes, String props, String max){
 	new Thread(() -> {
-		log.info("Stream processing Excel thread started");
+		log.debug("Stream processing Excel thread started");
 		try {
 			deferredStream.setResult(new ExcelUtility()
 					.produceExcelOutputFromListWithHeading(
@@ -143,7 +143,7 @@ public class FormattedBranchOutPutServiceDeferredWrapper {
 			e.printStackTrace();
 		}
 	}).start();
-	log.info("Stream processing Excel complete");
+	log.debug("Stream processing Excel complete");
 	}
 
 }
