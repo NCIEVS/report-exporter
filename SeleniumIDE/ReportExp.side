@@ -3847,6 +3847,272 @@
       ],
       "value": "miRBase_ID"
     }]
+  }, {
+    "id": "b3b2e578-6b92-4e5f-a286-fceca3f218f6",
+    "name": "FormatAssertions",
+    "commands": [{
+      "id": "388c232b-8a3b-49d5-b9bb-f46a30ae6ebc",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7c82141c-7004-464c-a16d-b304905bb06d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x830",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f99f5f81-9d02-4886-9af3-61ce2a34544d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(1) .btn",
+      "targets": [
+        ["css=.card:nth-child(1) .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Start Selecting Concepts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "172d5909-d376-4c5a-8ed5-24a7382ad8c3",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.card:nth-child(1) .btn",
+      "targets": [
+        ["css=.card:nth-child(1) .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Start Selecting Concepts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d537d159-0e49-4174-b500-03d59f503d5c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default",
+      "targets": [
+        ["css=.tags-input-wrapper-default", "css:finder"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5a8c5e9f-88d1-44a7-be40-c82c549912e2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d6c009fb-1512-496e-9697-8e9f4cf5777e",
+      "comment": "",
+      "command": "type",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "C12434"
+    }, {
+      "id": "677c8814-8dd5-486d-bea2-c32937112eab",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "84eac971-4590-4580-af33-100f36a5cb87",
+      "comment": "",
+      "command": "click",
+      "target": "css=.wizard-btn",
+      "targets": [
+        ["css=.wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "07da81a2-0f4f-4476-b6b0-987f3af625c8",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.wizard-btn",
+      "targets": [
+        ["css=.wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bead256c-c4b2-4ff3-bb86-e8489bf57666",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5a7b8345-3d51-4ffb-a316-436c3f0b68cf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa-angle-double-right > path",
+      "targets": [
+        ["css=.fa-angle-double-right > path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab7a7d51-e077-4417-afb7-6b7adb22d639",
+      "comment": "",
+      "command": "click",
+      "target": "css=.wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "99fee8b6-6598-4f63-b4ad-53aa6523c2a3",
+      "comment": "",
+      "command": "click",
+      "target": "id=downloadFormat",
+      "targets": [
+        ["id=downloadFormat", "id"],
+        ["css=#downloadFormat", "css:finder"],
+        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "11dc5666-6891-4c41-be1d-d069a1bc6251",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": "label=CSV (csv) Comma Separated Value Format"
+    }, {
+      "id": "3b509e1a-7f96-4cd1-8eaa-64d38858b5de",
+      "comment": "",
+      "command": "assertText",
+      "target": "//*[@id=\"downloadFormat\"]/option[2]",
+      "targets": [
+        ["id=downloadFormat", "id"],
+        ["css=#downloadFormat", "css:finder"],
+        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": "CSV (csv) Comma Separated Value Format"
+    }, {
+      "id": "f98d1336-041f-45b1-86ec-9f8f28e0a61f",
+      "comment": "",
+      "command": "click",
+      "target": "id=downloadFormat",
+      "targets": [
+        ["id=downloadFormat", "id"],
+        ["css=#downloadFormat", "css:finder"],
+        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02bd9685-71ac-4077-b1c3-3e3849bcd822",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": "label=TABD (txt) Tab Delimited Value Format"
+    }, {
+      "id": "9e8f2a07-d582-40dc-8a2b-6540d9779b0a",
+      "comment": "",
+      "command": "assertText",
+      "target": "//*[@id=\"downloadFormat\"]/option[3]",
+      "targets": [],
+      "value": "TABD (txt) Tab Delimited Value Format"
+    }, {
+      "id": "033d9a0f-af0e-47a7-b52a-4db2e77d82c6",
+      "comment": "",
+      "command": "click",
+      "target": "id=downloadFormat",
+      "targets": [
+        ["id=downloadFormat", "id"],
+        ["css=#downloadFormat", "css:finder"],
+        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6697ee58-c226-4d1e-8341-dc066da94e78",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": "label=EXCEL (xlsx) Microsoft Excel Format"
+    }, {
+      "id": "974f1f75-6e5e-48fe-b451-7a28d0afd12f",
+      "comment": "",
+      "command": "assertText",
+      "target": "//*[@id=\"downloadFormat\"]/option[4]",
+      "targets": [],
+      "value": "EXCEL (xlsx) Microsoft Excel Format"
+    }, {
+      "id": "e9e79302-98fc-425c-bdb7-9b88891e78b8",
+      "comment": "",
+      "command": "click",
+      "target": "id=downloadFormat",
+      "targets": [
+        ["id=downloadFormat", "id"],
+        ["css=#downloadFormat", "css:finder"],
+        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69bcbe4a-e774-4bba-b4d1-abbc9f63ab4f",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": "label=JSON (json) JavaScript Object Notation Format"
+    }, {
+      "id": "54163f1d-7643-4ca1-8ff3-7f54acb469f8",
+      "comment": "",
+      "command": "assertText",
+      "target": "//*[@id=\"downloadFormat\"]/option[1]",
+      "targets": [],
+      "value": "JSON (json) JavaScript Object Notation Format"
+    }]
   }],
   "suites": [{
     "id": "4788f753-9a11-4c8d-bca4-b6e4d8cf9579",
