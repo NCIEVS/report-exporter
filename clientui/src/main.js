@@ -41,6 +41,9 @@ Vue.use(Vue2Storage, {
 import VueCookies from 'vue-cookies';
 Vue.use(VueCookies);
 
+import VueMeta from 'vue-meta';
+Vue.use(VueMeta);
+
 // setup jquery
 window.$ = window.jQuery = jQuery
 
