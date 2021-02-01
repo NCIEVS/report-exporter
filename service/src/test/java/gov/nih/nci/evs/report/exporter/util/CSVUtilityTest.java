@@ -35,12 +35,12 @@ class CSVUtilityTest {
 	String csvOutLineHeading4 = "terminology,code,name,parents,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
 	String csvOutLine2a = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine2ab = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
-	String csvOutLine2az = "ncit,C123234,Myent,,\"|synSource2 NCI atermgrp:synName2 |NOSOURCE  NOTYPE:synNamedn |\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
-	String csvOutLine2ac = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2az = "ncit,C123234,Myent,,\"|synSource2 NCI atermgrp:synName2 |Display_Name:synNamedn |\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2ac = "ncit,C123234,Myent,,\"|NCI:defvalue|defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	//String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	
 	String csvOutLine2ad = "ncit,C123234,Myent,,,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
-	String csvOutLine2ae = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2ae = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	
 	//	String csvOutLine2b	= "|NCIt CDISC mytermgr:synName ";
 //	String csvOutLine2c	=  "|synSource2 NCI atermgrp:synName2 |\"";
@@ -60,7 +60,7 @@ class CSVUtilityTest {
 	//String csvOutline5a = "ncit,C2222,My2,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	
 	String csvOutLineHeading2 = "terminology,code,name,parents,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2\r";
-	String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
+	String csvOutLine2aca = "ncit,C123234,Myent,,\"|NCI:defvalue|defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"\r";
 	String csvOutLine3b = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"\r";
 	String csvOutline4a = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
 	String csvOutline5a = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"\r";
@@ -80,10 +80,10 @@ class CSVUtilityTest {
 	
 	
 	String singleLineHeading = "terminology,code,name,parents,synonyms,definitions,Semantic_Type,UMLS_CUI,Contributing_Source";
-	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |NOSOURCE  NOTYPE:CDISC |\",\"|NCI:terms relative to CDISC.|\",,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
+	String singelLineCSV	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI PT:Clinical Data Interchange Standards Consortium Terminology |NCI SY:CDISC Terminology |NCI SY:CDISC |Display_Name:CDISC |\",\"|NCI:terms relative to CDISC.|\",,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
 	
 	String singleLineHeadingNoDefsNoMaps = "terminology,code,name,parents,synonyms,Semantic_Type,UMLS_CUI,Contributing_Source";
-	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI  PT:Clinical Data Interchange Standards Consortium Terminology |NCI  SY:CDISC Terminology |NCI  SY:CDISC |\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"" + "\r";
+	String singelLineCSVNoDefsNoMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",\"|NCI PT:Clinical Data Interchange Standards Consortium Terminology |NCI SY:CDISC Terminology |NCI SY:CDISC |\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"" + "\r";
 	String singelLineCSVNoSynsEmptyDefsEmptyMaps	 = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
 	String singelLineCSVNoDefsEmptySynsEmptyMaps = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
 	String singleLineCSVNoMapsEmptySynsEmptyDevs = "ncit,C61410,Clinical Data Interchange Standards Consortium Terminology,\"|C54443:Terminology Subset|\",,,\"|Intellectual Product|\",\"|C1880104|\",\"|CDISC|\"\r";
