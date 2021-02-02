@@ -4113,6 +4113,472 @@
       "targets": [],
       "value": "JSON (json) JavaScript Object Notation Format"
     }]
+  }, {
+    "id": "ae223604-5a4e-452e-81c5-10a52671fbdd",
+    "name": "DocumentationNav",
+    "commands": [{
+      "id": "73cc2097-da6a-471b-ba52-33b49a812bb3",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "26c6c2cc-aa5a-48cd-9dd0-70d31cd62af6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1200x973",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b0987bb7-a7e5-4cae-81c7-fc71790116a7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Documentation",
+      "targets": [
+        ["linkText=Documentation", "linkText"],
+        ["css=#collapsingNavbarSubHeader .nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Documentation')]", "xpath:link"],
+        ["xpath=//div[@id='collapsingNavbarSubHeader']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/documentation')]", "xpath:href"],
+        ["xpath=//div[2]/nav/div/ul/li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Documentation')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d17b0805-fa77-4e13-a64b-bfd8f47c2957",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Export Entities",
+      "targets": [
+        ["linkText=Export Entities", "linkText"],
+        ["css=.nav-link:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Export Entities')]", "xpath:link"],
+        ["xpath=//div[@id='faq-tabs']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#tab2')]", "xpath:href"],
+        ["xpath=//div/div/div/a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Export Entities')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b7a319a6-eb12-48da-9aaa-0d7b575d36fe",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-2-heading-2 .btn",
+      "targets": [
+        ["css=#accordion-tab-2-heading-2 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-2-heading-2']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'How do I remove concept codes?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "394d2a18-8829-4054-bf31-cd791ff06dbb",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-2-heading-3 .btn",
+      "targets": [
+        ["css=#accordion-tab-2-heading-3 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-2-heading-3']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Why is the \"Select Concept Codes for Entity Export\" step/icon in the upper right corner red?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "027a87d2-dcde-40df-99ae-47886211bc12",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-2-heading-4 .btn",
+      "targets": [
+        ["css=#accordion-tab-2-heading-4 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-2-heading-4']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'How do you select properties to be included in the export?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f1d5173a-c3d3-4344-afad-7d69710e2f1e",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-2-heading-5 .btn",
+      "targets": [
+        ["css=#accordion-tab-2-heading-5 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-2-heading-5']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[5]/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'How do I know the export was successful?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "58db76e4-3a38-403c-99f1-280b8f6ccf24",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Export Resolved Branch",
+      "targets": [
+        ["linkText=Export Resolved Branch", "linkText"],
+        ["css=.nav-link:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Export Resolved Branch')]", "xpath:link"],
+        ["xpath=//div[@id='faq-tabs']/a[3]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#tab3')]", "xpath:href"],
+        ["xpath=//div/div/div/a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Export Resolved Branch')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a12796fc-3ec6-42c0-9287-f78179e2bae7",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-3-heading-2 .btn",
+      "targets": [
+        ["css=#accordion-tab-3-heading-2 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[10]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-3-heading-2']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div[2]/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'How can I select a top node?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "16c9df32-01ec-400d-a2bf-8f47ce8a317f",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-3-heading-3 .btn",
+      "targets": [
+        ["css=#accordion-tab-3-heading-3 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[11]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-3-heading-3']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div[3]/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'What are levels?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a87d2253-1675-4c91-855c-41dfc542f15a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-3-heading-4 .btn",
+      "targets": [
+        ["css=#accordion-tab-3-heading-4 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[12]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-3-heading-4']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[3]/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'What are the different download options')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b4fabf3a-4d8e-4248-b9eb-bfddeab77347",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-link:nth-child(4)",
+      "targets": [
+        ["css=.nav-link:nth-child(4)", "css:finder"],
+        ["xpath=(//a[contains(text(),'Downloads')])[2]", "xpath:link"],
+        ["xpath=//div[@id='faq-tabs']/a[4]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#tab4')]", "xpath:href"],
+        ["xpath=//div/div/div/a[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "accecb99-0ad1-4290-9a77-6c0f2d231265",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-4-heading-1 .btn",
+      "targets": [
+        ["css=#accordion-tab-4-heading-1 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[13]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-4-heading-1']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'What is the Downloads page for?')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "173b74d4-70ee-432f-b0c7-d4cfb7b28db9",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-4-heading-2 .btn",
+      "targets": [
+        ["css=#accordion-tab-4-heading-2 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[14]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-4-heading-2']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Downloads List Tab')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ae26004-c2a2-437c-90f3-669fef3ed41f",
+      "comment": "",
+      "command": "click",
+      "target": "css=#accordion-tab-4-heading-3 .btn",
+      "targets": [
+        ["css=#accordion-tab-4-heading-3 .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[15]", "xpath:attributes"],
+        ["xpath=//div[@id='accordion-tab-4-heading-3']/h5/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/h5/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Downloads Search Tab')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9dd776a7-8fc6-4a2c-854a-197cc70de260",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Programmatic JSON Use",
+      "targets": [
+        ["linkText=Programmatic JSON Use", "linkText"],
+        ["css=.nav-link:nth-child(5)", "css:finder"],
+        ["xpath=//a[contains(text(),'Programmatic JSON Use')]", "xpath:link"],
+        ["xpath=//div[@id='faq-tabs']/a[5]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#tab5')]", "xpath:href"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'Programmatic JSON Use')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "885f4136-d93d-4bd3-b04e-b922828c88e9",
+    "name": "AaaBannerModal",
+    "commands": [{
+      "id": "78721b73-a009-4565-bcbe-7b4f2728579c",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "80d17d54-75c8-4075-ab57-d932cd34a4ea",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1200x973",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "59331e40-8313-437a-a0ea-f3581b5de334",
+      "comment": "",
+      "command": "click",
+      "target": "css=.modal-footer > .btn",
+      "targets": [
+        ["css=.modal-footer > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div/div/footer/button", "xpath:idRelative"],
+        ["xpath=//footer/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ok')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "9c816de8-7fc7-4be2-abb6-df36e02e5fad",
+    "name": "HeaderFooterNav",
+    "commands": [{
+      "id": "57386727-520c-4ad4-b904-d118abb9af87",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4b938332-5049-444f-bed9-db18f0744568",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1200x973",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "508f35a5-6f17-4259-804f-3109b11d99b9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=NATIONAL CANCER INSTITUTE - CANCER.GOV",
+      "targets": [
+        ["linkText=NATIONAL CANCER INSTITUTE - CANCER.GOV", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'NATIONAL CANCER INSTITUTE - CANCER.GOV')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[3]/div/nav/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://www.cancer.gov/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'NATIONAL CANCER INSTITUTE - CANCER.GOV')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win9487",
+      "windowTimeout": 2000
+    }, {
+      "id": "36008d04-80d1-4c60-90d8-d07e9adffc4d",
+      "comment": "",
+      "command": "storeWindowHandle",
+      "target": "root",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "82ad3b2d-4f88-4a40-b22f-c66feca6ad37",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win9487}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9660d884-bac8-4f07-962b-41e84da56ea8",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "43739fce-9060-4407-9ff0-0f8112ef8917",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(1) > .nav-link",
+      "targets": [
+        ["css=.nav-item:nth-child(1) > .nav-link", "css:finder"],
+        ["xpath=//div[@id='collapsingNavbarHeader']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://www.cancer.gov/about-cancer')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win261",
+      "windowTimeout": 2000
+    }, {
+      "id": "5580f06d-110d-4652-a546-4672f4987938",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win261}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e467af4e-9b39-4217-8954-7547355e73a6",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bfdae8d7-3761-4882-b8cb-5688246b194d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Research",
+      "targets": [
+        ["linkText=Research", "linkText"],
+        ["css=#collapsingNavbarHeader .nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Research')]", "xpath:link"],
+        ["xpath=//div[@id='collapsingNavbarHeader']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://www.cancer.gov/research')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Research')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win5375",
+      "windowTimeout": 2000
+    }, {
+      "id": "fcfb6d8b-5b70-4015-aa00-0d06d7082c25",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win5375}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3e9daee3-5b3e-4ca8-8931-a70a430ff1c6",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "113c279e-beac-42fb-8076-054d56f16c48",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Grants & Training",
+      "targets": [
+        ["linkText=Grants & Training", "linkText"],
+        ["css=#collapsingNavbarHeader .nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Grants & Training')]", "xpath:link"],
+        ["xpath=//div[@id='collapsingNavbarHeader']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://www.cancer.gov/grants-training')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Grants & Training')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win8315",
+      "windowTimeout": 2000
+    }, {
+      "id": "40e03f83-11b5-494f-bb96-6611ba87cf2b",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win8315}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6cc16f2c-fbae-43e0-9e6f-5f1bf4986480",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c5ebf46d-9c63-4b74-9ddd-a59da71a10d7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=News & Events",
+      "targets": [
+        ["linkText=News & Events", "linkText"],
+        ["css=#collapsingNavbarHeader .nav-item:nth-child(4) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'News & Events')]", "xpath:link"],
+        ["xpath=//div[@id='collapsingNavbarHeader']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://www.cancer.gov/news-events')]", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'News & Events')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win7411",
+      "windowTimeout": 2000
+    }, {
+      "id": "c32df598-f6fb-44dc-b9ac-acf9b23301a9",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win7411}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8b0369a1-f77c-4d5b-8f98-95b7bf301765",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "54486c26-5a38-421b-84bf-e12246484434",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=About NCI",
+      "targets": [
+        ["linkText=About NCI", "linkText"],
+        ["css=.nav-item:nth-child(5) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'About NCI')]", "xpath:link"],
+        ["xpath=//div[@id='collapsingNavbarHeader']/ul/li[5]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://www.cancer.gov/about-nci')]", "xpath:href"],
+        ["xpath=//li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'About NCI')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win3869",
+      "windowTimeout": 2000
+    }, {
+      "id": "cd384042-c2d1-4b8d-9497-1fdb55aefe1b",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win3869}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3e98a5ff-d7d1-45c0-a48a-f036b4c4c095",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "4788f753-9a11-4c8d-bca4-b6e4d8cf9579",
