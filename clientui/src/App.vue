@@ -34,7 +34,7 @@ export default {
   },
 
   metaInfo: {
-    title: 'EVS Report Exporter"',
+    title: 'EVS Report Exporter',
     headAttrs: {
         "X-XSS-Protection": 1,
         "mode": "block"
