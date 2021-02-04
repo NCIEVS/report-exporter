@@ -4568,11 +4568,179 @@
       "id": "cd384042-c2d1-4b8d-9497-1fdb55aefe1b",
       "comment": "",
       "command": "selectWindow",
-      "target": "handle=${win3869}",
+      "target": "handle=${root}",
       "targets": [],
       "value": ""
     }, {
-      "id": "3e98a5ff-d7d1-45c0-a48a-f036b4c4c095",
+      "id": "6ddeaa55-f09f-400e-8370-bf8866827095",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Policies",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "93044b90-17e3-46d0-9cc6-138abd6d92b9",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "40ef6887-aa7c-4535-b69b-c5d7c3fad883",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cbf13817-c3d4-4bd0-b8b8-8bdae40414a2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Accessibility",
+      "targets": [
+        ["linkText=Viewing Files", "linkText"],
+        ["css=p:nth-child(1) > a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Viewing Files')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p/a[3]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.cancer.gov/global/viewing-files']", "xpath:href"],
+        ["xpath=//p/a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Viewing Files')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "23d6f544-4573-4624-ad34-e5cc370dd15a",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "887948dc-960a-47d8-8d64-832ab86eeb72",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Viewing Files",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "faa7ac03-d0f3-4db3-ac5c-76a50e06ee67",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8577d39e-74d0-4722-b9cd-3756bfbcc611",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=FOIA",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2089fed3-3523-4401-868b-a972ebe2c06e",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b5e4893d-b68e-466e-91e7-7bffd8256569",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=U.S. Department of Health and Human Services",
+      "targets": [
+        ["linkText=U.S. Department of Health and Human Services", "linkText"],
+        ["css=p:nth-child(2) > a:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'U.S. Department of Health and Human Services')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p[2]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.hhs.gov/']", "xpath:href"],
+        ["xpath=//p[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'U.S. Department of Health and Human Services')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win8579",
+      "windowTimeout": 2000
+    }, {
+      "id": "0df7a0d8-1c9a-4695-bd85-b885940932b2",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win8579}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f8de9eb4-50db-40e4-8833-0b4fb2ef1ff7",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8ab53a8d-cb73-4017-9dec-44a53cb43808",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=National Institutes of Health",
+      "targets": [
+        ["linkText=National Institutes of Health", "linkText"],
+        ["css=p:nth-child(2) > a:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'National Institutes of Health')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p[2]/a[2]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.nih.gov/']", "xpath:href"],
+        ["xpath=//p[2]/a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'National Institutes of Health')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win5829",
+      "windowTimeout": 2000
+    }, {
+      "id": "43dff966-e64d-4350-9cfe-efc996809329",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f78fd344-d060-4bb2-bb07-4ceaf14d2fd9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=National Cancer Institute",
+      "targets": [
+        ["linkText=National Cancer Institute", "linkText"],
+        ["css=p:nth-child(2) > a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'National Cancer Institute')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p[2]/a[3]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.cancer.gov/']", "xpath:href"],
+        ["xpath=//p[2]/a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'National Cancer Institute')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4786e418-0d1f-4e33-a96d-7547ca3e933c",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1eab36ae-045e-48e6-ae57-c3b849e43f82",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=USA.gov",
+      "targets": [
+        ["linkText=USA.gov", "linkText"],
+        ["css=p:nth-child(2) > a:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'USA.gov')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p[2]/a[4]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.usa.gov/']", "xpath:href"],
+        ["xpath=//p[2]/a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'USA.gov')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win7786",
+      "windowTimeout": 2000
+    }, {
+      "id": "b674acd9-f0c5-4ee3-9456-2d3f906dfdc0",
       "comment": "",
       "command": "selectWindow",
       "target": "handle=${root}",
