@@ -40,7 +40,7 @@
               </div>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" v-bind:to="'/downloads'" title="Link to Downloads">Downloads</router-link>
+              <router-link class="nav-link" v-bind:to="'/exports'" title="Link to Downloads">Downloads</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" v-bind:to="'/documentation'" title="Link to Documentation">Documentation</router-link>

@@ -20,7 +20,7 @@ public class TimedEvictionConcurrentMap {
 	
 	@Scheduled(fixedRate = 300000, initialDelay = 300000)
 	public void pollandCleanMap() {
-		log.info("Running Cache Cleanup Thread");
+		//log.info("Running Cache Cleanup Thread");
 		dRHash.forEach((x,y) -> {if(y.isStale()) {
 			log.info("Removing file: " +  x);
 			dRHash.remove(x);}});

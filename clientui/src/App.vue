@@ -32,14 +32,21 @@ export default {
     SubHeaderBar,
     FooterBar,
   },
+
+  metaInfo: {
+    title: 'EVS Report Exporter',
+    headAttrs: {
+        "X-XSS-Protection": 1,
+        "mode": "block"
+      },
+    meta: [
+      { name: 'Referrer-Policy', value: 'no-referrer | same-origin' },
+    ]
+  },
   data(){
     return {
       selectedTags:[]
     }
-  },
-  created () {
-    // Set the title in browser tab
-    document.title = "EVS Report Exporter";
   }
 }
 </script>

@@ -29,10 +29,10 @@ public class EVSAPIBaseService {
     @Value("${NODE_LIST}")
 	private String curatedTopNodeList;
     
-    @Value("${BASE_URL}")
+    @Value("${evs.api.url.baseurl}")
     private String baseURL;
     
-    @Value("${BASE_METAD_URL}")
+    @Value("${evs.api.url.metadataurl}")
     private String baseMetaURL;
     
     @Value("${CHILDREN}")
