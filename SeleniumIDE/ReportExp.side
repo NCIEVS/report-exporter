@@ -2,7 +2,7 @@
   "id": "580af3e8-c850-4b90-952c-339744d16b23",
   "version": "2.0",
   "name": "ReportExp",
-  "url": "http://localhost:8080",
+  "url": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
   "tests": [{
     "id": "067aa33f-18ad-482d-9061-994ec790b3f9",
     "name": "ReadEntityAllCatsJSON",
@@ -4383,6 +4383,20 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "91378170-261f-49dd-89b5-411ae9525a39",
+      "comment": "",
+      "command": "storeWindowHandle",
+      "target": "root",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "382271ca-0448-4677-a757-0149908c11c8",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "508f35a5-6f17-4259-804f-3109b11d99b9",
       "comment": "",
       "command": "click",
@@ -4401,17 +4415,24 @@
       "windowHandleName": "win9487",
       "windowTimeout": 2000
     }, {
-      "id": "36008d04-80d1-4c60-90d8-d07e9adffc4d",
-      "comment": "",
-      "command": "storeWindowHandle",
-      "target": "root",
-      "targets": [],
-      "value": ""
-    }, {
       "id": "82ad3b2d-4f88-4a40-b22f-c66feca6ad37",
       "comment": "",
       "command": "selectWindow",
       "target": "handle=${win9487}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "71ca387e-e4bb-45de-992d-c8ceda9a7d38",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "Comprehensive Cancer Information - National Cancer Institute",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fa0d4d70-db46-4b23-b81d-7a481469ca51",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -4437,10 +4458,31 @@
       "windowHandleName": "win261",
       "windowTimeout": 2000
     }, {
+      "id": "721e25a8-9f61-4681-a5d3-b9d9fa436622",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win261}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4ac9acb0-0230-46be-9b1e-e136ddfee684",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "About Cancer - National Cancer Institute",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "5580f06d-110d-4652-a546-4672f4987938",
       "comment": "",
       "command": "selectWindow",
       "target": "handle=${win261}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "51d502e0-9e7b-4dc5-9326-2c3a5f0129c4",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -4476,6 +4518,20 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "d83203a3-27bb-43f0-993e-f04c03737ef5",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "Cancer Research - National Cancer Institute",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8f4b1b1f-c58b-4024-9758-11c58713de5c",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "3e9daee3-5b3e-4ca8-8931-a70a430ff1c6",
       "comment": "",
       "command": "selectWindow",
@@ -4505,6 +4561,20 @@
       "comment": "",
       "command": "selectWindow",
       "target": "handle=${win8315}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0c62f71d-b35e-41fa-8b85-00d88d2a4bfc",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "Grants & Training - National Cancer Institute",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8ec4c1e5-d012-49a5-a6bf-f9bbc5b1e79a",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -4540,6 +4610,20 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "eb4d5207-3a95-4e75-9cb2-ff7d7b249033",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "News & Events - National Cancer Institute",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "756fe23c-f78b-4da2-a30c-8a8ff2586d83",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "8b0369a1-f77c-4d5b-8f98-95b7bf301765",
       "comment": "",
       "command": "selectWindow",
@@ -4564,6 +4648,27 @@
       "opensWindow": true,
       "windowHandleName": "win3869",
       "windowTimeout": 2000
+    }, {
+      "id": "c2eda02e-17b2-41c3-aba1-c5d7271612d8",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win3869}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e513c713-5f23-4471-82c3-512d344a536d",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "About NCI - National Cancer Institute",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d1e522cc-e655-4def-b91b-fca0875e6365",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }, {
       "id": "cd384042-c2d1-4b8d-9497-1fdb55aefe1b",
       "comment": "",
@@ -4747,6 +4852,311 @@
       "targets": [],
       "value": ""
     }]
+  }, {
+    "id": "20a837dc-5fb2-40fa-a924-b1485d259ed3",
+    "name": "FooterTest",
+    "commands": [{
+      "id": "4370e76b-d422-45ef-816d-63a6efd53229",
+      "comment": "",
+      "command": "open",
+      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a98065e4-8e65-45a6-9e93-56242cf9e184",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1200x973",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7a78f9bd-0f38-47dd-9cab-05a3112cdcce",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Policies",
+      "targets": [
+        ["linkText=Policies", "linkText"],
+        ["css=p:nth-child(1) > a:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Policies')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.cancer.gov/global/web/policies']", "xpath:href"],
+        ["xpath=//p/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Policies')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9675dac0-4e99-41fe-ab81-c551fa7842e6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.current-page > a",
+      "targets": [
+        ["css=.current-page > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'Policies')])[5]", "xpath:link"],
+        ["xpath=//div[@id='nvcgSlSectionNav']/div/div/ul/li/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/policies')])[9]", "xpath:href"],
+        ["xpath=//div/ul/li/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ece0f1d-8999-4bb5-a4e7-986e444ed8ff",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//div[@id='main']/article/div/h1",
+      "targets": [
+        ["css=.resize-content > h1", "css:finder"],
+        ["xpath=//div[@id='main']/article/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Policies')]", "xpath:innerText"]
+      ],
+      "value": "Policies"
+    }, {
+      "id": "d0d238b8-a1a3-4532-9c7c-a06118997727",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d926f4e9-ecf2-4cee-996b-93434b1249e2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Accessibility",
+      "targets": [
+        ["linkText=Accessibility", "linkText"],
+        ["css=p:nth-child(1) > a:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Accessibility')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p/a[2]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.cancer.gov/global/web/policies/accessibility']", "xpath:href"],
+        ["xpath=//p/a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Accessibility')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "573ad746-b11c-4b96-94eb-81da77805f88",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.resize-content > h1",
+      "targets": [
+        ["css=.resize-content > h1", "css:finder"],
+        ["xpath=//div[@id='main']/article/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Accessibility Policy')]", "xpath:innerText"]
+      ],
+      "value": "Accessibility Policy"
+    }, {
+      "id": "b363bc25-4fd1-457a-99c8-f437996cae38",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9a9c035c-920f-4256-8836-ec948b9d691a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Viewing Files",
+      "targets": [
+        ["linkText=Viewing Files", "linkText"],
+        ["css=p:nth-child(1) > a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Viewing Files')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p/a[3]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.cancer.gov/global/viewing-files']", "xpath:href"],
+        ["xpath=//p/a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Viewing Files')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee9d9485-0f27-4655-a7f9-62992a9d89a3",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.resize-content > h1",
+      "targets": [
+        ["css=.resize-content > h1", "css:finder"],
+        ["xpath=//div[@id='main']/article/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Accessibility Policy')]", "xpath:innerText"]
+      ],
+      "value": "Accessibility Policy"
+    }, {
+      "id": "5a2476c3-e7b7-480a-a970-899a4ddf1708",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=FOIA",
+      "targets": [
+        ["linkText=FOIA", "linkText"],
+        ["css=p:nth-child(1) > a:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'FOIA')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p/a[4]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.cancer.gov/global/web/policies/foia']", "xpath:href"],
+        ["xpath=//p/a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'FOIA')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad0b357f-b14d-4591-a406-411ffa20712a",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.resize-content > h1",
+      "targets": [
+        ["css=.resize-content > h1", "css:finder"],
+        ["xpath=//div[@id='main']/article/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Accessibility Policy')]", "xpath:innerText"]
+      ],
+      "value": "Freedom of Information Act"
+    }, {
+      "id": "d7116b17-cd8d-490b-b076-5aafa92d4375",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=U.S. Department of Health and Human Services",
+      "targets": [
+        ["linkText=U.S. Department of Health and Human Services", "linkText"],
+        ["css=p:nth-child(2) > a:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'U.S. Department of Health and Human Services')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p[2]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.hhs.gov/']", "xpath:href"],
+        ["xpath=//p[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'U.S. Department of Health and Human Services')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f2135b6-40db-4da9-87c5-7196ddce2410",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=site-name",
+      "targets": [
+        ["id=site-name", "id"],
+        ["linkText=U.S. Department of Health & Human Services", "linkText"],
+        ["css=#site-name", "css:finder"],
+        ["xpath=//a[contains(text(),'U.S. Department of Health & Human Services')]", "xpath:link"],
+        ["xpath=//a[@id='site-name']", "xpath:attributes"],
+        ["xpath=//div[@id='hhs-blue-header']/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/')])[2]", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'U.S. Department of Health & Human Services')]", "xpath:innerText"]
+      ],
+      "value": "U.S. Department of Health & Human Services"
+    }, {
+      "id": "ac40ab6a-88f4-4cef-baa6-dc33109a4354",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d9066f86-8d1e-498b-bbbe-6b3cdfe04509",
+      "comment": "",
+      "command": "storeWindowHandle",
+      "target": "root",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "621fd3bb-0563-4a35-87eb-9737b02b0ce4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=National Institutes of Health",
+      "targets": [
+        ["linkText=National Institutes of Health", "linkText"],
+        ["css=p:nth-child(2) > a:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'National Institutes of Health')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div[5]/div/div/div/p[2]/a[2]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://www.nih.gov/']", "xpath:href"],
+        ["xpath=//p[2]/a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'National Institutes of Health')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "tabtwo",
+      "windowTimeout": 2000
+    }, {
+      "id": "07c6eb23-a1e8-4a2d-b273-c0f641f0f8da",
+      "comment": "",
+      "command": "echo",
+      "target": "${tabtwo}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7fbd772a-8959-4628-89ac-f9696494288e",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${tabtwo}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "737653df-aaf9-4665-b7b4-38e7ef3b1b81",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.nih-logo > img",
+      "targets": [
+        ["css=.nih-logo > img", "css:finder"],
+        ["xpath=//img[@alt='National Institutes of Health (NIH) - Turning Discovery into Health']", "xpath:img"],
+        ["xpath=//a/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6f96db58-723b-48ad-8f0c-3686cc0fd818",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "National Institutes of Health (NIH) | Turning Discovery Into Health",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "aad0046f-27fe-40de-ac9a-4fa3eb4d82c0",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f37a944d-fd47-49ea-adbf-b7dee4a1b09c",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "901e5dae-bd84-410f-b598-b1f753982ba6",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=National Cancer Institute",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0ee5c631-3e23-466e-ae0a-9fb80e323587",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "Comprehensive Cancer Information - National Cancer Institute",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "16d33e42-ea4a-4790-96ff-777781435c28",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "18dac887-fcfc-4a11-b0a4-aa510fb709e5",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=USA.gov",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "76871f9e-cc05-4ceb-a95c-81ed3e9d6cc1",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "Official Guide to Government Information and Services | USAGov",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b8c31a28-892e-45e0-928f-e6e93f9489bb",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "4788f753-9a11-4c8d-bca4-b6e4d8cf9579",
@@ -4756,6 +5166,6 @@
     "timeout": 300,
     "tests": ["067aa33f-18ad-482d-9061-994ec790b3f9"]
   }],
-  "urls": ["http://localhost:8080/"],
+  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/"],
   "plugins": []
 }
