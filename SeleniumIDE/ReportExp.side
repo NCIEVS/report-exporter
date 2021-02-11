@@ -759,7 +759,7 @@
     }]
   }, {
     "id": "6056e06d-26b4-4c4f-b34b-99d25ac9058d",
-    "name": "PropBoundaryTests",
+    "name": "PropBoundaryFullTest",
     "commands": [{
       "id": "7cdb0764-0b68-40f5-9ad4-a3e99aff729a",
       "comment": "",
@@ -900,13 +900,9 @@
     }, {
       "id": "2e5fa9be-3895-4831-b3ca-a0493c77d883",
       "comment": "",
-      "command": "doubleClick",
+      "command": "click",
       "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
-      "targets": [
-        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
-        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
-        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
-      ],
+      "targets": [],
       "value": ""
     }, {
       "id": "b85b419a-6957-4f68-912b-95e00f9039b0",
@@ -1382,17 +1378,6 @@
       ],
       "value": ""
     }, {
-      "id": "514a8cd2-723f-4bac-855a-d6c1b4037049",
-      "comment": "",
-      "command": "click",
-      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option",
-      "targets": [
-        ["css=.msl-searchable-list:nth-child(1) .multi-select-option", "css:finder"],
-        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
-        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "e0784ac5-ba1b-4dad-9786-43790527ec48",
       "comment": "",
       "command": "click",
@@ -1447,7 +1432,7 @@
     }]
   }, {
     "id": "11d25f84-1798-4c5b-9d6b-19e987fbcc9f",
-    "name": "PropBoundryUpper",
+    "name": "PropBoundryLower",
     "commands": [{
       "id": "3518444e-d093-4fc0-98a3-9893ac083159",
       "comment": "",
@@ -1761,7 +1746,7 @@
     }]
   }, {
     "id": "c7533e90-5c9d-4521-aa10-011e49c39662",
-    "name": "PropBoundryLower",
+    "name": "PropBoundryUpper",
     "commands": [{
       "id": "5231dc9f-00a8-49a2-aee5-e68b0cbec5bc",
       "comment": "",
@@ -2758,13 +2743,6 @@
         ["xpath=//span/button", "xpath:position"],
         ["xpath=//button[contains(.,'Refresh')]", "xpath:innerText"]
       ],
-      "value": ""
-    }, {
-      "id": "abefd415-96fa-4eab-a72f-890c945861c8",
-      "comment": "",
-      "command": "",
-      "target": "",
-      "targets": [],
       "value": ""
     }, {
       "id": "d7d321d0-af1a-4a1d-bb79-0ca94801563e",
@@ -4367,7 +4345,7 @@
     }]
   }, {
     "id": "9c816de8-7fc7-4be2-abb6-df36e02e5fad",
-    "name": "HeaderFooterNav",
+    "name": "HeaderNavTest",
     "commands": [{
       "id": "57386727-520c-4ad4-b904-d118abb9af87",
       "comment": "",
@@ -4957,7 +4935,7 @@
     }]
   }, {
     "id": "20a837dc-5fb2-40fa-a924-b1485d259ed3",
-    "name": "FooterTest",
+    "name": "FooterNavTest",
     "commands": [{
       "id": "4370e76b-d422-45ef-816d-63a6efd53229",
       "comment": "",
@@ -5258,6 +5236,1015 @@
       "command": "close",
       "target": "",
       "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "5a812148-70e8-4fb0-9e72-fcdea4eb05da",
+    "name": "PropNameFullTest",
+    "commands": [{
+      "id": "8ff16c35-aa8e-4ae6-b4eb-524d22e07071",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cc4b2355-a946-482d-ae74-e6b0792f08b9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1512x960",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "111c714d-fd3e-4b5c-b7c2-d66083bb8798",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(1) .btn",
+      "targets": [
+        ["css=.card:nth-child(1) .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Start Selecting Concepts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0fb47f59-be48-469b-b719-83bc4eeb3f40",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.card:nth-child(1) .btn",
+      "targets": [
+        ["css=.card:nth-child(1) .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Start Selecting Concepts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "589e5d82-876e-4211-8981-8bfd4bededab",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cd4a405e-7582-47ff-9513-fbc6e7853606",
+      "comment": "",
+      "command": "type",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "C12434"
+    }, {
+      "id": "6e726565-fb4c-4a81-bc5e-9b439076a244",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "0635f71f-44ed-4b3e-99e2-fea3e3a98d7c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.wizard-btn",
+      "targets": [
+        ["css=.wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2fc7eb7f-a37e-4f94-81a1-a710d4e2f94f",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.wizard-btn",
+      "targets": [
+        ["css=.wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "22c5bca5-66b2-4b07-9945-d6a024453211",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fbc7d975-65af-4b79-b4f4-7e21b90392e5",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "ALT_DEFINITION"
+    }, {
+      "id": "b3158714-efda-4651-bc60-94cea4165e59",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba475539-be84-4e3b-9334-1f60c3f0ce9a",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Accepted_Therapeutic_Use_For"
+    }, {
+      "id": "722682dc-0b5d-4f29-ac0d-365e41aee618",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f3c60f96-1d43-4983-b0d0-811ee4720387",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "CAS_Registry"
+    }, {
+      "id": "7f36470a-6690-44e6-bb74-af9f582eb53a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "30512c98-a289-4a5b-b384-fe6cb090c43f",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "CHEBI_ID"
+    }, {
+      "id": "8764d504-6fe9-41c9-9108-3295254f911e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "60eea1d0-3545-400e-a7e2-eb247ccc615b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Chemical_Formula"
+    }, {
+      "id": "272400a3-927c-41ed-9691-8769cb8d6521",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2dd91669-ef49-4326-b09d-557d7ddaeaf5",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Concept_Status"
+    }, {
+      "id": "00ec644d-ca17-4ca8-94b3-c23b6685f32e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08653593-4ca8-4ffe-979e-85f65d837815",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Contributing_Source"
+    }, {
+      "id": "75b5a1d8-0926-4fea-8f2f-6a3f672b820e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4f1819b-4eca-4ed0-8eea-5ad715a54102",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "DEFINITION"
+    }, {
+      "id": "a3d84e4e-e183-45ae-8c84-1d302a9764e2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "da8f4629-fce1-4a9b-b303-a375468300c6",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "DesignNote"
+    }, {
+      "id": "d30c3b5d-2671-45f3-ad63-fe6df76c1392",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "354c7912-52fe-422d-8930-fc71a2c43342",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Display_Name"
+    }, {
+      "id": "85623741-c204-4ff1-b38f-c8a1aeff060c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "019c000d-8ef0-42ae-97eb-5dec3849de7e",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "EntrezGene_ID"
+    }, {
+      "id": "d2a5ea3b-f9a2-4b75-8d1a-53d0f87b9bd6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d57c3163-a5ae-485d-bf20-9ff9874f773e",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Essential_Amino_Acid"
+    }, {
+      "id": "01cffab5-ba28-48ca-a8c9-9d6755940dbf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f36053b8-8713-4e0f-8bd8-4cdf834a3fbd",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Essential_Fatty_Acid"
+    }, {
+      "id": "0efdc01e-7457-4d02-81d5-214c5889ea6f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "607d6d48-31be-495b-b992-dc68ef80d2bd",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "FDA_UNII_Code"
+    }, {
+      "id": "29f32816-b903-4b89-8210-7c96d3da4b7e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "98780b48-f551-43e9-a481-51d21bc73c7f",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "FULL_SYN"
+    }, {
+      "id": "2ddcde03-4e58-40c0-b183-1b99fa644c4c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4011e04d-1497-4ea3-b3b4-5b58e4a294d6",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "GO_Annotation"
+    }, {
+      "id": "b9c9b71f-5fc5-46d7-b40b-4d0113484f27",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b454b0e0-6dcb-4081-aad4-0a0dc1eaf5c6",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "GenBank_Accession_Number"
+    }, {
+      "id": "6afa05be-13d3-4733-864d-da2da563f87d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a883f96-450b-4357-9916-1b01ad4ca294",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "HGNC_ID"
+    }, {
+      "id": "2936f4b4-8219-4af9-a774-d02f762a1b79",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2ac099d3-974b-4cad-8c94-69be10d30665",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "ICD-O-3_Code"
+    }, {
+      "id": "e5ea23ec-d411-425b-a887-257e0ba8b794",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "16d67091-73c8-4913-8b12-791b02d39dcb",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "INFOODS"
+    }, {
+      "id": "5dbada15-0345-4c1d-9ac0-940af44a2f3f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "adafa2ba-0978-4efb-ba7c-64ce7857db51",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "KEGG_ID"
+    }, {
+      "id": "8705cfea-ef14-4b16-8516-1654b6af74a8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69e945dd-7fd5-4cb0-a158-70a0976e7fe8",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "MGI_Accession_ID"
+    }, {
+      "id": "a0a4f5c9-c57c-44d0-be06-65549b1fef8a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c720385-212d-4f03-a3f6-5012c853eadd",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Macronutrient"
+    }, {
+      "id": "506c9cee-f812-40c6-8576-03b754f4f6a0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "963213ac-422f-42dc-a3a3-d1192224ec0b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Maps_To"
+    }, {
+      "id": "d4e42c3e-bbc7-434b-8033-46d1572118bb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "734de40b-b256-4dc7-b8d9-f1687ecc8bf8",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Micronutrient"
+    }, {
+      "id": "fcbfa443-4e71-4ff5-b233-6eb940c0bfbb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7997f8a5-75fc-4f02-a276-95f8b42d708c",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "NCBI_Taxon_ID"
+    }, {
+      "id": "0bf7bc7b-72a3-4b4a-a74f-2362ee35d221",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "474c3831-03bc-432a-91ef-5338ed75fe11",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "NCI_META_CUI"
+    }, {
+      "id": "dd5be860-e122-4ffd-9f5f-abe31dcd9516",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b5566c86-d858-426c-9647-617eafe188e7",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "NSC Number"
+    }, {
+      "id": "68e9b88a-24d4-462c-8814-7695c96a59bb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8fd6a2fe-a2d8-48a0-889d-0d0fbcf31b25",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Neoplastic_Status"
+    }, {
+      "id": "d849760e-154c-485d-99d8-4c56fc9dad6f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6c5d6acc-917e-49d0-8aad-f577de78c0e0",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Nutrient"
+    }, {
+      "id": "15696d38-c0cb-486b-9e72-7b6bed7ae3a0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "48d86342-295b-44e1-8e82-4ceb1250f6bf",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "OID"
+    }, {
+      "id": "395494f7-ac6f-4999-9947-c2f5e92a25e6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dbf8aaf0-3e7c-4f9f-8928-d8138311f7d2",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "OMIM_Number"
+    }, {
+      "id": "8d28d63a-b36b-491c-b92e-47a9f877bf46",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1b5878f4-6839-4905-a17c-52db308715a2",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "PDQ_Closed_Trial_Search_ID"
+    }, {
+      "id": "c6441660-c2f1-45de-a299-213f4ac54cea",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "679ed621-6dee-474c-867d-b6b6674cf7f9",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "PDQ_Open_Trial_Search_ID"
+    }, {
+      "id": "85cc0b7f-103c-4b54-9d74-2f09883b2391",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "28831e83-b2b6-45d7-ac09-0e14719cd6b8",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "PID_ID"
+    }, {
+      "id": "845b41ae-b0a0-4f21-aa22-19a8284f1895",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1247769-a491-4424-9bba-5f08c5976da8",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "PubMedID_Primary_Reference"
+    }, {
+      "id": "6ac1a026-8929-451d-989a-18e4541399b8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f25741f8-d7b6-47a5-a26f-f2730a1ad929",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "SNP_ID"
+    }, {
+      "id": "dfc06b53-e528-42d9-b357-de51808cb01f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4f70d748-6b40-46a7-9896-71b678fe933b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Semantic_Type"
+    }, {
+      "id": "de6a674b-c06e-4885-b70f-14c688d68e1a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "20b5b3b5-3925-4747-a2ae-98fb99b69c1d",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Subsource"
+    }, {
+      "id": "36da9955-a0c5-45b1-b41d-963adef517dc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "28884aa9-4387-4cbb-90da-c359dd18ea27",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Swiss_Prot"
+    }, {
+      "id": "c01d6587-a599-4b42-b02e-f4e104304cc6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d162384-48f2-4bd7-a3bf-60c24cc2f785",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Tolerable_Level"
+    }, {
+      "id": "f3d879f3-68ec-4103-978b-8c113c413d3d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f769ff0f-a29d-479a-af56-c8cdf9266703",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "UMLS_CUI"
+    }, {
+      "id": "5aad8664-ec26-4867-9936-9209c16fe4a1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f3a2c349-8279-477b-9fb6-85d92058ffcc",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "USDA_ID"
+    }, {
+      "id": "9dcdf575-0a5f-4c47-8541-a09ee8117eb6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "465fb126-c6e2-4193-a193-ddad49e2bbda",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "US_Recommended_Intake"
+    }, {
+      "id": "c96b4f5b-1152-49fa-aa91-6b37b54d48b2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "07f81cb4-fed6-4408-8d18-66dd5aed7e81",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Unit"
+    }, {
+      "id": "bf881ee4-c454-46ba-a95c-e75b51150154",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a78480b5-53e2-46dc-9683-38bb2bc3d384",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "miRBase_ID"
+    }, {
+      "id": "2827dcfc-d6bb-4dc3-b4d2-f0d4887cd30b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3165ba60-4baf-4f52-865f-676b1d041677",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "ALT_DEFINITION"
+    }, {
+      "id": "7ff4686f-d98b-4cff-b54a-59123b99c780",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(46)",
+      "targets": [],
+      "value": "miRBase_ID"
+    }, {
+      "id": "0448e0ba-93e3-4a5a-8db1-42f338bdb6eb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffca8e56-4765-472f-a3c7-7d0e498e67d1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b495b0b-db4f-46c8-ad48-dd8fc8eaa62c",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "500fc5d7-ad25-47b1-9b2c-d47dc18cb2f2",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
+      ],
       "value": ""
     }]
   }],
