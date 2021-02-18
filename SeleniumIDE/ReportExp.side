@@ -6826,6 +6826,25 @@
       "targets": [],
       "value": "label=10 Levels"
     }, {
+      "id": "141ec448-f467-434b-8371-6b98eec1965e",
+      "comment": "",
+      "command": "pause",
+      "target": "3000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "36e01c5c-4470-4cc1-bb90-e613d6f37479",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#selectedTagList > li:nth-child(3)",
+      "targets": [
+        ["css=#selectedTagList > li:nth-child(3)", "css:finder"],
+        ["xpath=//ul[@id='selectedTagList']/li[3]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'Children to Resolve: 24068')]", "xpath:innerText"]
+      ],
+      "value": " Children to Resolve: 24068 "
+    }, {
       "id": "19a9dba3-adfb-4ffe-b9b8-6ecdd4092a67",
       "comment": "",
       "command": "click",
