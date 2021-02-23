@@ -6843,7 +6843,7 @@
         ["xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]", "xpath:position"],
         ["xpath=//li[contains(.,'Children to Resolve: 24068')]", "xpath:innerText"]
       ],
-      "value": " Children to Resolve: 24068 "
+      "value": " Children to Resolve: 24173"
     }, {
       "id": "19a9dba3-adfb-4ffe-b9b8-6ecdd4092a67",
       "comment": "",
@@ -8007,6 +8007,118 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "733a2075-306f-4b47-9d0f-b7e3cb164470",
+    "name": "BranchNodeSelectOptions",
+    "commands": [{
+      "id": "a3c68ba8-cb68-45fb-ab87-a0896453344a",
+      "comment": "",
+      "command": "open",
+      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d88913d7-023c-474d-b690-5366ba2d04bc",
+      "comment": "",
+      "command": "//setWindowSize",
+      "target": "1886x1038",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e9d1a3a3-b12f-45d8-90ae-d0254687c0a0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(2) .btn",
+      "targets": [
+        ["css=.card:nth-child(2) .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div[2]/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Start Selecting Root Nodes')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "35ce0aee-08d7-4487-834a-cbb37ba325f1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectaCode0']/div/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba936fad-a6db-4018-9847-94e3d20243b3",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectaCode0']/div/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "C55710"
+    }, {
+      "id": "8ef62846-fbbb-41b8-a5d3-6cbe486e2f3c",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectaCode0']/div/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "c12474a3-ec1c-48cd-b31a-4b63550df1e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-remove",
+      "targets": [
+        ["css=.tags-input-remove", "css:finder"],
+        ["xpath=//div[@id='SelectaCode0']/div/div/div/div/div/form/div/div/div/span/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//span/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "288b9e06-4e6c-442b-bc2c-c984ae2a6a42",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectaCode0']/div/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6767180e-d4c1-4fb9-b45f-1af0223b7a77",
+      "comment": "",
+      "command": "//executeScript",
+      "target": "return window.document.getElementById(\"tags\");",
+      "targets": [],
+      "value": "vselect"
+    }, {
+      "id": "1f7cf909-4467-4918-bb82-012f67df0a58",
+      "comment": "",
+      "command": "//echo",
+      "target": "${vselect}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7ca0c848-de31-4dff-975a-f2b01f0ad637",
+      "comment": "",
+      "command": "//click",
+      "target": "${vselect}[5]",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "4788f753-9a11-4c8d-bca4-b6e4d8cf9579",
@@ -8016,6 +8128,6 @@
     "timeout": 300,
     "tests": ["067aa33f-18ad-482d-9061-994ec790b3f9"]
   }],
-  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/"],
+  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/"],
   "plugins": []
 }
