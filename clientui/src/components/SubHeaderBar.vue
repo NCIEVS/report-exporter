@@ -26,7 +26,7 @@
                       width="77" height="38px" border="0">
                     NCI Metathesaurus
                   </a>
-                  <a class="dropdown-item" alt="NCI Term Browser" href="https://evsexplore.nci.nih.gov/evsexplore/welcome" target="_blank">
+                  <a class="dropdown-item" alt="NCI Term Browser" href="https://ncithesaurus.nci.nih.gov/ncitbrowser/" target="_blank">
                     <img alt="NCI Term Browser" src="../assets/EVSTermsBrowserTile.png"
                     width="77" height="38px" border="0">
                     NCI Term Browser
@@ -35,6 +35,11 @@
                     <img alt="NCI Terminology Resources" src="../assets/Cancer_govTile.png"
                       width="77" height="38px" border="0">
                     NCI Terminology Resources
+                  </a>
+                  <a class="dropdown-item" alt="EVS Explore" href="https://evsexplore.nci.nih.gov/evsexplore/welcome" target="_blank">
+                    <img alt="NCI Terminology Explorer" src="../assets/NCItTile.png"
+                      width="77" height="38px" border="0">
+                    EVS Explore
                   </a>
                 </div>
               </div>
