@@ -67,7 +67,13 @@ Update the **Tomcat8/conf/server.xml** file for Tomcat. Add the following **"Rew
           <Valve className="org.apache.catalina.valves.rewrite.RewriteValve" />
     </Host>
     
-    
+ Tier related settings must be adjusted using the application properties files specific to each tier.  Since there is a dependency upon the EVS REST API these settings would be specific EVS REST API instances on each tier.  So for the production tier the application-prod.properties file would contain URLs for both meta and concept resources.  THe tomcat server would be started using a setenv.sh file with the prod version of one of the following additions to the CATALINA_OPTS environmental variable configuration:
+ 
+    -Dspring.profiles.active=dev 
+    -Dspring.profiles.active=qa 
+    -Dspring.profiles.active=stage
+    -Dspring.profiles.active=prod 
+ 
  Start the Tomcat server
  
  Open a browser and go to  http://localhost:8080/reportexporter
