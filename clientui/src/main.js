@@ -44,6 +44,8 @@ Vue.use(VueCookies);
 import VueMeta from 'vue-meta';
 Vue.use(VueMeta);
 
+import VueAnalytics from 'vue-analytics';
+
 // setup jquery
 window.$ = window.jQuery = jQuery
 
@@ -73,6 +75,11 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.VUE_APP_ROOT_CONTEXT
   //base: '/reportexporter/'
+})
+
+Vue.use(VueAnalytics, {
+    id: '263363085',
+    router
 })
 
 // global variable visible to all Vue instances
