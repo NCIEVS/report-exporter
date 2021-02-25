@@ -78,7 +78,7 @@ const router = new VueRouter({
 })
 
 Vue.use(VueAnalytics, {
-    id: '2339695752',
+    id: 'G-M2H3K4GGQJ',
     router
 })
 
