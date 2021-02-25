@@ -4812,7 +4812,7 @@
       "id": "fc61af42-011c-4d15-b03c-21230a5434ad",
       "comment": "",
       "command": "assertTitle",
-      "target": "EVS Explore",
+      "target": "NCI Thesaurus",
       "targets": [],
       "value": ""
     }, {
@@ -4877,6 +4877,59 @@
       "value": ""
     }, {
       "id": "8df62a1c-b17d-4bb0-a116-64960bda4e29",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d092db30-1d9f-4d2b-94d0-a39c11321dd1",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=EVS",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "901b6091-41bd-4d92-98c7-0da867136b49",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=EVS Explore",
+      "targets": [
+        ["linkText=NCI Enterprise Vocabulary Services", "linkText"],
+        ["css=.dropdown-item:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'NCI Enterprise Vocabulary Services')]", "xpath:link"],
+        ["xpath=//div[@id='collapsingNavbarSubHeader']/ul/li/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://evs.nci.nih.gov/']", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,' NCI Enterprise Vocabulary Services')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "Explore",
+      "windowTimeout": 2000
+    }, {
+      "id": "5eee0361-712c-46e3-bf79-067834f7c6a0",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${Explore}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "35e02c6f-8fef-4015-8011-755fc0bfb4d7",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "EVS Explore",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2e0336a3-771a-4b83-abdb-15ff5915dd97",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7d1eed5e-fc18-49fd-86c8-77bfe90bba60",
       "comment": "",
       "command": "selectWindow",
       "target": "handle=${root}",
