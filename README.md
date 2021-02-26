@@ -67,7 +67,20 @@ Update the **Tomcat8/conf/server.xml** file for Tomcat. Add the following **"Rew
           <Valve className="org.apache.catalina.valves.rewrite.RewriteValve" />
     </Host>
     
- Tier related settings must be adjusted using the application properties files specific to each tier.  Since there is a dependency upon the EVS REST API these settings would be specific EVS REST API instances on each tier.  So for the production tier the application-prod.properties file would contain URLs for both meta and concept resources.  THe tomcat server would be started using a setenv.sh file with the prod version of one of the following additions to the CATALINA_OPTS environmental variable configuration:
+### Content Security Policy (CSP) 
+The following CSP settings were set to satisfy some app scan security issues.
+ 
+On the apache server, add the following section to 
+/local/content/apache/conf/vhosts-ssl/reportexporter.conf
+
+	<IfModule headers_module>
+	RequestHeader set X-HTTPS 1
+		Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'"
+	</IfModule>
+
+#### Application Properties
+    
+Tier related settings must be adjusted using the application properties files specific to each tier.  Since there is a dependency upon the EVS REST API these settings would be specific EVS REST API instances on each tier.  So for the production tier the application-prod.properties file would contain URLs for both meta and concept resources.  The tomcat server would be started using a setenv.sh file with the prod version of one of the following additions to the CATALINA_OPTS environmental variable configuration:
  
     -Dspring.profiles.active=dev 
     -Dspring.profiles.active=qa 
