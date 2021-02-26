@@ -67,7 +67,8 @@ Update the **Tomcat8/conf/server.xml** file for Tomcat. Add the following **"Rew
           <Valve className="org.apache.catalina.valves.rewrite.RewriteValve" />
     </Host>
     
-### Content Security Policy (CSP) 
+#### Content Security Policy (CSP) 
+
 The following CSP settings were set to satisfy some app scan security issues.
  
 On the apache server, add the following section to 
