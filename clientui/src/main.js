@@ -44,7 +44,12 @@ Vue.use(VueCookies);
 import VueMeta from 'vue-meta';
 Vue.use(VueMeta);
 
-import VueAnalytics from 'vue-analytics';
+//import VueAnalytics from 'vue-analytics';
+// google analytics tracking
+import VueGtag from "vue-gtag";
+Vue.use(VueGtag, {
+  config: { id: "G-M2H3K4GGQJ" }
+});
 
 // setup jquery
 window.$ = window.jQuery = jQuery
@@ -77,10 +82,10 @@ const router = new VueRouter({
   //base: '/reportexporter/'
 })
 
-Vue.use(VueAnalytics, {
-    id: 'G-M2H3K4GGQJ',
-    router
-})
+// Vue.use(VueAnalytics, {
+//     id: 'G-M2H3K4GGQJ',
+//     router
+// })
 
 // global variable visible to all Vue instances
 // values come from the env.development or env.production files.
