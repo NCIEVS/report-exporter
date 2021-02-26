@@ -2,7 +2,7 @@
   <div class="subheader">
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
        <a class="navbar-brand" href="#">
-      <img  alt="EVS Exporter" src="../assets/ExpTile.png"  width="70" height="31px" border="0">
+      <img  alt="EVS Exporter" src="../assets/ExpTile.png"  width="65" height="38px" border="0">
       </a>
       <router-link v-bind:to="'/'" >Home</router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
