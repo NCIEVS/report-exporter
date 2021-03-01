@@ -81,7 +81,7 @@ const router = new VueRouter({
 
 
 Vue.use(VueGtag, {
-  config: { id: "G-W036P60FRG" }
+  config: { id: "G-Z6BMK717KN" }
 }, router);
 // Vue.use(VueAnalytics, {
 //     id: 'G-M2H3K4GGQJ',
