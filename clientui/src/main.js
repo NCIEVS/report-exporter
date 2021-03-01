@@ -47,9 +47,6 @@ Vue.use(VueMeta);
 //import VueAnalytics from 'vue-analytics';
 // google analytics tracking
 import VueGtag from "vue-gtag";
-Vue.use(VueGtag, {
-  config: { id: "G-M2H3K4GGQJ" }
-});
 
 // setup jquery
 window.$ = window.jQuery = jQuery
@@ -82,6 +79,10 @@ const router = new VueRouter({
   //base: '/reportexporter/'
 })
 
+
+Vue.use(VueGtag, {
+  config: { id: "G-M2H3K4GGQJ" }
+}, router);
 // Vue.use(VueAnalytics, {
 //     id: 'G-M2H3K4GGQJ',
 //     router
