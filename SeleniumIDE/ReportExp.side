@@ -8151,25 +8151,23 @@
       ],
       "value": ""
     }, {
-      "id": "6767180e-d4c1-4fb9-b45f-1af0223b7a77",
+      "id": "1982c50a-a51f-420d-83b0-a455a12992aa",
       "comment": "",
-      "command": "//executeScript",
-      "target": "return window.document.getElementById(\"tags\");",
-      "targets": [],
-      "value": "vselect"
-    }, {
-      "id": "1f7cf909-4467-4918-bb82-012f67df0a58",
-      "comment": "",
-      "command": "//echo",
-      "target": "${vselect}",
+      "command": "click",
+      "target": "xpath=//*[@id=\"SelectaCode0\"]/div/div/div/div[1]/div/form/div[1]/div/div[2]/ul/li[5]",
       "targets": [],
       "value": ""
     }, {
-      "id": "7ca0c848-de31-4dff-975a-f2b01f0ad637",
+      "id": "dc0a1296-6551-4c05-8cb8-7531d8cc7089",
       "comment": "",
-      "command": "//click",
-      "target": "${vselect}[5]",
-      "targets": [],
+      "command": "click",
+      "target": "css=.tags-input-remove",
+      "targets": [
+        ["css=.tags-input-remove", "css:finder"],
+        ["xpath=//div[@id='SelectaCode0']/div/div/div/div/div/form/div/div/div/span/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//span/a", "xpath:position"]
+      ],
       "value": ""
     }]
   }],
