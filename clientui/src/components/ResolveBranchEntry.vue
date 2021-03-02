@@ -404,6 +404,20 @@ export default {
 
   methods: {
 
+      gaTrackDownload () {
+        // Send Google analytics download event
+        this.$gtag.query('event', "Branch Resolve Download", {
+           'event_category': "Download",
+           'event_label': this.userSelectedFormat.name
+        })
+      },
+      gaTrackDeferredDownload () {
+        // Send Google analytics deferred download event
+        this.$gtag.query('event', "Branch Resolve Deferred Download", {
+           'event_category': "Download",
+           'event_label': this.userSelectedFormat.name
+        })
+      },
       // Tree dialog user chose a tree node
       userSelectTreeBranchNode() {
         //console.log('userSelectTreeBranchNode - user selected:' + this.treeSelectedCode)
@@ -684,6 +698,9 @@ export default {
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
+
+        this.gaTrackDownload();
+
         axios({
           url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
               this.userEnteredCodes + '/' +
@@ -722,6 +739,8 @@ export default {
             loader: 'dots',
             isFullPage: false,
           });
+
+        this.gaTrackDeferredDownload();
 
         api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
             this.userSelectedProperyNames, this.selectedLevel,
