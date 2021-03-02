@@ -187,6 +187,9 @@ export default {
     FormWizard,
     TabContent
   },
+  metaInfo: {
+    title: 'EVS Report Exporter - Read Code',
+  },
   data(){
     return {
       selectedTags: [],

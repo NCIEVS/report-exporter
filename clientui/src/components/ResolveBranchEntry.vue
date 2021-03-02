@@ -276,6 +276,9 @@ export default {
     TabContent,
    'v-jstree': VJstree,
   },
+  metaInfo: {
+    title: 'EVS Report Exporter - Branch Resolve',
+  },
   data(){
     return {
       selectedTags: [],

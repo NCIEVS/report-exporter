@@ -119,6 +119,9 @@
   export default {
     name: 'downloads',
 
+    metaInfo: {
+      title: 'EVS Report Exporter - Downloads',
+    },
     data(){
       return {
         deferredKeys: [],

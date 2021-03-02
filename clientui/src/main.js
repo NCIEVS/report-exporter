@@ -83,10 +83,6 @@ const router = new VueRouter({
 Vue.use(VueGtag, {
   config: { id: "G-Z6BMK717KN" }
 }, router);
-// Vue.use(VueAnalytics, {
-//     id: 'G-M2H3K4GGQJ',
-//     router
-// })
 
 // global variable visible to all Vue instances
 // values come from the env.development or env.production files.
