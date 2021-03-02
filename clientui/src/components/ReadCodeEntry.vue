@@ -211,6 +211,15 @@ export default {
   },
 
   methods: {
+    gaTrackDownload () {
+      console.log("Sending download event to GA")
+      // Send Google analytics download development
+      this.$gtag.query('event', "Read Conecept Code Download", {
+         'event_category': "Download",
+         'event_label': this.userSelectedFormat.name
+      })
+    },
+
     // Wizard methods
     validateFirstStep() {
       // make sure the user has a code entered
@@ -429,6 +438,8 @@ export default {
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
+
+        this.gaTrackDownload();
 
           axios({
                 url: this.$baseURL + 'download/get-file-for-readCodes/'  +

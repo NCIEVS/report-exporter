@@ -81,7 +81,8 @@ const router = new VueRouter({
 
 
 Vue.use(VueGtag, {
-  config: { id: "G-Z6BMK717KN" }
+  config: { id: "G-Z6BMK717KN" },
+  appName: 'Report Exporter',
 }, router);
 
 // global variable visible to all Vue instances
