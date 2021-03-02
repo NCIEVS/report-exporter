@@ -699,8 +699,6 @@ export default {
         this.setSelectedTags()
         this.setSelectedPropertyNames()
 
-        this.gaTrackDownload();
-
         axios({
           url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
               this.userEnteredCodes + '/' +
@@ -740,7 +738,7 @@ export default {
             isFullPage: false,
           });
 
-        this.gaTrackDeferredDownload();
+        this.gaTrackDownload();
 
         api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
             this.userSelectedProperyNames, this.selectedLevel,
@@ -775,6 +773,9 @@ export default {
             loader: 'dots',
             isFullPage: false,
           });
+
+        this.gaTrackDeferredDownload();
+
         api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
             this.userSelectedProperyNames, this.selectedLevel,
             this.userSelectedFormat.name)

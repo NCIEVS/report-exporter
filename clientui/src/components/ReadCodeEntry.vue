@@ -212,7 +212,6 @@ export default {
 
   methods: {
     gaTrackDownload () {
-      console.log("Sending download event to GA")
       // Send Google analytics download event
       this.$gtag.query('event', "Read Conecept Code Download", {
          'event_category': "Download",
