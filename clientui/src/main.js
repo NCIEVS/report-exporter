@@ -79,9 +79,8 @@ const router = new VueRouter({
   //base: '/reportexporter/'
 })
 
-
 Vue.use(VueGtag, {
-  config: { id: "G-Z6BMK717KN" },
+  config: { id: process.env.VUE_APP_GA_CODE },
   appName: 'Report Exporter',
 }, router);
 
@@ -89,9 +88,10 @@ Vue.use(VueGtag, {
 // values come from the env.development or env.production files.
 Vue.prototype.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
 
-console.log('App Base URL: ' + process.env.VUE_APP_BASE_URL)
-console.log('Root Context: ' + process.env.VUE_APP_ROOT_CONTEXT)
+//console.log('App Base URL: ' + process.env.VUE_APP_BASE_URL)
+//console.log('Root Context: ' + process.env.VUE_APP_ROOT_CONTEXT)
 console.log('Base URL:     ' + Vue.prototype.$baseURL)
+//console.log('VUE_APP_GA_CODE:     ' + process.env.VUE_APP_GA_CODE)
 
 // instatinate the vue instance
 new Vue({
