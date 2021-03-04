@@ -44,7 +44,6 @@ Vue.use(VueCookies);
 import VueMeta from 'vue-meta';
 Vue.use(VueMeta);
 
-//import VueAnalytics from 'vue-analytics';
 // google analytics tracking
 import VueGtag from "vue-gtag";
 
