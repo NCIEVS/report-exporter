@@ -213,7 +213,7 @@ export default {
   methods: {
     gaTrackDownload () {
       // Send Google analytics download event
-      this.$gtag.query('event', "Read Conecept Code Download", {
+      this.$gtag.query('event', "Read Concept Code Download", {
          'event_category': "Download",
          'event_label': this.userSelectedFormat.name
       })
