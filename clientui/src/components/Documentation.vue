@@ -372,7 +372,10 @@
 <script>
   export default {
     name: 'documentation',
-
+    
+  metaInfo: {
+    title: 'EVS Report Exporter - Documentation',
+  },
   created() {
     // scroll to the top of the page
     window.scrollTo(0,0);

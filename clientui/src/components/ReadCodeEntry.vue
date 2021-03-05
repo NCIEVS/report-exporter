@@ -187,6 +187,9 @@ export default {
     FormWizard,
     TabContent
   },
+  metaInfo: {
+    title: 'EVS Report Exporter - Read Code',
+  },
   data(){
     return {
       selectedTags: [],
@@ -208,6 +211,14 @@ export default {
   },
 
   methods: {
+    gaTrackDownload () {
+      // Send Google analytics download event
+      this.$gtag.query('event', "Read Concept Code Download", {
+         'event_category': "Download",
+         'event_label': this.userSelectedFormat.name
+      })
+    },
+
     // Wizard methods
     validateFirstStep() {
       // make sure the user has a code entered
@@ -426,6 +437,8 @@ export default {
         // set the user selected tags and properties
         this.setSelectedTags()
         this.setSelectedPropertyNames()
+
+        this.gaTrackDownload();
 
           axios({
                 url: this.$baseURL + 'download/get-file-for-readCodes/'  +
