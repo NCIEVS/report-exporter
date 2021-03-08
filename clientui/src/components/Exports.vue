@@ -119,6 +119,9 @@
   export default {
     name: 'downloads',
 
+    metaInfo: {
+      title: 'EVS Report Exporter - Downloads',
+    },
     data(){
       return {
         deferredKeys: [],
@@ -136,6 +139,13 @@
 
     methods: {
 
+      gaTrackDeferredDownload (format) {
+        // Send Google analytics deferred download event
+        this.$gtag.query('event', "Deferred Download", {
+           'event_category': "Download",
+           'event_label': format
+        })
+      },
       setLocalValues() {
         var keys = this.$storage.keys()
         // clear out the clearDeferredData
@@ -317,6 +327,8 @@
             loader: 'dots',
             isFullPage: false,
         });
+
+        this.gaTrackDeferredDownload(format);
 
         let here = this
         var extension = this.getFileExtension(format)

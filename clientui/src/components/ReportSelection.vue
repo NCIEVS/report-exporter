@@ -92,6 +92,9 @@
     components: {
       nciWarningModal
     },
+    metaInfo: {
+      title: 'EVS Report Exporter - Report Selection',
+    },
     data(){
       return {
         isModalVisible: false,
