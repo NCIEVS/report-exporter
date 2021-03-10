@@ -12,9 +12,9 @@ import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
 public class TabDelUtility extends FormatUtility{
 
-	public String produceTabDelOutputFromListWithHeading(List<RestEntity> list, String props) {
+	public String produceTabDelOutputFromListWithHeading(List<RestEntity> list, String props, String searchCodes, int level)  {
 		CommonServices services = new CommonServices();
-		services.setNoSynonyms(!props.contains("FULL_SYN"));
+		services.setNoSynonyms(!(props.contains("FULL_SYN") || props.contains("Display_Name")));
 		services.setNoDefinitions(!(props.contains("DEFINITION") || props.contains("ALT_DEFINITION")));
 		services.setNoMaps(!props.contains("Maps_To"));
 		StringBuffer firstLine = new StringBuffer();
@@ -22,7 +22,7 @@ public class TabDelUtility extends FormatUtility{
 		StringBuffer oneLine = new StringBuffer();
 		list.stream().forEach(x -> {x.getProperties()
 			.stream()
-			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));  
+			.forEach(z -> services.addPropertyTypeAndPositionToCache(z));
 			oneLine.append(
 				"\r\n" + x.getTerminology() + 
 				separator + x.getCode() + 
@@ -43,6 +43,7 @@ public class TabDelUtility extends FormatUtility{
 						.stream()
 						.collect(Collectors.joining(separator));
 		oneLine.insert(0, firstHeaderString + secondHeader);
+		oneLine.append(produceDelimitedQueryRecord(separator,searchCodes,level,props));
 		return oneLine.toString();
 	}
 	
@@ -64,10 +65,4 @@ public class TabDelUtility extends FormatUtility{
 		return oneLine.toString();
 	}
 	
-
-	
-	public static void main(String ...args) {
-		new TabDelUtility().produceTabDelOutputFromListWithHeading(null, null);
-	}
-
 }

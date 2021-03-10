@@ -66,10 +66,10 @@
       <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
       <tab-content icon="ti-download" title="Select Format and Export"
         :before-change="validateExportStep">
-        <div class="container">
+        <div ref="formContainer" class="container">
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
-                <form ref="formContainer">
+                <form>
                   <div class="form-group">
                     <label for="downloadFormat">Select format for export</label>
                     <select v-model="userSelectedFormat"
@@ -187,6 +187,9 @@ export default {
     FormWizard,
     TabContent
   },
+  metaInfo: {
+    title: 'EVS Report Exporter - Read Code',
+  },
   data(){
     return {
       selectedTags: [],
@@ -208,6 +211,14 @@ export default {
   },
 
   methods: {
+    gaTrackDownload () {
+      // Send Google analytics download event
+      this.$gtag.query('event', "Read Concept Code Download", {
+         'event_category': "Download",
+         'event_label': this.userSelectedFormat.name
+      })
+    },
+
     // Wizard methods
     validateFirstStep() {
       // make sure the user has a code entered
@@ -365,7 +376,7 @@ export default {
                     this.$notify({
                       group: 'app',
                       title: 'Invalid Concept Code',
-                      text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.  <b>' +tempCode+'</b> has been removed.',
+                      text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.',
                       type: 'error',
                       duration: 6000,
                       position: "left bottom"
@@ -427,6 +438,8 @@ export default {
         this.setSelectedTags()
         this.setSelectedPropertyNames()
 
+        this.gaTrackDownload();
+
           axios({
                 url: this.$baseURL + 'download/get-file-for-readCodes/'  +
                     this.userEnteredCodes + '/' +
@@ -481,6 +494,12 @@ export default {
   top: 60;
 } */
 
+.container{
+  padding: 5px 15px 5px 15px;
+}
+.wizard-tab-container {
+  padding: 5px 5px 5px 5px;
+}
 /* Summary list box formatting */
 .list-group{
     max-height: 150px;

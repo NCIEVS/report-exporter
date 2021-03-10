@@ -27,7 +27,7 @@ public class CodeReadService {
 	public static final String RETIRED = "Concept Code Retired";
 	public static final String VALID = "SUCCESS";
 	
-	public List<RestEntity> getRestEntitiesWithParents(List<String> codes){
+	public List<RestEntity> getRestEntitiesWithParents(List<String> codes, String props ){
 		List<RestEntity> propMeta = 
 				codes.stream().map(x -> 
 					getRestEntityWithParent(
@@ -48,10 +48,15 @@ public class CodeReadService {
 		return entity;
 	}
 	
+	public RestEntity[] getRestEntitiesWithParent(String codes){
+		RestEntity[] entities = service.getEntities(codes);
+		return entities;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<RestEntity> getEntitiesForPropertyNameFilter
 	(List<RestEntity> list, List<String> propList){
-		list.stream().filter(x -> !retiredConceptsFilter(x) ).forEach(
+		list.stream().filter(x -> !retiredConceptsFilter(x)).forEach(
 				entity -> {
 					entity.setProperties(
 						(List<Property>)filterProperties(entity.getProperties(), propList));
@@ -86,19 +91,25 @@ public class CodeReadService {
 		propList.clear();return propList;}
 		List<String> tempList = new ArrayList<String>(list);
 		if(propList.get(0) instanceof PropertyMap) 
-		{tempList.add("Has Synonym");}
+		{tempList.add("Has Synonym"); tempList.add("Related To");}
 		if(propList.get(0) instanceof Definition && !(list.contains("DEFINITION") || list.contains("ALT_DEFINITION"))){
 			propList.clear();
 			return propList; 
 		}
-		if(propList.get(0) instanceof Synonym && !list.contains("FULL_SYN")){
+		if(propList.get(0) instanceof Synonym && !(list.contains("FULL_SYN") || list.contains("Display_Name"))){
 			propList.clear();
 			return propList; 
 		}
 		
-		return propList.stream().filter(
-				x -> tempList.stream().anyMatch(y -> x.getType() == null?true:x.getType().equals(y)))
-				.collect(Collectors.toList());
+		return propList.stream()
+				.filter(
+				x -> tempList
+					.stream()
+					.anyMatch(y -> 
+					x.getType() == null?
+							true:
+							x.getType().equals(y)))
+					.collect(Collectors.toList());
 	}
 	
 	public  boolean retiredConceptsFilter(RestEntity entity){
@@ -121,6 +132,14 @@ public class CodeReadService {
 				entity.setQueryCode(-1);
 				entity.setQueryStatus(NOTFOUND);
 				return entity;
+		}
+		if(entity == null) {
+			entity = new RestEntity();
+			entity.setName("");
+			entity.setCode(code);
+			entity.setQueryCode(-1);
+			entity.setQueryStatus(NOTFOUND);
+			return entity;
 		}
 		if(retiredConceptsFilter(entity)) {
 			entity = new RestEntity();

@@ -13,7 +13,12 @@
                   <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">
                       <i class="mdi mdi-account-settings"></i> Export Resolved Branch
                   </a>
-
+                  <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4" aria-selected="false">
+                      <i class="mdi mdi-account-settings"></i> Downloads
+                  </a>
+                  <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5" aria-selected="false">
+                      <i class="mdi mdi-account-settings"></i> Programmatic JSON Use
+                  </a>
               </div>
           </div>
           <div class="col-lg-8">
@@ -169,7 +174,9 @@
                               </div>
                               <div class="collapse show" id="accordion-tab-3-content-1" aria-labelledby="accordion-tab-3-heading-1" data-parent="#accordion-tab-3">
                                   <div class="card-body">
+                                    <p>
                                       A top node is a node that has at least one level of child concept codes.
+                                    </p>
                                   </div>
                               </div>
                           </div>
@@ -215,10 +222,146 @@
                                       </p>
                                   </div>
                               </div>
+                              <div class="card-header" id="accordion-tab-3-heading-4">
+                                  <h5>
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-3-content-4" aria-expanded="false" aria-controls="accordion-tab-3-content-4">
+                                        What are the different download options
+                                      </button>
+                                  </h5>
+                              </div>
+                              <div class="collapse" id="accordion-tab-3-content-4" aria-labelledby="accordion-tab-3-heading-4" data-parent="#accordion-tab-4">
+                                  <div class="card-body">
+                                    <p>
+                                      <b>Export now</b> will process the export request and immediately download the file.
+                                    </p>
+                                    <p>
+                                      <b>Export and download later</b> will initiate the export process and return a <b>download ID</b>.
+                                      Copy this download ID to retrieve the download later.  To retrieve the download, select the <b>Downloads</b>
+                                      link in the top banner on the right.
+                                    </p>
+                                  </div>
+                              </div>
                           </div>
                       </div>
                   </div>
 
+                  <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="tab4">
+                      <div class="accordion" id="accordion-tab-4">
+                          <div class="card">
+                              <div class="card-header" id="accordion-tab-4-heading-1">
+                                  <h5>
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-1" aria-expanded="false" aria-controls="accordion-tab-4-content-1">
+                                        What is the Downloads page for?
+                                      </button>
+                                  </h5>
+                              </div>
+                              <div class="collapse show" id="accordion-tab-4-content-1" aria-labelledby="accordion-tab-4-heading-1" data-parent="#accordion-tab-4">
+                                  <div class="card-body">
+                                    <p>
+                                      The Report Exporter Download page allows the user to download resolved branch reports that were exported with the <b>Export and download later</b> option.
+                                      Some large exports take over 10-30 seconds to process.
+                                    </p>
+                                    <p>
+                                      When the user selects the <b>Export and download later</b> option and exports, the browser stores the download ID locally and will remember it.
+                                    </p>
+                                    <p>
+                                      These downloads will be available for one hour after they are created.
+                                    </p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="accordion" id="accordion-tab-4">
+                          <div class="card">
+                              <div class="card-header" id="accordion-tab-4-heading-2">
+                                  <h5>
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-2" aria-expanded="false" aria-controls="accordion-tab-4-content-2">
+                                        Downloads List Tab
+                                      </button>
+                                  </h5>
+                              </div>
+                              <div class="collapse" id="accordion-tab-4-content-2" aria-labelledby="accordion-tab-4-heading-2" data-parent="#accordion-tab-4">
+                                  <div class="card-body">
+                                    <p>
+                                      The <strong>Downloads List</strong> Tab contains a table of all known <b>Export and download later</b> exports from the current browser.
+                                      The browser stores a list of the download IDs to display.
+                                      The <strong>Status</strong> column can be one of the following status:
+                                      <ul>
+                                        <li>
+                                          <strong>In Process</strong>: The requested resolved branch export is still being processed by the server.
+                                        </li>
+                                        <li>
+                                          <strong>Complete</strong>: The requested resolved branch export is complete and ready to be exported.  There will be a download button visible.
+                                        </li>
+                                      </ul>
+                                    </p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                    <div class="accordion" id="accordion-tab-4">
+                        <div class="card">
+                            <div class="card-header" id="accordion-tab-4-heading-3">
+                                <h5>
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-3" aria-expanded="false" aria-controls="accordion-tab-4-content-3">
+                                      Downloads Search Tab
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse" id="accordion-tab-4-content-3" aria-labelledby="accordion-tab-4-heading-3" data-parent="#accordion-tab-3">
+                                <div class="card-body">
+                                  <p>
+                                    The <strong>Downloads Search</strong> Tab allows a user search for a download ID that they got when they selected <b>Export and download later</b>.
+                                    The user can search for their <strong>download ID</strong>.  The three possible respones are:
+                                    <ul>
+                                      <li>
+                                        <strong>In Process</strong>: The requested resolved branch export is still being processed by the server.
+                                      </li>
+                                      <li>
+                                        <strong>Complete</strong>: The requested resolved branch export is complete and ready to be exported.  There will be a download button visible.
+                                      </li>
+                                      <li>
+                                        <strong>Expired</strong>: The requested resolved branch export has expired and is no longer available.
+                                      </li>
+                                    </ul>
+                                  </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                     <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="tab5">
+                        <div class="accordion" id="accordion-tab-5">
+                            <div class="card">
+                                <div class="card-header" id="accordion-tab-5-heading-1">
+                                    <h5>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-1" aria-expanded="false" aria-controls="accordion-tab-5-content-1">
+                                          What is programmatic access using JSON?
+                                        </button>
+                                    </h5>
+                                </div>
+                                  <div class="collapse show" id="accordion-tab-5-content-1" aria-labelledby="accordion-tab-5-heading-1" data-parent="#accordion-tab-5">
+                                  <div class="card-body">
+                                    <p>
+                                      The downloadable JSON file output is a model that can be transformed into model objects for use in computer programs.  
+                                    </p>
+                                    <p>
+                                      The model includes a wrapper object that contains metadata about the search parameters used to generate the JSON output.
+                                      </p>
+                                    <p>
+                                      The wrapper object also contains the list of objects which can be processed by a program as well.
+                                    </p>
+                                    <p>
+                                      The attribute names of the objects correspond to headings you would see in the EXCEL and character delimited files.
+                                    </p>
+                                  </div>
+                              </div>
+                            </div>
+                           </div>
+                    </div>
               </div>
           </div>
       </div>
@@ -230,6 +373,9 @@
   export default {
     name: 'documentation',
     
+  metaInfo: {
+    title: 'EVS Report Exporter - Documentation',
+  },
   created() {
     // scroll to the top of the page
     window.scrollTo(0,0);

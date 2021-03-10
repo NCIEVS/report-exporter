@@ -45,6 +45,7 @@ import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
+import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 
 class EXELUtilityTest {
 	
@@ -64,33 +65,33 @@ class EXELUtilityTest {
 	String excelOutline5a = "ncit,C2222,My2,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 
 	String excelOutLine1b = "terminology,code,name,parents,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-	String excelOutLine2b = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine2b = "ncit,C123234,Myent,,\"|NCI:defvalue|defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
 	String excelOutLine3b = "ncit,C000000,0ent,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
 	String excelOutline4b = "ncit,C999999,My9,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	String excelOutline5b = "ncit,C2222,My2,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 
 	
 	String excelOutLine1c = "terminology,code,name,parents,synonyms,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-	String excelOutLine2c = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine2c = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
 	String excelOutLine3c = "ncit,C000000,0ent,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
 	String excelOutline4c = "ncit,C999999,My9,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	String excelOutline5c = "ncit,C2222,My2,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 
 	
 	String excelOutLine1d = "terminology,code,name,parents,synonyms,definitions,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-	String excelOutLine2d = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine2d = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|defvalue2|\",\"|propvalue|propvalue1|\",\"|propvalue2|\"";
 	String excelOutLine3d = "ncit,C000000,0ent,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
 	String excelOutline4d = "ncit,C999999,My9,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	String excelOutline5d = "ncit,C2222,My2,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 
 	String excelOutLine1e = "terminology,code,name,parents,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-	String excelOutLine2e = "ncit,C123234,Myent,,\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine2e = "ncit,C123234,Myent,,\"|NCI:defvalue|defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"";
 	String excelOutLine3e = "ncit,C000000,0ent,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
 	String excelOutline4e = "ncit,C999999,My9,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	String excelOutline5e = "ncit,C2222,My2,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 
 	String excelOutLine1f = "terminology,code,name,parents,synonyms,definitions,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-	String excelOutLine2f = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|NOSOURCE:defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"";
+	String excelOutLine2f = "ncit,C123234,Myent,,\"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |\",\"|NCI:defvalue|defvalue2|\",,\"|propvalue|propvalue1|\",\"|propvalue2|\"";
 	String excelOutLine3f = "ncit,C000000,0ent,,,,,,,\"|prop0value|\",\"|GO:0000075 prop0value2:TAS|\"";
 	String excelOutline4f = "ncit,C999999,My9,,,,,\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
 	String excelOutline5f = "ncit,C2222,My2,,,,\"|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|ICDO3 3.1 PT 9861/3 Acute myeloid leukemia, NOS:Related To|GDC PT PD Acute myeloid leukemia, NOS:Has Synonym|\",\"|prop9value3|\",,,,\"|prop9value|\",\"|prop9value2|\"";
@@ -98,24 +99,27 @@ class EXELUtilityTest {
 	
 	Workbook wb;
 	
+	CodeReadService svc;
+	
 	@Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
 	@BeforeEach
 	void setUp() throws Exception {
 		util = new ExcelUtility();
+		svc = new CodeReadService();
 	}
 
 	@Test
 	void testProduceCSVOutputFromListWithHeading() throws IOException {
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList(), props));
+		assertNotNull(util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 ));
 	}
 	
 	@Test
 	void testProduceCSVOutputFromListWithHeadingStreamedToPOIObject() throws IOException {
 
 		String props = "FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(svc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -325,7 +329,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingMap() throws IOException {
 
 		String props = "Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -349,6 +353,13 @@ class EXELUtilityTest {
 			Row row2 = sheet.getRow(2);
 			Row row3 = sheet.getRow(3);
 			Row row4 = sheet.getRow(4);
+			Row row5 = sheet.getRow(5);
+			Row row6 = sheet.getRow(6);
+			Row row7 = sheet.getRow(7);
+			Row row8 = sheet.getRow(8);
+			Row row9 = sheet.getRow(9);
+			Row row10 = sheet.getRow(10);
+			Row row11 = sheet.getRow(11);
 
 			String header0 = headerRow.getCell(0).getStringCellValue();
 			String cell0 = row1.getCell(0).getStringCellValue();	
@@ -526,6 +537,23 @@ class EXELUtilityTest {
 			String header10c = headerRow.getCell(10).getStringCellValue();
 			String cell10c = row4.getCell(10) != null?row4.getCell(10).getStringCellValue():null;	
 			assertTrue(header10c.equals("Prop9Type2")  && cell10c.equals("|prop9value2|"));
+			
+
+			String cell11c = row5.getCell(0) != null?row5.getCell(0).getStringCellValue():null;	
+			assertEquals(cell11c,null);			
+			String cell12c = row6.getCell(0) != null?row5.getCell(0).getStringCellValue():null;	
+			assertEquals(cell12c,null);
+			String cell13c = row7.getCell(0) != null?row5.getCell(0).getStringCellValue():null;	
+			assertEquals(cell13c,null);
+			
+			String cell14c = row9.getCell(0) != null?row8.getCell(0).getStringCellValue():null;	
+			assertEquals(cell14c,"Report Search Parameters: ");		
+			String cell15c = row9.getCell(0) != null?row9.getCell(0).getStringCellValue():null;	
+			assertEquals(cell15c,"Input:  C123456");
+			String cell16c = row10.getCell(0) != null?row10.getCell(0).getStringCellValue():null;	
+			assertEquals(cell16c,"Hierarchy level: 0");
+			String cell17c = row11.getCell(0) != null?row11.getCell(0).getStringCellValue():null;	
+			assertEquals(cell17c,"Properties Selected: Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2");		
 
 		stream.close();
 		workbook.close();
@@ -535,7 +563,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingDefinition() throws IOException {
 
 		String props = "DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -578,7 +606,7 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("definitions")  && cell4.equals("|NCI:defvalue|NOSOURCE:defvalue2|"));
+			assertTrue(header4.equals("definitions")  && cell4.equals("|NCI:defvalue|defvalue2|"));
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
@@ -745,7 +773,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingBothDefinitions() throws IOException {
 
 		String props = "ALT_DEFINITION,DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -788,7 +816,7 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("definitions")  && cell4.equals("|NCI:defvalue|NOSOURCE:defvalue2|"));
+			assertTrue(header4.equals("definitions")  && cell4.equals("|NCI:defvalue|defvalue2|"));
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
@@ -955,7 +983,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingAltDefinition() throws IOException {
 
 		String props = "ALT_DEFINITION,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -998,7 +1026,7 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("definitions")  && cell4.equals("|NCI:defvalue|NOSOURCE:defvalue2|"));
+			assertTrue(header4.equals("definitions")  && cell4.equals("|NCI:defvalue|defvalue2|"));
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
@@ -1164,8 +1192,8 @@ class EXELUtilityTest {
 	@Test
 	void testProduceExcelOutputFromByteArrayHeadingAltDefSyn() throws IOException {
 
-		String props = "DEFINITION,FULL_SYN,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		String props = "DEFINITION,Display_Name,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(svc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)),props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1208,11 +1236,13 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("synonyms")  && cell4.equals("|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |"));
+			assertEquals(header4,"synonyms");
+			assertEquals(cell4,"|synSource2 NCI atermgrp:synName2 |Display_Name:CDISC |");
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
-			assertTrue(header5.equals("definitions")  && cell5.equals("|NCI:defvalue|NOSOURCE:defvalue2|"));
+			assertEquals(header5,"definitions");
+			assertEquals(cell5,"|NCI:defvalue|");
 			
 			String header6 = headerRow.getCell(6).getStringCellValue();
 			String cell6 = row1.getCell(6).getStringCellValue();	
@@ -1395,7 +1425,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingAltMapsDef() throws IOException {
 
 		String props = "DEFINITION,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1438,7 +1468,7 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("definitions")  && cell4.equals("|NCI:defvalue|NOSOURCE:defvalue2|"));
+			assertTrue(header4.equals("definitions")  && cell4.equals("|NCI:defvalue|defvalue2|"));
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
@@ -1624,7 +1654,7 @@ class EXELUtilityTest {
 	void testProduceExcelOutputFromByteArrayHeadingAltMapsSyn() throws IOException {
 
 		String props = "FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1667,7 +1697,8 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("synonyms")  && cell4.equals("|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |"));
+			assertEquals(header4,"synonyms");
+			assertEquals(cell4,"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |Display_Name:CDISC |");
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
@@ -1852,8 +1883,8 @@ class EXELUtilityTest {
 	@Test
 	void testProduceExcelOutputFromByteArrayHeadingHeadingAll() throws IOException {
 
-		String props = "DEFINITION,ALT_DEF,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
-		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(getRestEntityList(), props);
+		String props = "DEFINITION,ALT_DEFINITION,FULL_SYN,Maps_To,PropType,PropType2,Prop0Type,GO_Annotation,Prop9Type,Prop9Type2";
+		ByteArrayOutputStream stream = util.produceExcelOutputFromListWithHeading(svc.getEntitiesForPropertyNameFilter(getRestEntityList(), CommonServices.splitInput(props)), props, "C123456", 0 );
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -1896,11 +1927,13 @@ class EXELUtilityTest {
 			
 			String header4 = headerRow.getCell(4).getStringCellValue();
 			String cell4 = row1.getCell(4).getStringCellValue();	
-			assertTrue(header4.equals("synonyms")  && cell4.equals("|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |"));
+			assertEquals(header4,"synonyms");  
+			assertEquals(cell4,"|NCIt CDISC mytermgr:synName |synSource2 NCI atermgrp:synName2 |");
 			
 			String header5 = headerRow.getCell(5).getStringCellValue();
 			String cell5 = row1.getCell(5).getStringCellValue();	
-			assertTrue(header5.equals("definitions")  && cell5.equals("|NCI:defvalue|NOSOURCE:defvalue2|"));
+			assertEquals(header5,"definitions");  
+			assertEquals(cell5,"|NCI:defvalue|defvalue2|");
 			
 			String header6 = headerRow.getCell(6).getStringCellValue();
 			String cell6 = row1.getCell(6).getStringCellValue();	
@@ -2104,7 +2137,7 @@ class EXELUtilityTest {
 		
 		List<Synonym> syns = new ArrayList<Synonym>();
 		Synonym syn = new Synonym();
-		syn.setType("synType");
+		syn.setType("FULL_SYN");
 		syn.setName("synName");
 		syn.setSource("NCIt");
 		syn.setSubSource("CDISC");
@@ -2114,17 +2147,21 @@ class EXELUtilityTest {
 		syn2.setSubSource("NCI");
 		syn2.setTermGroup("atermgrp");
 		syn2.setName("synName2");
+		Synonym syn3 = new Synonym();
+		syn3.setName("CDISC");
+		syn3.setType("Display_Name");
 		syns.add(syn);
 		syns.add(syn2);
+		syns.add(syn3);
 		ent.setSynonyms(syns);
 		
 		List<Definition> defs = new ArrayList<Definition>();
 		Definition def = new Definition();
-		def.setType("defType");
+		def.setType("DEFINITION");
 		def.setDefinition("defvalue");
 		def.setSource("NCI");
 		Definition def2 = new Definition();
-		def2.setType("defType2");
+		def2.setType("ALT_DEFINITION");
 		def2.setDefinition("defvalue2");
 		defs.add(def);
 		defs.add(def2);
