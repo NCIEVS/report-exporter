@@ -67,6 +67,12 @@ public class EVSAPIBaseService {
 	
 	@Value("${REST_ROOT_FILTER_LIST:C28428}")
 	private String rootFilterList;
+
+	@Value("${SURVEY_EMAIL_LIST}")
+	private String emailList;
+	
+	@Value("${SMTP_SERVER}")
+	private String smtpServer;
     
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
 		return 
@@ -200,6 +206,23 @@ public class EVSAPIBaseService {
 	public String getRootFilterList() {
 		return rootFilterList;
 	}
+	
+	public String getEmailList() {
+		return emailList;
+	}
+
+	public void setEmailList(String emailList) {
+		this.emailList = emailList;
+	}
+
+	public String getSmtpServer() {
+		return smtpServer;
+	}
+
+	public void setSmtpServer(String smtpServer) {
+		this.smtpServer = smtpServer;
+	}
+
 
 	public WebClient getNewWebClientWithBuffer() {
 		
