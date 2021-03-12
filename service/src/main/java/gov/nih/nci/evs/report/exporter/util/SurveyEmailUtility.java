@@ -49,12 +49,14 @@ public class SurveyEmailUtility {
 		return "<b>Survey Results</b>"
 				+ "<br/>"
 				+ "<br/>"
-				+ "Rating:<br/>"
+				+ "Rating: "
 				+ survey.getRating()
 				+ "<br/>"
+				+ "<br/>"
 				+ "Features:<br/>"
-				+ survey.getFeatures() + "<br/>"
-						+ "<br/>"
+				+ survey.getFeatures() 
+				+ "<br/>"
+				+ "<br/>"
 				+ "Recommendations:<br/>"
 				+ survey.getRecommendatons() +"<br/>"
 						+ "<br/>";
