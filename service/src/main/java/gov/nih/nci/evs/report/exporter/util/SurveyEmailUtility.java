@@ -31,6 +31,9 @@ public class SurveyEmailUtility {
 
 		String msg = "Survey Results<br/>"
 				+ "<br/>"
+				+ "Rating:"
+				+ survey.getRating()
+				+ "<br/>"
 				+ "Features:<br/>"
 				+ survey.getFeatures() + "<br/>"
 						+ "<br/>"

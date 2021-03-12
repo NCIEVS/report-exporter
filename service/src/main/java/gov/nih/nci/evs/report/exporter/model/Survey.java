@@ -5,10 +5,17 @@ import java.util.Date;
 public class Survey {
 	
 	Date date;
+	int rating;
 	String email;
 	String recommendatons;
 	String features;
 	
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 	public Date getDate() {
 		return date;
 	}
