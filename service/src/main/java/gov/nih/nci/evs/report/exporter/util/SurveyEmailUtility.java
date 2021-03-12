@@ -29,18 +29,7 @@ public class SurveyEmailUtility {
 		  Message.RecipientType.TO, InternetAddress.parse(emailList));
 		message.setSubject("Automated Survey Results");
 
-		String msg = "Survey Results<br/>"
-				+ "<br/>"
-				+ "Rating:"
-				+ survey.getRating()
-				+ "<br/>"
-				+ "Features:<br/>"
-				+ survey.getFeatures() + "<br/>"
-						+ "<br/>"
-				+ "Recommendations:<br/>"
-				+ survey.getRecommendatons() +"<br/>"
-						+ "<br/>";
-
+		String msg = getSurveyMessage(survey);
 		MimeBodyPart mimeBodyPart = new MimeBodyPart();
 		mimeBodyPart.setContent(msg, "text/html");
 		
@@ -56,11 +45,29 @@ public class SurveyEmailUtility {
 		}
 	}
 	
+	public static String getSurveyMessage(Survey survey) {
+		return "<b>Survey Results</b>"
+				+ "<br/>"
+				+ "<br/>"
+				+ "Rating:<br/>"
+				+ survey.getRating()
+				+ "<br/>"
+				+ "Features:<br/>"
+				+ survey.getFeatures() + "<br/>"
+						+ "<br/>"
+				+ "Recommendations:<br/>"
+				+ survey.getRecommendatons() +"<br/>"
+						+ "<br/>";
+
+	}
+	
 	public static void main(String ...args) {
 		Survey survey = new Survey();
+		survey.setRating(9);
 		survey.setEmail("scott.bauer@nih.gov");
 		survey.setFeatures("this will be where we have features");
 		survey.setRecommendatons("this is where we'll have recommendations");
+		System.out.println(getSurveyMessage(survey));
 		
 		SurveyEmailUtility.sendSurveyEmail("mailfwd.nih.gov", "scott.bauer@nih.gov", survey);
 	}
