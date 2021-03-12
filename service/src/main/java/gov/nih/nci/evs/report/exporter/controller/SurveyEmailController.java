@@ -24,7 +24,7 @@ public class SurveyEmailController {
 	
 	@PostMapping("/survey")
 	  public String surveySubmit(@ModelAttribute Survey survey, Model model) {
-	    //model.addAttribute("survey", survey);
+	    model.addAttribute("survey", survey);
 	    service.sendSurveyEmail(survey);
 	    return "result";
 	  }
