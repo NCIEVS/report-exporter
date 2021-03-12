@@ -13,7 +13,7 @@ public class SurveyEmailService{
 	EVSAPIBaseService service;
 	
 	public void sendSurveyEmail(Survey survey) {
-		SurveyEmailUtility.sendSurveyEmail(service.getSmtpServer(), service.getEmailList(), survey);
+		SurveyEmailUtility.sendSurveyEmail(service.getSmtpServer(), service.getEmailList(), service.getDefaultEmail(), survey);
 			
 	}
 

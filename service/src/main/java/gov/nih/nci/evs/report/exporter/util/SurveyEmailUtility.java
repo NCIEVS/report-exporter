@@ -16,7 +16,7 @@ import gov.nih.nci.evs.report.exporter.model.Survey;
 
 public class SurveyEmailUtility {
 
-	public static void sendSurveyEmail(String smtpServer, String emailList, Survey survey) {
+	public static void sendSurveyEmail(String smtpServer, String emailList, String defaultFromEmail, Survey survey) {
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host",smtpServer);
 
@@ -24,7 +24,7 @@ public class SurveyEmailUtility {
 		
 		Message message = new MimeMessage(session);
 		try {
-		message.setFrom(new InternetAddress(survey.getEmail()== null?"scott.bauer@nih.gov":survey.getEmail()));
+		message.setFrom(new InternetAddress(survey.getEmail()== null?defaultFromEmail:survey.getEmail()));
 		message.setRecipients(
 		  Message.RecipientType.TO, InternetAddress.parse(emailList));
 		message.setSubject("Automated Survey Results");
@@ -58,7 +58,7 @@ public class SurveyEmailUtility {
 				+ "<br/>"
 				+ "<br/>"
 				+ "Recommendations:<br/>"
-				+ survey.getRecommendatons() +"<br/>"
+				+ survey.getRecommendations() +"<br/>"
 						+ "<br/>";
 
 	}
@@ -68,10 +68,10 @@ public class SurveyEmailUtility {
 		survey.setRating(9);
 		survey.setEmail("scott.bauer@nih.gov");
 		survey.setFeatures("this will be where we have features");
-		survey.setRecommendatons("this is where we'll have recommendations");
+		survey.setRecommendations("this is where we'll have recommendations");
 		System.out.println(getSurveyMessage(survey));
 		
-		SurveyEmailUtility.sendSurveyEmail("mailfwd.nih.gov", "scott.bauer@nih.gov", survey);
+		SurveyEmailUtility.sendSurveyEmail("mailfwd.nih.gov", "scott.bauer@nih.gov", "scott.bauer@nih.gov", survey);
 	}
 
 }

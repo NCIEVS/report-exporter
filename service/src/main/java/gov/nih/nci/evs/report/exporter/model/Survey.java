@@ -7,7 +7,7 @@ public class Survey {
 	Date date;
 	int rating;
 	String email;
-	String recommendatons;
+	String recommendations;
 	String features;
 	
 	public int getRating() {
@@ -28,11 +28,11 @@ public class Survey {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getRecommendatons() {
-		return recommendatons;
+	public String getRecommendations() {
+		return recommendations;
 	}
-	public void setRecommendatons(String recommendatons) {
-		this.recommendatons = recommendatons;
+	public void setRecommendations(String recommendations) {
+		this.recommendations = recommendations;
 	}
 	public String getFeatures() {
 		return features;

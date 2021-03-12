@@ -73,6 +73,9 @@ public class EVSAPIBaseService {
 	
 	@Value("${SMTP_SERVER}")
 	private String smtpServer;
+	
+	@Value("${DEFAULT_FROM_EMAIL}")
+	private String defaultEmail;
     
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
 		return 
@@ -223,6 +226,14 @@ public class EVSAPIBaseService {
 		this.smtpServer = smtpServer;
 	}
 
+
+	public String getDefaultEmail() {
+		return defaultEmail;
+	}
+
+	public void setDefaultEmail(String defaultEmail) {
+		this.defaultEmail = defaultEmail;
+	}
 
 	public WebClient getNewWebClientWithBuffer() {
 		
