@@ -1,5 +1,15 @@
 <template>
   <div class="subheader">
+
+    <surveyModal v-show="isSurveyModalVisible" @close="closeModal">
+        <!--div slot="header">
+          <h4 class="modal-title">Survey</h4>
+        </div>
+        <div slot="body">
+          <p>survey here</p>
+        </div-->
+    </surveyModal>
+
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
       <router-link v-bind:to="'/'" >Home</router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +63,9 @@
             <li class="nav-item">
               <a class="nav-link" href="https://github.com/NCIEVS/report-exporter/issues" target="_blank" title="Link to Help">Help Forum</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" v-on:click="showModal">Feedback</a>
+            </li>
 
           </ul>
       </div>
@@ -61,11 +74,29 @@
 </template>
 
 <script>
+  import surveyModal from './Survey2.vue';
   export default {
     name: 'SubHeaderBar',
     props: {
       msg: String
-    }
+    },
+    components: {
+      surveyModal
+    },
+    data(){
+      return {
+        isSurveyModalVisible: false,
+      }
+    },
+    methods: {
+      showModal() {
+        this.isSurveyModalVisible = true;
+      },
+      closeModal() {
+        this.isSurveyModalVisible = false;
+
+      },
+    },
   }
 </script>
 
