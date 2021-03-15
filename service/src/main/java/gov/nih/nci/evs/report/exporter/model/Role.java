@@ -24,5 +24,9 @@ public class Role {
 	public void setRelatedName(String relatedName) {
 		this.relatedName = relatedName;
 	}
+	
+	public String toString() {
+		return "Role: " + type +  "Code: " + relatedCode + " Name: " + relatedName;
+	}
 
 }

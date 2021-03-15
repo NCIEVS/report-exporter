@@ -138,7 +138,8 @@ public class EVSAPIBaseService {
 				.create()
 				.get()
 				.uri(baseURL + code + roles)
-				.retrieve().bodyToMono(Role[].class)
+				.retrieve()
+				.bodyToMono(Role[].class)
 				.block()).collect(Collectors.toList());			
 	}
 	
