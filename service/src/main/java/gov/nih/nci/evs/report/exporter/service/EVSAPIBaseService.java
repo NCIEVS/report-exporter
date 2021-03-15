@@ -18,6 +18,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.RestPropertyMetadata;
+import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
@@ -49,6 +50,9 @@ public class EVSAPIBaseService {
 	
 	@Value("${PARENTS}")
 	private String parents;
+	
+	@Value("${ROLES}")
+	private String roles;
 	
 	@Value("${PARENTS_PARAM}")
 	private String parentsParam;
@@ -126,6 +130,16 @@ public class EVSAPIBaseService {
 			log.info("Bad Resource Request, check the URL for special characters: ", e);
 			return null;
 		}
+	}
+	
+	public List<Role> getRestRole(String code) {	
+
+		return Stream.of(WebClient
+				.create()
+				.get()
+				.uri(baseURL + code + roles)
+				.retrieve().bodyToMono(Role[].class)
+				.block()).collect(Collectors.toList());			
 	}
 	
 	public Root[] getRestRoots(RestTemplate template){
