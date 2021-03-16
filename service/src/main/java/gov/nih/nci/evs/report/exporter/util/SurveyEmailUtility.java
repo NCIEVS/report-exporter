@@ -24,7 +24,7 @@ public class SurveyEmailUtility {
 		
 		Message message = new MimeMessage(session);
 		try {
-		message.setFrom(new InternetAddress(survey.getEmail()== null?defaultFromEmail:survey.getEmail()));
+		message.setFrom(new InternetAddress(defaultFromEmail));
 		message.setRecipients(
 		  Message.RecipientType.TO, InternetAddress.parse(emailList));
 		message.setSubject("Automated Survey Results");
@@ -58,8 +58,12 @@ public class SurveyEmailUtility {
 				+ "<br/>"
 				+ "<br/>"
 				+ "Recommendations:<br/>"
-				+ survey.getRecommendations() +"<br/>"
-						+ "<br/>";
+				+ survey.getRecommendations() 
+				+"<br/>"
+				+ "<br/>"
+				+ "Email: "
+				+ survey.getEmail() +"<br/>"
+				+ "<br/>";
 
 	}
 	
