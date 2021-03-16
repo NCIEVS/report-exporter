@@ -20,8 +20,12 @@ public class RoleController {
 
 	  @GetMapping("/roles/{codes}")
 	  public List<RestRolesEntity> codeReadRoles(@PathVariable String codes) {
-		  
 			return service.getRestRoleEntitiesForRoleNode(codes);
+	  }
+	  
+	  @GetMapping("/sortedroles/{codes}")
+	  public List<Role> getSortedRolesForCodes(@PathVariable String codes) {
+			return service.getWeightSortedRolesForCodes(codes);
 	  }
 	
 }
