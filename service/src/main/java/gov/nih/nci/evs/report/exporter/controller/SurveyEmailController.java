@@ -3,8 +3,9 @@ package gov.nih.nci.evs.report.exporter.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.nih.nci.evs.report.exporter.model.Survey;
@@ -23,9 +24,9 @@ public class SurveyEmailController {
 	  }
 	
 	@PostMapping("/survey")
-	  public String surveySubmit(@ModelAttribute Survey survey, Model model) {
-	    model.addAttribute("survey", survey);
+	@ResponseBody
+	  public Survey surveySubmit(@RequestBody Survey survey) {
 	    service.sendSurveyEmail(survey);
-	    return "result";
+	    return survey;
 	  }
 }
