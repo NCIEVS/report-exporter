@@ -8,6 +8,8 @@
 
     data(){
        return{
+         surveyCookie: "NCISurvey",
+
           survey:{
             rating:undefined,
             email:'',
@@ -37,7 +39,7 @@
             hint: "Max 500 characters",
             max: 500,
             placeholder: "comments",
-            rows: 4,
+            rows: 3,
             //required:true,
             validator:VueFormGenerator.validators.string,
          }
@@ -52,7 +54,7 @@
             hint: "Max 500 characters",
             max: 500,
             placeholder: "comments",
-            rows: 4,
+            rows: 3,
             //required:true,
             validator:VueFormGenerator.validators.string,
          },
@@ -102,11 +104,17 @@
           .then(() => {
             this.close();
             alert('Thanks for taking the survey!');
+            this.setSurveyCookie()
           })
           .catch(error => {
               console.log("error submitting survey..." + error)
           });
       },
+
+      setSurveyCookie() {
+        this.$cookies.set(this.surveyCookie,"true");
+      },
+
     },
   }
 </script>
@@ -155,7 +163,6 @@
                                            ref="secondTabForm"
                                            >
                        </vue-form-generator>
-
                     </tab-content>
                 </form-wizard>
               </div>
@@ -203,7 +210,7 @@
     width: 800px;
     padding: 0px 0px 0px 15px;
     max-width: 90%;
-    height: 650px;
+    height: 600px;
     max-height: 90%;
     background: white;
     box-shadow: 2px 2px 20px 1px;
@@ -225,7 +232,7 @@
     justify-content: flex-end;
   }
   .modal-body-survey {
-    height: 650px;
+    height: 600px;
     overflow-y: auto;
     position: relative;
     padding: 20px 10px;

@@ -6,10 +6,12 @@
     <surveyModal :key="componentKey" v-show="isSurveyModalVisible" @close="closeModal">
         <!--div slot="header">
           <h4 class="modal-title">Survey</h4>
-        </div>
-        <div slot="body">
-          <p>You recently took the survey.  Thank you for your feedback.</p>
         </div-->
+        <div slot="body" v-if="getSurveyCookie()">
+
+          <p class="lead">You recently took the survey.  Thank you for your feedback.</p>
+
+        </div>
     </surveyModal>
 
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
@@ -89,6 +91,7 @@
       return {
         isSurveyModalVisible: false,
         componentKey: 0,
+        surveyCookie: "NCISurvey",
       }
     },
     methods: {
@@ -103,6 +106,10 @@
         this.forceRerender();
         this.isSurveyModalVisible = false;
       },
+      getSurveyCookie() {
+        var surveyCookie = this.$cookies.get(this.surveyCookie);
+        return surveyCookie;
+      }
     },
   }
 </script>
