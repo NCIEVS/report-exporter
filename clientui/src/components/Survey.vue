@@ -47,7 +47,7 @@
          fields:[
          {
             type: "textArea",
-            label: "Would you like to tell us about your project to see if we have additional recommendations? Please supply your email if you wish a personal response.",
+            label: "Would you like to tell us about your project to see if we have additional recommendations?",
             model: "recommendations",
             hint: "Max 500 characters",
             max: 500,
@@ -59,7 +59,7 @@
          {
            type: "input",
            inputType: "text",
-           label: "Email",
+           label: "Please supply your <b>email</b> if you would like a personal response.",
            model: "email",
            //required:true,
            validator:VueFormGenerator.validators.email,
