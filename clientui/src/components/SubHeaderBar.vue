@@ -1,7 +1,9 @@
 <template>
+
   <div class="subheader">
 
-    <surveyModal v-show="isSurveyModalVisible" @close="closeModal">
+    <!-- use the componentKey to reset the wizard in the dialog  -->
+    <surveyModal :key="componentKey" v-show="isSurveyModalVisible" @close="closeModal">
         <!--div slot="header">
           <h4 class="modal-title">Survey</h4>
         </div>
@@ -86,13 +88,19 @@
     data(){
       return {
         isSurveyModalVisible: false,
+        componentKey: 0,
       }
     },
     methods: {
+      forceRerender() {
+        this.componentKey += 1;
+      },
       showModal() {
         this.isSurveyModalVisible = true;
       },
       closeModal() {
+        // reset the survey wizard
+        this.forceRerender();
         this.isSurveyModalVisible = false;
       },
     },
@@ -101,22 +109,22 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.evs-subheader {
+  .evs-subheader {
+      color: rgba(255,255,255, 1);
+      background-color: #007dbd;
+      padding: 0 30px 2px;
+  }
+  .navbar-dark .navbar-nav .nav-link {
+     font-size: 16px;
+     color: rgba(255,255,255, 1);
+  }
+  .navbar a  {
+    font-size: 16px;
     color: rgba(255,255,255, 1);
-    background-color: #007dbd;
-    padding: 0 30px 2px;
-}
-.navbar-dark .navbar-nav .nav-link {
-   font-size: 16px;
-   color: rgba(255,255,255, 1);
-}
-.navbar a  {
-  font-size: 16px;
-  color: rgba(255,255,255, 1);
-  text-decoration: none;
-}
-.dropdown-menu
-.dropdown-item  {
-  color: black;
-}
+    text-decoration: none;
+  }
+  .dropdown-menu
+  .dropdown-item  {
+    color: black;
+  }
 </style>

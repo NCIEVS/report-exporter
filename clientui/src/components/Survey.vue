@@ -78,13 +78,6 @@
         this.survey.features='';
         this.survey.recommendations='';
         this.survey.email='';
-
-        this.$forceUpdate();
-        //this.$emit('reset');
-        //this.$refs.wizard.reset();
-
-        //this.$refs.wizard.startIndex=0;
-        //this.$refs.wizard.changeTab(2,0)
       },
 
       reset: function(){
@@ -107,16 +100,13 @@
             this.survey,
           )
           .then(() => {
-              alert('Thanks for taking the survey!');
-              this.close();
+            this.close();
+            alert('Thanks for taking the survey!');
           })
           .catch(error => {
               console.log("error submitting survey..." + error)
           });
       },
-    },
-    mounted() {
-        console.log("mounted")
     },
   }
 </script>
@@ -128,16 +118,7 @@
         role="dialog"
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription">
-        <!--header class="modal-header-survey" id="modalTitle">
-          <slot name="header">
-            This is the default tile!
-            <button
-              type="button"
-              class="btn-close"
-              @click="close"
-              aria-label="Close modal">x</button>
-          </slot>
-        </header-->
+
         <section class="modal-body-survey" id="modalDescription">
           <slot name="body">
               <div>
@@ -149,6 +130,7 @@
                         finish-button-text="Submit"
                         color="gray"
                         error-color="#a94442"
+                        ref="wizard"
                      >
                      <tab-content title="Overview"
                                   icon="ti-info-alt">
