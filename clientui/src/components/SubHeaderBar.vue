@@ -6,7 +6,7 @@
           <h4 class="modal-title">Survey</h4>
         </div>
         <div slot="body">
-          <p>survey here</p>
+          <p>You recently took the survey.  Thank you for your feedback.</p>
         </div-->
     </surveyModal>
 
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-  import surveyModal from './Survey2.vue';
+  import surveyModal from './Survey.vue';
   export default {
     name: 'SubHeaderBar',
     props: {
@@ -94,7 +94,6 @@
       },
       closeModal() {
         this.isSurveyModalVisible = false;
-
       },
     },
   }
