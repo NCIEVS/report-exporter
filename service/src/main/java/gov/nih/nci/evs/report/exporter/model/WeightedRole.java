@@ -4,6 +4,11 @@ public class WeightedRole implements Comparable<WeightedRole> {
 	Role role;
 	int weight;
 	
+	public WeightedRole(Role x, int i) {
+		this.role = x;
+	    this.weight = i;
+	}
+
 	public Role getRole() {
 		return role;
 	}
@@ -22,7 +27,7 @@ public class WeightedRole implements Comparable<WeightedRole> {
 
 	@Override
 	public int compareTo(WeightedRole o) {
-		return this.weight - o.weight;
+		return o.weight - this.weight;
 	}
 	
 	

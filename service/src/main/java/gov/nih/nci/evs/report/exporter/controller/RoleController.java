@@ -25,7 +25,7 @@ public class RoleController {
 	  
 	  @GetMapping("/sortedroles/{codes}")
 	  public List<Role> getSortedRolesForCodes(@PathVariable String codes) {
-			return service.getWeightSortedRolesForCodes(codes);
+			return service.getSortedRoles(codes);
 	  }
 	
 }

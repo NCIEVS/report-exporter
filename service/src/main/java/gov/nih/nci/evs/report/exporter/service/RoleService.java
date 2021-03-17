@@ -1,6 +1,7 @@
 package gov.nih.nci.evs.report.exporter.service;
 
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,8 +26,18 @@ public class RoleService {
 	}
 	
 	public List<WeightedRole> getDistinctWeightedRolesForEntityCodes(String codes){
-		return null;
+		Hashtable<String,WeightedRole> distinctRoles = new Hashtable<String,WeightedRole>();	
+		getRolesForCodes(codes).stream().forEach(x -> saveOrUpdateWeightedRoles(x, distinctRoles));
+		return distinctRoles.values().stream().collect(Collectors.toList());
 	}
+	
+	public void saveOrUpdateWeightedRoles(Role role, Hashtable<String, WeightedRole> wRoles) {
+		WeightedRole rStored = wRoles.get(role.getType());
+		if(rStored == null){wRoles.put(role.getType(), new WeightedRole(role,1));
+		}else {rStored.setWeight(rStored.getWeight() + 1);
+		}
+	}
+	
 	
 	public RestEntity getRestEntityForRoleNode(String code) {
 		return service.getEntity(code);
@@ -52,7 +63,7 @@ public class RoleService {
 		
 	}
 
-	public List<Role> getWeightSortedRolesForCodes(String codes) {
+	public List<Role> getRolesForCodes(String codes) {
 		return CommonServices.splitInput(codes)
 				.stream()
 				.map(code -> getRolesForEntityCode(code)).flatMap(List::stream).
@@ -62,6 +73,10 @@ public class RoleService {
 	public List<Role> sortRoleListByWeight(List<WeightedRole> roles){
 		Collections.sort(roles);
 		return roles.stream().map(x -> x.getRole()).collect(Collectors.toList());
+	}
+	
+	public List<Role> getSortedRoles(String codes){
+		return sortRoleListByWeight(getDistinctWeightedRolesForEntityCodes(codes));
 	}
 
 }
