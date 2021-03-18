@@ -38,7 +38,7 @@
             model: "features",
             hint: "Max 500 characters",
             max: 500,
-            placeholder: "comments",
+            placeholder: "suggest features",
             rows: 3,
             //required:true,
             validator:VueFormGenerator.validators.string,
@@ -53,7 +53,7 @@
             model: "recommendations",
             hint: "Max 500 characters",
             max: 500,
-            placeholder: "comments",
+            placeholder: "suggest recommendations",
             rows: 3,
             //required:true,
             validator:VueFormGenerator.validators.string,
@@ -81,11 +81,6 @@
         this.survey.recommendations='';
         this.survey.email='';
       },
-
-      reset: function(){
-        console.log("RESET Called")
-       },
-
       onComplete: function(){
         this.submitForm();
        },
