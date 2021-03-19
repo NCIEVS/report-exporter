@@ -1,5 +1,19 @@
 <template>
+
   <div class="subheader">
+
+    <!-- use the componentKey to reset the wizard in the dialog  -->
+    <surveyModal :key="componentKey" v-show="isSurveyModalVisible" @close="closeModal">
+        <!--div slot="header">
+          <h4 class="modal-title">Survey</h4>
+        </div-->
+        <div slot="body" v-if="getSurveyCookie()">
+
+          <p class="lead">You recently took the survey.  Thank you for your feedback.</p>
+
+        </div>
+    </surveyModal>
+
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
       <router-link v-bind:to="'/'" >Home</router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +67,9 @@
             <li class="nav-item">
               <a class="nav-link" href="https://github.com/NCIEVS/report-exporter/issues" target="_blank" title="Link to Help">Help Forum</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" v-on:click="showModal">Feedback</a>
+            </li>
 
           </ul>
       </div>
@@ -61,34 +78,60 @@
 </template>
 
 <script>
+  import surveyModal from './Survey.vue';
   export default {
     name: 'SubHeaderBar',
     props: {
       msg: String
-    }
+    },
+    components: {
+      surveyModal
+    },
+    data(){
+      return {
+        isSurveyModalVisible: false,
+        componentKey: 0,
+        surveyCookie: "NCISurvey",
+      }
+    },
+    methods: {
+      forceRerender() {
+        this.componentKey += 1;
+      },
+      showModal() {
+        this.isSurveyModalVisible = true;
+      },
+      closeModal() {
+        // reset the survey wizard
+        this.forceRerender();
+        this.isSurveyModalVisible = false;
+      },
+      getSurveyCookie() {
+        var surveyCookie = this.$cookies.get(this.surveyCookie);
+        return surveyCookie;
+      }
+    },
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-.evs-subheader {
+  .evs-subheader {
+      color: rgba(255,255,255, 1);
+      background-color: #007dbd;
+      padding: 0 30px 2px;
+  }
+  .navbar-dark .navbar-nav .nav-link {
+     font-size: 16px;
+     color: rgba(255,255,255, 1);
+  }
+  .navbar a  {
+    font-size: 16px;
     color: rgba(255,255,255, 1);
-    background-color: #007dbd;
-    padding: 0 30px 2px;
-}
-.navbar-dark .navbar-nav .nav-link {
-   font-size: 16px;
-   color: rgba(255,255,255, 1);
-}
-.navbar a  {
-  font-size: 16px;
-  color: rgba(255,255,255, 1);
-  text-decoration: none;
-}
-.dropdown-menu
-.dropdown-item  {
-  color: black;
-}
-
+    text-decoration: none;
+  }
+  .dropdown-menu
+  .dropdown-item  {
+    color: black;
+  }
 </style>

@@ -24,6 +24,10 @@ import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 Vue.use(VueFormWizard)
 
+import VueFormGenerator from 'vue-form-generator'
+//import 'vue-form-generator/dist/vfg.css'
+Vue.use(VueFormGenerator)
+
 import Notifications from 'vue-notification'
 import ThemifyIcon from "vue-themify-icons";
 

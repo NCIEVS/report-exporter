@@ -26,6 +26,7 @@
     "popper.js": "^1.16.1",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.4",
+    "vue-form-generator": "^2.3.4",
     "vue-form-wizard": "^0.8.4",
     "vue-gtag": "^1.11.0",
     "vue-jstree": "^2.1.6",
