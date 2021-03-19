@@ -12,13 +12,7 @@ public class RestRolesEntity {
 	private String name;
 	
 	private List<Role> roles;
-	
-	private int queryCode;
-	
-	private String queryStatus;
 
-	
-	
 	public String getCode() {
 		return code;
 	}
