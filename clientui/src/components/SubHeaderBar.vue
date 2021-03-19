@@ -91,7 +91,7 @@
       return {
         isSurveyModalVisible: false,
         componentKey: 0,
-        surveyCookie: "NCISurvey",
+        surveyCookie: "NCIReportExporterSurvey",
       }
     },
     methods: {
