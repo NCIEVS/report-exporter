@@ -53,6 +53,7 @@ public class RoleService {
 		RestRolesEntity entity = new RestRolesEntity();
 		
 		RestEntity rEntity = service.getEntity(code);
+		if(rEntity == null) {throw new RuntimeException("Code has no roles or does not exist");}
 		entity.setCode(rEntity.getCode());
 		entity.setName(rEntity.getName());
 		entity.setRoles(service.getRestRole(code));
@@ -84,18 +85,35 @@ public class RoleService {
 		return sortRoleListByWeight(getDistinctWeightedRolesForEntityCodes(codes));
 	}
 
-	public InputStream getCSVBytesForRestRoleParams(String codes, String roles) {
-		List<RestRolesEntity> entities =  getRestRoleEntitiesForRoleNode(codes);
+	public InputStream getChildCSVBytesForRestRoleParams(String codes, String roles) {
+		List<RestRolesEntity> entities =  filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes));
 		return new ByteArrayInputStream( 
 				new CSVRoleUtility().produceCSVOutputFromListWithHeading(entities, roles, codes, ",").getBytes());
 	}
 
-	public InputStream getJsonBytesForRestRoleParams(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	private List<RestRolesEntity> filterEntitiesAndRolesForRoles(String roles, List<RestRolesEntity> entities) {
+		return entities.stream()
+				.filter(x -> entityContainRoleFilter(roles, x))
+				.collect(Collectors.toList());
+	}
+	
+	private boolean entityContainRoleFilter(String roles, RestRolesEntity entity) {
+		List<String> roleList = CommonServices.splitInput(roles);
+		List<Role> roleModelList = entity
+				.getRoles()
+				.stream()
+				.filter(x -> roleList.contains(x.getType()))
+				.collect(Collectors.toList());
+		if(roleModelList == null || roleModelList.size() == 0) {
+		return false;
+		}
+		else {
+			entity.setRoles(roleModelList);
+			return true;
+		}
 	}
 
-	public InputStream getChildCSVBytesForRoleParams(String id) {
+	public InputStream getJsonBytesForRestRoleParams(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

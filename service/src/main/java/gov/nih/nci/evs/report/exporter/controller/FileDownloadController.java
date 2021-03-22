@@ -61,8 +61,8 @@ public class FileDownloadController {
 	@Autowired
 	CodeReadService codeReadService;
 	
-//	@Autowired
-//	RoleService roleService;
+	@Autowired
+	RoleService roleService;
 
 	@GetMapping(
 			  value = "/get-file/{id}/JsonFile.json",
@@ -277,31 +277,7 @@ public class FileDownloadController {
 		}
 			}
 	
-//	@GetMapping(
-//			  value = "/get-file-for-resolved-roles/{id}/{roles}/{format}/{filename}",
-//			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
-//			)
-//			public @ResponseBody byte[] getRoleFileByFormatForBranch(@PathVariable String id,
-//					@PathVariable String roles,
-//					@PathVariable String format,
-//					@PathVariable String filename) throws IOException {
-//				CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
-//				switch(fmt) {
-//		            case JSON: 
-//		            	return IOUtils.toByteArray(
-//		         			    roleService.getJsonBytesForRestRoleParams(id));
-//		            case CSV:
-//					    return IOUtils.toByteArray(
-//					    		roleService.getChildCSVBytesForRoleParams(id));
-//		            case TABD: 
-//					    return IOUtils.toByteArray(
-//					    		roleService.getChildTabDelBytesForRestRoleParams(id));
-//		            default:
-//		            	return IOUtils.toByteArray(
-//		            			roleService.getJsonBytesForRestRoleParams(id));
-//				}
-//
-//			}
+
 	
 	@GetMapping("/get-minfile-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
 	public ResponseEntity<InputStreamResource> minimalFileReportForExcelBranch(@PathVariable String id, 
@@ -311,6 +287,32 @@ public class FileDownloadController {
 	    headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
 	    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 	}
+	
+	@GetMapping(
+			  value = "/get-file-for-resolved-roles/{codes}/{roles}/{format}/{filename}",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+			)
+			public @ResponseBody byte[] getRoleFileByFormatForBranch(@PathVariable String codes,
+					@PathVariable String roles,
+					@PathVariable String format,
+					@PathVariable String filename) throws IOException {
+				CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
+				switch(fmt) {
+		            case JSON: 
+		            	return IOUtils.toByteArray(
+		         			    roleService.getJsonBytesForRestRoleParams(codes));
+		            case CSV:
+					    return IOUtils.toByteArray(
+					    		roleService.getChildCSVBytesForRestRoleParams(codes, roles));
+		            case TABD: 
+					    return IOUtils.toByteArray(
+					    		roleService.getChildTabDelBytesForRestRoleParams(codes));
+		            default:
+		            	return IOUtils.toByteArray(
+		            			roleService.getJsonBytesForRestRoleParams(codes));
+				}
+
+			}
 	
 
 }
