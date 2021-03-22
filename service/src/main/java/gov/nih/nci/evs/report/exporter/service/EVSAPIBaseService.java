@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -24,6 +25,9 @@ import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @Service
 public class EVSAPIBaseService {
+	
+	@Autowired
+	RoleService roleService;
 	
 	private Logger log = LoggerFactory.getLogger(TimedDeferredResultWrapper.class);
 	
@@ -80,6 +84,8 @@ public class EVSAPIBaseService {
 	
 	@Value("${DEFAULT_FROM_EMAIL}")
 	private String defaultEmail;
+	
+	
     
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
 		return 
@@ -112,13 +118,16 @@ public class EVSAPIBaseService {
 	
 	public RestEntity getEntity(String code) {	
 		try {
-			return WebClient
+			RestEntity entity =
+					WebClient
 					.create()
 					.get()
 					.uri(new URI(baseURL + code + summary + "," + maps + "," + parentsParam))
 					.retrieve()
 					.bodyToMono(RestEntity.class)
 					.block();
+			entity.setRoles(roleService.getRolesForEntityCode(code));
+			return entity;
 		} catch (URISyntaxException e) {
 			log.info("Bad Resource Request, check the URL for special characters: ", e);
 			return null;
