@@ -22,6 +22,9 @@ public class CodeReadService {
 	@Autowired
 	EVSAPIBaseService service;
 	
+	@Autowired
+	RoleService roleService;
+	
 
 	public static final String NOTFOUND = "Concept Code Not Found";
 	public static final String RETIRED = "Concept Code Retired";
@@ -124,6 +127,7 @@ public class CodeReadService {
 		RestEntity entity = null;
 		try {
 			entity = service.getEntity(code);
+			entity.setRoles(roleService.getRolesForEntityCode(code));
 		}
 			catch (WebClientResponseException.NotFound nf) {
 				entity = new RestEntity();
@@ -157,5 +161,13 @@ public class CodeReadService {
 	
 	public void setService(EVSAPIBaseService service) {
 		this.service = service;
+	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
 	}
 }

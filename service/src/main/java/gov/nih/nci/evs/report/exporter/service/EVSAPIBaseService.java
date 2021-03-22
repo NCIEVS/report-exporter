@@ -26,9 +26,9 @@ import gov.nih.nci.evs.report.exporter.util.CommonServices;
 @Service
 public class EVSAPIBaseService {
 	
-	@Autowired
-	RoleService roleService;
-	
+//	@Autowired
+//	RoleService roleService;
+//	
 	private Logger log = LoggerFactory.getLogger(TimedDeferredResultWrapper.class);
 	
     @Value("${NODE_LIST}")
@@ -118,16 +118,13 @@ public class EVSAPIBaseService {
 	
 	public RestEntity getEntity(String code) {	
 		try {
-			RestEntity entity =
-					WebClient
+			return WebClient
 					.create()
 					.get()
 					.uri(new URI(baseURL + code + summary + "," + maps + "," + parentsParam))
 					.retrieve()
 					.bodyToMono(RestEntity.class)
 					.block();
-			entity.setRoles(roleService.getRolesForEntityCode(code));
-			return entity;
 		} catch (URISyntaxException e) {
 			log.info("Bad Resource Request, check the URL for special characters: ", e);
 			return null;

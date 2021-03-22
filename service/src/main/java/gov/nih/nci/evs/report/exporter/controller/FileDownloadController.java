@@ -34,6 +34,7 @@ import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutServiceDeferredWrapper;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
+import gov.nih.nci.evs.report.exporter.service.RoleService;
 import gov.nih.nci.evs.report.exporter.service.TimedDeferredResultWrapper;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.TimedEvictionConcurrentMap;
@@ -44,18 +45,9 @@ public class FileDownloadController {
 	
 	private static final Logger log = LoggerFactory.getLogger(FileDownloadController.class);
 	
-//	public enum Formats{JSON,CSV,TABD,EXCEL};
-	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
-	
 	@Value("${RESULT_TIME_OUT:3600000}")
 	public int resultTimeOut;
 	
-//	
-//	public Format[] formats = new Format[]
-//			{new Format(Formats.JSON.name(), "JavaScript Object Notation Format", "json" ),
-//			 new Format(Formats.CSV.name(), "Comma Separated Value Format", "csv" ),
-//			 new Format(Formats.TABD.name(), "Tab Delimited Value Format", "txt" ),
-//			 new Format(Formats.EXCEL.name(), "Microsoft Excel Format", "xlsx" )};
 	
 	@Autowired
 	FormattedOutputService service;
@@ -68,6 +60,9 @@ public class FileDownloadController {
 	
 	@Autowired
 	CodeReadService codeReadService;
+	
+//	@Autowired
+//	RoleService roleService;
 
 	@GetMapping(
 			  value = "/get-file/{id}/JsonFile.json",
@@ -265,23 +260,48 @@ public class FileDownloadController {
 					@PathVariable String max,
 					@PathVariable String format,
 					@PathVariable String filename) throws IOException {
-				CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
-				switch(fmt) {
-		            case JSON: 
-		            	return IOUtils.toByteArray(
-		         			    branchService.getJsonBytesForRestChildParams(id, max));
-		            case CSV:
-					    return IOUtils.toByteArray(
-					    		branchService.getChildCSVBytesForRestParams(id, max));
-		            case TABD: 
-					    return IOUtils.toByteArray(
-					    		branchService.getChildTabDelBytesForRestParams(id, max));
-		            default:
-		            	return IOUtils.toByteArray(
-		            			branchService.getJsonBytesForRestChildParams(id, max));
-				}
-
+		CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
+		switch(fmt) {
+            case JSON: 
+            	return IOUtils.toByteArray(
+         			    branchService.getJsonBytesForRestChildParams(id, max));
+            case CSV:
+			    return IOUtils.toByteArray(
+			    		branchService.getChildCSVBytesForRestParams(id, max));
+            case TABD: 
+			    return IOUtils.toByteArray(
+			    		branchService.getChildTabDelBytesForRestParams(id, max));
+            default:
+            	return IOUtils.toByteArray(
+            			branchService.getJsonBytesForRestChildParams(id, max));
+		}
 			}
+	
+//	@GetMapping(
+//			  value = "/get-file-for-resolved-roles/{id}/{roles}/{format}/{filename}",
+//			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+//			)
+//			public @ResponseBody byte[] getRoleFileByFormatForBranch(@PathVariable String id,
+//					@PathVariable String roles,
+//					@PathVariable String format,
+//					@PathVariable String filename) throws IOException {
+//				CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
+//				switch(fmt) {
+//		            case JSON: 
+//		            	return IOUtils.toByteArray(
+//		         			    roleService.getJsonBytesForRestRoleParams(id));
+//		            case CSV:
+//					    return IOUtils.toByteArray(
+//					    		roleService.getChildCSVBytesForRoleParams(id));
+//		            case TABD: 
+//					    return IOUtils.toByteArray(
+//					    		roleService.getChildTabDelBytesForRestRoleParams(id));
+//		            default:
+//		            	return IOUtils.toByteArray(
+//		            			roleService.getJsonBytesForRestRoleParams(id));
+//				}
+//
+//			}
 	
 	@GetMapping("/get-minfile-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
 	public ResponseEntity<InputStreamResource> minimalFileReportForExcelBranch(@PathVariable String id, 

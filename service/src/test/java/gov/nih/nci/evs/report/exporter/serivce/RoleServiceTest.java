@@ -2,10 +2,8 @@ package gov.nih.nci.evs.report.exporter.serivce;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -17,20 +15,16 @@ import org.mockito.Mockito;
 
 import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.WeightedRole;
-import gov.nih.nci.evs.report.exporter.service.EVSAPIBaseService;
 import gov.nih.nci.evs.report.exporter.service.RoleService;
 
 class RoleServiceTest {
 	
 	RoleService service;
-	
-	//RoleService mockedRoleService;
-	
+
 	@BeforeEach
 	void setUp() throws Exception {
 
 		service = new RoleService();
-		//mockedRoleService = Mockito.mock(RoleService.class);
 		}
 
 	@Test

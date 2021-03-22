@@ -1,5 +1,7 @@
 package gov.nih.nci.evs.report.exporter.service;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
@@ -13,6 +15,7 @@ import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.RestRolesEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.WeightedRole;
+import gov.nih.nci.evs.report.exporter.util.CSVRoleUtility;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @Service
@@ -20,6 +23,8 @@ public class RoleService {
 	
 	@Autowired
 	EVSAPIBaseService service;
+	
+	CSVRoleUtility utility;
 	
 	public List<Role> getRolesForEntityCode(String code){
 		return service.getRestRole(code);
@@ -77,6 +82,27 @@ public class RoleService {
 	
 	public List<Role> getSortedRoles(String codes){
 		return sortRoleListByWeight(getDistinctWeightedRolesForEntityCodes(codes));
+	}
+
+	public InputStream getCSVBytesForRestRoleParams(String codes, String roles) {
+		List<RestRolesEntity> entities =  getRestRoleEntitiesForRoleNode(codes);
+		return new ByteArrayInputStream( 
+				new CSVRoleUtility().produceCSVOutputFromListWithHeading(entities, roles, codes, ",").getBytes());
+	}
+
+	public InputStream getJsonBytesForRestRoleParams(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public InputStream getChildCSVBytesForRoleParams(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public InputStream getChildTabDelBytesForRestRoleParams(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
