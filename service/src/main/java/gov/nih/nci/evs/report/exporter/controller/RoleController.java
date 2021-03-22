@@ -17,6 +17,11 @@ public class RoleController {
 	@Autowired
 	RoleService service;
 	
+	  @GetMapping("/role/{code}")
+	  public RestRolesEntity codeReadRole(@PathVariable String code) {
+			return service.getRestRoleEntityForRoleNode(code);
+	  }
+	
 
 	  @GetMapping("/roles/{codes}")
 	  public List<RestRolesEntity> codeReadRoles(@PathVariable String codes) {
