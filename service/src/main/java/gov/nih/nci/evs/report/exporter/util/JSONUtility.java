@@ -12,5 +12,11 @@ public class JSONUtility extends FormatUtility {
 		ExporterQueryResponse response = new ExporterQueryResponse(entities, codes, props, level);
 		return CommonServices.getGsonForPrettyPrint().toJson(response);	
 	}
+	
+	public String produceJsonRoleOutputFromListWithHeading(
+			List<RestEntity> entities, String roles, String codes) { 
+		ExporterQueryResponse response = new ExporterQueryResponse(entities, codes, roles, 0);
+		return CommonServices.getGsonForPrettyPrint().toJson(response);	
+	}
 
 }
