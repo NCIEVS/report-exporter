@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
-import gov.nih.nci.evs.report.exporter.model.RestRolesEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.WeightedRole;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.DelimitedRoleOutputUtility;
+import gov.nih.nci.evs.report.exporter.util.JSONUtility;
 
 @Service
 public class RoleService {
@@ -47,9 +47,9 @@ public class RoleService {
 		return service.getEntity(code);
 	}
 	
-	public RestRolesEntity getRestRoleEntityForRoleNode(String code) {
+	public RestEntity getRestRoleEntityForRoleNode(String code) {
 
-		RestRolesEntity entity = new RestRolesEntity();
+		RestEntity entity = new RestEntity();
 		
 		RestEntity rEntity = service.getEntity(code);
 		if(rEntity == null) {throw new RuntimeException("Code has no roles or does not exist");}
@@ -60,7 +60,7 @@ public class RoleService {
 		return entity;
 	}
 	
-	public List<RestRolesEntity> getRestRoleEntitiesForRoleNode(String codes) {
+	public List<RestEntity> getRestRoleEntitiesForRoleNode(String codes) {
 		return CommonServices.splitInput(codes)
 				.stream()
 				.map(code -> getRestRoleEntityForRoleNode(code))
@@ -85,24 +85,24 @@ public class RoleService {
 	}
 
 	public InputStream getChildCSVBytesForRestRoleParams(String codes, String roles) {
-		List<RestRolesEntity> entities =  filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes));
+		List<RestEntity> entities =  filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes));
 		return new ByteArrayInputStream( 
 				new DelimitedRoleOutputUtility().produceDelimitedOutputFromListWithHeading(entities, roles, codes, ",").getBytes());
 	}
 	
 	public InputStream getChildTabDelBytesForRestRoleParams(String codes, String roles) {
-		List<RestRolesEntity> entities =  filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes));
+		List<RestEntity> entities =  filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes));
 		return new ByteArrayInputStream( 
 				new DelimitedRoleOutputUtility().produceDelimitedOutputFromListWithHeading(entities, roles, codes, "\t").getBytes());
 	}
 
-	private List<RestRolesEntity> filterEntitiesAndRolesForRoles(String roles, List<RestRolesEntity> entities) {
+	private List<RestEntity> filterEntitiesAndRolesForRoles(String roles, List<RestEntity> entities) {
 		return entities.stream()
 				.filter(x -> entityContainRoleFilter(roles, x))
 				.collect(Collectors.toList());
 	}
 	
-	private boolean entityContainRoleFilter(String roles, RestRolesEntity entity) {
+	private boolean entityContainRoleFilter(String roles, RestEntity entity) {
 		List<String> roleList = CommonServices.splitInput(roles);
 		List<Role> roleModelList = entity
 				.getRoles()
@@ -118,14 +118,9 @@ public class RoleService {
 		}
 	}
 
-	public InputStream getJsonBytesForRestRoleParams(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public InputStream getChildTabDelBytesForRestRoleParams(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public InputStream getJsonBytesForRestRoleParams(String codes, String roles) {
+		return new ByteArrayInputStream(new JSONUtility().produceJsonRoleOutputFromListWithHeading(
+				filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes)), roles, codes).getBytes());
 	}
 
 }

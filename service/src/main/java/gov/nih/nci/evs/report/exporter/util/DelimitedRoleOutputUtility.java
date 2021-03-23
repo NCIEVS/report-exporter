@@ -3,14 +3,14 @@ package gov.nih.nci.evs.report.exporter.util;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import gov.nih.nci.evs.report.exporter.model.RestRolesEntity;
+import gov.nih.nci.evs.report.exporter.model.RestEntity;
 
 
 public class DelimitedRoleOutputUtility extends FormatUtility {
 
 	
 
-	public String produceDelimitedOutputFromListWithHeading(List<RestRolesEntity> list, String roles, String searchCodes, String separator) {
+	public String produceDelimitedOutputFromListWithHeading(List<RestEntity> list, String roles, String searchCodes, String separator) {
 
 		CommonServices services = new CommonServices();
 		StringBuffer firstLine = new StringBuffer();

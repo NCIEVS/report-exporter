@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import gov.nih.nci.evs.report.exporter.model.RestRolesEntity;
+import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
 
 class CSVRoleUtilityTest {
@@ -23,11 +23,11 @@ class CSVRoleUtilityTest {
 	@Test
 	void testRoleEntityOutput() {
 
-		RestRolesEntity entity = new RestRolesEntity();
+		RestEntity entity = new RestEntity();
 		entity.setCode("C000000");
 		entity.setName("Role Source");
 		entity.setRoles(getRoleList());
-		List<RestRolesEntity> roleEntities = new ArrayList<RestRolesEntity>();
+		List<RestEntity> roleEntities = new ArrayList<RestEntity>();
 		roleEntities.add(entity);
 		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
 	}
@@ -35,17 +35,17 @@ class CSVRoleUtilityTest {
 	@Test
 	void testMultiRoleEntityOutput() {
 		
-		List<RestRolesEntity> roleEntities = new ArrayList<RestRolesEntity>();
+		List<RestEntity> roleEntities = new ArrayList<RestEntity>();
 
-		RestRolesEntity entity = new RestRolesEntity();
+		RestEntity entity = new RestEntity();
 		entity.setCode("C000000");
 		entity.setName("Role Source");
 		entity.setRoles(getRoleList());
-		RestRolesEntity entity1 = new RestRolesEntity();
+		RestEntity entity1 = new RestEntity();
 		entity1.setCode("C000001");
 		entity1.setName("Role Source1");
 		entity1.setRoles(getRoleList1());
-		RestRolesEntity entity2 = new RestRolesEntity();
+		RestEntity entity2 = new RestEntity();
 		entity2.setCode("C000009");
 		entity2.setName("Role Source9");
 		entity2.setRoles(getRoleList2());

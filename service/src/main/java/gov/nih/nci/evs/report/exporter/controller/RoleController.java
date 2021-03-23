@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import gov.nih.nci.evs.report.exporter.model.RestRolesEntity;
+import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.service.RoleService;
 
@@ -18,13 +18,13 @@ public class RoleController {
 	RoleService service;
 	
 	  @GetMapping("/role/{code}")
-	  public RestRolesEntity codeReadRole(@PathVariable String code) {
+	  public RestEntity codeReadRole(@PathVariable String code) {
 			return service.getRestRoleEntityForRoleNode(code);
 	  }
 	
 
 	  @GetMapping("/roles/{codes}")
-	  public List<RestRolesEntity> codeReadRoles(@PathVariable String codes) {
+	  public List<RestEntity> codeReadRoles(@PathVariable String codes) {
 			return service.getRestRoleEntitiesForRoleNode(codes);
 	  }
 	  

@@ -300,7 +300,7 @@ public class FileDownloadController {
 				switch(fmt) {
 		            case JSON: 
 		            	return IOUtils.toByteArray(
-		         			    roleService.getJsonBytesForRestRoleParams(codes));
+		         			    roleService.getJsonBytesForRestRoleParams(codes, roles));
 		            case CSV:
 					    return IOUtils.toByteArray(
 					    		roleService.getChildCSVBytesForRestRoleParams(codes, roles));
@@ -309,7 +309,7 @@ public class FileDownloadController {
 					    		roleService.getChildTabDelBytesForRestRoleParams(codes, roles));
 		            default:
 		            	return IOUtils.toByteArray(
-		            			roleService.getJsonBytesForRestRoleParams(codes));
+		            			roleService.getJsonBytesForRestRoleParams(codes, roles));
 				}
 
 			}
