@@ -11,12 +11,12 @@ import gov.nih.nci.evs.report.exporter.model.Role;
 
 class CSVRoleUtilityTest {
 	
-	CSVRoleUtility utility;
+	DelimitedRoleOutputUtility utility;
 	CommonServices services;
 	
 	@BeforeEach
 	void setup(){
-		utility = new CSVRoleUtility();
+		utility = new DelimitedRoleOutputUtility();
 		services = new CommonServices();
 	}
 
@@ -29,7 +29,7 @@ class CSVRoleUtilityTest {
 		entity.setRoles(getRoleList());
 		List<RestRolesEntity> roleEntities = new ArrayList<RestRolesEntity>();
 		roleEntities.add(entity);
-		System.out.println(utility.produceCSVOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
+		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
 	}
 	
 	@Test
@@ -52,7 +52,7 @@ class CSVRoleUtilityTest {
 		roleEntities.add(entity);
 		roleEntities.add(entity1);
 		roleEntities.add(entity2);
-		System.out.println(utility.produceCSVOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
+		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
 	}
 	
 	

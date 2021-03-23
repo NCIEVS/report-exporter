@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +14,8 @@ import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.RestRolesEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.WeightedRole;
-import gov.nih.nci.evs.report.exporter.util.CSVRoleUtility;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
+import gov.nih.nci.evs.report.exporter.util.DelimitedRoleOutputUtility;
 
 @Service
 public class RoleService {
@@ -24,7 +23,7 @@ public class RoleService {
 	@Autowired
 	EVSAPIBaseService service;
 	
-	CSVRoleUtility utility;
+	DelimitedRoleOutputUtility utility;
 	
 	public List<Role> getRolesForEntityCode(String code){
 		return service.getRestRole(code);
@@ -88,7 +87,13 @@ public class RoleService {
 	public InputStream getChildCSVBytesForRestRoleParams(String codes, String roles) {
 		List<RestRolesEntity> entities =  filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes));
 		return new ByteArrayInputStream( 
-				new CSVRoleUtility().produceCSVOutputFromListWithHeading(entities, roles, codes, ",").getBytes());
+				new DelimitedRoleOutputUtility().produceDelimitedOutputFromListWithHeading(entities, roles, codes, ",").getBytes());
+	}
+	
+	public InputStream getChildTabDelBytesForRestRoleParams(String codes, String roles) {
+		List<RestRolesEntity> entities =  filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes));
+		return new ByteArrayInputStream( 
+				new DelimitedRoleOutputUtility().produceDelimitedOutputFromListWithHeading(entities, roles, codes, "\t").getBytes());
 	}
 
 	private List<RestRolesEntity> filterEntitiesAndRolesForRoles(String roles, List<RestRolesEntity> entities) {

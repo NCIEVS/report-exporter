@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 import gov.nih.nci.evs.report.exporter.model.RestRolesEntity;
 
 
-public class CSVRoleUtility extends FormatUtility {
+public class DelimitedRoleOutputUtility extends FormatUtility {
 
 	
 
-	public String produceCSVOutputFromListWithHeading(List<RestRolesEntity> list, String roles, String searchCodes, String separator) {
+	public String produceDelimitedOutputFromListWithHeading(List<RestRolesEntity> list, String roles, String searchCodes, String separator) {
 
 		CommonServices services = new CommonServices();
 		StringBuffer firstLine = new StringBuffer();

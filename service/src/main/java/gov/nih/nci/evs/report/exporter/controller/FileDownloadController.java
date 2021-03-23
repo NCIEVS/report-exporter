@@ -306,7 +306,7 @@ public class FileDownloadController {
 					    		roleService.getChildCSVBytesForRestRoleParams(codes, roles));
 		            case TABD: 
 					    return IOUtils.toByteArray(
-					    		roleService.getChildTabDelBytesForRestRoleParams(codes));
+					    		roleService.getChildTabDelBytesForRestRoleParams(codes, roles));
 		            default:
 		            	return IOUtils.toByteArray(
 		            			roleService.getJsonBytesForRestRoleParams(codes));
