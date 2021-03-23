@@ -291,28 +291,41 @@ public class FileDownloadController {
 	@GetMapping(
 			  value = "/get-file-for-resolved-roles/{codes}/{roles}/{format}/{filename}",
 			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
-			)
-			public @ResponseBody byte[] getRoleFileByFormatForBranch(@PathVariable String codes,
+					)
+					public ResponseEntity<InputStreamResource>  getRoleFileByFormatForBranch(@PathVariable String codes,
 					@PathVariable String roles,
 					@PathVariable String format,
 					@PathVariable String filename) throws IOException {
-				CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
+					ByteArrayInputStream in;
+					HttpHeaders headers = new HttpHeaders();
+					CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
 				switch(fmt) {
 		            case JSON: 
-		            	return IOUtils.toByteArray(
-		         			    roleService.getJsonBytesForRestRoleParams(codes, roles));
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) roleService.getJsonBytesForRestRoleParams(codes, roles);
+		            	break;
 		            case CSV:
-					    return IOUtils.toByteArray(
-					    		roleService.getChildCSVBytesForRestRoleParams(codes, roles));
-		            case TABD: 
-					    return IOUtils.toByteArray(
-					    		roleService.getChildTabDelBytesForRestRoleParams(codes, roles));
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".csv");
+		            	in = (ByteArrayInputStream) 
+					    		roleService.getChildCSVBytesForRestRoleParams(codes, roles);
+		            	break;
+		            case TABD:
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".txt");
+		            	in = (ByteArrayInputStream) 
+					    		roleService.getChildTabDelBytesForRestRoleParams(codes, roles);
+		            	break;
+		            case EXCEL:
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+		            	in = roleService.getChildExcelBytesForRestRoleParams(codes, roles);
+		    			break;
 		            default:
-		            	return IOUtils.toByteArray(
-		            			roleService.getJsonBytesForRestRoleParams(codes, roles));
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) 
+		            			roleService.getJsonBytesForRestRoleParams(codes, roles);
 				}
+				
+				return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 
 			}
 	
-
 }

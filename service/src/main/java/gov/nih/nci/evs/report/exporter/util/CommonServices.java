@@ -107,12 +107,15 @@ public class CommonServices {
 		roleEle.add(role.getRelatedCode());
 		roleEle.add(role.getRelatedName());
 		return roleEle.stream().collect(Collectors.joining(separator));
-//		return "\r\n" +
-//				code +
-//				separator + name +
-//				separator + role.getType() +
-//				separator + role.getRelatedCode() +
-//				separator + role.getRelatedName();
+	}
+	
+	public Row calculateAndProduceSpacedXLSRoles(Row row, Role role, String code, String name, int internalIndex) {
+		row.createCell(internalIndex++).setCellValue(code);
+		row.createCell(internalIndex++).setCellValue(name);
+		row.createCell(internalIndex++).setCellValue(role.getType());
+		row.createCell(internalIndex++).setCellValue(role.getRelatedCode());
+		row.createCell(internalIndex++).setCellValue(role.getRelatedName());
+		return row;
 	}
 	
 	public void clearPropertyListsFromHeaderMap() {
