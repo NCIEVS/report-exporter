@@ -142,7 +142,7 @@
 
                     <ul class="list-group" id="selectedRoleList">
                       <li v-for="selectedRole in selectedRoles" :key="selectedRole.type">
-                        {{ selectedRole.type }} ({{ selectedRole.relatedName }})
+                        {{ selectedRole.type }}
                       </li>
                     </ul>
                   </div>
