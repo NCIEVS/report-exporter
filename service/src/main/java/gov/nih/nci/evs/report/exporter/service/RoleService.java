@@ -1,6 +1,7 @@
 package gov.nih.nci.evs.report.exporter.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -15,6 +16,7 @@ import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.WeightedRole;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.DelimitedRoleOutputUtility;
+import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
 import gov.nih.nci.evs.report.exporter.util.JSONUtility;
 
 @Service
@@ -121,6 +123,11 @@ public class RoleService {
 	public InputStream getJsonBytesForRestRoleParams(String codes, String roles) {
 		return new ByteArrayInputStream(new JSONUtility().produceJsonRoleOutputFromListWithHeading(
 				filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes)), roles, codes).getBytes());
+	}
+
+	public ByteArrayInputStream getChildExcelBytesForRestRoleParams(String codes, String roles) throws IOException {
+		return new ByteArrayInputStream(new ExcelUtility().produceExcelRoleOutputFromListWithHeading(
+				filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes)), roles, codes).toByteArray());
 	}
 
 }
