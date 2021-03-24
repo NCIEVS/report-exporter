@@ -25,6 +25,15 @@ const api = {
         })
     },
 
+		getRoles(baseUrl, codes){
+        return new Promise((resolve)=>{
+            axios.get(baseUrl + 'sortedroles/' + encodeURIComponent(codes))
+            .then((response) =>{
+            resolve(response.data);
+            })
+        })
+    },
+
     getFormats(baseUrl){
         return new Promise((resolve)=>{
             axios.get(baseUrl + 'download/output-formats')

@@ -47,14 +47,16 @@
 
         <div class="container">
           <form>
-            <div class="form-group">
-              <label for="usedCodes">Codes without selected roles: {{this.usedCodes}}</label>
+            <!-- <div class="form-group">
+              <span class="badge badge-pill badge-primary">TEST</span>
+              <label for="usedCodes">Codes with selected roles: {{this.usedCodes}}</label>
             </div>
             <div class="form-group">
               <label for="selectedRoles">Select roles to include in the export</label>
-            </div>
+            </div> -->
             <div class="form-group">
               <v-multiselect-listbox :key="componentKey" v-model="selectedRoles" :options="this.availableRoles"
+                  v-on:change="updateUsedConceptCodes()"
                   :reduce-display-property="(option) => option.type"
                   :reduce-value-property="(option) => option.relatedCode"
                   search-input-class="custom-input-class"
@@ -237,6 +239,7 @@ export default {
         this.availableRoles = []
         this.selectedRoles = []
         this.userSelectedRoleNames = []
+        this.usedCodes = [];
 
         // get the roles based on the codes selected for the next wizard page
         this.getRoles()
@@ -256,6 +259,41 @@ export default {
 
     onComplete: function() {
       this.downloadFile();
+    },
+
+    updateUsedConceptCodes() {
+      this.usedCodes = [];
+      //this.usedCodes.push("TEST");
+
+      // loop through all concept codes
+      for(let x = this.entityList.length; x >=0; x-- ) {
+        if (this.entityList[x]) {
+          // console.log("Entity: " + this.entityList[x].code)
+          // console.log("--------")
+
+          // for each concept code, loop through its roles
+          for(let i = this.selectedRoles.length; i >=0; i-- ) {
+            if (this.selectedRoles[i]) {
+              // console.log("Entity: " + this.selectedRoles[i].type)
+              // console.log(this.entityList.some(item => item.code === "C7788"))
+
+              // check if the selected role is associated to the concept code
+              // if it is, add concept code
+              const roles = this.entityList[x].roles;
+              //console.log(roles.some(item => item.type === this.selectedRoles[i].type))
+
+              if (roles.some(item => item.type === this.selectedRoles[i].type)) {
+                this.usedCodes.push(this.entityList[x].code);
+                break;
+              }
+            }
+          }
+        }
+      }
+
+
+
+
     },
 
     updateShowSummary() {
