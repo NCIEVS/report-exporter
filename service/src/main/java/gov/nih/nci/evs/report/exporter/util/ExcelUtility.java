@@ -159,16 +159,9 @@ public class ExcelUtility extends FormatUtility {
 		      for(Role role:rElements) {
 		      Row row = sheet.createRow(i++);
 		      //Create a set of rows for the static values
-		      services.calculateAndProduceSpacedXLSRoles(row, role, codes, codes, internalIndex);
-		      //Creating an index wrapper to pass by reference
-		      IndexWrapper indexWrapper = new IndexWrapper(internalIndex);
-		      //Clearing property list for the next entity, leaving type and position metadata
-		    		  services.clearPropertyListsFromHeaderMap();		  
+		      services.calculateAndProduceSpacedXLSRoles(row, role, codes, codes, internalIndex);	  
 		      }
 		  }
-
-		
-	    //Finish setting up headers with each property type designation
 	    
 	    produceQueryRecordExcel(sheet, codes, 0, roles, i);
 
