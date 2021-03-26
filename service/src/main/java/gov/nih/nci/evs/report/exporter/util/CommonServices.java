@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import gov.nih.nci.evs.report.exporter.model.Format;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
+import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 
@@ -98,6 +99,25 @@ public class CommonServices {
 				getOrderedPropertyLists(propHeaderMap), separator);
 	}
 	
+	public String calculateAndProduceSpacedRoles(Role role, String code, String name, String separator) {
+		ArrayList<String> roleEle = new ArrayList<String>();
+		roleEle.add(code);
+		roleEle.add(name);
+		roleEle.add(role.getType());
+		roleEle.add(role.getRelatedCode());
+		roleEle.add(role.getRelatedName());
+		return roleEle.stream().collect(Collectors.joining(separator));
+	}
+	
+	public Row calculateAndProduceSpacedXLSRoles(Row row, Role role, String code, String name, int internalIndex) {
+		row.createCell(internalIndex++).setCellValue(code);
+		row.createCell(internalIndex++).setCellValue(name);
+		row.createCell(internalIndex++).setCellValue(role.getType());
+		row.createCell(internalIndex++).setCellValue(role.getRelatedCode());
+		row.createCell(internalIndex++).setCellValue(role.getRelatedName());
+		return row;
+	}
+	
 	public void clearPropertyListsFromHeaderMap() {
 		getPropHeaderMap()
 		.keySet()
@@ -141,6 +161,11 @@ public class CommonServices {
 		.filter(x -> x != getDefinitionHeaderForIndicator(services))
 		.filter(x -> x != getSynonymHeaderForIndicator(services))
 		.filter(x -> x != getMapHeaderForIndicator(services))
+		.collect(Collectors.toList());
+	}
+	
+	public List<String> getRoleHeadings() {
+		return Stream.of(FormatUtility.ROLE_FIELDS)
 		.collect(Collectors.toList());
 	}
 	

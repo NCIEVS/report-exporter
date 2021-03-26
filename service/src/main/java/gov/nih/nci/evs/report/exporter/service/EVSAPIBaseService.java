@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,12 +19,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.RestPropertyMetadata;
+import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @Service
 public class EVSAPIBaseService {
 	
+//	@Autowired
+//	RoleService roleService;
+//	
 	private Logger log = LoggerFactory.getLogger(TimedDeferredResultWrapper.class);
 	
     @Value("${NODE_LIST}")
@@ -49,6 +54,9 @@ public class EVSAPIBaseService {
 	
 	@Value("${PARENTS}")
 	private String parents;
+	
+	@Value("${ROLES}")
+	private String roles;
 	
 	@Value("${PARENTS_PARAM}")
 	private String parentsParam;
@@ -76,6 +84,8 @@ public class EVSAPIBaseService {
 	
 	@Value("${DEFAULT_FROM_EMAIL}")
 	private String defaultEmail;
+	
+	
     
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
 		return 
@@ -135,6 +145,17 @@ public class EVSAPIBaseService {
 			log.info("Bad Resource Request, check the URL for special characters: ", e);
 			return null;
 		}
+	}
+	
+	public List<Role> getRestRole(String code) {	
+
+		return Stream.of(WebClient
+				.create()
+				.get()
+				.uri(baseURL + code + roles)
+				.retrieve()
+				.bodyToMono(Role[].class)
+				.block()).collect(Collectors.toList());			
 	}
 	
 	public Root[] getRestRoots(RestTemplate template){
