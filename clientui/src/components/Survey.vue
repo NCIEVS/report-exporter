@@ -8,7 +8,7 @@
 
     data(){
        return{
-         surveyCookie: "NCISurvey",
+         surveyCookie: "NCIReportExporterSurvey",
 
           survey:{
             rating:undefined,
@@ -102,7 +102,9 @@
             this.setSurveyCookie()
           })
           .catch(error => {
+              alert('There was an error submitting the survey.  Please try again later.');
               console.log("error submitting survey..." + error)
+              this.close();
           });
       },
 

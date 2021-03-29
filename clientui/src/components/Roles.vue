@@ -47,27 +47,42 @@
 
         <div class="container">
           <form>
-            <!-- <div class="form-group">
-              <span class="badge badge-pill badge-primary">TEST</span>
-              <label for="usedCodes">Codes with selected roles: {{this.usedCodes}}</label>
-            </div>
-            <div class="form-group">
-              <label for="selectedRoles">Select roles to include in the export</label>
-            </div> -->
-            <div class="form-group">
-              <v-multiselect-listbox :key="componentKey" v-model="selectedRoles" :options="this.availableRoles"
-                  v-on:change="updateUsedConceptCodes()"
-                  :reduce-display-property="(option) => option.type"
-                  :reduce-value-property="(option) => option.relatedCode"
-                  search-input-class="custom-input-class"
-                  search-options-placeholder="Search roles"
-                  selected-options-placeholder="Search selected roles"
-                  no-options-text="No roles"
-                  selected-no-options-text="No roles selected"
-                  no-options-found-text="No roles found"
-                  no-selected-options-found-text="No selected roles found">
-              </v-multiselect-listbox>
-            </div>
+            <div class="row border-bottom concept-container">
+                <div class="col">
+                  <label for="unusedCodes">No roles selected for these concept codes</label>
+                  <div class="input-group" id="unusedCodes">
+                    <div class="pill-padding" v-for="code in unusedCodes" v-bind:key="code">
+                      <span class="badge badge-pill badge-secondary">{{code}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="usedCodes">Used Concept Codes</label>
+                  <div class="input-group">
+                    <div class="pill-padding" v-for="code in usedCodes" v-bind:key="code">
+                      <span class="badge badge-pill badge-primary">{{code}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group role-select-container">
+                <label for="selectedRoles">Select roles to include in the export</label>
+              </div>
+              <div class="form-group">
+                <v-multiselect-listbox :key="componentKey" v-model="selectedRoles" :options="this.availableRoles"
+                    v-on:change="updateUsedConceptCodes()"
+                    :reduce-display-property="(option) => option.type"
+                    :reduce-value-property="(option) => option.relatedCode"
+                    search-input-class="custom-input-class"
+                    search-options-placeholder="Search roles"
+                    selected-options-placeholder="Search selected roles"
+                    no-options-text="No roles"
+                    selected-no-options-text="No roles selected"
+                    no-options-found-text="No roles found"
+                    no-selected-options-found-text="No selected roles found">
+                </v-multiselect-listbox>
+              </div>
           </form>
         </div>
       </tab-content>
@@ -203,6 +218,7 @@ export default {
       selectedTags: [],
       userEnteredCodes: [],
       usedCodes: [],
+      unusedCodes: [],
       entityList: [],
       availableRoles: [],
       selectedRoles: [],
@@ -240,9 +256,12 @@ export default {
         this.selectedRoles = []
         this.userSelectedRoleNames = []
         this.usedCodes = [];
+        this.unusedCodes = [];
 
         // get the roles based on the codes selected for the next wizard page
         this.getRoles()
+        // reset what concept codes are used
+        this.updateUsedConceptCodes()
       }
       return Object.keys(this.selectedTags).length>0
     },
@@ -263,37 +282,38 @@ export default {
 
     updateUsedConceptCodes() {
       this.usedCodes = [];
-      //this.usedCodes.push("TEST");
+      this.unusedCodes = [];
 
       // loop through all concept codes
       for(let x = this.entityList.length; x >=0; x-- ) {
         if (this.entityList[x]) {
-          // console.log("Entity: " + this.entityList[x].code)
-          // console.log("--------")
 
-          // for each concept code, loop through its roles
-          for(let i = this.selectedRoles.length; i >=0; i-- ) {
-            if (this.selectedRoles[i]) {
-              // console.log("Entity: " + this.selectedRoles[i].type)
-              // console.log(this.entityList.some(item => item.code === "C7788"))
+          if (this.selectedRoles.length == 0) {
+            this.unusedCodes.push(this.entityList[x].code);
+          }
 
-              // check if the selected role is associated to the concept code
-              // if it is, add concept code
-              const roles = this.entityList[x].roles;
-              //console.log(roles.some(item => item.type === this.selectedRoles[i].type))
+          else {
+            // for each concept code, loop through its roles
+            for(let i = this.selectedRoles.length; i >=0; i-- ) {
+              if (this.selectedRoles[i]) {
 
-              if (roles.some(item => item.type === this.selectedRoles[i].type)) {
-                this.usedCodes.push(this.entityList[x].code);
-                break;
+                // check if the selected role is associated to the concept code
+                // if it is, add concept code
+                const roles = this.entityList[x].roles;
+
+                if (roles.some(item => item.type === this.selectedRoles[i].type)) {
+                  this.usedCodes.push(this.entityList[x].code);
+                  break;
+                }
+                else if (i == 0) {
+                  this.unusedCodes.push(this.entityList[x].code);
+                  break;
+                }
               }
             }
           }
         }
       }
-
-
-
-
     },
 
     updateShowSummary() {
@@ -442,7 +462,7 @@ export default {
                   }
                   // The concept code must have roles to be valid
                   else if (data[x].roles.length < 1) {
-                    console.log("Code: " + data[x].code + " is invalid: NO ROLES")
+                    //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
                     tempCode =  data[x].code
                     data.splice(x,1)
 
@@ -592,6 +612,16 @@ export default {
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
   color: white;
+}
+
+.concept-container{
+  padding-bottom: 10px;
+}
+.role-select-container{
+  padding-top: 10px;
+}
+.pill-padding {
+  padding-right: 2px;
 }
 
 .wizard-btn {
