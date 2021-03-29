@@ -54,6 +54,8 @@ You will need to create a file called **Tomcat8/conf/Catalina/localhost/rewrite.
     RewriteCond %{REQUEST_URI} ^(/reportexporter/roots).*$ [OR]
     RewriteCond %{REQUEST_URI} ^(/reportexporter/curated).*$ [OR]
     RewriteCond %{REQUEST_URI} ^(/reportexporter/resolve\-).*$ [OR]
+    RewriteCond %{REQUEST_URI} ^(/reportexporter/survey).*$ [OR]
+    RewriteCond %{REQUEST_URI} ^(/reportexporter/sortedroles).*$ [OR]
 
     RewriteRule ^(.*)$ - [L]
     RewriteRule ^(.*)$ /reportexporter/index.html
@@ -76,7 +78,7 @@ On the apache server, add the following section to
 
 	<IfModule headers_module>
 	RequestHeader set X-HTTPS 1
-		Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'"
+		Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' www.googletagmanager.com www.google-analytics.com ajax.googleapis.com; connect-src 'self' www.google-analytics.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'"
 	</IfModule>
 
 #### Application Properties
