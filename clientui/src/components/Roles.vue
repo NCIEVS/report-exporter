@@ -51,7 +51,7 @@
                 <div class="col">
                   <label for="unusedCodes">No roles selected for these concept codes</label>
                   <div class="input-group" id="unusedCodes">
-                    <div v-for="code in unusedCodes" v-bind:key="code">
+                    <div class="pill-padding" v-for="code in unusedCodes" v-bind:key="code">
                       <span class="badge badge-pill badge-secondary">{{code}}</span>
                     </div>
                   </div>
@@ -59,7 +59,7 @@
                 <div class="col">
                   <label for="usedCodes">Used Concept Codes</label>
                   <div class="input-group">
-                    <div v-for="code in usedCodes" v-bind:key="code">
+                    <div class="pill-padding" v-for="code in usedCodes" v-bind:key="code">
                       <span class="badge badge-pill badge-primary">{{code}}</span>
                     </div>
                   </div>
@@ -619,6 +619,9 @@ export default {
 }
 .role-select-container{
   padding-top: 10px;
+}
+.pill-padding {
+  padding-right: 2px;
 }
 
 .wizard-btn {
