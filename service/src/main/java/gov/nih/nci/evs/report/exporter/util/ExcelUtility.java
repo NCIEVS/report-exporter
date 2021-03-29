@@ -159,7 +159,7 @@ public class ExcelUtility extends FormatUtility {
 		      for(Role role:rElements) {
 		      Row row = sheet.createRow(i++);
 		      //Create a set of rows for the static values
-		      services.calculateAndProduceSpacedXLSRoles(row, role, codes, codes, internalIndex);	  
+		      services.calculateAndProduceSpacedXLSRoles(row, role, entity.getCode(), entity.getName(), internalIndex);	  
 		      }
 		  }
 	    
