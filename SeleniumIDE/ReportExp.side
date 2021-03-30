@@ -4310,7 +4310,7 @@
       "id": "59331e40-8313-437a-a0ea-f3581b5de334",
       "comment": "",
       "command": "click",
-      "target": "css=.modal-footer > .btn",
+      "target": "xpath=//div[@id='app']/div[4]/div/div/div/footer/button",
       "targets": [
         ["css=.modal-footer > .btn", "css:finder"],
         ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
@@ -6818,15 +6818,15 @@
     }, {
       "id": "141ec448-f467-434b-8371-6b98eec1965e",
       "comment": "",
-      "command": "pause",
-      "target": "3000",
+      "command": "waitForText",
+      "target": "xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]",
       "targets": [],
-      "value": ""
+      "value": " Children to Resolve: 24173"
     }, {
       "id": "36e01c5c-4470-4cc1-bb90-e613d6f37479",
       "comment": "",
       "command": "assertText",
-      "target": "css=#selectedTagList > li:nth-child(3)",
+      "target": "xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]",
       "targets": [
         ["css=#selectedTagList > li:nth-child(3)", "css:finder"],
         ["xpath=//ul[@id='selectedTagList']/li[3]", "xpath:idRelative"],
@@ -7788,7 +7788,7 @@
       "id": "9d9d482d-af56-4fac-a989-a9ea6862615f",
       "comment": "",
       "command": "click",
-      "target": "css=.wizard-btn",
+      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
       "targets": [
         ["css=.wizard-btn", "css:finder"],
         ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
@@ -7872,7 +7872,7 @@
       "id": "278fa5fc-5080-4e1a-a8f9-cc9480e11ba5",
       "comment": "",
       "command": "click",
-      "target": "css=.wizard-btn",
+      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
       "targets": [
         ["css=.wizard-btn", "css:finder"],
         ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
@@ -7885,7 +7885,7 @@
       "id": "38b05f63-e1c9-4f6b-80cc-1973fb0b3e6d",
       "comment": "",
       "command": "click",
-      "target": "css=.wizard-footer-right .wizard-btn",
+      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
       "targets": [
         ["css=.wizard-footer-right .wizard-btn", "css:finder"],
         ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
@@ -7935,7 +7935,7 @@
       "id": "98f6dea4-ea9d-4e4a-83ba-5fcc99765cce",
       "comment": "",
       "command": "click",
-      "target": "css=.wizard-footer-right .wizard-btn",
+      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
       "targets": [
         ["css=.wizard-footer-right .wizard-btn", "css:finder"],
         ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
@@ -8052,6 +8052,186 @@
         ["xpath=//div[@id='SelectaCode0']/div/div/div/div/div/form/div/div/div/span/a", "xpath:idRelative"],
         ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
         ["xpath=//span/a", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "765f821c-e8ea-4c4a-9fb7-be92578268cb",
+    "name": "RolesResolutionTest",
+    "commands": [{
+      "id": "03e30dc3-bb46-4e9e-bff2-78a3dd9854a6",
+      "comment": "",
+      "command": "open",
+      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e56ea64c-21ce-4e2c-ad02-ea2bb43a5bb2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x959",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f46ccb09-97c7-45a3-bcf0-cbee2029b6f9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(3) .align-self-end",
+      "targets": [
+        ["css=.card:nth-child(3) .align-self-end", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div[3]/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/a/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "31f1bc33-3a23-419e-aa2c-408c018cac54",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforRolesExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "95ac1813-d7e2-4d69-8bdb-80c4a2cb2dda",
+      "comment": "",
+      "command": "type",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforRolesExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C12434"
+    }, {
+      "id": "205d70b9-834c-499d-8d53-d10f657df21a",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "843e0492-40b8-4ab3-9e8f-7dad5a8d3bb1",
+      "comment": "",
+      "command": "",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "954ecc35-708e-47fc-bba6-3f1ea46940f9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-8 > form",
+      "targets": [
+        ["css=.col-md-8 > form", "css:finder"],
+        ["xpath=//div[@id='SelectConceptCodesforRolesExport0']/div/div/div/div/form", "xpath:idRelative"],
+        ["xpath=//form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e9077de5-f619-40ba-ba7e-9816465975f8",
+      "comment": "",
+      "command": "click",
+      "target": "css=#read-codes-entry .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "03d3f6a0-dd33-43a5-9d4a-d1a794bc7408",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#read-codes-entry .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f395268-5aed-47f1-88dd-2150d7887e2e",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#read-codes-entry .wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6cf3ec80-5f9e-41d4-a9d3-046b31b18fe1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option",
+      "targets": [
+        ["css=.multi-select-option", "css:finder"],
+        ["xpath=//div[@id='SelectRoles1']/div/form/div[3]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "567485f6-583b-43fc-9d3f-66921bb5f53f",
+      "comment": "",
+      "command": "click",
+      "target": "css=#read-codes-entry .wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b9adff1-515d-43af-b56c-44a32628516e",
+      "comment": "",
+      "command": "click",
+      "target": "id=downloadFormat",
+      "targets": [
+        ["id=downloadFormat", "id"],
+        ["css=#downloadFormat", "css:finder"],
+        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/select", "xpath:idRelative"],
+        ["xpath=//form/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cdbdf5bb-b296-4849-8b2e-dc05fb6cc480",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": "label=EXCEL (xlsx) Microsoft Excel Format"
+    }, {
+      "id": "d4e8f49a-b67b-4ba4-bca1-f1b801dc4e3a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#read-codes-entry .wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
       ],
       "value": ""
     }]
