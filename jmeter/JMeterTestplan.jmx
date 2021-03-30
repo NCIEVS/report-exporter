@@ -26,13 +26,27 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Property Request" enabled="true">
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Property Request" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">JSON</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/properties</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -106,9 +120,9 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/output-formats</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -173,9 +187,9 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/roots</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -241,9 +255,9 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/get-file-for-readCodes/C12434/DEFINITION,FULL_SYN,Display_Name/CSV/mycsv</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -317,9 +331,9 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/get-file-for-readCodes/C12434/DEFINITION,FULL_SYN,Display_Name/EXCEL/myexcel</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -375,9 +389,9 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download//get-file-for-readCodes/C12434/DEFINITION,FULL_SYN,Display_Name/TABD/mycTab</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -452,9 +466,9 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/get-file-for-readCodes/C12434/DEFINITION,FULL_SYN,Display_Name/JSON/myjson</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -622,9 +636,9 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/get-file-for-resolved-branch/C1909/DEFINITION,FULL_SYN,Display_Name/1/CSV/mycsv</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -761,9 +775,9 @@ Hierarchy level: 1
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/get-file-for-resolved-branch/C1909/DEFINITION,FULL_SYN,Display_Name/1/EXCEL/myexcel</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -819,9 +833,9 @@ Hierarchy level: 1
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/get-file-for-resolved-branch/C1909/DEFINITION,FULL_SYN,Display_Name/1/TABD/mytabd</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -958,9 +972,9 @@ Hierarchy level: 1
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/get-file-for-resolved-branch/C1909/DEFINITION,FULL_SYN,Display_Name/1/JSON/myjson</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2317,9 +2331,9 @@ Hierarchy level: 1
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/deferred/getURLHashForDeferredResult//C1909/DEFINITION,FULL_SYN,Display_Name/1/CSV</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2388,9 +2402,9 @@ vars.put(&quot;id&quot;,hashid);
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/deferred/checkFileForHashFormatResponseEntity/${id}/CSV/csvbyhash</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2498,9 +2512,9 @@ vars.put(&quot;id&quot;,hashid);
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/deferred/getURLHashForDeferredResult//C12218/DEFINITION,FULL_SYN,Display_Name/1/TABD</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2569,9 +2583,9 @@ vars.put(&quot;tid&quot;,hashid);
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/deferred/checkFileForHashFormatResponseEntity/${tid}/TABD/tabbyhash</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2650,9 +2664,9 @@ vars.put(&quot;tid&quot;,hashid);
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/deferred/getURLHashForDeferredResult//C12218/DEFINITION,FULL_SYN,Display_Name/1/JSON</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2721,9 +2735,9 @@ vars.put(&quot;jid&quot;,hashid);
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/deferred/checkFileForHashFormatResponseEntity/${jid}/JSON/jsonbyhash</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2848,9 +2862,9 @@ vars.put(&quot;jid&quot;,hashid);
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/deferred/getURLHashForDeferredResult//C12218/DEFINITION,FULL_SYN,Display_Name/1/EXCEL</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2919,9 +2933,9 @@ vars.put(&quot;eid&quot;,hashid);
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding">ALL</stringProp>
           <stringProp name="HTTPSampler.path">/reportexporter/download/deferred/checkFileForHashFormatResponseEntity/${eid}/EXCEL/excelbyhash</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -2975,6 +2989,73 @@ vars.put(&quot;eid&quot;,hashid);
           <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
             <stringProp name="ConstantTimer.delay">3000</stringProp>
           </ConstantTimer>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Roles Request" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">evsreportexporter-dev.nci.nih.gov</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/reportexporter/sortedroles/C18108,C18107,C18106</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="354935782">[{&quot;type&quot;:&quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,&quot;relatedCode&quot;:&quot;C16399&quot;,&quot;relatedName&quot;:&quot;Cell Differentiation Process&quot;},{&quot;type&quot;:&quot;Gene_Product_Encoded_By_Gene&quot;,&quot;relatedCode&quot;:&quot;C21295&quot;,&quot;relatedName&quot;:&quot;Ligand Binding Protein Gene&quot;},{&quot;type&quot;:&quot;Gene_Product_Has_Associated_Anatomy&quot;,&quot;relatedCode&quot;:&quot;C13226&quot;,&quot;relatedName&quot;:&quot;Cytoplasm&quot;},{&quot;type&quot;:&quot;Gene_Product_Has_Biochemical_Function&quot;,&quot;relatedCode&quot;:&quot;C16518&quot;,&quot;relatedName&quot;:&quot;DNA Binding Protein&quot;},{&quot;type&quot;:&quot;Biological_Process_Has_Associated_Location&quot;,&quot;relatedCode&quot;:&quot;C12508&quot;,&quot;relatedName&quot;:&quot;Cell&quot;},{&quot;type&quot;:&quot;Gene_Product_Has_Chemical_Classification&quot;,&quot;relatedCode&quot;:&quot;C18484&quot;,&quot;relatedName&quot;:&quot;Nuclear Hormone Receptor Superfamily&quot;},{&quot;type&quot;:&quot;Biological_Process_Has_Result_Biological_Process&quot;,&quot;relatedCode&quot;:&quot;C21064&quot;,&quot;relatedName&quot;:&quot;Protein Turnover&quot;},{&quot;type&quot;:&quot;Biological_Process_Has_Initiator_Process&quot;,&quot;relatedCode&quot;:&quot;C17133&quot;,&quot;relatedName&quot;:&quot;Signal Transduction&quot;},{&quot;type&quot;:&quot;Gene_Product_Has_Structural_Domain_Or_Motif&quot;,&quot;relatedCode&quot;:&quot;C13428&quot;,&quot;relatedName&quot;:&quot;Hormone Receptor DNA-Binding Domain&quot;}]</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
           <hashTree/>
         </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
