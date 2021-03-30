@@ -144,7 +144,18 @@ class EXELUtilityRoleTest {
 			Row row2 = sheet.getRow(2);
 			Row row3 = sheet.getRow(3);
 			Row row4 = sheet.getRow(4);
-			
+			Row row5 = sheet.getRow(5);
+			Row row6 = sheet.getRow(6);
+			Row row7 = sheet.getRow(7);
+			Row row8 = sheet.getRow(8);
+			Row row9 = sheet.getRow(9);
+			Row row10 = sheet.getRow(10);
+			Row row11 = sheet.getRow(11);
+			Row row12 = sheet.getRow(12);
+			Row row13 = sheet.getRow(13);
+			Row row14 = sheet.getRow(14);
+			Row row15 = sheet.getRow(15);
+			Row row16 = sheet.getRow(16);
 			
 			
 			String header1 = headerRow.getCell(0).getStringCellValue();
@@ -174,83 +185,373 @@ class EXELUtilityRoleTest {
 			
 			
 			
-			String header0a = headerRow.getCell(0).getStringCellValue();
 			String cell0a = row2.getCell(0).getStringCellValue();	
-			assertEquals(header0a,"concept code"); 
+			assertEquals(header1,"concept code"); 
 			assertEquals(cell0a,"C123234");
 			
-			String header1a = headerRow.getCell(1).getStringCellValue();
 			String cell1a = row2.getCell(1).getStringCellValue();	
-			assertEquals(header1a,"concept name"); 
+			assertEquals(header2,"concept name"); 
 			assertEquals(cell1a,"Myent");
 			
-			String header2a = headerRow.getCell(2).getStringCellValue();
 			String cell2a = row2.getCell(2).getStringCellValue();	
-			assertEquals(header2a,"role"); 
+			assertEquals(header3,"role"); 
 			assertEquals(cell2a,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
 			
-			String header3a = headerRow.getCell(3).getStringCellValue();
-			String cell3a = row2.getCell(3).getStringCellValue();	
-			assertEquals(header3a,"target code");
-			assertEquals(cell3a,"code of target");
-			
-			String header4a = headerRow.getCell(4).getStringCellValue();
-			String cell4a = row2.getCell(4).getStringCellValue();	
-			assertEquals(header4a,"target name"); 
-			assertEquals(cell4a,"name of target");
 
+			String cell3a = row2.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code");
+			assertEquals(cell3a,"code of target");
+
+			String cell4a = row2.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cell4a,"name of target");
 			
-			String header0b = headerRow.getCell(0).getStringCellValue();
+
+
 			String cell0b = row3.getCell(0).getStringCellValue();	
-			assertEquals(header0b,"concept code"); 
+			assertEquals(header1,"concept code"); 
 			assertEquals(cell0b,"C123234");
 			
-			String header1b = headerRow.getCell(1).getStringCellValue();
+	
 			String cell1b = row3.getCell(1).getStringCellValue();	
-			assertEquals(header1b,"concept name"); 
+			assertEquals(header2,"concept name"); 
 			assertEquals(cell1b,"Myent");
 			
-			String header2b = headerRow.getCell(2).getStringCellValue();
+
 			String cell2b = row3.getCell(2).getStringCellValue();	
-			assertEquals(header2b,"role"); 
+			assertEquals(header3,"role"); 
 			assertEquals(cell2b,"Allele_Has_Activity");
 			
-			String header3b = headerRow.getCell(3).getStringCellValue();
+
 			String cell3b = row3.getCell(3).getStringCellValue();	
-			assertEquals(header3b,"target code"); 
+			assertEquals(header4,"target code"); 
 			assertEquals(cell3b,"code of target");
 			
-			String header4b = headerRow.getCell(4).getStringCellValue();
-			String cell4b = row3.getCell(4).getStringCellValue();	
-			assertEquals(header4b,"target name"); 
-			assertEquals(cell4b,"name of target");
 
+			String cell4b = row3.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cell4b,"name of target");
 			
-			String header0c = headerRow.getCell(0).getStringCellValue();
+
+
 			String cell0c = row4.getCell(0).getStringCellValue();	
-			assertEquals(header0c,"concept code"); 
+			assertEquals(header1,"concept code"); 
 			assertEquals(cell0c,"C123234");
 			
-			String header1c = headerRow.getCell(1).getStringCellValue();
 			String cell1c = row4.getCell(1).getStringCellValue();	
-			assertEquals(header1c,"concept name"); 
+			assertEquals(header2,"concept name"); 
 			assertEquals(cell1c,"Myent");
 			
-			String header2c = headerRow.getCell(2).getStringCellValue();
 			String cell2c = row4.getCell(2).getStringCellValue();	
-			assertEquals(header2c,"role"); 
+			assertEquals(header3,"role"); 
 			assertEquals(cell2c,"Gene_Associated_With_Disease");
 			
-			String header3c = headerRow.getCell(3).getStringCellValue();
 			String cell3c = row4.getCell(3).getStringCellValue();	
-			assertEquals(header3c,"target code"); 
+			assertEquals(header4,"target code"); 
 			assertEquals(cell3c,"code of target");
 			
-			String header4c = headerRow.getCell(4).getStringCellValue();
 			String cell4c = row4.getCell(4).getStringCellValue();	
-			assertEquals(header4c,"target name"); 
+			assertEquals(header5,"target name"); 
 			assertEquals(cell4c,"name of target");
+			
+			
+			
 
+			String cell1x = row5.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code");  
+			assertEquals(cell1x,"C000000");
+			
+
+			String cell2x = row5.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cell2x,"0ent");
+			
+
+			String cell3x = row5.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cell3x,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
+			
+
+			String cell4x = row5.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(cell4x,"code of target");
+			
+
+			String cell5x = row5.getCell(4).getStringCellValue();
+			assertEquals(header5,"target name"); 
+			assertEquals(cell5x,"name of target");
+			
+			
+			
+
+			String cell0z = row6.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cell0z,"C000000");
+			
+
+			String cell1z = row6.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cell1z,"0ent");
+			
+
+			String cell2z = row6.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cell2z,"Allele_Has_Activity");
+			
+
+			String cell3z = row6.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code");
+			assertEquals(cell3z,"code of target");
+			
+
+			String cell4z = row6.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cell4z,"name of target");
+
+			
+
+			String cell0y = row7.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cell0y,"C000000");
+			
+
+			String cell1y = row7.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cell1y,"0ent");
+			
+
+			String cell2y = row7.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cell2y,"Gene_Associated_With_Disease");
+			
+
+			String cell3y = row7.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(cell3y,"code of target");
+			
+
+			String cell4y = row7.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cell4y,"name of target");
+
+			
+
+			String cell0w = row8.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cell0w,"C000000");
+			
+
+			String cell1w = row8.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cell1w,"0ent");
+			
+
+			String cell2w = row8.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cell2w,"Procedure_Has_Target_Disease");
+			
+
+			String cell3w = row8.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(cell3w,"code of target");
+			
+
+			String cell4w = row8.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cell4w,"name of target");
+			
+
+
+			String cella = row9.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code");  
+			assertEquals(cella,"C999999");
+			
+
+			String cellb = row9.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cellb,"My9");
+			
+
+			String cellc = row9.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cellc,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
+			
+
+			String celld = row9.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(celld,"code of target");
+			
+
+			String celle = row9.getCell(4).getStringCellValue();
+			assertEquals(header5,"target name"); 
+			assertEquals(celle,"name of target");
+			
+			
+			
+			String cellf = row10.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cellf,"C999999");
+			
+			String cellg = row10.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cellg,"My9");
+			
+			String cellh = row10.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cellh,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
+			
+
+			String celli = row10.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code");
+			assertEquals(celli,"code of target");
+
+			String cellj = row10.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cellj,"name of target");
+			
+
+
+			String cellk = row11.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cellk,"C999999");
+			
+	
+			String celll = row11.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(celll,"My9");
+			
+
+			String cellm = row11.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cellm,"Allele_Has_Activity");
+			
+
+			String celln = row11.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(celln,"code of target");
+			
+
+			String cello = row11.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cello,"name of target");
+			
+
+
+			String cellp = row12.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cellp,"C999999");
+			
+			String cellq = row12.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cellq,"My9");
+			
+			String cellr = row12.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cellr,"Gene_Is_Biomarker_Type");
+			
+			String cell = row12.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(cell,"code of target");
+			
+			String cellt = row12.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cellt,"name of target");
+
+			
+			String cella1 = row13.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code");  
+			assertEquals(cella1,"C2222");
+			
+
+			String cellb1 = row13.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cellb1,"My2");
+			
+
+			String cellc1 = row13.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cellc1,"Gene_Found_In_Shoe");
+			
+
+			String celld1 = row13.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(celld1,"code of target");
+			
+
+			String celle1 = row13.getCell(4).getStringCellValue();
+			assertEquals(header5,"target name"); 
+			assertEquals(celle1,"name of target");
+			
+			
+			
+			String cellf1 = row14.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cellf1,"C2222");
+			
+			String cellg1 = row14.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cellg1,"My2");
+			
+			String cellh1 = row14.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cellh1,"Gene_Found_In_Shoe");
+			
+
+			String celli1 = row14.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code");
+			assertEquals(celli1,"code of target");
+
+			String cellj1 = row14.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cellj1,"name of target");
+			
+
+
+			String cellk1 = row15.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cellk1,"C2222");
+			
+	
+			String celll1 = row15.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(celll1,"My2");
+			
+
+			String cellm1 = row15.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cellm1,"Gene_Found_In_Shoe");
+			
+
+			String celln1 = row15.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(celln1,"code of target");
+			
+
+			String cello1 = row15.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cello1,"name of target");
+			
+
+
+			String cellp1 = row16.getCell(0).getStringCellValue();	
+			assertEquals(header1,"concept code"); 
+			assertEquals(cellp1,"C2222");
+			
+			String cellq1 = row16.getCell(1).getStringCellValue();	
+			assertEquals(header2,"concept name"); 
+			assertEquals(cellq1,"My2");
+			
+			String cellr1 = row16.getCell(2).getStringCellValue();	
+			assertEquals(header3,"role"); 
+			assertEquals(cellr1,"Gene_Found_In_Shoe");
+			
+			String cellnn1 = row16.getCell(3).getStringCellValue();	
+			assertEquals(header4,"target code"); 
+			assertEquals(cellnn1,"code of target");
+			
+			String cellt1 = row16.getCell(4).getStringCellValue();	
+			assertEquals(header5,"target name"); 
+			assertEquals(cellt1,"name of target");
 
 		stream.close();
 		workbook.close();
@@ -2130,23 +2431,23 @@ private List<RestEntity> getRestRoleEntityList() {
 		List<Role> roles1 = new ArrayList<Role>();
 		Role rolea = new Role();
 		rolea.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
-		rolea.setRelatedCode("roleName");
-		rolea.setRelatedName("NCIt");
+		rolea.setRelatedCode("code of target");
+		rolea.setRelatedName("name of target");
 
 		Role role2a = new Role();
 		role2a.setType("Allele_Has_Activity");
-		role2a.setRelatedCode("roleName");
-		role2a.setRelatedName("NCIt");
+		role2a.setRelatedCode("code of target");
+		role2a.setRelatedName("name of target");
 		
 		Role role3a = new Role();
 		role3a.setType("Gene_Associated_With_Disease");
-		role3a.setRelatedCode("roleName");
-		role3a.setRelatedName("NCIt");
+		role3a.setRelatedCode("code of target");
+		role3a.setRelatedName("name of target");
 
 		Role role4a = new Role();
 		role4a.setType("Procedure_Has_Target_Disease");
-		role4a.setRelatedCode("roleName");
-		role4a.setRelatedName("NCIt");
+		role4a.setRelatedCode("code of target");
+		role4a.setRelatedName("name of target");
 		
 		roles1.add(rolea);
 		roles1.add(role2a);
@@ -2178,23 +2479,23 @@ private List<RestEntity> getRestRoleEntityList() {
 		List<Role> roles2 = new ArrayList<Role>();
 		Role roleb = new Role();
 		roleb.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
-		roleb.setRelatedCode("roleName");
-		roleb.setRelatedName("NCIt");
+		roleb.setRelatedCode("code of target");
+		roleb.setRelatedName("name of target");
 
 		Role role2b = new Role();
 		role2b.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
-		role2b.setRelatedCode("roleName");
-		role2b.setRelatedName("NCIt");
+		role2b.setRelatedCode("code of target");
+		role2b.setRelatedName("name of target");
 		
 		Role role3b = new Role();
 		role3b.setType("Allele_Has_Activity");
-		role3b.setRelatedCode("roleName");
-		role3b.setRelatedName("NCIt");
+		role3b.setRelatedCode("code of target");
+		role3b.setRelatedName("name of target");
 
 		Role role4b = new Role();
 		role4b.setType("Gene_Is_Biomarker_Type");
-		role4b.setRelatedCode("roleName");
-		role4b.setRelatedName("NCIt");
+		role4b.setRelatedCode("code of target");
+		role4b.setRelatedName("name of target");
 		
 		roles2.add(roleb);
 		roles2.add(role2b);
@@ -2253,23 +2554,23 @@ private List<RestEntity> getRestRoleEntityList() {
 		List<Role> roles3 = new ArrayList<Role>();
 		Role rolec = new Role();
 		rolec.setType("Gene_Found_In_Shoe");
-		rolec.setRelatedCode("roleName");
-		rolec.setRelatedName("NCIt");
+		rolec.setRelatedCode("code of target");
+		rolec.setRelatedName("name of target");
 
 		Role role2c = new Role();
 		role2c.setType("Gene_Found_In_Shoe");
-		role2c.setRelatedCode("roleName");
-		role2c.setRelatedName("NCIt");
+		role2c.setRelatedCode("code of target");
+		role2c.setRelatedName("name of target");
 		
 		Role role3c = new Role();
 		role3c.setType("Gene_Found_In_Shoe");
-		role3c.setRelatedCode("roleName");
-		role3c.setRelatedName("NCIt");
+		role3c.setRelatedCode("code of target");
+		role3c.setRelatedName("name of target");
 
 		Role role4c = new Role();
 		role4c.setType("Gene_Found_In_Shoe");
-		role4c.setRelatedCode("roleName");
-		role4c.setRelatedName("NCIt");
+		role4c.setRelatedCode("code of target");
+		role4c.setRelatedName("name of target");
 		
 		roles3.add(rolec);
 		roles3.add(role2c);
