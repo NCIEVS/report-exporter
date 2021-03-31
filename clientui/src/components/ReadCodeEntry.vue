@@ -70,21 +70,15 @@
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
                 <form>
-                  <div class="form-group">
-                    <label for="downloadFormat">Select format for export</label>
-                    <select v-model="userSelectedFormat"
-                         id="downloadFormat"
-                         class="form-control">
-                      <option
-                         v-for="availableFormat in availableFormats"
-                         :value="availableFormat"
-                         :key="availableFormat.name">
-                         {{ availableFormat.name + ' (' +
-                            availableFormat.extension + ')  ' +
-                            availableFormat.description }}
-                       </option>
-                    </select>
+
+                   <!-- Export format pulldown plugin -->
+                   <div class="form-group">
+                     <export-format
+                        baseURL=this.$baseURL
+                        @formatUpdated= "onFormatUpdated">
+                    </export-format>
                    </div>
+
                 </form>
              </div>
            </div>
@@ -171,10 +165,11 @@
 // Custom input tags
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
-import api from '../api.js';
-import axios from 'axios';
-import {FormWizard, TabContent} from 'vue-form-wizard';
-import 'vue-loading-overlay/dist/vue-loading.css';
+import api from '../api.js'
+import axios from 'axios'
+import {FormWizard, TabContent} from 'vue-form-wizard'
+import 'vue-loading-overlay/dist/vue-loading.css'
+import ExportFormat from './ExportFormat.vue'
 
 export default {
   name: 'read-code-entry',
@@ -185,7 +180,8 @@ export default {
     'tags-input': VoerroTagsInput,
     'vMultiselectListbox': vMultiselectListbox,
     FormWizard,
-    TabContent
+    TabContent,
+    ExportFormat
   },
   metaInfo: {
     title: 'EVS Report Exporter - Read Code',
@@ -199,8 +195,7 @@ export default {
       availableProperties: [],
       selectedProperties: [],
       userSelectedProperyNames: [],
-      availableFormats: [],
-      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format","extension":"json"},
+      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -237,6 +232,10 @@ export default {
 
     onComplete: function() {
       this.downloadFile();
+    },
+
+    onFormatUpdated (updatedFormat) {
+      this.userSelectedFormat = updatedFormat
     },
 
     updateShowSummary() {
@@ -478,11 +477,7 @@ export default {
       // load properties after the page is loaded.
       api.getProperties(this.$baseURL)
           .then((data)=>{this.availableProperties = data;
-        })
-
-      api.getFormats(this.$baseURL)
-          .then((data)=>{this.availableFormats = data;
-       })
+      })
     }
   }
 

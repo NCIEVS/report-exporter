@@ -57,7 +57,7 @@
                   </div>
                 </div>
                 <div class="col">
-                  <label for="usedCodes">Used Concept Codes</label>
+                  <label for="usedCodes">Used concept codes</label>
                   <div class="input-group">
                     <div class="pill-padding" v-for="code in usedCodes" v-bind:key="code">
                       <span class="badge badge-pill badge-primary">{{code}}</span>
@@ -94,21 +94,13 @@
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
                 <form>
+                  <!-- Export format pulldown plugin -->
                   <div class="form-group">
-                    <label for="downloadFormat">Select format for export</label>
-                    <select v-model="userSelectedFormat"
-                         id="downloadFormat"
-                         class="form-control">
-                      <option
-                         v-for="availableFormat in availableFormats"
-                         :value="availableFormat"
-                         :key="availableFormat.name">
-                         {{ availableFormat.name + ' (' +
-                            availableFormat.extension + ')  ' +
-                            availableFormat.description }}
-                       </option>
-                    </select>
-                   </div>
+                    <export-format
+                       baseURL=this.$baseURL
+                       @formatUpdated= "onFormatUpdated">
+                   </export-format>
+                  </div>
                 </form>
              </div>
            </div>
@@ -195,10 +187,11 @@
 // Custom input tags
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
-import api from '../api.js';
-import axios from 'axios';
-import {FormWizard, TabContent} from 'vue-form-wizard';
-import 'vue-loading-overlay/dist/vue-loading.css';
+import api from '../api.js'
+import axios from 'axios'
+import {FormWizard, TabContent} from 'vue-form-wizard'
+import 'vue-loading-overlay/dist/vue-loading.css'
+import ExportFormat from './ExportFormat.vue'
 
 export default {
   name: 'report-code-entry',
@@ -207,7 +200,8 @@ export default {
     'tags-input': VoerroTagsInput,
     'vMultiselectListbox': vMultiselectListbox,
     FormWizard,
-    TabContent
+    TabContent,
+    ExportFormat
   },
   metaInfo: {
     title: 'EVS Report Exporter - Roles',
@@ -223,8 +217,7 @@ export default {
       availableRoles: [],
       selectedRoles: [],
       userSelectedRoleNames: [],
-      availableFormats: [],
-      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format","extension":"json"},
+      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json"},
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -278,6 +271,10 @@ export default {
 
     onComplete: function() {
       this.downloadFile();
+    },
+
+    onFormatUpdated (updatedFormat) {
+      this.userSelectedFormat = updatedFormat
     },
 
     updateUsedConceptCodes() {
