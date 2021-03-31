@@ -8062,7 +8062,7 @@
       "id": "03e30dc3-bb46-4e9e-bff2-78a3dd9854a6",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -8120,13 +8120,6 @@
         ["xpath=//input", "xpath:position"]
       ],
       "value": "${KEY_ENTER}"
-    }, {
-      "id": "843e0492-40b8-4ab3-9e8f-7dad5a8d3bb1",
-      "comment": "",
-      "command": "",
-      "target": "",
-      "targets": [],
-      "value": ""
     }, {
       "id": "954ecc35-708e-47fc-bba6-3f1ea46940f9",
       "comment": "",
@@ -8201,6 +8194,20 @@
         ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
       ],
       "value": ""
+    }, {
+      "id": "c0a8c6d6-0752-497e-ac06-b3af2ae4fd16",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=/html/body/div/div[4]/div/div[2]/div/div[2]/div/div/div[1]/div/div[1]/span",
+      "targets": [],
+      "value": "1"
+    }, {
+      "id": "16b268f1-36ac-449f-be1a-4e3238e26caf",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=/html/body/div/div[4]/div/div[2]/div/div[2]/div/div/div[1]/div/div[2]/ul/li",
+      "targets": [],
+      "value": "C12434:Blood"
     }, {
       "id": "0b9adff1-515d-43af-b56c-44a32628516e",
       "comment": "",

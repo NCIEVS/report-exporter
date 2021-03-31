@@ -3058,6 +3058,457 @@ vars.put(&quot;eid&quot;,hashid);
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Resolve to CSV  Roles " enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-roles/C12434,C18108,C18107,C18106/Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process,Gene_Product_Encoded_By_Gene,Biological_Process_Has_Initiator_Process,Gene_Product_Encoded_By_Gene/CSV/mycsv</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="567247222">concept code,concept name,role,target code,target name</stringProp>
+              <stringProp name="107595188">C12434,Blood,Anatomic_Structure_Is_Physical_Part_Of,C12909,Hematopoietic System</stringProp>
+              <stringProp name="161630196">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C16399,Cell Differentiation Process</stringProp>
+              <stringProp name="826165624">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C18081,Cell Proliferation</stringProp>
+              <stringProp name="-648950308">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C18597,DNA Binding</stringProp>
+              <stringProp name="1830018392">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C25989,Homeostatic Process</stringProp>
+              <stringProp name="799815655">C18108,Steroid Hormone Receptor,Gene_Product_Encoded_By_Gene,C21295,Ligand Binding Protein Gene</stringProp>
+              <stringProp name="-1860387227">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C20139,Ligand Binding</stringProp>
+              <stringProp name="1336166906">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C17770,Maturation</stringProp>
+              <stringProp name="-1266709479">C18108,Steroid Hormone Receptor,Gene_Product_Encoded_By_Gene,C20709,Nuclear Receptor Gene</stringProp>
+              <stringProp name="-1530852065">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C19970,Pattern Formation</stringProp>
+              <stringProp name="1928777319">C18108,Steroid Hormone Receptor,Gene_Product_Encoded_By_Gene,C20103,Receptor Gene</stringProp>
+              <stringProp name="534191191">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C18992,Receptor Signaling</stringProp>
+              <stringProp name="2068696355">C18108,Steroid Hormone Receptor,Gene_Product_Encoded_By_Gene,C20194,Regulatory Gene</stringProp>
+              <stringProp name="-383212156">C18108,Steroid Hormone Receptor,Gene_Product_Encoded_By_Gene,C20420,Transcription Factor Gene</stringProp>
+              <stringProp name="787863749">C18108,Steroid Hormone Receptor,Gene_Product_Encoded_By_Gene,C54362,Transcription Regulation Gene</stringProp>
+              <stringProp name="1123409713">C18108,Steroid Hormone Receptor,Gene_Product_Plays_Role_In_Biological_Process,C19077,Transcriptional Regulation</stringProp>
+              <stringProp name="-1723801037">C18107,Receptor Mediated Endocytosis,Biological_Process_Has_Initiator_Process,C17133,Signal Transduction</stringProp>
+              <stringProp name="-1787560695">C18106,Receptor,Gene_Product_Encoded_By_Gene,C21295,Ligand Binding Protein Gene</stringProp>
+              <stringProp name="-1789320569">C18106,Receptor,Gene_Product_Plays_Role_In_Biological_Process,C20139,Ligand Binding</stringProp>
+              <stringProp name="-1267509495">C18106,Receptor,Gene_Product_Encoded_By_Gene,C20103,Receptor Gene</stringProp>
+              <stringProp name="690003833">C18106,Receptor,Gene_Product_Plays_Role_In_Biological_Process,C18992,Receptor Signaling</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="-972201116">Report Search Parameters:</stringProp>
+              <stringProp name="-1922333019">&quot;|Input:  C12434,C18108,C18107,C18106|&quot;</stringProp>
+              <stringProp name="-1503016833">&quot;|Roles Selected: Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process,Gene_Product_Encoded_By_Gene,Biological_Process_Has_Initiator_Process,Gene_Product_Encoded_By_Gene|&quot;</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Resolve to Tab Del  Roles " enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-roles/C12434,C18108,C18107,C18106/Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process,Gene_Product_Encoded_By_Gene,Biological_Process_Has_Initiator_Process,Gene_Product_Encoded_By_Gene/TABD/mytabd</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-141763556">concept code	concept name	role	target code	target name</stringProp>
+              <stringProp name="517452430">C12434	Blood	Anatomic_Structure_Is_Physical_Part_Of	C12909	Hematopoietic System</stringProp>
+              <stringProp name="1458718388">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C16399	Cell Differentiation Process</stringProp>
+              <stringProp name="2079963192">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C18081	Cell Proliferation</stringProp>
+              <stringProp name="1721857820">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C18597	DNA Binding</stringProp>
+              <stringProp name="2043037336">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C25989	Homeostatic Process</stringProp>
+              <stringProp name="270698471">C18108	Steroid Hormone Receptor	Gene_Product_Encoded_By_Gene	C21295	Ligand Binding Protein Gene</stringProp>
+              <stringProp name="442338597">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C20139	Ligand Binding</stringProp>
+              <stringProp name="-249923398">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C17770	Maturation</stringProp>
+              <stringProp name="2146556953">C18108	Steroid Hormone Receptor	Gene_Product_Encoded_By_Gene	C20709	Nuclear Receptor Gene</stringProp>
+              <stringProp name="-243480993">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C19970	Pattern Formation</stringProp>
+              <stringProp name="-1111941529">C18108	Steroid Hormone Receptor	Gene_Product_Encoded_By_Gene	C20103	Receptor Gene</stringProp>
+              <stringProp name="1787988759">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C18992	Receptor Signaling</stringProp>
+              <stringProp name="515644707">C18108	Steroid Hormone Receptor	Gene_Product_Encoded_By_Gene	C20194	Regulatory Gene</stringProp>
+              <stringProp name="317912452">C18108	Steroid Hormone Receptor	Gene_Product_Encoded_By_Gene	C20420	Transcription Factor Gene</stringProp>
+              <stringProp name="-887609147">C18108	Steroid Hormone Receptor	Gene_Product_Encoded_By_Gene	C54362	Transcription Regulation Gene</stringProp>
+              <stringProp name="1035374065">C18108	Steroid Hormone Receptor	Gene_Product_Plays_Role_In_Biological_Process	C19077	Transcriptional Regulation</stringProp>
+              <stringProp name="2039111577">C18107	Receptor Mediated Endocytosis	Biological_Process_Has_Initiator_Process	C17133	Signal Transduction</stringProp>
+              <stringProp name="458860297">C18106	Receptor	Gene_Product_Encoded_By_Gene	C21295	Ligand Binding Protein Gene</stringProp>
+              <stringProp name="1758219079">C18106	Receptor	Gene_Product_Plays_Role_In_Biological_Process	C20139	Ligand Binding</stringProp>
+              <stringProp name="-953515767">C18106	Receptor	Gene_Product_Encoded_By_Gene	C20103	Receptor Gene</stringProp>
+              <stringProp name="1230071865">C18106	Receptor	Gene_Product_Plays_Role_In_Biological_Process	C18992	Receptor Signaling</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="-972201116">Report Search Parameters:</stringProp>
+              <stringProp name="-1922333019">&quot;|Input:  C12434,C18108,C18107,C18106|&quot;</stringProp>
+              <stringProp name="-1503016833">&quot;|Roles Selected: Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process,Gene_Product_Encoded_By_Gene,Biological_Process_Has_Initiator_Process,Gene_Product_Encoded_By_Gene|&quot;</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Resolve to JSON  Roles " enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-roles/C12434,C18108,C18107,C18106/Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process,Gene_Product_Encoded_By_Gene,Biological_Process_Has_Initiator_Process,Gene_Product_Encoded_By_Gene/JSON/myjson</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1454395658">&quot;entities&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-530306972">&quot;code&quot;: &quot;C12434&quot;,</stringProp>
+              <stringProp name="-1828681667">&quot;name&quot;: &quot;Blood&quot;,</stringProp>
+              <stringProp name="-2034482962">&quot;roles&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-878595011">&quot;type&quot;: &quot;Anatomic_Structure_Is_Physical_Part_Of&quot;,</stringProp>
+              <stringProp name="-488441000">&quot;relatedCode&quot;: &quot;C12909&quot;,</stringProp>
+              <stringProp name="-776628948">&quot;relatedName&quot;: &quot;Hematopoietic System&quot;</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="919158235">&quot;queryCode&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-361388158">&quot;code&quot;: &quot;C18108&quot;,</stringProp>
+              <stringProp name="1059057933">&quot;name&quot;: &quot;Steroid Hormone Receptor&quot;,</stringProp>
+              <stringProp name="-2034482962">&quot;roles&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="-379197403">&quot;relatedCode&quot;: &quot;C16399&quot;,</stringProp>
+              <stringProp name="1706206014">&quot;relatedName&quot;: &quot;Cell Differentiation Process&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="-324747143">&quot;relatedCode&quot;: &quot;C18081&quot;,</stringProp>
+              <stringProp name="1518951142">&quot;relatedName&quot;: &quot;Cell Proliferation&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="-320093981">&quot;relatedCode&quot;: &quot;C18597&quot;,</stringProp>
+              <stringProp name="-1900467532">&quot;relatedName&quot;: &quot;DNA Binding&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="485188462">&quot;relatedCode&quot;: &quot;C25989&quot;,</stringProp>
+              <stringProp name="-877414109">&quot;relatedName&quot;: &quot;Homeostatic Process&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1072236238">&quot;type&quot;: &quot;Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="364233158">&quot;relatedCode&quot;: &quot;C21295&quot;,</stringProp>
+              <stringProp name="-688080720">&quot;relatedName&quot;: &quot;Ligand Binding Protein Gene&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="334505584">&quot;relatedCode&quot;: &quot;C20139&quot;,</stringProp>
+              <stringProp name="-1275897886">&quot;relatedName&quot;: &quot;Ligand Binding&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="-346942399">&quot;relatedCode&quot;: &quot;C17770&quot;,</stringProp>
+              <stringProp name="365767900">&quot;relatedName&quot;: &quot;Maturation&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1072236238">&quot;type&quot;: &quot;Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="339957337">&quot;relatedCode&quot;: &quot;C20709&quot;,</stringProp>
+              <stringProp name="-2124256975">&quot;relatedName&quot;: &quot;Nuclear Receptor Gene&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="-287837055">&quot;relatedCode&quot;: &quot;C19970&quot;,</stringProp>
+              <stringProp name="-21615313">&quot;relatedName&quot;: &quot;Pattern Formation&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1072236238">&quot;type&quot;: &quot;Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="334410445">&quot;relatedCode&quot;: &quot;C20103&quot;,</stringProp>
+              <stringProp name="-970950505">&quot;relatedName&quot;: &quot;Receptor Gene&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="-316404702">&quot;relatedCode&quot;: &quot;C18992&quot;,</stringProp>
+              <stringProp name="271437950">&quot;relatedName&quot;: &quot;Receptor Signaling&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1072236238">&quot;type&quot;: &quot;Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="334679525">&quot;relatedCode&quot;: &quot;C20194&quot;,</stringProp>
+              <stringProp name="799240307">&quot;relatedName&quot;: &quot;Regulatory Gene&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1072236238">&quot;type&quot;: &quot;Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="337237707">&quot;relatedCode&quot;: &quot;C20420&quot;,</stringProp>
+              <stringProp name="-679234216">&quot;relatedName&quot;: &quot;Transcription Factor Gene&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1072236238">&quot;type&quot;: &quot;Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="-1181504377">&quot;relatedCode&quot;: &quot;C54362&quot;,</stringProp>
+              <stringProp name="1139337587">&quot;relatedName&quot;: &quot;Transcription Regulation Gene&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="-296142017">&quot;relatedCode&quot;: &quot;C19077&quot;,</stringProp>
+              <stringProp name="690393351">&quot;relatedName&quot;: &quot;Transcriptional Regulation&quot;</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="919158235">&quot;queryCode&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-361389119">&quot;code&quot;: &quot;C18107&quot;,</stringProp>
+              <stringProp name="-2044069426">&quot;name&quot;: &quot;Receptor Mediated Endocytosis&quot;,</stringProp>
+              <stringProp name="-2034482962">&quot;roles&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-131875188">&quot;type&quot;: &quot;Biological_Process_Has_Initiator_Process&quot;,</stringProp>
+              <stringProp name="-352599806">&quot;relatedCode&quot;: &quot;C17133&quot;,</stringProp>
+              <stringProp name="-1486883494">&quot;relatedName&quot;: &quot;Signal Transduction&quot;</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="919158235">&quot;queryCode&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-361390080">&quot;code&quot;: &quot;C18106&quot;,</stringProp>
+              <stringProp name="725066861">&quot;name&quot;: &quot;Receptor&quot;,</stringProp>
+              <stringProp name="-2034482962">&quot;roles&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1072236238">&quot;type&quot;: &quot;Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="364233158">&quot;relatedCode&quot;: &quot;C21295&quot;,</stringProp>
+              <stringProp name="-688080720">&quot;relatedName&quot;: &quot;Ligand Binding Protein Gene&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="334505584">&quot;relatedCode&quot;: &quot;C20139&quot;,</stringProp>
+              <stringProp name="-1275897886">&quot;relatedName&quot;: &quot;Ligand Binding&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1072236238">&quot;type&quot;: &quot;Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="334410445">&quot;relatedCode&quot;: &quot;C20103&quot;,</stringProp>
+              <stringProp name="-970950505">&quot;relatedName&quot;: &quot;Receptor Gene&quot;</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-377679824">&quot;type&quot;: &quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,</stringProp>
+              <stringProp name="-316404702">&quot;relatedCode&quot;: &quot;C18992&quot;,</stringProp>
+              <stringProp name="271437950">&quot;relatedName&quot;: &quot;Receptor Signaling&quot;</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="919158235">&quot;queryCode&quot;: 0</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="-1956317199">&quot;input&quot;: &quot;C12434,C18108,C18107,C18106&quot;,</stringProp>
+              <stringProp name="1531352407">&quot;propertiesSelected&quot;: &quot;Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process,Gene_Product_Encoded_By_Gene,Biological_Process_Has_Initiator_Process,Gene_Product_Encoded_By_Gene&quot;,</stringProp>
+              <stringProp name="287949017">&quot;hierarchyLevel&quot;: 0</stringProp>
+              <stringProp name="125">}</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Resolve to EXCEL  Roles " enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-roles/C12434,C18108,C18107,C18106/Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process,Gene_Product_Encoded_By_Gene,Biological_Process_Has_Initiator_Process,Gene_Product_Encoded_By_Gene/EXCEL/myexcel</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
