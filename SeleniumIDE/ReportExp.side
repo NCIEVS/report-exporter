@@ -8195,6 +8195,20 @@
       ],
       "value": ""
     }, {
+      "id": "80a3254d-db4a-4d80-816a-7c82a8e9747e",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=/html/body/div/div[4]/div/div[2]/div/div[2]/div/div/div[2]/div/div[1]/span",
+      "targets": [],
+      "value": "1"
+    }, {
+      "id": "1e886a01-7d54-48dd-97c0-b67db59cc545",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=/html/body/div/div[4]/div/div[2]/div/div[2]/div/div/div[2]/div/div[2]/ul/li",
+      "targets": [],
+      "value": "Anatomic_Structure_Is_Physical_Part_Of"
+    }, {
       "id": "c0a8c6d6-0752-497e-ac06-b3af2ae4fd16",
       "comment": "",
       "command": "assertText",
@@ -8240,6 +8254,278 @@
         ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
         ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
       ],
+      "value": ""
+    }, {
+      "id": "89a9226d-2846-40f2-a86a-c3933475a63f",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": " CSV (csv) Comma Separated Value Format "
+    }, {
+      "id": "930a00c3-6bf2-43f3-8df9-f8c9ac7b056e",
+      "comment": "",
+      "command": "click",
+      "target": "css=#read-codes-entry .wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7ce9c805-4bbf-4477-a0dd-a3d4a2f30234",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": " JSON (json) JavaScript Object Notation Format "
+    }, {
+      "id": "621ca983-7c2a-4c57-bef0-87779129592c",
+      "comment": "",
+      "command": "click",
+      "target": "css=#read-codes-entry .wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "95b093eb-2075-48a8-8498-a6a9612312aa",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": " TABD (txt) Tab Delimited Value Format "
+    }, {
+      "id": "586a4d96-d668-476d-a884-51d4537f6bc5",
+      "comment": "",
+      "command": "click",
+      "target": "css=#read-codes-entry .wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ddb29d7b-eb18-4cca-a10a-bc45cc589533",
+    "name": "SurveyNav",
+    "commands": [{
+      "id": "15e200aa-9356-4f68-9cea-1970cb3336a6",
+      "comment": "",
+      "command": "open",
+      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "44d92162-13a7-434a-83d2-f4e690a85a3e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x959",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "87bf4952-142e-47c7-aa8c-bc3c804d9b69",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Feedback",
+      "targets": [
+        ["linkText=Feedback", "linkText"],
+        ["css=#collapsingNavbarSubHeader .nav-item:nth-child(5) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Feedback')]", "xpath:link"],
+        ["xpath=//div[@id='collapsingNavbarSubHeader']/ul/li[5]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//div[2]/nav/div/ul/li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Feedback')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "db03d224-be49-47b9-889d-c41d5e85b491",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//section[@id='modalDescription']/div/div/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//section[@id='modalDescription']/div/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "caf23839-7750-4721-9969-01545614756d",
+      "comment": "",
+      "command": "click",
+      "target": "id=how-would-you-rate-the-ease-of-retrieving-the-desired-data-1-is-difficult-10-is-easy",
+      "targets": [
+        ["id=how-would-you-rate-the-ease-of-retrieving-the-desired-data-1-is-difficult-10-is-easy", "id"],
+        ["css=#how-would-you-rate-the-ease-of-retrieving-the-desired-data-1-is-difficult-10-is-easy", "css:finder"],
+        ["xpath=//select[@id='how-would-you-rate-the-ease-of-retrieving-the-desired-data-1-is-difficult-10-is-easy']", "xpath:attributes"],
+        ["xpath=//div[@id='Features1']/div/fieldset/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b8e09ed6-6076-415d-9040-f9b32c18b154",
+      "comment": "",
+      "command": "select",
+      "target": "id=how-would-you-rate-the-ease-of-retrieving-the-desired-data-1-is-difficult-10-is-easy",
+      "targets": [],
+      "value": "label=5"
+    }, {
+      "id": "200ccbb9-f5a9-46bb-8f20-bc93cff9d575",
+      "comment": "",
+      "command": "click",
+      "target": "id=what-features-would-you-like-to-see-on-this-application",
+      "targets": [
+        ["id=what-features-would-you-like-to-see-on-this-application", "id"],
+        ["css=#what-features-would-you-like-to-see-on-this-application", "css:finder"],
+        ["xpath=//textarea[@id='what-features-would-you-like-to-see-on-this-application']", "xpath:attributes"],
+        ["xpath=//div[@id='Features1']/div/fieldset/div[2]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fc76a4e3-691b-45c5-9be5-3c5d666d7c8b",
+      "comment": "",
+      "command": "type",
+      "target": "id=what-features-would-you-like-to-see-on-this-application",
+      "targets": [
+        ["id=what-features-would-you-like-to-see-on-this-application", "id"],
+        ["css=#what-features-would-you-like-to-see-on-this-application", "css:finder"],
+        ["xpath=//textarea[@id='what-features-would-you-like-to-see-on-this-application']", "xpath:attributes"],
+        ["xpath=//div[@id='Features1']/div/fieldset/div[2]/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Suggesting features"
+    }, {
+      "id": "f75aecc5-96b1-4cf9-8e93-96d63295e3da",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//section[@id='modalDescription']/div/div/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//section[@id='modalDescription']/div/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d46b3d3-0575-4e74-bd58-81c1b079daa9",
+      "comment": "",
+      "command": "click",
+      "target": "id=would-you-like-to-tell-us-about-your-project-to-see-if-we-have-additional-recommendations",
+      "targets": [
+        ["id=would-you-like-to-tell-us-about-your-project-to-see-if-we-have-additional-recommendations", "id"],
+        ["css=#would-you-like-to-tell-us-about-your-project-to-see-if-we-have-additional-recommendations", "css:finder"],
+        ["xpath=//textarea[@id='would-you-like-to-tell-us-about-your-project-to-see-if-we-have-additional-recommendations']", "xpath:attributes"],
+        ["xpath=//div[@id='AdditionalInfo2']/div/fieldset/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//div[3]/div/fieldset/div/div/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "297eb3f8-61d2-4f66-8b25-b7818518f621",
+      "comment": "",
+      "command": "type",
+      "target": "id=would-you-like-to-tell-us-about-your-project-to-see-if-we-have-additional-recommendations",
+      "targets": [
+        ["id=would-you-like-to-tell-us-about-your-project-to-see-if-we-have-additional-recommendations", "id"],
+        ["css=#would-you-like-to-tell-us-about-your-project-to-see-if-we-have-additional-recommendations", "css:finder"],
+        ["xpath=//textarea[@id='would-you-like-to-tell-us-about-your-project-to-see-if-we-have-additional-recommendations']", "xpath:attributes"],
+        ["xpath=//div[@id='AdditionalInfo2']/div/fieldset/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//div[3]/div/fieldset/div/div/textarea", "xpath:position"]
+      ],
+      "value": "making recommendations"
+    }, {
+      "id": "d99b25e9-d61b-4bb1-b380-9698064cb8a9",
+      "comment": "",
+      "command": "click",
+      "target": "id=please-supply-your-bemailb-if-you-would-like-a-personal-response",
+      "targets": [
+        ["id=please-supply-your-bemailb-if-you-would-like-a-personal-response", "id"],
+        ["css=#please-supply-your-bemailb-if-you-would-like-a-personal-response", "css:finder"],
+        ["xpath=//input[@id='please-supply-your-bemailb-if-you-would-like-a-personal-response']", "xpath:attributes"],
+        ["xpath=//div[@id='AdditionalInfo2']/div/fieldset/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a8d333ca-79c6-4c53-a163-23ffdebcc9ce",
+      "comment": "",
+      "command": "type",
+      "target": "id=please-supply-your-bemailb-if-you-would-like-a-personal-response",
+      "targets": [
+        ["id=please-supply-your-bemailb-if-you-would-like-a-personal-response", "id"],
+        ["css=#please-supply-your-bemailb-if-you-would-like-a-personal-response", "css:finder"],
+        ["xpath=//input[@id='please-supply-your-bemailb-if-you-would-like-a-personal-response']", "xpath:attributes"],
+        ["xpath=//div[@id='AdditionalInfo2']/div/fieldset/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "mailme@mightymail.sdu"
+    }, {
+      "id": "3ef53074-dbbf-417a-aa1f-8664ae668f06",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//section[@id='modalDescription']/div/div/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//section[@id='modalDescription']/div/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "23d12ca8-cb89-48a4-aa34-e369a36832a1",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Thanks for taking the survey!",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f7a96989-4e82-4a35-9d9e-84c48a9bf48d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Feedback",
+      "targets": [
+        ["linkText=Feedback", "linkText"],
+        ["css=#collapsingNavbarSubHeader .nav-item:nth-child(5) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Feedback')]", "xpath:link"],
+        ["xpath=//div[@id='collapsingNavbarSubHeader']/ul/li[5]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//div[2]/nav/div/ul/li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Feedback')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f999b9c3-c95f-4920-b8f4-ca6fbf5a3c25",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[3]/div[2]/div/div/footer/button", "xpath:idRelative"],
+        ["xpath=//footer/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Close')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "15067544-1bf1-46c3-8df3-4010b8a92959",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }],
