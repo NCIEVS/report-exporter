@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.nih.nci.evs.report.exporter.model.Rel;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.service.RoleService;
@@ -29,7 +30,7 @@ public class RoleController {
 	  }
 	  
 	  @GetMapping("/sortedroles/{codes}")
-	  public List<Role> getSortedRolesForCodes(@PathVariable String codes) {
+	  public List<Rel> getSortedRolesForCodes(@PathVariable String codes) {
 			return service.getSortedRoles(codes);
 	  }
 	

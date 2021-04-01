@@ -22,4 +22,13 @@ public class FormatUtility {
 				"\r\n" +  "\"|Roles Selected: " + props + "|\"";
 		return appendedQuery;
 	}
+	
+	
+	public String produceDelimitedAssocQueryRecord(String separator, String codes, String props) {
+		String appendedQuery = "\r\n" + "\r\n" + "\r\n" +
+				"\r\n" + "Report Search Parameters: " + 
+				"\r\n" +  "\"|Input:  " + codes + "|\"" +
+				"\r\n" +  "\"|Associations Selected: " + props + "|\"";
+		return appendedQuery;
+	}
 }
