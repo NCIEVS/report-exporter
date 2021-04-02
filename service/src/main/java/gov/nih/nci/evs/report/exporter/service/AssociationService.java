@@ -33,7 +33,7 @@ public class AssociationService {
 		return service.getRestAssociation(code);
 	}
 	
-	public List<Rel> getDistinctWeightedRelsForEntityCodes(String codes, List<? extends Rel> rawRels){
+	public List<Rel> getDistinctWeightedRelsForEntityCodes(List<? extends Rel> rawRels){
 		Hashtable<String,Rel> distinctRels = new Hashtable<String,Rel>();	
 		rawRels.stream().forEach(x -> saveOrUpdateWeightedRels(x, distinctRels));
 		return distinctRels.values().stream().collect(Collectors.toList());
@@ -88,12 +88,12 @@ public class AssociationService {
 		return rels;
 	}
 	
-	public List<? extends Rel> getSortedRels(String codes, List<? extends Rel> rels){
-		return sortRelListByWeight(getDistinctWeightedRelsForEntityCodes(codes, rels));
+	public List<? extends Rel> getSortedRels(List<? extends Rel> rels){
+		return sortRelListByWeight(getDistinctWeightedRelsForEntityCodes(rels));
 	}
 	
 	public List<? extends Rel> getSortedAssociations(String codes){
-		return getSortedRels(codes, getAssociationsForCodes(codes));
+		return getSortedRels(getAssociationsForCodes(codes));
 	}
 
 	public InputStream getChildCSVBytesForRestAssociationParams(String codes, String associations) {

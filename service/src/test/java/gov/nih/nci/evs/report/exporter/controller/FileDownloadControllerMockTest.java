@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.service.AssociationService;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutServiceDeferredWrapper;
@@ -44,6 +45,9 @@ public class FileDownloadControllerMockTest {
 	
 	@MockBean
 	private RoleService roleService;
+	
+	@MockBean
+	private AssociationService assocService;
 	
 	@MockBean
 	private FormattedBranchOutPutService branchoutputservice;
