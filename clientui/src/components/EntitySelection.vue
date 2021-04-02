@@ -18,7 +18,7 @@ checks:
     <label for="tags">Enter NCI Thesaurus concept codes</label>
     <div class="form-group">
         <tags-input element-id="tags"
-          v-model="selectedTags" placeholder="(plugin) Type entity code, then click enter"
+          v-model="selectedTags" placeholder="Type entity code, then click enter"
           :add-tags-on-comma="true"
           :add-tags-on-space="true"
           :add-tags-on-blur="true"
@@ -281,7 +281,7 @@ checks:
         }
         return false;
       },
-      
+
       // removes forward slashes and all kinds of Unicode whitespace characters
       cleanString(string) {
           return string.replace(/[\s/]/g, '')
