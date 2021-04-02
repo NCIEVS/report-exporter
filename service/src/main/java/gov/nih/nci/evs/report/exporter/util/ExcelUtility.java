@@ -16,11 +16,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
 
 public class ExcelUtility extends FormatUtility {
+	
+	enum QUERY_OUTPUT {REGULAR,ROLE,ASSOCIATION}
 	
 
 	
@@ -110,7 +113,7 @@ public class ExcelUtility extends FormatUtility {
 	      cell.setCellStyle(headerCellStyle);
 	      col++;}
 	    
-	    produceQueryRecordExcel(sheet, codes, level, props, i);
+	    produceQueryRecordExcel(sheet, codes, level, props, i, QUERY_OUTPUT.REGULAR);
 
 	   //Setup the output stream for download
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -163,7 +166,61 @@ public class ExcelUtility extends FormatUtility {
 		      }
 		  }
 	    
-	    produceQueryRecordExcel(sheet, codes, 0, roles, i);
+	    produceQueryRecordExcel(sheet, codes, 0, roles, i, QUERY_OUTPUT.ROLE);
+
+	   //Setup the output stream for download
+	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
+	   workbook.write(stream);
+	   workbook.close();
+	   return stream;
+	 }
+	    
+	    
+	    public ByteArrayOutputStream  produceExcelAssociationOutputFromListWithHeading(
+				  List<RestEntity> entities, String associations, String codes) 
+						  throws IOException {
+		   
+		    //Init the workbook for Excel
+		    Workbook workbook = new XSSFWorkbook();
+		    //Init the services to maintain an instance of the prooerty cache
+		    CommonServices services = new CommonServices();
+
+		    Sheet sheet = workbook.createSheet("entities");
+		    //Set up the head configuration
+		    Font headerFont = workbook.createFont();
+		    headerFont.setBold(true);
+		    headerFont.setColor(IndexedColors.BLUE.getIndex());
+		    CellStyle headerCellStyle = workbook.createCellStyle();
+		    headerCellStyle.setFont(headerFont);
+		 
+		    // Row for Header
+		    Row headerRow = sheet.createRow(0);
+		    
+		    //Use the row headers
+		    List<String> fields = services.getAssocHeadings();
+		    int col = 0;
+		    for (String field: fields) {
+		      Cell cell = headerRow.createCell(col);
+		      cell.setCellValue(fields.get(col));
+		      cell.setCellStyle(headerCellStyle);
+		      col++;
+		    }
+		 
+		    //Iterate over the list of RestEntities and their associations to designated rows and columns
+		    int i = 1;
+		    for (RestEntity entity : entities) {
+		      Integer internalIndex = 0;
+		    //Add each property list to the cache noting the position of the property in 
+		    //the cache
+		      List<Association> rElements = entity.getAssociations();
+		      for(Association association:rElements) {
+		      Row row = sheet.createRow(i++);
+		      //Create a set of rows for the static values
+		      services.calculateAndProduceSpacedXLSAssociations(row, association, entity.getCode(), entity.getName(), internalIndex);	  
+		      }
+		  }
+	    
+	    produceQueryRecordExcel(sheet, codes, 0, associations, i, QUERY_OUTPUT.ASSOCIATION);
 
 	   //Setup the output stream for download
 	   ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -221,15 +278,33 @@ public class ExcelUtility extends FormatUtility {
 		   return stream;
 		  }
 	  
-		public void produceQueryRecordExcel(Sheet sheet,String codes, int level, String props, int rowNumber) {
+		public void produceQueryRecordExcel(Sheet sheet,String codes, int level, String props, int rowNumber, QUERY_OUTPUT op) {
 		
 					sheet.createRow(rowNumber++);
 					sheet.createRow(rowNumber++);
 					sheet.createRow(rowNumber++);
 					sheet.createRow(rowNumber++).createCell(0).setCellValue("Report Search Parameters: ");
 					sheet.createRow(rowNumber++).createCell(0).setCellValue("Input:  " + codes );
-					sheet.createRow(rowNumber++).createCell(0).setCellValue("Hierarchy level: " + level);
-					sheet.createRow(rowNumber++).createCell(0).setCellValue("Properties Selected: " + props);
+					
+					switch(op) {
+					
+					case REGULAR:
+						sheet.createRow(rowNumber++).createCell(0).setCellValue("Hierarchy level: " + level);
+						sheet.createRow(rowNumber++).createCell(0).setCellValue("Properties Selected: " + props);
+			            break;
+			        case ROLE:
+						sheet.createRow(rowNumber++).createCell(0).setCellValue("Roles Selected: " + props);
+			            break;
+			        case ASSOCIATION:
+						sheet.createRow(rowNumber++).createCell(0).setCellValue("Associations Selected: " + props);
+				        break;
+			        default:
+						sheet.createRow(rowNumber++).createCell(0).setCellValue("Hierarchy level: " + level);
+						sheet.createRow(rowNumber++).createCell(0).setCellValue("Properties Selected: " + props);
+			            break;
+					
+					}
+
 		}
 
 

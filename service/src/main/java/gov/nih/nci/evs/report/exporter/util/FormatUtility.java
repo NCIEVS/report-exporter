@@ -4,6 +4,7 @@ public class FormatUtility {
 	
 	public final static String[] FIELDS = {"terminology", "code", "name", "parents", "synonyms", "definitions", "Maps_To"};
 	public final static String[] ROLE_FIELDS = {"concept code", "concept name", "role","target code","target name"};
+	public final static String[] ASSOCIATION_FIELDS = {"concept code", "concept name", "association","target code","target name"};
 
 	
 	public String produceDelimitedQueryRecord(String separator, String codes, int level, String props) {

@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.Format;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
@@ -109,12 +110,31 @@ public class CommonServices {
 		return roleEle.stream().collect(Collectors.joining(separator));
 	}
 	
+	public String calculateAndProduceSpacedAssociations(Association assoc, String code, String name, String separator) {
+		ArrayList<String> assocEle = new ArrayList<String>();
+		assocEle.add(code);
+		assocEle.add(name);
+		assocEle.add(assoc.getType());
+		assocEle.add(assoc.getRelatedCode());
+		assocEle.add(assoc.getRelatedName());
+		return assocEle.stream().collect(Collectors.joining(separator));
+	}
+	
 	public Row calculateAndProduceSpacedXLSRoles(Row row, Role role, String code, String name, int internalIndex) {
 		row.createCell(internalIndex++).setCellValue(code);
 		row.createCell(internalIndex++).setCellValue(name);
 		row.createCell(internalIndex++).setCellValue(role.getType());
 		row.createCell(internalIndex++).setCellValue(role.getRelatedCode());
 		row.createCell(internalIndex++).setCellValue(role.getRelatedName());
+		return row;
+	}
+	
+	public Row calculateAndProduceSpacedXLSAssociations(Row row, Association association, String code, String name, int internalIndex) {
+		row.createCell(internalIndex++).setCellValue(code);
+		row.createCell(internalIndex++).setCellValue(name);
+		row.createCell(internalIndex++).setCellValue(association.getType());
+		row.createCell(internalIndex++).setCellValue(association.getRelatedCode());
+		row.createCell(internalIndex++).setCellValue(association.getRelatedName());
 		return row;
 	}
 	
@@ -166,6 +186,11 @@ public class CommonServices {
 	
 	public List<String> getRoleHeadings() {
 		return Stream.of(FormatUtility.ROLE_FIELDS)
+		.collect(Collectors.toList());
+	}
+	
+	public List<String> getAssocHeadings() {
+		return Stream.of(FormatUtility.ASSOCIATION_FIELDS)
 		.collect(Collectors.toList());
 	}
 	
