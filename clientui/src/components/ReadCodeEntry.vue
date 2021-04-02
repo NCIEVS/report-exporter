@@ -19,7 +19,7 @@
               <div class="row justify-content-center">
                  <div class="col-12 col-md-8">
                     <form ref="formSelectCodes">
-                      
+
                       <div class="form-group">
                         <entity-selection
                            :baseURL=this.$baseURL
@@ -233,13 +233,10 @@ export default {
     },
 
     onEntitiesUpdated(updatedTags, updatedEntityCodes, userSelectedProperyNames,userEnteredCodes) {
-      console.log("ENTITES UPDATED")
       this.selectedTags = updatedTags
       this.entityList = updatedEntityCodes
       this.userSelectedProperyNames = userSelectedProperyNames
       this.userEnteredCodes = userEnteredCodes
-
-      //this.updateSelectedConceptCodeDescriptions(this.entityList);
     },
 
     updateShowSummary() {

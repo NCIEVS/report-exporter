@@ -274,7 +274,6 @@ export default {
     },
 
     onEntitiesUpdated(updatedTags, updatedEntityCodes, userSelectedProperyNames,userEnteredCodes) {
-      console.log("ENTITES UPDATED")
       this.selectedTags = updatedTags
       this.entityList = updatedEntityCodes
       this.userSelectedProperyNames = userSelectedProperyNames

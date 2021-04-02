@@ -90,16 +90,12 @@ checks:
       },
 
       onTagRemoved(code) {
-        console.log("onTagRemoved() " + code)
         this.removeTag(code)
         this.updateParent()
       },
 
       removeTag(code) {
         // find and remove the code from the entity list that is to be removed.
-        console.log("Remove code: key " + code.key)
-        console.log("EntityList length " + this.entityList.length)
-
         for (let i = 0; i < Object.keys(this.entityList).length; i++) {
           if (code.key == this.entityList[i].code) {
             this.entityList.splice(i,1)
@@ -110,8 +106,6 @@ checks:
 
       // called when an entity/code is added
       onTagAdded(newCode) {
-        // console.log("Added tag: " + newCode.value),
-
         // Test if the string entered was pasted in - if it has a comma separated
         // list of values
         newCode.value.includes(',') ?
@@ -226,7 +220,6 @@ checks:
                     // The concept code must have roles to be valid
 
                     else if (this.rolesRequired && data[x].roles.length < 1) {
-                      console.log ("rolesRequired = " + this.rolesRequired)
                       //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
                       tempCode =  data[x].code
                       data.splice(x,1)
