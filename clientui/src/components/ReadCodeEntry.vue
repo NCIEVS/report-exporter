@@ -193,7 +193,6 @@ export default {
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
-      multipleEntitiesSplit: [],
       showSummary: true,
       showSummaryText: ''
     }
