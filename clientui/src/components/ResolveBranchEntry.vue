@@ -128,7 +128,7 @@
                    <!-- Export format pulldown plugin -->
                    <div class="form-group">
                      <export-format
-                        baseURL=this.$baseURL
+                        :baseURL=this.$baseURL
                         @formatUpdated= "onFormatUpdated">
                     </export-format>
                    </div>

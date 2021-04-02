@@ -1,3 +1,12 @@
+<!--
+Export Format plugin.  This plugin displays a list of valid formats for
+exporting reports.  These formats are retrieved from the service.
+
+  Plugin input:
+    baseURL: String, URL to the service
+
+-->
+
 <template>
   <div>
     <label for="downloadFormat">Select format for export</label>
@@ -38,13 +47,11 @@
     },
 
     methods: {
-
       getDownloadFormats: function () {
-        api.getFormats(this.$baseURL)
+        api.getFormats(this.baseURL)
            .then((data)=>{this.availableFormats = data;
         })
       },
-
     },
 
     beforeMount() {
