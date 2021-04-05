@@ -167,4 +167,13 @@ public class CodeReadService {
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
+	
+	public AssociationService getAssociationService() {
+		return associationService;
+	}
+
+	public void setAssociationService(AssociationService associationService) {
+		this.associationService = associationService;
+		
+	}
 }

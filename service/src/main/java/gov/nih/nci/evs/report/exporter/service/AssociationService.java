@@ -35,16 +35,8 @@ public class AssociationService {
 	
 	public List<Rel> getDistinctWeightedRelsForEntityCodes(List<? extends Rel> rawRels){
 		Hashtable<String,Rel> distinctRels = new Hashtable<String,Rel>();	
-		rawRels.stream().forEach(x -> saveOrUpdateWeightedRels(x, distinctRels));
+		rawRels.stream().forEach(x -> CommonServices.saveOrUpdateWeightedRels(x, distinctRels));
 		return distinctRels.values().stream().collect(Collectors.toList());
-	}
-	
-	public void saveOrUpdateWeightedRels(Rel rel, Hashtable<String, Rel> wRels) {
-		Rel rStored = wRels.get(rel.getType());
-		rel.setWeight(1);
-		if(rStored == null){wRels.put(rel.getType(), rel);
-		}else {rStored.setWeight(rStored.getWeight() + 1);
-		}
 	}
 	
 	
@@ -80,16 +72,9 @@ public class AssociationService {
 				collect(Collectors.toList());
 	}
 	
-	public List<Rel> sortRelListByWeight(List<Rel> rels){
-		Collections.sort(rels, new Comparator<Rel>() {            @Override
-            public int compare(Rel r1, Rel r2) {
-            return r2.getWeight() - r1.getWeight();
-        }});
-		return rels;
-	}
 	
 	public List<? extends Rel> getSortedRels(List<? extends Rel> rels){
-		return sortRelListByWeight(getDistinctWeightedRelsForEntityCodes(rels));
+		return CommonServices.sortRelListByWeight(getDistinctWeightedRelsForEntityCodes(rels));
 	}
 	
 	public List<? extends Rel> getSortedAssociations(String codes){

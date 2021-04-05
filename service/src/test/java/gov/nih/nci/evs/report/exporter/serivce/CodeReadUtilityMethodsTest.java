@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.service.AssociationService;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.EVSAPIBaseService;
 import gov.nih.nci.evs.report.exporter.service.RoleService;
@@ -38,14 +39,18 @@ class CodeReadUtilityMethodsTest {
 	
 	RoleService roleService;
 	
+	AssociationService associationService;
+	
 
 	@BeforeEach
 	void setUp() throws Exception {
 		crservice = new CodeReadService();
 		service = Mockito.mock(EVSAPIBaseService.class);
 		roleService = Mockito.mock(RoleService.class);
+		associationService = Mockito.mock(AssociationService.class);
 		crservice.setService(service);
 		crservice.setRoleService(roleService);
+		crservice.setAssociationService(associationService);
 		}
 
 	@Test
@@ -56,7 +61,6 @@ class CodeReadUtilityMethodsTest {
 	
 	@Test
 	void testCurationFilterException(){
-		//EVSAPIBaseService spyService = Mockito.spy(EVSAPIBaseService.class);
 		doThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND))
 		.when(service).getEntity( 
 				Mockito.anyString());
@@ -70,8 +74,7 @@ class CodeReadUtilityMethodsTest {
 	}
 	
 	@Test
-	void testCurationFilterRetired(){
-//		EVSAPIBaseService spyService = Mockito.spy(EVSAPIBaseService.class);		
+	void testCurationFilterRetired(){		
 		doReturn(getEntity())
 		.when(service).getEntity(
 				Mockito.anyString());

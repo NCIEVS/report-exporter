@@ -15,10 +15,8 @@ import org.mockito.Mockito;
 
 import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.Rel;
-import gov.nih.nci.evs.report.exporter.model.Role;
-import gov.nih.nci.evs.report.exporter.model.WeightedRel;
 import gov.nih.nci.evs.report.exporter.service.AssociationService;
-import gov.nih.nci.evs.report.exporter.service.RoleService;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 class AssociationServiceTest {
 	
@@ -46,11 +44,11 @@ class AssociationServiceTest {
 		assertTrue(associations.size() == 1);
 		assertEquals(associations.get(association.getType()).getWeight(), 1);
 		assertEquals(associations.get(association1.getType()).getWeight(), 1);
-		service.saveOrUpdateWeightedRels(association, associations);
+		CommonServices.saveOrUpdateWeightedRels(association, associations);
 		assertTrue(associations.size() == 1);
 		assertEquals(associations.get(association.getType()).getWeight(), 2);
 		assertEquals(associations.get(association1.getType()).getWeight(), 2);
-		service.saveOrUpdateWeightedRels(association1, associations);
+		CommonServices.saveOrUpdateWeightedRels(association1, associations);
 		assertTrue(associations.size() == 1);
 		assertEquals(associations.get(association.getType()).getWeight(), 3);
 		assertEquals(associations.get(association1.getType()).getWeight(), 3);
@@ -58,7 +56,7 @@ class AssociationServiceTest {
 		association2.setType("hasSomeAssociationOf");
 		association2.setRelatedCode("3333");
 		association2.setRelatedName("target3");
-		service.saveOrUpdateWeightedRels(association2, associations);
+		CommonServices.saveOrUpdateWeightedRels(association2, associations);
 		assertTrue(associations.size() == 2);
 		assertEquals(associations.get(association.getType()).getWeight(), 3);
 		assertEquals(associations.get(association1.getType()).getWeight(), 3);
@@ -71,14 +69,14 @@ class AssociationServiceTest {
 		association4.setType("hasAssociationOf");
 		association4.setRelatedCode("5555");
 		association4.setRelatedName("target5");
-		service.saveOrUpdateWeightedRels(association3, associations);
+		CommonServices.saveOrUpdateWeightedRels(association3, associations);
 		assertTrue(associations.size() == 2);
 		assertEquals(associations.get(association.getType()).getWeight(), 3);
 		assertEquals(associations.get(association1.getType()).getWeight(), 3);
 		assertEquals(associations.get(association2.getType()).getWeight(), 2);
 		assertEquals(associations.get(association3.getType()).getWeight(), 2);
 		assertEquals(associations.get(association4.getType()).getWeight(), 3);
-		service.saveOrUpdateWeightedRels(association4, associations);
+		CommonServices.saveOrUpdateWeightedRels(association4, associations);
 		assertTrue(associations.size() == 2);
 		assertEquals(associations.get(association.getType()).getWeight(), 4);
 		assertEquals(associations.get(association1.getType()).getWeight(), 4);
@@ -96,7 +94,7 @@ class AssociationServiceTest {
 		.when(mockedAssociationService).getAssociationsForCodes(
 				Mockito.anyString());
 		List<Rel> wAssociations = mockedAssociationService.getDistinctWeightedRelsForEntityCodes( getAssociationList());
-		List<Rel> associations = service.sortRelListByWeight(wAssociations);
+		List<Rel> associations = CommonServices.sortRelListByWeight(wAssociations);
 		assertEquals(associations.size(), 3);
 		assertEquals(associations.stream().filter(x -> x.getType().equals("hasAssociationOf")).findAny().get().getType(), "hasAssociationOf");
 		assertEquals(associations.stream().filter(x -> x.getType().equals("hasAnyAssociationOf")).findAny().get().getType(), "hasAnyAssociationOf");

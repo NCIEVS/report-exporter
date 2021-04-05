@@ -32,18 +32,10 @@ public class RoleService {
 		return service.getRestRole(code);
 	}
 	
-	public List<Rel> getDistinctWeightedRelsForEntityCodes(String codes){
-		Hashtable<String,Rel> distinctRoles = new Hashtable<String,Rel>();	
-		getRolesForCodes(codes).stream().forEach(x -> saveOrUpdateWeightedRels(x, distinctRoles));
-		return distinctRoles.values().stream().collect(Collectors.toList());
-	}
-	
-	public void saveOrUpdateWeightedRels(Rel role, Hashtable<String, Rel> wRoles) {
-		Rel rStored = wRoles.get(role.getType());
-		role.setWeight(1);
-		if(rStored == null){wRoles.put(role.getType(), role);
-		}else {rStored.setWeight(rStored.getWeight() + 1);
-		}
+	public List<Rel> getDistinctWeightedRelsForEntityCodes(List<? extends Rel> rawRels){
+		Hashtable<String,Rel> distinctRels = new Hashtable<String,Rel>();	
+		rawRels.stream().forEach(x -> CommonServices.saveOrUpdateWeightedRels(x, distinctRels));
+		return distinctRels.values().stream().collect(Collectors.toList());
 	}
 	
 	
@@ -79,17 +71,10 @@ public class RoleService {
 				collect(Collectors.toList());
 	}
 	
-	public List<Rel> sortRoleListByWeight(List<Rel> rels){
-		Collections.sort(rels, new Comparator<Rel>() {            @Override
-            public int compare(Rel r1, Rel r2) {
-            return r2.getWeight() - r1.getWeight();
-        }});
-		return rels;
+	public List<? extends Rel> getSortedRoles(String codes){
+		return CommonServices.getSortedRels(getRolesForCodes(codes));
 	}
 	
-	public List<Rel> getSortedRoles(String codes){
-		return sortRoleListByWeight(getDistinctWeightedRelsForEntityCodes(codes));
-	}
 
 	public InputStream getChildCSVBytesForRestRoleParams(String codes, String roles) {
 		List<RestEntity> entities =  filterEntitiesAndRolesForRoles(roles,getRestRoleEntitiesForRoleNode(codes));
