@@ -219,10 +219,6 @@ public class FileDownloadController {
 	@GetMapping(value = "deferred/checkFileForHashFormatResponseEntity/{hash}/{format}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<InputStreamResource> getDeferredResponseEntityResult(@PathVariable String hash,
 			@PathVariable String format, @PathVariable String fileName) {
-//		log.info("Hash for download: " + hash);
-//		log.info("Result wrapper exists? " + TimedEvictionConcurrentMap.getdRHash().containsKey(hash));
-//		log.info("DeferredResult exists? " + (TimedEvictionConcurrentMap.getdRHash().get(hash) != null));
-//		log.info("Result exists? " + TimedEvictionConcurrentMap.getdRHash().get(hash).getResult().hasResult());
 		ByteArrayInputStream in = null;
 		try {
 		 in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash()

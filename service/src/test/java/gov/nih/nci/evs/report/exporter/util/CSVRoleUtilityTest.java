@@ -1,8 +1,11 @@
 package gov.nih.nci.evs.report.exporter.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,7 +55,34 @@ class CSVRoleUtilityTest {
 		roleEntities.add(entity);
 		roleEntities.add(entity1);
 		roleEntities.add(entity2);
-		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
+		String test = utility.produceDelimitedOutputFromListWithHeading(roleEntities, "C000000", "hasRoleOf", ",");
+		String[] strings = StringUtils.split(test,"\n");
+		assertEquals(strings[0],"concept code,concept name,role,target code,target name\r");
+		assertEquals(strings[1],"C000000,Role Source,hasRoleOf,C1111,target1\r");
+		assertEquals(strings[2],"C000000,Role Source,hasAnyRoleOf,C2222,target2\r");
+		assertEquals(strings[3],"C000000,Role Source,hasSomeRoleOf,C3333,target3\r");
+//				+ "C000000,Role Source,hasSomeRoleOf,C4444,target4\r"
+//				+ "C000000,Role Source,hasRoleOf,C5555,target5\r"
+//				+ "C000000,Role Source,hasRoleOf,C6666,target6\r"
+//				+ "C000001,Role Source1,hasRoleOf,C1112,target12\r"
+//				+ "C000001,Role Source1,hasAnyRoleOf,C2223,target23\r"
+//				+ "C000001,Role Source1,hasSomeRoleOf,C3334,target34\r"
+//				+ "C000001,Role Source1,hasSomeRoleOf,C4445,target45\r"
+//				+ "C000001,Role Source1,hasRoleOf,C5556,target56\r"
+//				+ "C000001,Role Source1,hasUnrelatedRol,C6667,target67\r"
+//				+ "C000009,Role Source9,hasRoleOf,C1110,target10\r"
+//				+ "C000009,Role Source9,hasAnyRoleOf,C2221,target21\r"
+//				+ "C000009,Role Source9,hasSomeRoleOf,C3332,target32\r"
+//				+ "C000009,Role Source9,hasSomeRoleOf,C4443,target43\r"
+//				+ "C000009,Role Source9,hasRoleOf,C5554,target54\r"
+//				+ "C000009,Role Source9,hasRoleOf,C6665,target65\r"
+//				+ "\r"
+//				+ "\r"
+//				+ "\r"
+//				+ "Report Search Parameters:\r"
+//				+ "\"|Input:  hasRoleOf|\"\r"
+//				+ "\"|Roles Selected: C000000|\"\r"
+//				);
 	}
 	
 	
@@ -66,6 +96,7 @@ class CSVRoleUtilityTest {
 		role.setRelatedName("target1");
 		String test = services.calculateAndProduceSpacedRoles(role,"C9999", "TestName", ",");
 		System.out.println(test);
+		assertEquals(test, "C9999,TestName,hasRoleOf,1111,target1");
 	}
 
 	
