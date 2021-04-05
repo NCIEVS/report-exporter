@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.RestPropertyMetadata;
@@ -84,6 +85,9 @@ public class EVSAPIBaseService {
 	
 	@Value("${DEFAULT_FROM_EMAIL}")
 	private String defaultEmail;
+
+	@Value("${ASSOCIATIONS}")
+	private String associations;
 	
 	
     
@@ -155,6 +159,17 @@ public class EVSAPIBaseService {
 				.uri(baseURL + code + roles)
 				.retrieve()
 				.bodyToMono(Role[].class)
+				.block()).collect(Collectors.toList());			
+	}
+	
+	public List<Association> getRestAssociation(String code) {	
+
+		return Stream.of(WebClient
+				.create()
+				.get()
+				.uri(baseURL + code + associations)
+				.retrieve()
+				.bodyToMono(Association[].class)
 				.block()).collect(Collectors.toList());			
 	}
 	

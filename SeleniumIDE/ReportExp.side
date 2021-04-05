@@ -8528,6 +8528,121 @@
       "targets": [],
       "value": ""
     }]
+  }, {
+    "id": "c4a8b7f4-1f81-4a0e-ab9d-69a3814fe1bc",
+    "name": "RolesSortingTest",
+    "commands": [{
+      "id": "57a7be63-2ff4-4e10-973e-e289929dfb78",
+      "comment": "",
+      "command": "open",
+      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "96fbdc82-cef5-4e33-93e4-351bfe4a8d23",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x959",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "86ab9cb9-9ce5-41e0-8866-d3cec7b33157",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(3) .align-self-end",
+      "targets": [
+        ["css=.card:nth-child(3) .align-self-end", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div[3]/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/a/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b2e11cbe-5315-4f18-a875-20420ff194a4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforRolesExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f41b3b76-cf0f-4560-82c8-5ef484998d29",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "94418b3c-5259-4488-9885-a420ee5db8b6",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=/html/body/div/div[4]/div/div[1]/div[2]/div[2]/div[1]/div/div/div/div/form/div/div/div[1]/input[1]",
+      "targets": [],
+      "value": "C12434,C18108,C18107,C18106"
+    }, {
+      "id": "bb722c76-9e32-409f-8b91-b693f5209320",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "ffe6e1ff-c91d-46d3-9066-b6d6486250dc",
+      "comment": "",
+      "command": "click",
+      "target": "css=#read-codes-entry .wizard-footer-right .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a6724847-08e5-4663-b48f-c4092516e70a",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "xpath=/html/body/div/div[4]/div/div[1]/div[2]/div[2]/div[2]/div/form/div[3]/div/div[1]/div/div[1]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "9de6836d-69b2-4fe2-b575-0309e0aba6f7",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=/html/body/div/div[4]/div/div[1]/div[2]/div[2]/div[2]/div/form/div[3]/div/div[1]/div/div[1]",
+      "targets": [],
+      "value": "Gene_Product_Plays_Role_In_Biological_Process "
+    }, {
+      "id": "533a520e-2e97-4365-8ac1-35cd512edbe2",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=/html/body/div/div[4]/div/div[1]/div[2]/div[2]/div[2]/div/form/div[3]/div/div[1]/div/div[2]",
+      "targets": [],
+      "value": "Gene_Product_Encoded_By_Gene"
+    }, {
+      "id": "15b548fc-f412-4b0b-8cb2-994fa383bd16",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=/html/body/div/div[4]/div/div[1]/div[2]/div[2]/div[2]/div/form/div[3]/div/div[1]/div/div[10]",
+      "targets": [],
+      "value": "Anatomic_Structure_Is_Physical_Part_Of"
+    }]
   }],
   "suites": [{
     "id": "4788f753-9a11-4c8d-bca4-b6e4d8cf9579",

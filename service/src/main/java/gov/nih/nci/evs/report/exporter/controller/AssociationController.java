@@ -10,28 +10,29 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.nih.nci.evs.report.exporter.model.Rel;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
+import gov.nih.nci.evs.report.exporter.service.AssociationService;
 import gov.nih.nci.evs.report.exporter.service.RoleService;
 
 @RestController
-public class RoleController {
+public class AssociationController {
 	
 	@Autowired
-	RoleService service;
+	AssociationService service;
 	
-	  @GetMapping("/role/{code}")
+	  @GetMapping("/association/{code}")
 	  public RestEntity codeReadRole(@PathVariable String code) {
-			return service.getRestRoleEntityForRoleNode(code);
+			return service.getRestAssociationEntityForRoleNode(code);
 	  }
 	
 
-	  @GetMapping("/roles/{codes}")
+	  @GetMapping("/associations/{codes}")
 	  public List<RestEntity> codeReadRoles(@PathVariable String codes) {
-			return service.getRestRoleEntitiesForRoleNode(codes);
+			return service.getRestRelEntitiesForRelNode(codes);
 	  }
 	  
-	  @GetMapping("/sortedroles/{codes}")
-	  public List<Rel> getSortedRolesForCodes(@PathVariable String codes) {
-			return service.getSortedRoles(codes);
+	  @GetMapping("/sortedassociations/{codes}")
+	  public List<? extends Rel> getSortedRolesForCodes(@PathVariable String codes) {
+			return service.getSortedAssociations(codes);
 	  }
 	
 }

@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,9 +12,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import gov.nih.nci.evs.report.exporter.model.Rel;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
-import gov.nih.nci.evs.report.exporter.model.WeightedRole;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.DelimitedRoleOutputUtility;
 import gov.nih.nci.evs.report.exporter.util.ExcelUtility;
@@ -31,15 +32,16 @@ public class RoleService {
 		return service.getRestRole(code);
 	}
 	
-	public List<WeightedRole> getDistinctWeightedRolesForEntityCodes(String codes){
-		Hashtable<String,WeightedRole> distinctRoles = new Hashtable<String,WeightedRole>();	
-		getRolesForCodes(codes).stream().forEach(x -> saveOrUpdateWeightedRoles(x, distinctRoles));
+	public List<Rel> getDistinctWeightedRelsForEntityCodes(String codes){
+		Hashtable<String,Rel> distinctRoles = new Hashtable<String,Rel>();	
+		getRolesForCodes(codes).stream().forEach(x -> saveOrUpdateWeightedRels(x, distinctRoles));
 		return distinctRoles.values().stream().collect(Collectors.toList());
 	}
 	
-	public void saveOrUpdateWeightedRoles(Role role, Hashtable<String, WeightedRole> wRoles) {
-		WeightedRole rStored = wRoles.get(role.getType());
-		if(rStored == null){wRoles.put(role.getType(), new WeightedRole(role,1));
+	public void saveOrUpdateWeightedRels(Rel role, Hashtable<String, Rel> wRoles) {
+		Rel rStored = wRoles.get(role.getType());
+		role.setWeight(1);
+		if(rStored == null){wRoles.put(role.getType(), role);
 		}else {rStored.setWeight(rStored.getWeight() + 1);
 		}
 	}
@@ -77,13 +79,16 @@ public class RoleService {
 				collect(Collectors.toList());
 	}
 	
-	public List<Role> sortRoleListByWeight(List<WeightedRole> roles){
-		Collections.sort(roles);
-		return roles.stream().map(x -> x.getRole()).collect(Collectors.toList());
+	public List<Rel> sortRoleListByWeight(List<Rel> rels){
+		Collections.sort(rels, new Comparator<Rel>() {            @Override
+            public int compare(Rel r1, Rel r2) {
+            return r2.getWeight() - r1.getWeight();
+        }});
+		return rels;
 	}
 	
-	public List<Role> getSortedRoles(String codes){
-		return sortRoleListByWeight(getDistinctWeightedRolesForEntityCodes(codes));
+	public List<Rel> getSortedRoles(String codes){
+		return sortRoleListByWeight(getDistinctWeightedRelsForEntityCodes(codes));
 	}
 
 	public InputStream getChildCSVBytesForRestRoleParams(String codes, String roles) {

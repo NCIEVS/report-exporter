@@ -4,6 +4,7 @@ public class FormatUtility {
 	
 	public final static String[] FIELDS = {"terminology", "code", "name", "parents", "synonyms", "definitions", "Maps_To"};
 	public final static String[] ROLE_FIELDS = {"concept code", "concept name", "role","target code","target name"};
+	public final static String[] ASSOCIATION_FIELDS = {"concept code", "concept name", "association","target code","target name"};
 
 	
 	public String produceDelimitedQueryRecord(String separator, String codes, int level, String props) {
@@ -20,6 +21,15 @@ public class FormatUtility {
 				"\r\n" + "Report Search Parameters: " + 
 				"\r\n" +  "\"|Input:  " + codes + "|\"" +
 				"\r\n" +  "\"|Roles Selected: " + props + "|\"";
+		return appendedQuery;
+	}
+	
+	
+	public String produceDelimitedAssocQueryRecord(String separator, String codes, String props) {
+		String appendedQuery = "\r\n" + "\r\n" + "\r\n" +
+				"\r\n" + "Report Search Parameters: " + 
+				"\r\n" +  "\"|Input:  " + codes + "|\"" +
+				"\r\n" +  "\"|Associations Selected: " + props + "|\"";
 		return appendedQuery;
 	}
 }
