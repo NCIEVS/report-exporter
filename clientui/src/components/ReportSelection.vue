@@ -73,6 +73,21 @@
           </router-link>
         </div>
       </div>
+
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h5 class="my-0 font-weight-normal"><b>Export Associations</b></h5>
+        </div>
+        <div class="card-body d-flex flex-column">
+          <h3 class="card-title pricing-card-title">Get Concept Roles</h3>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Export entities with assocations and targets</li>
+          </ul>
+          <router-link v-bind:to="'/associations'" class="mt-auto">
+            <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -11,6 +11,8 @@ checks:
     baseURL: String, URL to the service
     rolesRequired: default to false. Determine if concept codes are required to
       have roles.
+    associationsRequired: default to false. Determine if concept codes are required to
+      have associations.
 -->
 
 <template>
@@ -46,7 +48,8 @@ checks:
   export default {
     props: {
       baseURL: { required: true, type: String },
-      rolesRequired: { default: false, type: Boolean }
+      rolesRequired: { default: false, type: Boolean },
+      associationsRequired: { default: false, type: Boolean }
     },
 
     components: {
@@ -217,10 +220,9 @@ checks:
                         position: "left bottom"
                       });
                     }
-                    // The concept code must have roles to be valid
-
-                    else if (this.rolesRequired && data[x].roles.length < 1) {
-                      //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
+                    // Check if the concept code must have roles to be valid
+                    if (this.rolesRequired && data[x].roles.length < 1) {
+                      //console.log("Code: " + data[x].code + " is invalid: NO Associations")
                       tempCode =  data[x].code
                       data.splice(x,1)
 
@@ -235,6 +237,28 @@ checks:
                         group: 'app',
                         title: 'Invalid Concept Code',
                         text: '<b>' +tempCode+'</b> is not valid. Reason: No Roles for this concept code.',
+                        type: 'error',
+                        duration: 6000,
+                        position: "left bottom"
+                      });
+                    }
+                    // Check if the concept code must have associations to be valid
+                    if (this.associationsRequired && data[x].associations.length < 1) {
+                      //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
+                      tempCode =  data[x].code
+                      data.splice(x,1)
+
+                      // need to remove from selectedTags
+                      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                        if (tempCode == this.selectedTags[i].value) {
+                          this.selectedTags.splice(i,1)
+                        }
+                      }
+                      // Display error message for this code
+                      this.$notify({
+                        group: 'app',
+                        title: 'Invalid Concept Code',
+                        text: '<b>' +tempCode+'</b> is not valid. Reason: No Associations for this concept code.',
                         type: 'error',
                         duration: 6000,
                         position: "left bottom"
