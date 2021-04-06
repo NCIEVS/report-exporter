@@ -17,6 +17,7 @@ import ReadCodeEntry from './components/ReadCodeEntry.vue'
 import SearchTermEntry from './components/SearchTermEntry.vue'
 import ResolveBranchEntry from './components/ResolveBranchEntry.vue'
 import Roles from './components/Roles.vue'
+import Associations from './components/Associations.vue'
 
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
@@ -68,6 +69,7 @@ const routes = [
   { path: '/searchTermEntry', component: SearchTermEntry },
   { path: '/resolveBranchEntry', component: ResolveBranchEntry },
   { path: '/roles', component: Roles },
+  { path: '/associations', component: Associations },
   { path: '/about', component: About },
   { path: '/documentation', component: Documentation },
   { path: '/exports', component: Exports },

@@ -5,14 +5,14 @@
     <form-wizard
       @on-complete="onComplete"
       step-size="xs"
-      title="Entity Export"
-      subtitle="Steps to select concept codes, then their properties and export the results"
+      title="Assocations Export"
+      subtitle="Steps to select concept codes, then their associations and export the results"
       finish-button-text="Export"
       nextButtonText="Select Next Option"
       color="#017ebe">
 
       <!-- STEP 1: SELECT CODES -->
-      <tab-content icon="ti-settings" title="Select Concept Codes for Entity Export"
+      <tab-content icon="ti-settings" title="Select Concept Codes for Associations Export"
         :before-change="validateFirstStep">
         <div class="container">
           <div class="container">
@@ -23,7 +23,7 @@
                       <div class="form-group">
                         <entity-selection
                            :baseURL=this.$baseURL
-                           :rolesRequired=false
+                           :associationsRequired=true
                           @entitesUpdated= "onEntitiesUpdated">
                        </entity-selection>
                       </div>
@@ -36,24 +36,48 @@
         </div>
       </tab-content>
 
-      <!-- STEP 2: SELECT PROPERTIES -->
-      <tab-content icon="ti-view-list-alt" title="Select Properties"
-        :before-change="validatePropertyStep">
+      <!-- STEP 2: SELECT ASSOCIATIONS -->
+      <tab-content icon="ti-view-list-alt" title="Select Associations"
+        :before-change="validateAssociationStep">
 
         <div class="container">
           <form>
-            <div class="form-group">
-              <label for="selectedProperties">Select properties to include in the export</label>
-            </div>
-            <div class="form-group">
-              <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
-                  :reduce-display-property="(option) => option.name"
-                  :reduce-value-property="(option) => option.code"
-                  search-input-class="custom-input-class"
-                  search-options-placeholder="Search properties"
-                  selected-options-placeholder="Search selected properties">
-              </v-multiselect-listbox>
-            </div>
+            <div class="row border-bottom concept-container">
+                <div class="col">
+                  <label for="unusedCodes">No associations selected for these concept codes</label>
+                  <div class="input-group" id="unusedCodes">
+                    <div class="pill-padding" v-for="code in unusedCodes" v-bind:key="code">
+                      <span class="badge badge-pill badge-secondary">{{code}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="usedCodes">Used concept codes</label>
+                  <div class="input-group">
+                    <div class="pill-padding" v-for="code in usedCodes" v-bind:key="code">
+                      <span class="badge badge-pill badge-primary">{{code}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group association-select-container">
+                <label for="selectedAssociations">Select associations to include in the export</label>
+              </div>
+              <div class="form-group">
+                <v-multiselect-listbox :key="componentKey" v-model="selectedAssociations" :options="this.availableAssociations"
+                    v-on:change="updateUsedConceptCodes()"
+                    :reduce-display-property="(option) => option.type"
+                    :reduce-value-property="(option) => option.relatedCode"
+                    search-input-class="custom-input-class"
+                    search-options-placeholder="Search associations"
+                    selected-options-placeholder="Search selected associations"
+                    no-options-text="No associations"
+                    selected-no-options-text="No associations selected"
+                    no-options-found-text="No associations found"
+                    no-selected-options-found-text="No selected associations found">
+                </v-multiselect-listbox>
+              </div>
           </form>
         </div>
       </tab-content>
@@ -65,15 +89,13 @@
             <div class="row justify-content-center">
                <div class="col-12 col-md-6">
                 <form>
-
-                   <!-- Export format pulldown plugin -->
-                   <div class="form-group">
-                     <export-format
-                        :baseURL=this.$baseURL
-                        @formatUpdated= "onFormatUpdated">
-                    </export-format>
-                   </div>
-
+                  <!-- Export format pulldown plugin -->
+                  <div class="form-group">
+                    <export-format
+                       :baseURL=this.$baseURL
+                       @formatUpdated= "onFormatUpdated">
+                   </export-format>
+                  </div>
                 </form>
              </div>
            </div>
@@ -117,12 +139,12 @@
               </div>
               <div class="col-sm-4">
                 <div class="card bg-light border-dark mb-3">
-                  <div class="card-header">Selected Properties <span class="badge badge-secondary">{{Object.keys(this.selectedProperties).length}}</span></div>
+                  <div class="card-header">Selected Associations <span class="badge badge-secondary">{{Object.keys(this.selectedAssociations).length}}</span></div>
                   <div class="card-body">
 
-                    <ul class="list-group" id="selectedPropertyList">
-                      <li v-for="selectedProperty in selectedProperties" :key="selectedProperty.code">
-                        {{ selectedProperty.name }}
+                    <ul class="list-group" id="selectedAssociationList">
+                      <li v-for="selectedAssociation in selectedAssociations" :key="selectedAssociation.type">
+                        {{ selectedAssociation.type }}
                       </li>
                     </ul>
                   </div>
@@ -132,7 +154,7 @@
                 <div class="card bg-light border-dark mb-3">
                   <div class="card-header">Selected Export Format</div>
                   <div class="card-body">
-                    <ul class="list-group" id="selectedPropertyList">
+                    <ul class="list-group" id="selectedAssociationList">
                       <li>
                         {{
                             userSelectedFormat.length !== 0 ?
@@ -167,11 +189,10 @@ import ExportFormat from './ExportFormat.vue'
 import EntitySelection from './EntitySelection.vue'
 
 export default {
-  name: 'read-code-entry',
-  props: {
-    msg: String
-  },
+  name: 'report-code-entry',
+
   components: {
+    // 'tags-input': VoerroTagsInput,
     'vMultiselectListbox': vMultiselectListbox,
     FormWizard,
     TabContent,
@@ -179,17 +200,20 @@ export default {
     EntitySelection
   },
   metaInfo: {
-    title: 'EVS Report Exporter - Read Code',
+    title: 'EVS Report Exporter - Associations',
   },
   data(){
     return {
+      componentKey: 0,
       selectedTags: [],
       userEnteredCodes: [],
+      usedCodes: [],
+      unusedCodes: [],
       entityList: [],
-      availableProperties: [],
-      selectedProperties: [],
-      userSelectedProperyNames: [],
-      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
+      availableAssociations: [],
+      selectedAssociations: [],
+      userSelectedAssociationNames: [],
+      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json"},
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -201,21 +225,38 @@ export default {
   methods: {
     gaTrackDownload () {
       // Send Google analytics download event
-      this.$gtag.query('event', "Read Concept Code Download", {
+      this.$gtag.query('event', "Associations Download", {
          'event_category': "Download",
          'event_label': this.userSelectedFormat.name
       })
     },
-
+    forceRerender() {
+      this.componentKey += 1;
+    },
     // Wizard methods
     validateFirstStep() {
       // make sure the user has a code entered
+      if (Object.keys(this.selectedTags).length>0) {
+        this.forceRerender();
+
+        this.selectedItems = []
+        this.availableAssociations = []
+        this.selectedAssociations = []
+        this.userSelectedAssociationNames = []
+        this.usedCodes = [];
+        this.unusedCodes = [];
+
+        // get the Associations based on the codes selected for the next wizard page
+        this.getAssociations()
+        // reset what concept codes are used
+        this.updateUsedConceptCodes()
+      }
       return Object.keys(this.selectedTags).length>0
     },
 
-    validatePropertyStep() {
-      // make sure the user has selected at least one property
-      return Object.keys(this.selectedProperties).length>0
+    validateAssociationStep() {
+      // make sure the user has selected at least one assocation
+      return Object.keys(this.selectedAssociations).length>0
     },
 
     validateExportStep() {
@@ -238,18 +279,59 @@ export default {
       this.userEnteredCodes = userEnteredCodes
     },
 
+    updateUsedConceptCodes() {
+      this.usedCodes = [];
+      this.unusedCodes = [];
+
+      // loop through all concept codes
+      for(let x = this.entityList.length; x >=0; x-- ) {
+        if (this.entityList[x]) {
+          if (this.selectedAssociations.length == 0) {
+            this.unusedCodes.push(this.entityList[x].code);
+          }
+
+          else {
+            // for each concept code, loop through its Associations
+            for(let i = this.selectedAssociations.length; i >=0; i-- ) {
+              if (this.selectedAssociations[i]) {
+                // check if the selected assocation is associated to the concept code
+                // if it is, add concept code
+                const associations = this.entityList[x].associations;
+
+                if (associations.some(item => item.type === this.selectedAssociations[i].type)) {
+                  this.usedCodes.push(this.entityList[x].code);
+                  break;
+                }
+                else if (i == 0) {
+                  this.unusedCodes.push(this.entityList[x].code);
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
     updateShowSummary() {
       this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
       this.showSummary = !this.showSummary;
     },
 
-    setSelectedPropertyNames() {
-      this.userSelectedProperyNames = []
+    setSelectedAssociationNames() {
+      this.userSelectedAssociationNames = []
 
-      for (let i = 0; i < Object.keys(this.selectedProperties).length; i++) {
-        this.userSelectedProperyNames.push(this.selectedProperties[i].name)
+      for (let i = 0; i < Object.keys(this.selectedAssociations).length; i++) {
+        this.userSelectedAssociationNames.push(this.selectedAssociations[i].type)
       }
     },
+
+      getAssociations() {
+        // load Associations for the selected codes
+        api.getAssociations(this.$baseURL, this.userEnteredCodes)
+            .then((data)=>{this.availableAssociations = data;
+          })
+      },
 
       // Determine if the user entered entity code is unique
       isDuplicateTag(newTag){
@@ -281,15 +363,15 @@ export default {
             isFullPage: false,
           });
 
-        // set the user selected tags and properties
-        //this.setSelectedTags()
-        this.setSelectedPropertyNames()
+        // set the user selected tags and Associations
+        // this.setSelectedTags()
+        this.setSelectedAssociationNames()
         this.gaTrackDownload();
 
           axios({
-                url: this.$baseURL + 'download/get-file-for-readCodes/'  +
+                url: this.$baseURL + 'download/get-file-for-resolved-associations/'  +
                     this.userEnteredCodes + '/' +
-                    this.userSelectedProperyNames + '/' +
+                    this.userSelectedAssociationNames + '/' +
                     this.userSelectedFormat.name  + '/'+
                     this.filename + '.' +
                     this.userSelectedFormat.extension,
@@ -318,13 +400,11 @@ export default {
     created() {
       // scroll to the top of the page
       window.scrollTo(0,0);
-
       this.updateShowSummary();
 
-      // load properties after the page is loaded.
-      api.getProperties(this.$baseURL)
-          .then((data)=>{this.availableProperties = data;
-      })
+      api.getFormats(this.$baseURL)
+          .then((data)=>{this.availableFormats = data;
+       })
     }
   }
 
@@ -353,6 +433,16 @@ export default {
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
   color: white;
+}
+
+.concept-container{
+  padding-bottom: 10px;
+}
+.assocation-select-container{
+  padding-top: 10px;
+}
+.pill-padding {
+  padding-right: 2px;
 }
 
 .wizard-btn {

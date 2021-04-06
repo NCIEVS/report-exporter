@@ -34,6 +34,15 @@ const api = {
         })
     },
 
+		getAssociations(baseUrl, codes){
+        return new Promise((resolve)=>{
+            axios.get(baseUrl + 'sortedassociations/' + encodeURIComponent(codes))
+            .then((response) =>{
+            resolve(response.data);
+            })
+        })
+    },
+
     getFormats(baseUrl){
         return new Promise((resolve)=>{
             axios.get(baseUrl + 'download/output-formats')
