@@ -32,7 +32,16 @@ class CSVRoleUtilityTest {
 		entity.setRoles(getRoleList());
 		List<RestEntity> roleEntities = new ArrayList<RestEntity>();
 		roleEntities.add(entity);
-		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
+		String test = utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ",");
+		String[] strings = StringUtils.split(test,"\n");
+		assertEquals(strings[0],"concept code,concept name,role,target code,target name\r");
+		assertEquals(strings[1],"C000000,Role Source,hasRoleOf,C1111,target1\r");
+		assertEquals(strings[2],"C000000,Role Source,hasAnyRoleOf,C2222,target2\r");
+		assertEquals(strings[3],"C000000,Role Source,hasSomeRoleOf,C3333,target3\r");
+		assertEquals(strings[4],"C000000,Role Source,hasSomeRoleOf,C4444,target4\r");
+		assertEquals(strings[5], "C000000,Role Source,hasRoleOf,C5555,target5\r");
+		assertEquals(strings[6],"C000000,Role Source,hasRoleOf,C6666,target6\r");
+		
 	}
 	
 	@Test
@@ -56,7 +65,6 @@ class CSVRoleUtilityTest {
 		roleEntities.add(entity1);
 		roleEntities.add(entity2);
 		String test = utility.produceDelimitedOutputFromListWithHeading(roleEntities, "C000000", "hasRoleOf", ",");
-		System.out.println(test);
 		String[] strings = StringUtils.split(test,"\n");
 		assertEquals(strings[0],"concept code,concept name,role,target code,target name\r");
 		assertEquals(strings[1],"C000000,Role Source,hasRoleOf,C1111,target1\r");
