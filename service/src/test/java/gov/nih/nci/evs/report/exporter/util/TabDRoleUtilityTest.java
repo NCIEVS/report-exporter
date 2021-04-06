@@ -1,8 +1,11 @@
 package gov.nih.nci.evs.report.exporter.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +32,15 @@ class TabDRoleUtilityTest {
 		entity.setRoles(getRoleList());
 		List<RestEntity> roleEntities = new ArrayList<RestEntity>();
 		roleEntities.add(entity);
-		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), "\t"));
+		String test = utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), "\t");
+		String[] strings = StringUtils.split(test,"\n");
+		assertEquals(strings[0],"concept code\tconcept name\trole\ttarget code\ttarget name\r");
+		assertEquals(strings[1],"C000000\tRole Source\thasRoleOf\tC1111\ttarget1\r");
+		assertEquals(strings[2],"C000000\tRole Source\thasAnyRoleOf\tC2222\ttarget2\r");
+		assertEquals(strings[3],"C000000\tRole Source\thasSomeRoleOf\tC3333\ttarget3\r");
+		assertEquals(strings[4],"C000000\tRole Source\thasSomeRoleOf\tC4444\ttarget4\r");
+		assertEquals(strings[5], "C000000\tRole Source\thasRoleOf\tC5555\ttarget5\r");
+		assertEquals(strings[6],"C000000\tRole Source\thasRoleOf\tC6666\ttarget6\r");
 	}
 	
 	@Test
@@ -52,7 +63,33 @@ class TabDRoleUtilityTest {
 		roleEntities.add(entity);
 		roleEntities.add(entity1);
 		roleEntities.add(entity2);
-		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), "\t"));
+		String test = utility.produceDelimitedOutputFromListWithHeading(roleEntities, "C000000", "hasRoleOf", "\t");
+		String[] strings = StringUtils.split(test,"\n");
+		assertEquals(strings[0],"concept code\tconcept name\trole\ttarget code\ttarget name\r");
+		assertEquals(strings[1],"C000000\tRole Source\thasRoleOf\tC1111\ttarget1\r");
+		assertEquals(strings[2],"C000000\tRole Source\thasAnyRoleOf\tC2222\ttarget2\r");
+		assertEquals(strings[3],"C000000\tRole Source\thasSomeRoleOf\tC3333\ttarget3\r");
+		assertEquals(strings[4],"C000000\tRole Source\thasSomeRoleOf\tC4444\ttarget4\r");
+		assertEquals(strings[5], "C000000\tRole Source\thasRoleOf\tC5555\ttarget5\r");
+		assertEquals(strings[6],"C000000\tRole Source\thasRoleOf\tC6666\ttarget6\r");
+		assertEquals(strings[7],"C000001\tRole Source1\thasRoleOf\tC1112\ttarget12\r");
+		assertEquals(strings[8],"C000001\tRole Source1\thasAnyRoleOf\tC2223\ttarget23\r");
+		assertEquals(strings[9],"C000001\tRole Source1\thasSomeRoleOf\tC3334\ttarget34\r");
+		assertEquals(strings[10],"C000001\tRole Source1\thasSomeRoleOf\tC4445\ttarget45\r");
+		assertEquals(strings[11],"C000001\tRole Source1\thasRoleOf\tC5556\ttarget56\r");
+		assertEquals(strings[12],"C000001\tRole Source1\thasUnrelatedRol\tC6667\ttarget67\r");
+		assertEquals(strings[13],"C000009\tRole Source9\thasRoleOf\tC1110\ttarget10\r");
+		assertEquals(strings[14],"C000009\tRole Source9\thasAnyRoleOf\tC2221\ttarget21\r");
+		assertEquals(strings[15],"C000009\tRole Source9\thasSomeRoleOf\tC3332\ttarget32\r");
+		assertEquals(strings[16],"C000009\tRole Source9\thasSomeRoleOf\tC4443\ttarget43\r");
+		assertEquals(strings[17],"C000009\tRole Source9\thasRoleOf\tC5554\ttarget54\r");
+		assertEquals(strings[18],"C000009\tRole Source9\thasRoleOf\tC6665\ttarget65\r");
+		assertEquals(strings[19],"\r");
+		assertEquals(strings[20],"\r");
+		assertEquals(strings[21],"\r");
+		assertEquals(strings[22],"Report Search Parameters: \r");
+		assertEquals(strings[23],"\"|Input:  hasRoleOf|\"\r");
+		assertEquals(strings[24],"\"|Roles Selected: C000000|\"");
 	}
 	
 	
@@ -65,7 +102,8 @@ class TabDRoleUtilityTest {
 		role.setRelatedCode("1111");
 		role.setRelatedName("target1");
 		String test = services.calculateAndProduceSpacedRoles(role,"C9999", "TestName", "\t");
-		System.out.println(test);
+		assertEquals(test, "C9999\tTestName\thasRoleOf\t1111\ttarget1");
+
 	}
 
 	
