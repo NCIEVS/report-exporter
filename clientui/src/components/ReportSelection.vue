@@ -79,7 +79,7 @@
           <h5 class="my-0 font-weight-normal"><b>Export Associations</b></h5>
         </div>
         <div class="card-body d-flex flex-column">
-          <h3 class="card-title pricing-card-title">Get Concept Roles</h3>
+          <h3 class="card-title pricing-card-title">Get Concept Associations</h3>
           <ul class="list-unstyled mt-3 mb-4">
             <li>Export entities with assocations and targets</li>
           </ul>
