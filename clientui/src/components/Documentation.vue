@@ -442,7 +442,7 @@
                                     </p>
                                     <p>
                                         Concept codes can also be copied from a list of codes that are comma separated.
-                                        <br>For example, <strong>C1909, C12434, C61410, C3909</strong>
+                                        <br>For example, <strong>C1909, C12434, C149359</strong>
                                     </p>
                                     <p>
                                       If the concept code doesn't have any associations, then the concept code will be removed and a
