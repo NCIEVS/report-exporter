@@ -1,10 +1,8 @@
 package gov.nih.nci.evs.report.exporter.util;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +16,6 @@ import gov.nih.nci.evs.report.exporter.model.Qualifier;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
-import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 import gov.nih.nci.evs.report.exporter.service.BranchResolutionService;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 

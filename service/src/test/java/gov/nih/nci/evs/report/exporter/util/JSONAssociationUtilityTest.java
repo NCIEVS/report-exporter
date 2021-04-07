@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.google.gson.GsonBuilder;
@@ -18,11 +17,9 @@ import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.ExporterQueryResponse;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyMap;
-import gov.nih.nci.evs.report.exporter.model.Qualifier;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
-import gov.nih.nci.evs.report.exporter.service.RoleService;
 
 class JSONAssociationUtilityTest {
 	
@@ -30,14 +27,7 @@ class JSONAssociationUtilityTest {
 	String roles = "Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process";
 	int level = 0;
 	
-	private RoleService service;
 	FormattedOutputService ouputService;
-
-	@BeforeEach
-	void setUp() throws Exception {
-		service = new RoleService();
-		
-	}
 	
 	@Test 
 	void testAssociations(){
