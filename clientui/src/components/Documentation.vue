@@ -333,7 +333,11 @@
                               <div class="collapse" id="accordion-tab-4-content-4" aria-labelledby="accordion-tab-4-heading-4" data-parent="#accordion-tab-4">
                                   <div class="card-body">
                                     <p>
-                                      TBD Answer
+                                      Roles are ranked and displayed by weight which is determined by the
+                                      total number of instances used by the concept entity or set of entities.
+                                      This sum is not by a the number of concepts containing the role but the total number
+                                      contained by all entities.  The roles are ranked and displayed in descending
+                                      order based on this total sum.
                                     </p>
                                   </div>
                               </div>
@@ -349,7 +353,8 @@
                               <div class="collapse" id="accordion-tab-4-content-5" aria-labelledby="accordion-tab-4-heading-5" data-parent="#accordion-tab-4">
                                   <div class="card-body">
                                     <p>
-                                      TBD Inherited Answer
+                                      Roles that are inherited by a given concept are displayed along with local role instances.
+                                      There is no current distinction between roles that are inherited and roles that are not.
                                     </p>
                                   </div>
                               </div>
@@ -499,12 +504,16 @@
                               <div class="collapse" id="accordion-tab-5-content-4" aria-labelledby="accordion-tab-5-heading-4" data-parent="#accordion-tab-5">
                                   <div class="card-body">
                                     <p>
-                                      TBD Answer
+                                      Associations are ranked and displayed by weight which is determined by the
+                                      total number of instances used by the concept entity or set of entities.
+                                      This sum is not by a the number of concepts containing the association but the total number
+                                      contained by all entities.  The associations are ranked and displayed in descending
+                                      order based on this total sum.
                                     </p>
                                   </div>
                               </div>
                           </div>
-                          <div class="card">
+                          <!--div class="card">
                               <div class="card-header" id="accordion-tab-5-heading-5">
                                   <h5>
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-5" aria-expanded="false" aria-controls="accordion-tab-5-content-5">
@@ -519,7 +528,7 @@
                                     </p>
                                   </div>
                               </div>
-                          </div>
+                          </div-->
 
                           <div class="card">
                               <div class="card-header" id="accordion-tab-5-heading-6">
