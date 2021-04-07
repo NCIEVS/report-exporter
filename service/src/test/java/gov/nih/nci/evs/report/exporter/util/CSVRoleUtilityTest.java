@@ -1,8 +1,11 @@
 package gov.nih.nci.evs.report.exporter.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +32,16 @@ class CSVRoleUtilityTest {
 		entity.setRoles(getRoleList());
 		List<RestEntity> roleEntities = new ArrayList<RestEntity>();
 		roleEntities.add(entity);
-		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
+		String test = utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ",");
+		String[] strings = StringUtils.split(test,"\n");
+		assertEquals(strings[0],"concept code,concept name,role,target code,target name\r");
+		assertEquals(strings[1],"C000000,Role Source,hasRoleOf,C1111,target1\r");
+		assertEquals(strings[2],"C000000,Role Source,hasAnyRoleOf,C2222,target2\r");
+		assertEquals(strings[3],"C000000,Role Source,hasSomeRoleOf,C3333,target3\r");
+		assertEquals(strings[4],"C000000,Role Source,hasSomeRoleOf,C4444,target4\r");
+		assertEquals(strings[5], "C000000,Role Source,hasRoleOf,C5555,target5\r");
+		assertEquals(strings[6],"C000000,Role Source,hasRoleOf,C6666,target6\r");
+		
 	}
 	
 	@Test
@@ -52,7 +64,34 @@ class CSVRoleUtilityTest {
 		roleEntities.add(entity);
 		roleEntities.add(entity1);
 		roleEntities.add(entity2);
-		System.out.println(utility.produceDelimitedOutputFromListWithHeading(roleEntities, entity.getCode(), entity.getName(), ","));
+		String test = utility.produceDelimitedOutputFromListWithHeading(roleEntities, "C000000", "hasRoleOf", ",");
+		String[] strings = StringUtils.split(test,"\n");
+		assertEquals(strings[0],"concept code,concept name,role,target code,target name\r");
+		assertEquals(strings[1],"C000000,Role Source,hasRoleOf,C1111,target1\r");
+		assertEquals(strings[2],"C000000,Role Source,hasAnyRoleOf,C2222,target2\r");
+		assertEquals(strings[3],"C000000,Role Source,hasSomeRoleOf,C3333,target3\r");
+		assertEquals(strings[4],"C000000,Role Source,hasSomeRoleOf,C4444,target4\r");
+		assertEquals(strings[5], "C000000,Role Source,hasRoleOf,C5555,target5\r");
+		assertEquals(strings[6],"C000000,Role Source,hasRoleOf,C6666,target6\r");
+		assertEquals(strings[7],"C000001,Role Source1,hasRoleOf,C1112,target12\r");
+		assertEquals(strings[8],"C000001,Role Source1,hasAnyRoleOf,C2223,target23\r");
+		assertEquals(strings[9],"C000001,Role Source1,hasSomeRoleOf,C3334,target34\r");
+		assertEquals(strings[10],"C000001,Role Source1,hasSomeRoleOf,C4445,target45\r");
+		assertEquals(strings[11],"C000001,Role Source1,hasRoleOf,C5556,target56\r");
+		assertEquals(strings[12],"C000001,Role Source1,hasUnrelatedRol,C6667,target67\r");
+		assertEquals(strings[13],"C000009,Role Source9,hasRoleOf,C1110,target10\r");
+		assertEquals(strings[14],"C000009,Role Source9,hasAnyRoleOf,C2221,target21\r");
+		assertEquals(strings[15],"C000009,Role Source9,hasSomeRoleOf,C3332,target32\r");
+		assertEquals(strings[16],"C000009,Role Source9,hasSomeRoleOf,C4443,target43\r");
+		assertEquals(strings[17],"C000009,Role Source9,hasRoleOf,C5554,target54\r");
+		assertEquals(strings[18],"C000009,Role Source9,hasRoleOf,C6665,target65\r");
+		assertEquals(strings[19],"\r");
+		assertEquals(strings[20],"\r");
+		assertEquals(strings[21],"\r");
+		assertEquals(strings[22],"Report Search Parameters: \r");
+		assertEquals(strings[23],"\"|Input:  hasRoleOf|\"\r");
+		assertEquals(strings[24],"\"|Roles Selected: C000000|\"");
+
 	}
 	
 	
@@ -66,6 +105,7 @@ class CSVRoleUtilityTest {
 		role.setRelatedName("target1");
 		String test = services.calculateAndProduceSpacedRoles(role,"C9999", "TestName", ",");
 		System.out.println(test);
+		assertEquals(test, "C9999,TestName,hasRoleOf,1111,target1");
 	}
 
 	

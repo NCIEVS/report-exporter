@@ -30,7 +30,7 @@ public class RoleController {
 	  }
 	  
 	  @GetMapping("/sortedroles/{codes}")
-	  public List<Rel> getSortedRolesForCodes(@PathVariable String codes) {
+	  public List<? extends Rel> getSortedRolesForCodes(@PathVariable String codes) {
 			return service.getSortedRoles(codes);
 	  }
 	

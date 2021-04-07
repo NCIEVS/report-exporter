@@ -19,21 +19,21 @@ import org.junit.jupiter.api.Test;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.Definition;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyMap;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
-import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 
-class EXELUtilityRoleTest {
+class EXECLUtilityAssociationTest {
 	
 	ExcelUtility util;
 	
 	
 	String excelOutLine1 = "concept code,concept name,type,target name,target code";
 	
-	String roles = "Chemical_Or_Drug_Has_Mechanism_Of_Action,Allele_Has_Activity,Gene_Associated_With_Disease,Procedure_Has_Target_Disease,GGene_Is_Biomarker_Type,Gene_Found_In_Shoe";
+	String associations = "Chemical_Or_Drug_Has_Mechanism_Of_Action,Allele_Has_Activity,Gene_Associated_With_Disease,Procedure_Has_Target_Disease,GGene_Is_Biomarker_Type,Gene_Found_In_Shoe";
 	
 
 	Workbook wb;
@@ -50,13 +50,13 @@ class EXELUtilityRoleTest {
 
 	@Test
 	void testProduceOutputFromListWithHeading() throws IOException {
-		assertNotNull(util.produceExcelRoleOutputFromListWithHeading(getRestRoleEntityList(), roles, "C123456"));
+		assertNotNull(util.produceExcelAssociationOutputFromListWithHeading(getRestAssociationEntityList(), associations, "C123456"));
 	}
 	
 	@Test
 	void testProduceOutputFromListWithHeadingStreamedToPOIObject() throws IOException {
 
-		ByteArrayOutputStream stream = util.produceExcelRoleOutputFromListWithHeading(getRestRoleEntityList(), roles, "C123456");
+		ByteArrayOutputStream stream = util.produceExcelAssociationOutputFromListWithHeading(getRestAssociationEntityList(), associations, "C123456");
 
 		 Workbook workbook = new XSSFWorkbook((new ByteArrayInputStream(stream.toByteArray())));
 		
@@ -106,7 +106,7 @@ class EXELUtilityRoleTest {
 			
 			String header3 = headerRow.getCell(2).getStringCellValue();
 			String cell3 = row1.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cell3,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
 			
 			String header4 = headerRow.getCell(3).getStringCellValue();
@@ -130,7 +130,7 @@ class EXELUtilityRoleTest {
 			assertEquals(cell1a,"Myent");
 			
 			String cell2a = row2.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cell2a,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
 			
 
@@ -155,7 +155,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cell2b = row3.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cell2b,"Allele_Has_Activity");
 			
 
@@ -179,7 +179,7 @@ class EXELUtilityRoleTest {
 			assertEquals(cell1c,"Myent");
 			
 			String cell2c = row4.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cell2c,"Gene_Associated_With_Disease");
 			
 			String cell3c = row4.getCell(3).getStringCellValue();	
@@ -204,7 +204,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cell3x = row5.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cell3x,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
 			
 
@@ -231,7 +231,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cell2z = row6.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cell2z,"Allele_Has_Activity");
 			
 
@@ -257,7 +257,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cell2y = row7.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cell2y,"Gene_Associated_With_Disease");
 			
 
@@ -283,7 +283,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cell2w = row8.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cell2w,"Procedure_Has_Target_Disease");
 			
 
@@ -309,7 +309,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cellc = row9.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cellc,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
 			
 
@@ -333,7 +333,7 @@ class EXELUtilityRoleTest {
 			assertEquals(cellg,"My9");
 			
 			String cellh = row10.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cellh,"Chemical_Or_Drug_Has_Mechanism_Of_Action");
 			
 
@@ -358,7 +358,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cellm = row11.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cellm,"Allele_Has_Activity");
 			
 
@@ -382,7 +382,7 @@ class EXELUtilityRoleTest {
 			assertEquals(cellq,"My9");
 			
 			String cellr = row12.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cellr,"Gene_Is_Biomarker_Type");
 			
 			String cell = row12.getCell(3).getStringCellValue();	
@@ -405,7 +405,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cellc1 = row13.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cellc1,"Gene_Found_In_Shoe");
 			
 
@@ -429,7 +429,7 @@ class EXELUtilityRoleTest {
 			assertEquals(cellg1,"My2");
 			
 			String cellh1 = row14.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cellh1,"Gene_Found_In_Shoe");
 			
 
@@ -454,7 +454,7 @@ class EXELUtilityRoleTest {
 			
 
 			String cellm1 = row15.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cellm1,"Gene_Found_In_Shoe");
 			
 
@@ -478,7 +478,7 @@ class EXELUtilityRoleTest {
 			assertEquals(cellq1,"My2");
 			
 			String cellr1 = row16.getCell(2).getStringCellValue();	
-			assertEquals(header3,"role"); 
+			assertEquals(header3,"association"); 
 			assertEquals(cellr1,"Gene_Found_In_Shoe");
 			
 			String cellnn1 = row16.getCell(3).getStringCellValue();	
@@ -496,41 +496,41 @@ class EXELUtilityRoleTest {
 	@Test
 //	
 	
-private List<RestEntity> getRestRoleEntityList() {
+private List<RestEntity> getRestAssociationEntityList() {
 		
-		//Configure an entity with roles
+		//Configure an entity with associations
 		List<RestEntity> list = new ArrayList<RestEntity>();
 		RestEntity ent = new RestEntity();
 		ent.setCode("C123234");
 		ent.setName("Myent");
 		ent.setTerminology("ncit");
 		
-		List<Role> roles = new ArrayList<Role>();
-		Role role = new Role();
-		role.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
-		role.setRelatedCode("code of target");
-		role.setRelatedName("name of target");
+		List<Association> associations = new ArrayList<Association>();
+		Association association = new Association();
+		association.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
+		association.setRelatedCode("code of target");
+		association.setRelatedName("name of target");
 
-		Role role2 = new Role();
-		role2.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
-		role2.setRelatedCode("code of target");
-		role2.setRelatedName("name of target");
+		Association association2 = new Association();
+		association2.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
+		association2.setRelatedCode("code of target");
+		association2.setRelatedName("name of target");
 		
-		Role role3 = new Role();
-		role3.setType("Allele_Has_Activity");
-		role3.setRelatedCode("code of target");
-		role3.setRelatedName("name of target");
+		Association association3 = new Association();
+		association3.setType("Allele_Has_Activity");
+		association3.setRelatedCode("code of target");
+		association3.setRelatedName("name of target");
 
-		Role role4 = new Role();
-		role4.setType("Gene_Associated_With_Disease");
-		role4.setRelatedCode("code of target");
-		role4.setRelatedName("name of target");
+		Association association4 = new Association();
+		association4.setType("Gene_Associated_With_Disease");
+		association4.setRelatedCode("code of target");
+		association4.setRelatedName("name of target");
 		
-		roles.add(role);
-		roles.add(role2);
-		roles.add(role3);
-		roles.add(role4);
-		ent.setRoles(roles);
+		associations.add(association);
+		associations.add(association2);
+		associations.add(association3);
+		associations.add(association4);
+		ent.setAssociations(associations);
 		
 		List<Definition> defs = new ArrayList<Definition>();
 		Definition def = new Definition();
@@ -559,41 +559,41 @@ private List<RestEntity> getRestRoleEntityList() {
 		props.add(prop2);
 		ent.setProperties(props);
 		
-		//Configure an entity with roles
+		//Configure an entity with associations
 		RestEntity ent1 = new RestEntity();
 		ent1.setCode("C000000");
 		ent1.setName("0ent");
 		ent1.setTerminology("ncit");
 
-		List<Role> roles1 = new ArrayList<Role>();
-		Role rolea = new Role();
-		rolea.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
-		rolea.setRelatedCode("code of target");
-		rolea.setRelatedName("name of target");
+		List<Association> associations1 = new ArrayList<Association>();
+		Association associationa = new Association();
+		associationa.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
+		associationa.setRelatedCode("code of target");
+		associationa.setRelatedName("name of target");
 
-		Role role2a = new Role();
-		role2a.setType("Allele_Has_Activity");
-		role2a.setRelatedCode("code of target");
-		role2a.setRelatedName("name of target");
+		Association association2a = new Association();
+		association2a.setType("Allele_Has_Activity");
+		association2a.setRelatedCode("code of target");
+		association2a.setRelatedName("name of target");
 		
-		Role role3a = new Role();
-		role3a.setType("Gene_Associated_With_Disease");
-		role3a.setRelatedCode("code of target");
-		role3a.setRelatedName("name of target");
+		Association association3a = new Association();
+		association3a.setType("Gene_Associated_With_Disease");
+		association3a.setRelatedCode("code of target");
+		association3a.setRelatedName("name of target");
 
-		Role role4a = new Role();
-		role4a.setType("Procedure_Has_Target_Disease");
-		role4a.setRelatedCode("code of target");
-		role4a.setRelatedName("name of target");
+		Association association4a = new Association();
+		association4a.setType("Procedure_Has_Target_Disease");
+		association4a.setRelatedCode("code of target");
+		association4a.setRelatedName("name of target");
 		
-		roles1.add(rolea);
-		roles1.add(role2a);
-		roles1.add(role3a);
-		roles1.add(role4a);
-		ent1.setRoles(roles1);
+		associations1.add(associationa);
+		associations1.add(association2a);
+		associations1.add(association3a);
+		associations1.add(association4a);
+		ent1.setAssociations(associations1);
 		
 		
-		//Configure an entity with roles
+		//Configure an entity with associations
 		RestEntity ent9 = new RestEntity();
 		ent9.setCode("C999999");
 		ent9.setName("My9");
@@ -613,34 +613,34 @@ private List<RestEntity> getRestRoleEntityList() {
 		props9.add(prop39);
 		ent9.setProperties(props9);
 		
-		List<Role> roles2 = new ArrayList<Role>();
-		Role roleb = new Role();
-		roleb.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
-		roleb.setRelatedCode("code of target");
-		roleb.setRelatedName("name of target");
+		List<Association> associations2 = new ArrayList<Association>();
+		Association associationb = new Association();
+		associationb.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
+		associationb.setRelatedCode("code of target");
+		associationb.setRelatedName("name of target");
 
-		Role role2b = new Role();
-		role2b.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
-		role2b.setRelatedCode("code of target");
-		role2b.setRelatedName("name of target");
+		Association association2b = new Association();
+		association2b.setType("Chemical_Or_Drug_Has_Mechanism_Of_Action");
+		association2b.setRelatedCode("code of target");
+		association2b.setRelatedName("name of target");
 		
-		Role role3b = new Role();
-		role3b.setType("Allele_Has_Activity");
-		role3b.setRelatedCode("code of target");
-		role3b.setRelatedName("name of target");
+		Association association3b = new Association();
+		association3b.setType("Allele_Has_Activity");
+		association3b.setRelatedCode("code of target");
+		association3b.setRelatedName("name of target");
 
-		Role role4b = new Role();
-		role4b.setType("Gene_Is_Biomarker_Type");
-		role4b.setRelatedCode("code of target");
-		role4b.setRelatedName("name of target");
+		Association association4b = new Association();
+		association4b.setType("Gene_Is_Biomarker_Type");
+		association4b.setRelatedCode("code of target");
+		association4b.setRelatedName("name of target");
 		
-		roles2.add(roleb);
-		roles2.add(role2b);
-		roles2.add(role3b);
-		roles2.add(role4b);
-		ent9.setRoles(roles2);
+		associations2.add(associationb);
+		associations2.add(association2b);
+		associations2.add(association3b);
+		associations2.add(association4b);
+		ent9.setAssociations(associations2);
 		
-		//Configure an entity with roles
+		//Configure an entity with associations
 		RestEntity ent2 = new RestEntity();
 		ent2.setCode("C2222");
 		ent2.setName("My2");
@@ -688,32 +688,32 @@ private List<RestEntity> getRestRoleEntityList() {
 		
 		ent2.setMaps(maps);
 		
-		List<Role> roles3 = new ArrayList<Role>();
-		Role rolec = new Role();
-		rolec.setType("Gene_Found_In_Shoe");
-		rolec.setRelatedCode("code of target");
-		rolec.setRelatedName("name of target");
+		List<Association> associations3 = new ArrayList<Association>();
+		Association associationc = new Association();
+		associationc.setType("Gene_Found_In_Shoe");
+		associationc.setRelatedCode("code of target");
+		associationc.setRelatedName("name of target");
 
-		Role role2c = new Role();
-		role2c.setType("Gene_Found_In_Shoe");
-		role2c.setRelatedCode("code of target");
-		role2c.setRelatedName("name of target");
+		Association association2c = new Association();
+		association2c.setType("Gene_Found_In_Shoe");
+		association2c.setRelatedCode("code of target");
+		association2c.setRelatedName("name of target");
 		
-		Role role3c = new Role();
-		role3c.setType("Gene_Found_In_Shoe");
-		role3c.setRelatedCode("code of target");
-		role3c.setRelatedName("name of target");
+		Association association3c = new Association();
+		association3c.setType("Gene_Found_In_Shoe");
+		association3c.setRelatedCode("code of target");
+		association3c.setRelatedName("name of target");
 
-		Role role4c = new Role();
-		role4c.setType("Gene_Found_In_Shoe");
-		role4c.setRelatedCode("code of target");
-		role4c.setRelatedName("name of target");
+		Association association4c = new Association();
+		association4c.setType("Gene_Found_In_Shoe");
+		association4c.setRelatedCode("code of target");
+		association4c.setRelatedName("name of target");
 		
-		roles3.add(rolec);
-		roles3.add(role2c);
-		roles3.add(role3c);
-		roles3.add(role4c);
-		ent2.setRoles(roles3);
+		associations3.add(associationc);
+		associations3.add(association2c);
+		associations3.add(association3c);
+		associations3.add(association4c);
+		ent2.setAssociations(associations3);
 		
 
 		list.add(ent);
@@ -724,109 +724,109 @@ private List<RestEntity> getRestRoleEntityList() {
 	}	
 
 	
-	private List<Role> getRoleList() {
-		List<Role> roles = new ArrayList<Role>();
-		Role role = new Role();
-		role.setType("hasRoleOf");
-		role.setRelatedCode("C1111");
-		role.setRelatedName("target1");
-		Role role1 = new Role();
-		role1.setType("hasAnyRoleOf");
-		role1.setRelatedCode("C2222");
-		role1.setRelatedName("target2");
-		Role role2 = new Role();
-		role2.setType("hasSomeRoleOf");
-		role2.setRelatedCode("C3333");
-		role2.setRelatedName("target3");
-		Role role3 = new Role();
-		role3.setType("hasSomeRoleOf");
-		role3.setRelatedCode("C4444");
-		role3.setRelatedName("target4");
-		Role role4 = new Role();
-		role4.setType("hasRoleOf");
-		role4.setRelatedCode("C5555");
-		role4.setRelatedName("target5");
-		Role role5 = new Role();
-		role5.setType("hasRoleOf");
-		role5.setRelatedCode("C6666");
-		role5.setRelatedName("target6");
-		roles.add(role);
-		roles.add(role1);
-		roles.add(role2);
-		roles.add(role3);
-		roles.add(role4);
-		roles.add(role5);
-		return roles;	
+	private List<Association> getAssociationList() {
+		List<Association> associations = new ArrayList<Association>();
+		Association association = new Association();
+		association.setType("hasAssociationOf");
+		association.setRelatedCode("C1111");
+		association.setRelatedName("target1");
+		Association association1 = new Association();
+		association1.setType("hasAnyAssociationOf");
+		association1.setRelatedCode("C2222");
+		association1.setRelatedName("target2");
+		Association association2 = new Association();
+		association2.setType("hasSomeAssociationOf");
+		association2.setRelatedCode("C3333");
+		association2.setRelatedName("target3");
+		Association association3 = new Association();
+		association3.setType("hasSomeAssociationOf");
+		association3.setRelatedCode("C4444");
+		association3.setRelatedName("target4");
+		Association association4 = new Association();
+		association4.setType("hasAssociationOf");
+		association4.setRelatedCode("C5555");
+		association4.setRelatedName("target5");
+		Association association5 = new Association();
+		association5.setType("hasAssociationOf");
+		association5.setRelatedCode("C6666");
+		association5.setRelatedName("target6");
+		associations.add(association);
+		associations.add(association1);
+		associations.add(association2);
+		associations.add(association3);
+		associations.add(association4);
+		associations.add(association5);
+		return associations;	
 	}
 	
-	private List<Role> getRoleList1() {
-		List<Role> roles = new ArrayList<Role>();
-		Role role = new Role();
-		role.setType("hasRoleOf");
-		role.setRelatedCode("C1112");
-		role.setRelatedName("target12");
-		Role role1 = new Role();
-		role1.setType("hasAnyRoleOf");
-		role1.setRelatedCode("C2223");
-		role1.setRelatedName("target23");
-		Role role2 = new Role();
-		role2.setType("hasSomeRoleOf");
-		role2.setRelatedCode("C3334");
-		role2.setRelatedName("target34");
-		Role role3 = new Role();
-		role3.setType("hasSomeRoleOf");
-		role3.setRelatedCode("C4445");
-		role3.setRelatedName("target45");
-		Role role4 = new Role();
-		role4.setType("hasRoleOf");
-		role4.setRelatedCode("C5556");
-		role4.setRelatedName("target56");
-		Role role5 = new Role();
-		role5.setType("hasUnrelatedRol");
-		role5.setRelatedCode("C6667");
-		role5.setRelatedName("target67");
-		roles.add(role);
-		roles.add(role1);
-		roles.add(role2);
-		roles.add(role3);
-		roles.add(role4);
-		roles.add(role5);
-		return roles;	
+	private List<Association> getAssociationList1() {
+		List<Association> associations = new ArrayList<Association>();
+		Association association = new Association();
+		association.setType("hasAssociationOf");
+		association.setRelatedCode("C1112");
+		association.setRelatedName("target12");
+		Association association1 = new Association();
+		association1.setType("hasAnyAssociationOf");
+		association1.setRelatedCode("C2223");
+		association1.setRelatedName("target23");
+		Association association2 = new Association();
+		association2.setType("hasSomeAssociationOf");
+		association2.setRelatedCode("C3334");
+		association2.setRelatedName("target34");
+		Association association3 = new Association();
+		association3.setType("hasSomeAssociationOf");
+		association3.setRelatedCode("C4445");
+		association3.setRelatedName("target45");
+		Association association4 = new Association();
+		association4.setType("hasAssociationOf");
+		association4.setRelatedCode("C5556");
+		association4.setRelatedName("target56");
+		Association association5 = new Association();
+		association5.setType("hasUnrelatedRol");
+		association5.setRelatedCode("C6667");
+		association5.setRelatedName("target67");
+		associations.add(association);
+		associations.add(association1);
+		associations.add(association2);
+		associations.add(association3);
+		associations.add(association4);
+		associations.add(association5);
+		return associations;	
 	}
 	
-	private List<Role> getRoleList2() {
-		List<Role> roles = new ArrayList<Role>();
-		Role role = new Role();
-		role.setType("hasRoleOf");
-		role.setRelatedCode("C1110");
-		role.setRelatedName("target10");
-		Role role1 = new Role();
-		role1.setType("hasAnyRoleOf");
-		role1.setRelatedCode("C2221");
-		role1.setRelatedName("target21");
-		Role role2 = new Role();
-		role2.setType("hasSomeRoleOf");
-		role2.setRelatedCode("C3332");
-		role2.setRelatedName("target32");
-		Role role3 = new Role();
-		role3.setType("hasSomeRoleOf");
-		role3.setRelatedCode("C4443");
-		role3.setRelatedName("target43");
-		Role role4 = new Role();
-		role4.setType("hasRoleOf");
-		role4.setRelatedCode("C5554");
-		role4.setRelatedName("target54");
-		Role role5 = new Role();
-		role5.setType("hasRoleOf");
-		role5.setRelatedCode("C6665");
-		role5.setRelatedName("target65");
-		roles.add(role);
-		roles.add(role1);
-		roles.add(role2);
-		roles.add(role3);
-		roles.add(role4);
-		roles.add(role5);
-		return roles;	
+	private List<Association> getAssociationList2() {
+		List<Association> associations = new ArrayList<Association>();
+		Association association = new Association();
+		association.setType("hasAssociationOf");
+		association.setRelatedCode("C1110");
+		association.setRelatedName("target10");
+		Association association1 = new Association();
+		association1.setType("hasAnyAssociationOf");
+		association1.setRelatedCode("C2221");
+		association1.setRelatedName("target21");
+		Association association2 = new Association();
+		association2.setType("hasSomeAssociationOf");
+		association2.setRelatedCode("C3332");
+		association2.setRelatedName("target32");
+		Association association3 = new Association();
+		association3.setType("hasSomeAssociationOf");
+		association3.setRelatedCode("C4443");
+		association3.setRelatedName("target43");
+		Association association4 = new Association();
+		association4.setType("hasAssociationOf");
+		association4.setRelatedCode("C5554");
+		association4.setRelatedName("target54");
+		Association association5 = new Association();
+		association5.setType("hasAssociationOf");
+		association5.setRelatedCode("C6665");
+		association5.setRelatedName("target65");
+		associations.add(association);
+		associations.add(association1);
+		associations.add(association2);
+		associations.add(association3);
+		associations.add(association4);
+		associations.add(association5);
+		return associations;	
 		
 	}
 	

@@ -15,8 +15,8 @@ import org.mockito.Mockito;
 
 import gov.nih.nci.evs.report.exporter.model.Rel;
 import gov.nih.nci.evs.report.exporter.model.Role;
-import gov.nih.nci.evs.report.exporter.model.WeightedRel;
 import gov.nih.nci.evs.report.exporter.service.RoleService;
+import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 class RoleServiceTest {
 	
@@ -44,11 +44,11 @@ class RoleServiceTest {
 		assertTrue(roles.size() == 1);
 		assertEquals(roles.get(role.getType()).getWeight(), 1);
 		assertEquals(roles.get(role1.getType()).getWeight(), 1);
-		service.saveOrUpdateWeightedRels(role, roles);
+		CommonServices.saveOrUpdateWeightedRels(role, roles);
 		assertTrue(roles.size() == 1);
 		assertEquals(roles.get(role.getType()).getWeight(), 2);
 		assertEquals(roles.get(role1.getType()).getWeight(), 2);
-		service.saveOrUpdateWeightedRels(role1, roles);
+		CommonServices.saveOrUpdateWeightedRels(role1, roles);
 		assertTrue(roles.size() == 1);
 		assertEquals(roles.get(role.getType()).getWeight(), 3);
 		assertEquals(roles.get(role1.getType()).getWeight(), 3);
@@ -56,7 +56,7 @@ class RoleServiceTest {
 		role2.setType("hasSomeRoleOf");
 		role2.setRelatedCode("3333");
 		role2.setRelatedName("target3");
-		service.saveOrUpdateWeightedRels(role2, roles);
+		CommonServices.saveOrUpdateWeightedRels(role2, roles);
 		assertTrue(roles.size() == 2);
 		assertEquals(roles.get(role.getType()).getWeight(), 3);
 		assertEquals(roles.get(role1.getType()).getWeight(), 3);
@@ -69,14 +69,14 @@ class RoleServiceTest {
 		role4.setType("hasRoleOf");
 		role4.setRelatedCode("5555");
 		role4.setRelatedName("target5");
-		service.saveOrUpdateWeightedRels(role3, roles);
+		CommonServices.saveOrUpdateWeightedRels(role3, roles);
 		assertTrue(roles.size() == 2);
 		assertEquals(roles.get(role.getType()).getWeight(), 3);
 		assertEquals(roles.get(role1.getType()).getWeight(), 3);
 		assertEquals(roles.get(role2.getType()).getWeight(), 2);
 		assertEquals(roles.get(role3.getType()).getWeight(), 2);
 		assertEquals(roles.get(role4.getType()).getWeight(), 3);
-		service.saveOrUpdateWeightedRels(role4, roles);
+		CommonServices.saveOrUpdateWeightedRels(role4, roles);
 		assertTrue(roles.size() == 2);
 		assertEquals(roles.get(role.getType()).getWeight(), 4);
 		assertEquals(roles.get(role1.getType()).getWeight(), 4);
@@ -93,8 +93,8 @@ class RoleServiceTest {
 		doReturn(getRoleList())
 		.when(mockedRoleService).getRolesForCodes(
 				Mockito.anyString());
-		List<Rel> wRoles = mockedRoleService.getDistinctWeightedRelsForEntityCodes(Mockito.anyString());
-		List<Rel> roles = service.sortRoleListByWeight(wRoles);
+		List<Rel> wRoles = CommonServices.getDistinctWeightedRelsForEntityCodes(getRoleList());
+		List<Rel> roles = CommonServices.sortRelListByWeight(wRoles);
 		assertEquals(roles.size(), 3);
 		assertEquals(roles.stream().filter(x -> x.getType().equals("hasRoleOf")).findAny().get().getType(), "hasRoleOf");
 		assertEquals(roles.stream().filter(x -> x.getType().equals("hasAnyRoleOf")).findAny().get().getType(), "hasAnyRoleOf");

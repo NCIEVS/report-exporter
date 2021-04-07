@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,6 +28,7 @@ import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.Format;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
+import gov.nih.nci.evs.report.exporter.model.Rel;
 import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
@@ -358,6 +360,33 @@ public class CommonServices {
 
 			return this.flattenListValuesIntoRowCells(getOrderedPropertyLists(propHeaderMap), row, index);
 	  }
+	  
+	 public static void saveOrUpdateWeightedRels(Rel role, Hashtable<String, Rel> wRoles) {
+			Rel rStored = wRoles.get(role.getType());
+			role.setWeight(1);
+			if(rStored == null){wRoles.put(role.getType(), role);
+			}else {rStored.setWeight(rStored.getWeight() + 1);
+			}
+		}
+	 
+		
+		public static List<Rel> getSortedRels(List<? extends Rel> rels){
+			return CommonServices.sortRelListByWeight(getDistinctWeightedRelsForEntityCodes(rels));
+		}
+		
+		public static List<Rel> getDistinctWeightedRelsForEntityCodes(List<? extends Rel> rawRels){
+			Hashtable<String,Rel> distinctRels = new Hashtable<String,Rel>();	
+			rawRels.stream().forEach(x -> CommonServices.saveOrUpdateWeightedRels(x, distinctRels));
+			return distinctRels.values().stream().collect(Collectors.toList());
+		}
+	 
+		public static List<Rel> sortRelListByWeight(List<Rel> rels){
+			Collections.sort(rels, new Comparator<Rel>() {            @Override
+	            public int compare(Rel r1, Rel r2) {
+	            return r2.getWeight() - r1.getWeight();
+	        }});
+			return rels;
+		}
 	  
 	  
 	 public boolean isNoDefinitions() {
