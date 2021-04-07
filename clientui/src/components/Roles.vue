@@ -214,7 +214,7 @@ export default {
       selectedRoles: [],
       userSelectedRoleNames: [],
       userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json"},
-      filename: 'entities',
+      filename: 'roles',
       downloadReturnCode: null,
       invalidTag: '',
       showSummary: true,
