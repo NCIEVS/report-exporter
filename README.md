@@ -56,6 +56,7 @@ You will need to create a file called **Tomcat8/conf/Catalina/localhost/rewrite.
     RewriteCond %{REQUEST_URI} ^(/reportexporter/resolve\-).*$ [OR]
     RewriteCond %{REQUEST_URI} ^(/reportexporter/survey).*$ [OR]
     RewriteCond %{REQUEST_URI} ^(/reportexporter/sortedroles).*$ [OR]
+    RewriteCond %{REQUEST_URI} ^(/reportexporter/sortedassociations).*$ [OR]
 
     RewriteRule ^(.*)$ - [L]
     RewriteRule ^(.*)$ /reportexporter/index.html
