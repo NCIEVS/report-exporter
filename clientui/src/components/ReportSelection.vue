@@ -69,7 +69,7 @@
             <li>Export entities with roles and targets</li>
           </ul>
           <router-link v-bind:to="'/roles'" class="mt-auto">
-            <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
+            <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
           </router-link>
         </div>
       </div>

@@ -8,15 +8,21 @@
                       <i class="mdi mdi-help-circle"></i> NCI Report Exporter
                   </a>
                   <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false">
-                      <i class="mdi mdi-account"></i> Export Entities
+                      <i class="mdi mdi-account-settings"></i> Export Entities
                   </a>
                   <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">
                       <i class="mdi mdi-account-settings"></i> Export Resolved Branch
                   </a>
                   <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4" aria-selected="false">
-                      <i class="mdi mdi-account-settings"></i> Downloads
+                      <i class="mdi mdi-account-settings"></i> Export Roles
                   </a>
                   <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5" aria-selected="false">
+                      <i class="mdi mdi-account-settings"></i> Export Associations
+                  </a>
+                  <a href="#tab6" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6" aria-selected="false">
+                      <i class="mdi mdi-account-settings"></i> Downloads
+                  </a>
+                  <a href="#tab7" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab7" aria-selected="false">
                       <i class="mdi mdi-account-settings"></i> Programmatic JSON Use
                   </a>
               </div>
@@ -40,9 +46,9 @@
                                       in file types designed for typical research and development purposes.
                                     </p>
                                     <p>
-                                      The NCIt Report Exporter provides two different exports.
+                                      The NCIt Report Exporter provides four different exports.
                                       They are presented in a wizard-like format that walks the user through the different steps to take.
-                                      The two different exports are:
+                                      The four different exports are:
                                       <ul>
                                         <li>
                                           <strong>Export Entities</strong>: Enter one or more concept codes, select properties to be exported and the file format.

@@ -214,7 +214,7 @@ export default {
       selectedAssociations: [],
       userSelectedAssociationNames: [],
       userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json"},
-      filename: 'entities',
+      filename: 'associations',
       downloadReturnCode: null,
       invalidTag: '',
       showSummary: true,
