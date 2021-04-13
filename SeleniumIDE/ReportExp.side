@@ -6344,10 +6344,17 @@
       ],
       "value": "${KEY_ENTER}"
     }, {
+      "id": "ab537a3f-aea1-467f-8488-bacf78590cc9",
+      "comment": "",
+      "command": "pause",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "c6b402d0-b28a-469e-aa24-bd85c54fc3a1",
       "comment": "",
       "command": "click",
-      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
+      "target": "xpath=//button[contains(.,'Select Next Option')]",
       "targets": [
         ["css=.wizard-btn", "css:finder"],
         ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
@@ -8570,23 +8577,10 @@
       ],
       "value": ""
     }, {
-      "id": "f41b3b76-cf0f-4560-82c8-5ef484998d29",
-      "comment": "",
-      "command": "click",
-      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
-      "targets": [
-        ["css=.wizard-btn", "css:finder"],
-        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
-        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
-        ["xpath=//span/button", "xpath:position"],
-        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
       "id": "94418b3c-5259-4488-9885-a420ee5db8b6",
       "comment": "",
       "command": "type",
-      "target": "xpath=/html/body/div/div[4]/div/div[1]/div[2]/div[2]/div[1]/div/div/div/div/form/div/div/div[1]/input[1]",
+      "target": "xpath=//div[4]/div/div[1]/div[2]/div[2]/div[1]/div/div/div/div/form/div/div/div/div/div[1]/input[1]",
       "targets": [],
       "value": "C12434,C18108,C18107,C18106"
     }, {
