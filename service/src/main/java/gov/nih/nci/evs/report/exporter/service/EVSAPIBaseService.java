@@ -77,7 +77,7 @@ public class EVSAPIBaseService {
 	@Value("${REST_ROOT_FILTER_LIST:C28428}")
 	private String rootFilterList;
 
-	@Value("${SURVEY_EMAIL_LIST}")
+	@Value("${evs.mail.list}")
 	private String emailList;
 	
 	@Value("${SMTP_SERVER}")
