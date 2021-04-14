@@ -3049,7 +3049,7 @@ vars.put(&quot;eid&quot;,hashid);
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="354935782">[{&quot;type&quot;:&quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,&quot;relatedCode&quot;:&quot;C16399&quot;,&quot;relatedName&quot;:&quot;Cell Differentiation Process&quot;},{&quot;type&quot;:&quot;Gene_Product_Encoded_By_Gene&quot;,&quot;relatedCode&quot;:&quot;C21295&quot;,&quot;relatedName&quot;:&quot;Ligand Binding Protein Gene&quot;},{&quot;type&quot;:&quot;Gene_Product_Has_Associated_Anatomy&quot;,&quot;relatedCode&quot;:&quot;C13226&quot;,&quot;relatedName&quot;:&quot;Cytoplasm&quot;},{&quot;type&quot;:&quot;Gene_Product_Has_Biochemical_Function&quot;,&quot;relatedCode&quot;:&quot;C16518&quot;,&quot;relatedName&quot;:&quot;DNA Binding Protein&quot;},{&quot;type&quot;:&quot;Biological_Process_Has_Associated_Location&quot;,&quot;relatedCode&quot;:&quot;C12508&quot;,&quot;relatedName&quot;:&quot;Cell&quot;},{&quot;type&quot;:&quot;Gene_Product_Has_Chemical_Classification&quot;,&quot;relatedCode&quot;:&quot;C18484&quot;,&quot;relatedName&quot;:&quot;Nuclear Hormone Receptor Superfamily&quot;},{&quot;type&quot;:&quot;Biological_Process_Has_Result_Biological_Process&quot;,&quot;relatedCode&quot;:&quot;C21064&quot;,&quot;relatedName&quot;:&quot;Protein Turnover&quot;},{&quot;type&quot;:&quot;Biological_Process_Has_Initiator_Process&quot;,&quot;relatedCode&quot;:&quot;C17133&quot;,&quot;relatedName&quot;:&quot;Signal Transduction&quot;},{&quot;type&quot;:&quot;Gene_Product_Has_Structural_Domain_Or_Motif&quot;,&quot;relatedCode&quot;:&quot;C13428&quot;,&quot;relatedName&quot;:&quot;Hormone Receptor DNA-Binding Domain&quot;}]</stringProp>
+              <stringProp name="-1918933680">[{&quot;type&quot;:&quot;Gene_Product_Plays_Role_In_Biological_Process&quot;,&quot;relatedCode&quot;:&quot;C16399&quot;,&quot;relatedName&quot;:&quot;Cell Differentiation Process&quot;,&quot;weight&quot;:11},{&quot;type&quot;:&quot;Gene_Product_Encoded_By_Gene&quot;,&quot;relatedCode&quot;:&quot;C21295&quot;,&quot;relatedName&quot;:&quot;Ligand Binding Protein Gene&quot;,&quot;weight&quot;:8},{&quot;type&quot;:&quot;Gene_Product_Has_Associated_Anatomy&quot;,&quot;relatedCode&quot;:&quot;C13226&quot;,&quot;relatedName&quot;:&quot;Cytoplasm&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Gene_Product_Has_Biochemical_Function&quot;,&quot;relatedCode&quot;:&quot;C16518&quot;,&quot;relatedName&quot;:&quot;DNA Binding Protein&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Biological_Process_Has_Associated_Location&quot;,&quot;relatedCode&quot;:&quot;C12508&quot;,&quot;relatedName&quot;:&quot;Cell&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Gene_Product_Has_Chemical_Classification&quot;,&quot;relatedCode&quot;:&quot;C18484&quot;,&quot;relatedName&quot;:&quot;Nuclear Hormone Receptor Superfamily&quot;,&quot;weight&quot;:1},{&quot;type&quot;:&quot;Biological_Process_Has_Result_Biological_Process&quot;,&quot;relatedCode&quot;:&quot;C21064&quot;,&quot;relatedName&quot;:&quot;Protein Turnover&quot;,&quot;weight&quot;:1},{&quot;type&quot;:&quot;Biological_Process_Has_Initiator_Process&quot;,&quot;relatedCode&quot;:&quot;C17133&quot;,&quot;relatedName&quot;:&quot;Signal Transduction&quot;,&quot;weight&quot;:1},{&quot;type&quot;:&quot;Gene_Product_Has_Structural_Domain_Or_Motif&quot;,&quot;relatedCode&quot;:&quot;C13428&quot;,&quot;relatedName&quot;:&quot;Hormone Receptor DNA-Binding Domain&quot;,&quot;weight&quot;:1}]</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -3461,6 +3461,652 @@ vars.put(&quot;eid&quot;,hashid);
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-roles/C12434,C18108,C18107,C18106/Anatomic_Structure_Is_Physical_Part_Of,Gene_Product_Plays_Role_In_Biological_Process,Gene_Product_Encoded_By_Gene,Biological_Process_Has_Initiator_Process,Gene_Product_Encoded_By_Gene/EXCEL/myexcel</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Associations Request" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/reportexporter/sortedassociations/C12434,C149365,C149360,C149370</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="379646550">[{&quot;type&quot;:&quot;Concept_In_Subset&quot;,&quot;relatedCode&quot;:&quot;C74456&quot;,&quot;relatedName&quot;:&quot;CDISC SDTM Anatomical Location Terminology&quot;,&quot;weight&quot;:26},{&quot;type&quot;:&quot;Has_Pharmaceutical_Intended_Site&quot;,&quot;relatedCode&quot;:&quot;C25311&quot;,&quot;relatedName&quot;:&quot;Oral&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Has_Pharmaceutical_Administration_Method&quot;,&quot;relatedCode&quot;:&quot;C149973&quot;,&quot;relatedName&quot;:&quot;Swallowing Method of Administration&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Has_Pharmaceutical_Transformation&quot;,&quot;relatedCode&quot;:&quot;C149700&quot;,&quot;relatedName&quot;:&quot;No Transformation&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Has_Pharmaceutical_State_Of_Matter&quot;,&quot;relatedCode&quot;:&quot;C45300&quot;,&quot;relatedName&quot;:&quot;Solid&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Has_Pharmaceutical_Basic_Dose_Form&quot;,&quot;relatedCode&quot;:&quot;C154406&quot;,&quot;relatedName&quot;:&quot;Cachet Dosage Form Category&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Has_Pharmaceutical_Release_Characteristics&quot;,&quot;relatedCode&quot;:&quot;C149409&quot;,&quot;relatedName&quot;:&quot;Conventional Release Mechanism of Action&quot;,&quot;weight&quot;:2},{&quot;type&quot;:&quot;Is_PCDC_EWS_Permissible_Value_For_Variable&quot;,&quot;relatedCode&quot;:&quot;C171435&quot;,&quot;relatedName&quot;:&quot;Sample Anatomic Site&quot;,&quot;weight&quot;:1}]</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Resolve to CSV Assoc" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-associations/C12434,C149365,C149360,C149370/Concept_In_Subset,Has_Pharmaceutical_Intended_Site,Has_Pharmaceutical_Administration_Method,Has_Pharmaceutical_Transformation,Has_Pharmaceutical_State_Of_Matter,Has_Pharmaceutical_Basic_Dose_Form,Has_Pharmaceutical_Release_Characteristics,Is_PCDC_EWS_Permissible_Value_For_Variable/CSV/mycsv</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="714737469">concept code,concept name,association,target code,target name</stringProp>
+              <stringProp name="-1716552774">C12434,Blood,Concept_In_Subset,C74456,CDISC SDTM Anatomical Location Terminology</stringProp>
+              <stringProp name="1989773115">C12434,Blood,Concept_In_Subset,C78734,CDISC SDTM Specimen Type Terminology</stringProp>
+              <stringProp name="-1122937269">C12434,Blood,Concept_In_Subset,C66830,CDISC SDTM Terminology</stringProp>
+              <stringProp name="-242354363">C12434,Blood,Concept_In_Subset,C77526,CDISC SEND Terminology</stringProp>
+              <stringProp name="-140873538">C12434,Blood,Concept_In_Subset,C61410,Clinical Data Interchange Standards Consortium Terminology</stringProp>
+              <stringProp name="1422388359">C12434,Blood,Concept_In_Subset,C156953,CPTAC Baseline Medical Forms Terminology</stringProp>
+              <stringProp name="1264546457">C12434,Blood,Concept_In_Subset,C142799,CTRP Biomarker Terminology</stringProp>
+              <stringProp name="-1825153348">C12434,Blood,Concept_In_Subset,C116977,CTRP Terminology</stringProp>
+              <stringProp name="-1995320738">C12434,Blood,Concept_In_Subset,C174250,EWS Lab Table</stringProp>
+              <stringProp name="-1345210994">C12434,Blood,Concept_In_Subset,C174238,EWS Table Terminology</stringProp>
+              <stringProp name="-1419788962">C12434,Blood,Concept_In_Subset,C159008,GDC Biospecimen Anatomic Site Terminology</stringProp>
+              <stringProp name="585441914">C12434,Blood,Concept_In_Subset,C159010,GDC Biospecimen Type Terminology</stringProp>
+              <stringProp name="1547429480">C12434,Blood,Concept_In_Subset,C159093,GDC Progression or Recurrence Anatomic Site Terminology</stringProp>
+              <stringProp name="-1899900027">C12434,Blood,Concept_In_Subset,C159111,GDC Site of Resection or Biopsy Terminology</stringProp>
+              <stringProp name="-579401472">C12434,Blood,Concept_In_Subset,C157711,GDC Terminology</stringProp>
+              <stringProp name="-19468452">C12434,Blood,Concept_In_Subset,C159117,GDC Tissue or Organ of Origin Terminology</stringProp>
+              <stringProp name="1737328573">C12434,Blood,Concept_In_Subset,C159120,GDC Treatment Anatomic Site Terminology</stringProp>
+              <stringProp name="435674037">C12434,Blood,Concept_In_Subset,C177537,GDC Value Terminology</stringProp>
+              <stringProp name="1007041196">C12434,Blood,Is_PCDC_EWS_Permissible_Value_For_Variable,C171435,Sample Anatomic Site</stringProp>
+              <stringProp name="1555543834">C149365,Oral Cachet Dosage Form,Has_Pharmaceutical_Basic_Dose_Form,C154406,Cachet Dosage Form Category</stringProp>
+              <stringProp name="1143567352">C149365,Oral Cachet Dosage Form,Has_Pharmaceutical_Release_Characteristics,C149409,Conventional Release Mechanism of Action</stringProp>
+              <stringProp name="-1373851945">C149365,Oral Cachet Dosage Form,Concept_In_Subset,C148636,EDQM Health Care Terminology</stringProp>
+              <stringProp name="-1672198581">C149365,Oral Cachet Dosage Form,Concept_In_Subset,C175439,EDQM-HC Administrable Dose Form Terminology</stringProp>
+              <stringProp name="1324012806">C149365,Oral Cachet Dosage Form,Concept_In_Subset,C150103,EDQM-HC Pharmaceutical Dosage Form Terminology</stringProp>
+              <stringProp name="843315724">C149365,Oral Cachet Dosage Form,Has_Pharmaceutical_Transformation,C149700,No Transformation</stringProp>
+              <stringProp name="1791876429">C149365,Oral Cachet Dosage Form,Has_Pharmaceutical_Intended_Site,C25311,Oral</stringProp>
+              <stringProp name="1582658350">C149365,Oral Cachet Dosage Form,Has_Pharmaceutical_State_Of_Matter,C45300,Solid</stringProp>
+              <stringProp name="1786836456">C149365,Oral Cachet Dosage Form,Has_Pharmaceutical_Administration_Method,C149973,Swallowing Method of Administration</stringProp>
+              <stringProp name="1909879614">C149360,Bladder Irrigation Solution Dosage Form,Has_Pharmaceutical_Release_Characteristics,C149409,Conventional Release Mechanism of Action</stringProp>
+              <stringProp name="1964319697">C149360,Bladder Irrigation Solution Dosage Form,Concept_In_Subset,C148636,EDQM Health Care Terminology</stringProp>
+              <stringProp name="1733819921">C149360,Bladder Irrigation Solution Dosage Form,Concept_In_Subset,C175439,EDQM-HC Administrable Dose Form Terminology</stringProp>
+              <stringProp name="1418837888">C149360,Bladder Irrigation Solution Dosage Form,Concept_In_Subset,C150103,EDQM-HC Pharmaceutical Dosage Form Terminology</stringProp>
+              <stringProp name="-1125219913">C149360,Bladder Irrigation Solution Dosage Form,Has_Pharmaceutical_Intended_Site,C149623,Intravesical/Urethral</stringProp>
+              <stringProp name="-1794702731">C149360,Bladder Irrigation Solution Dosage Form,Has_Pharmaceutical_State_Of_Matter,C45298,Liquid</stringProp>
+              <stringProp name="-1559260846">C149360,Bladder Irrigation Solution Dosage Form,Has_Pharmaceutical_Transformation,C149700,No Transformation</stringProp>
+              <stringProp name="1423405525">C149360,Bladder Irrigation Solution Dosage Form,Has_Pharmaceutical_Administration_Method,C149887,Rinsing/Washing Method of Administration</stringProp>
+              <stringProp name="1524394055">C149360,Bladder Irrigation Solution Dosage Form,Has_Pharmaceutical_Basic_Dose_Form,C154598,Solution Dosage Form Category</stringProp>
+              <stringProp name="678010795">C149370,Chewing Method of Administration,Concept_In_Subset,C148636,EDQM Health Care Terminology</stringProp>
+              <stringProp name="-1376654851">C149370,Chewing Method of Administration,Concept_In_Subset,C150112,EDQM-HC Administration Method Terminology</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="-972201116">Report Search Parameters:</stringProp>
+              <stringProp name="-1690888369">&quot;|Input:  C12434,C149365,C149360,C149370|&quot;</stringProp>
+              <stringProp name="88558604">&quot;|Associations Selected: Concept_In_Subset,Has_Pharmaceutical_Intended_Site,Has_Pharmaceutical_Administration_Method,Has_Pharmaceutical_Transformation,Has_Pharmaceutical_State_Of_Matter,Has_Pharmaceutical_Basic_Dose_Form,Has_Pharmaceutical_Release_Characteristics,Is_PCDC_EWS_Permissible_Value_For_Variable|&quot;</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Resolve to Tab Del Assoc" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-associations/C12434,C149365,C149360,C149370/Concept_In_Subset,Has_Pharmaceutical_Intended_Site,Has_Pharmaceutical_Administration_Method,Has_Pharmaceutical_Transformation,Has_Pharmaceutical_State_Of_Matter,Has_Pharmaceutical_Basic_Dose_Form,Has_Pharmaceutical_Release_Characteristics,Is_PCDC_EWS_Permissible_Value_For_Variable/TABD/mytabd</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-727375965">concept code	concept name	association	target code	target name</stringProp>
+              <stringProp name="923799776">C12434	Blood	Concept_In_Subset	C74456	CDISC SDTM Anatomical Location Terminology</stringProp>
+              <stringProp name="2026008801">C12434	Blood	Concept_In_Subset	C78734	CDISC SDTM Specimen Type Terminology</stringProp>
+              <stringProp name="137853553">C12434	Blood	Concept_In_Subset	C66830	CDISC SDTM Terminology</stringProp>
+              <stringProp name="1018436459">C12434	Blood	Concept_In_Subset	C77526	CDISC SEND Terminology</stringProp>
+              <stringProp name="-1402471964">C12434	Blood	Concept_In_Subset	C61410	Clinical Data Interchange Standards Consortium Terminology</stringProp>
+              <stringProp name="-386040645">C12434	Blood	Concept_In_Subset	C156953	CPTAC Baseline Medical Forms Terminology</stringProp>
+              <stringProp name="-842617395">C12434	Blood	Concept_In_Subset	C142799	CTRP Biomarker Terminology</stringProp>
+              <stringProp name="832588528">C12434	Blood	Concept_In_Subset	C116977	CTRP Terminology</stringProp>
+              <stringProp name="-16354646">C12434	Blood	Concept_In_Subset	C174250	EWS Lab Table</stringProp>
+              <stringProp name="-1149810214">C12434	Blood	Concept_In_Subset	C174238	EWS Table Terminology</stringProp>
+              <stringProp name="-1646513238">C12434	Blood	Concept_In_Subset	C159008	GDC Biospecimen Anatomic Site Terminology</stringProp>
+              <stringProp name="-898095442">C12434	Blood	Concept_In_Subset	C159010	GDC Biospecimen Type Terminology</stringProp>
+              <stringProp name="366307252">C12434	Blood	Concept_In_Subset	C159093	GDC Progression or Recurrence Anatomic Site Terminology</stringProp>
+              <stringProp name="-738597167">C12434	Blood	Concept_In_Subset	C159111	GDC Site of Resection or Biopsy Terminology</stringProp>
+              <stringProp name="-1463499188">C12434	Blood	Concept_In_Subset	C157711	GDC Terminology</stringProp>
+              <stringProp name="-246192728">C12434	Blood	Concept_In_Subset	C159117	GDC Tissue or Organ of Origin Terminology</stringProp>
+              <stringProp name="1124802825">C12434	Blood	Concept_In_Subset	C159120	GDC Treatment Anatomic Site Terminology</stringProp>
+              <stringProp name="631074817">C12434	Blood	Concept_In_Subset	C177537	GDC Value Terminology</stringProp>
+              <stringProp name="-1580496596">C12434	Blood	Is_PCDC_EWS_Permissible_Value_For_Variable	C171435	Sample Anatomic Site</stringProp>
+              <stringProp name="-85281446">C149365	Oral Cachet Dosage Form	Has_Pharmaceutical_Basic_Dose_Form	C154406	Cachet Dosage Form Category</stringProp>
+              <stringProp name="321337272">C149365	Oral Cachet Dosage Form	Has_Pharmaceutical_Release_Characteristics	C149409	Conventional Release Mechanism of Action</stringProp>
+              <stringProp name="-1222643765">C149365	Oral Cachet Dosage Form	Concept_In_Subset	C148636	EDQM Health Care Terminology</stringProp>
+              <stringProp name="-2089779497">C149365	Oral Cachet Dosage Form	Concept_In_Subset	C175439	EDQM-HC Administrable Dose Form Terminology</stringProp>
+              <stringProp name="-603766534">C149365	Oral Cachet Dosage Form	Concept_In_Subset	C150103	EDQM-HC Pharmaceutical Dosage Form Terminology</stringProp>
+              <stringProp name="1731001752">C149365	Oral Cachet Dosage Form	Has_Pharmaceutical_Transformation	C149700	No Transformation</stringProp>
+              <stringProp name="964023399">C149365	Oral Cachet Dosage Form	Has_Pharmaceutical_Intended_Site	C25311	Oral</stringProp>
+              <stringProp name="-809036332">C149365	Oral Cachet Dosage Form	Has_Pharmaceutical_State_Of_Matter	C45300	Solid</stringProp>
+              <stringProp name="-175447896">C149365	Oral Cachet Dosage Form	Has_Pharmaceutical_Administration_Method	C149973	Swallowing Method of Administration</stringProp>
+              <stringProp name="949473534">C149360	Bladder Irrigation Solution Dosage Form	Has_Pharmaceutical_Release_Characteristics	C149409	Conventional Release Mechanism of Action</stringProp>
+              <stringProp name="-149648699">C149360	Bladder Irrigation Solution Dosage Form	Concept_In_Subset	C148636	EDQM Health Care Terminology</stringProp>
+              <stringProp name="-454602595">C149360	Bladder Irrigation Solution Dosage Form	Concept_In_Subset	C175439	EDQM-HC Administrable Dose Form Terminology</stringProp>
+              <stringProp name="-567750284">C149360	Bladder Irrigation Solution Dosage Form	Concept_In_Subset	C150103	EDQM-HC Pharmaceutical Dosage Form Terminology</stringProp>
+              <stringProp name="-1117111177">C149360	Bladder Irrigation Solution Dosage Form	Has_Pharmaceutical_Intended_Site	C149623	Intravesical/Urethral</stringProp>
+              <stringProp name="-1403364721">C149360	Bladder Irrigation Solution Dosage Form	Has_Pharmaceutical_State_Of_Matter	C45298	Liquid</stringProp>
+              <stringProp name="1956916958">C149360	Bladder Irrigation Solution Dosage Form	Has_Pharmaceutical_Transformation	C149700	No Transformation</stringProp>
+              <stringProp name="1156864277">C149360	Bladder Irrigation Solution Dosage Form	Has_Pharmaceutical_Administration_Method	C149887	Rinsing/Washing Method of Administration</stringProp>
+              <stringProp name="885488775">C149360	Bladder Irrigation Solution Dosage Form	Has_Pharmaceutical_Basic_Dose_Form	C154598	Solution Dosage Form Category</stringProp>
+              <stringProp name="-1181765883">C149370	Chewing Method of Administration	Concept_In_Subset	C148636	EDQM Health Care Terminology</stringProp>
+              <stringProp name="290790627">C149370	Chewing Method of Administration	Concept_In_Subset	C150112	EDQM-HC Administration Method Terminology</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="-972201116">Report Search Parameters:</stringProp>
+              <stringProp name="-1690888369">&quot;|Input:  C12434,C149365,C149360,C149370|&quot;</stringProp>
+              <stringProp name="88558604">&quot;|Associations Selected: Concept_In_Subset,Has_Pharmaceutical_Intended_Site,Has_Pharmaceutical_Administration_Method,Has_Pharmaceutical_Transformation,Has_Pharmaceutical_State_Of_Matter,Has_Pharmaceutical_Basic_Dose_Form,Has_Pharmaceutical_Release_Characteristics,Is_PCDC_EWS_Permissible_Value_For_Variable|&quot;</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Resolve to JSON Assoc" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-associations/C12434,C149365,C149360,C149370/Concept_In_Subset,Has_Pharmaceutical_Intended_Site,Has_Pharmaceutical_Administration_Method,Has_Pharmaceutical_Transformation,Has_Pharmaceutical_State_Of_Matter,Has_Pharmaceutical_Basic_Dose_Form,Has_Pharmaceutical_Release_Characteristics,Is_PCDC_EWS_Permissible_Value_For_Variable/JSON/myjson</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1454395658">&quot;entities&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-530306972">&quot;code&quot;: &quot;C12434&quot;,</stringProp>
+              <stringProp name="-1828681667">&quot;name&quot;: &quot;Blood&quot;,</stringProp>
+              <stringProp name="-2055853625">&quot;associations&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="594400559">&quot;relatedCode&quot;: &quot;C74456&quot;,</stringProp>
+              <stringProp name="706051311">&quot;relatedName&quot;: &quot;CDISC SDTM Anatomical Location Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="711626222">&quot;relatedCode&quot;: &quot;C78734&quot;,</stringProp>
+              <stringProp name="-51956273">&quot;relatedName&quot;: &quot;CDISC SDTM Specimen Type Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="-232216084">&quot;relatedCode&quot;: &quot;C66830&quot;,</stringProp>
+              <stringProp name="282293277">&quot;relatedName&quot;: &quot;CDISC SDTM Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="681122160">&quot;relatedCode&quot;: &quot;C77526&quot;,</stringProp>
+              <stringProp name="-279223653">&quot;relatedName&quot;: &quot;CDISC SEND Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="-379115505">&quot;relatedCode&quot;: &quot;C61410&quot;,</stringProp>
+              <stringProp name="-1663850029">&quot;relatedName&quot;: &quot;Clinical Data Interchange Standards Consortium Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="328063074">&quot;relatedCode&quot;: &quot;C156953&quot;,</stringProp>
+              <stringProp name="2085886215">&quot;relatedName&quot;: &quot;CPTAC Baseline Medical Forms Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="-675679323">&quot;relatedCode&quot;: &quot;C142799&quot;,</stringProp>
+              <stringProp name="-1571129796">&quot;relatedName&quot;: &quot;CTRP Biomarker Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="1073079072">&quot;relatedCode&quot;: &quot;C116977&quot;,</stringProp>
+              <stringProp name="-2068919558">&quot;relatedName&quot;: &quot;CTRP Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="2039344604">&quot;relatedCode&quot;: &quot;C174250&quot;,</stringProp>
+              <stringProp name="609714936">&quot;relatedName&quot;: &quot;EWS Lab Table&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="2039292710">&quot;relatedCode&quot;: &quot;C174238&quot;,</stringProp>
+              <stringProp name="-931477410">&quot;relatedName&quot;: &quot;EWS Table Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="405494688">&quot;relatedCode&quot;: &quot;C159008&quot;,</stringProp>
+              <stringProp name="1632886068">&quot;relatedName&quot;: &quot;GDC Biospecimen Anatomic Site Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="405516791">&quot;relatedCode&quot;: &quot;C159010&quot;,</stringProp>
+              <stringProp name="-1968339153">&quot;relatedName&quot;: &quot;GDC Biospecimen Type Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="405758002">&quot;relatedCode&quot;: &quot;C159093&quot;,</stringProp>
+              <stringProp name="-1645576148">&quot;relatedName&quot;: &quot;GDC Progression or Recurrence Anatomic Site Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="406441273">&quot;relatedCode&quot;: &quot;C159111&quot;,</stringProp>
+              <stringProp name="-302431614">&quot;relatedName&quot;: &quot;GDC Site of Resection or Biopsy Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="354724097">&quot;relatedCode&quot;: &quot;C157711&quot;,</stringProp>
+              <stringProp name="771232757">&quot;relatedName&quot;: &quot;GDC Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="406447039">&quot;relatedCode&quot;: &quot;C159117&quot;,</stringProp>
+              <stringProp name="527799891">&quot;relatedName&quot;: &quot;GDC Tissue or Organ of Origin Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="406470103">&quot;relatedCode&quot;: &quot;C159120&quot;,</stringProp>
+              <stringProp name="-1343897700">&quot;relatedName&quot;: &quot;GDC Treatment Anatomic Site Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="2127949765">&quot;relatedCode&quot;: &quot;C177537&quot;,</stringProp>
+              <stringProp name="1199179110">&quot;relatedName&quot;: &quot;GDC Value Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="1794286698">&quot;type&quot;: &quot;Is_PCDC_EWS_Permissible_Value_For_Variable&quot;,</stringProp>
+              <stringProp name="1955249416">&quot;relatedCode&quot;: &quot;C171435&quot;,</stringProp>
+              <stringProp name="-83904047">&quot;relatedName&quot;: &quot;Sample Anatomic Site&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="919158235">&quot;queryCode&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1636383552">&quot;code&quot;: &quot;C149365&quot;,</stringProp>
+              <stringProp name="145615636">&quot;name&quot;: &quot;Oral Cachet Dosage Form&quot;,</stringProp>
+              <stringProp name="-2055853625">&quot;associations&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="1434089150">&quot;type&quot;: &quot;Has_Pharmaceutical_Basic_Dose_Form&quot;,</stringProp>
+              <stringProp name="266041095">&quot;relatedCode&quot;: &quot;C154406&quot;,</stringProp>
+              <stringProp name="1915378779">&quot;relatedName&quot;: &quot;Cachet Dosage Form Category&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="1599200777">&quot;type&quot;: &quot;Has_Pharmaceutical_Release_Characteristics&quot;,</stringProp>
+              <stringProp name="-478313948">&quot;relatedCode&quot;: &quot;C149409&quot;,</stringProp>
+              <stringProp name="-567270253">&quot;relatedName&quot;: &quot;Conventional Release Mechanism of Action&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="-505009567">&quot;relatedCode&quot;: &quot;C148636&quot;,</stringProp>
+              <stringProp name="-786311557">&quot;relatedName&quot;: &quot;EDQM Health Care Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="2069769864">&quot;relatedCode&quot;: &quot;C175439&quot;,</stringProp>
+              <stringProp name="-210916908">&quot;relatedName&quot;: &quot;EDQM-HC Administrable Dose Form Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="148751045">&quot;relatedCode&quot;: &quot;C150103&quot;,</stringProp>
+              <stringProp name="1297823566">&quot;relatedName&quot;: &quot;EDQM-HC Pharmaceutical Dosage Form Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1725990316">&quot;type&quot;: &quot;Has_Pharmaceutical_Transformation&quot;,</stringProp>
+              <stringProp name="-475552034">&quot;relatedCode&quot;: &quot;C149700&quot;,</stringProp>
+              <stringProp name="-27953532">&quot;relatedName&quot;: &quot;No Transformation&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-655219932">&quot;type&quot;: &quot;Has_Pharmaceutical_Intended_Site&quot;,</stringProp>
+              <stringProp name="479431111">&quot;relatedCode&quot;: &quot;C25311&quot;,</stringProp>
+              <stringProp name="-1871594490">&quot;relatedName&quot;: &quot;Oral&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-468991900">&quot;type&quot;: &quot;Has_Pharmaceutical_State_Of_Matter&quot;,</stringProp>
+              <stringProp name="-2040559575">&quot;relatedCode&quot;: &quot;C45300&quot;,</stringProp>
+              <stringProp name="1289405447">&quot;relatedName&quot;: &quot;Solid&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1026948245">&quot;type&quot;: &quot;Has_Pharmaceutical_Administration_Method&quot;,</stringProp>
+              <stringProp name="-473493572">&quot;relatedCode&quot;: &quot;C149973&quot;,</stringProp>
+              <stringProp name="1054922439">&quot;relatedName&quot;: &quot;Swallowing Method of Administration&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="919158235">&quot;queryCode&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1636388357">&quot;code&quot;: &quot;C149360&quot;,</stringProp>
+              <stringProp name="-1889500257">&quot;name&quot;: &quot;Bladder Irrigation Solution Dosage Form&quot;,</stringProp>
+              <stringProp name="-2055853625">&quot;associations&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="1599200777">&quot;type&quot;: &quot;Has_Pharmaceutical_Release_Characteristics&quot;,</stringProp>
+              <stringProp name="-478313948">&quot;relatedCode&quot;: &quot;C149409&quot;,</stringProp>
+              <stringProp name="-567270253">&quot;relatedName&quot;: &quot;Conventional Release Mechanism of Action&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="-505009567">&quot;relatedCode&quot;: &quot;C148636&quot;,</stringProp>
+              <stringProp name="-786311557">&quot;relatedName&quot;: &quot;EDQM Health Care Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="2069769864">&quot;relatedCode&quot;: &quot;C175439&quot;,</stringProp>
+              <stringProp name="-210916908">&quot;relatedName&quot;: &quot;EDQM-HC Administrable Dose Form Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="148751045">&quot;relatedCode&quot;: &quot;C150103&quot;,</stringProp>
+              <stringProp name="1297823566">&quot;relatedName&quot;: &quot;EDQM-HC Pharmaceutical Dosage Form Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-655219932">&quot;type&quot;: &quot;Has_Pharmaceutical_Intended_Site&quot;,</stringProp>
+              <stringProp name="-476413090">&quot;relatedCode&quot;: &quot;C149623&quot;,</stringProp>
+              <stringProp name="284936449">&quot;relatedName&quot;: &quot;Intravesical/Urethral&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-468991900">&quot;type&quot;: &quot;Has_Pharmaceutical_State_Of_Matter&quot;,</stringProp>
+              <stringProp name="-2041207289">&quot;relatedCode&quot;: &quot;C45298&quot;,</stringProp>
+              <stringProp name="1126478068">&quot;relatedName&quot;: &quot;Liquid&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1725990316">&quot;type&quot;: &quot;Has_Pharmaceutical_Transformation&quot;,</stringProp>
+              <stringProp name="-475552034">&quot;relatedCode&quot;: &quot;C149700&quot;,</stringProp>
+              <stringProp name="-27953532">&quot;relatedName&quot;: &quot;No Transformation&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1026948245">&quot;type&quot;: &quot;Has_Pharmaceutical_Administration_Method&quot;,</stringProp>
+              <stringProp name="-474383458">&quot;relatedCode&quot;: &quot;C149887&quot;,</stringProp>
+              <stringProp name="886610374">&quot;relatedName&quot;: &quot;Rinsing/Washing Method of Administration&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="1434089150">&quot;type&quot;: &quot;Has_Pharmaceutical_Basic_Dose_Form&quot;,</stringProp>
+              <stringProp name="267234657">&quot;relatedCode&quot;: &quot;C154598&quot;,</stringProp>
+              <stringProp name="-1465310284">&quot;relatedName&quot;: &quot;Solution Dosage Form Category&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="919158235">&quot;queryCode&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-1636358566">&quot;code&quot;: &quot;C149370&quot;,</stringProp>
+              <stringProp name="507260750">&quot;name&quot;: &quot;Chewing Method of Administration&quot;,</stringProp>
+              <stringProp name="-2055853625">&quot;associations&quot;: [</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="-505009567">&quot;relatedCode&quot;: &quot;C148636&quot;,</stringProp>
+              <stringProp name="-786311557">&quot;relatedName&quot;: &quot;EDQM Health Care Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="3919">},</stringProp>
+              <stringProp name="123">{</stringProp>
+              <stringProp name="-490897959">&quot;type&quot;: &quot;Concept_In_Subset&quot;,</stringProp>
+              <stringProp name="148779875">&quot;relatedCode&quot;: &quot;C150112&quot;,</stringProp>
+              <stringProp name="-899478273">&quot;relatedName&quot;: &quot;EDQM-HC Administration Method Terminology&quot;,</stringProp>
+              <stringProp name="1869305474">&quot;weight&quot;: 0</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="919158235">&quot;queryCode&quot;: 0</stringProp>
+              <stringProp name="125">}</stringProp>
+              <stringProp name="2927">],</stringProp>
+              <stringProp name="-418496693">&quot;input&quot;: &quot;C12434,C149365,C149360,C149370&quot;,</stringProp>
+              <stringProp name="-1620635877">&quot;propertiesSelected&quot;: &quot;Concept_In_Subset,Has_Pharmaceutical_Intended_Site,Has_Pharmaceutical_Administration_Method,Has_Pharmaceutical_Transformation,Has_Pharmaceutical_State_Of_Matter,Has_Pharmaceutical_Basic_Dose_Form,Has_Pharmaceutical_Release_Characteristics,Is_PCDC_EWS_Permissible_Value_For_Variable&quot;,</stringProp>
+              <stringProp name="287949017">&quot;hierarchyLevel&quot;: 0</stringProp>
+              <stringProp name="125">}</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Resolve to EXCEL Assoc" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">reportexporter/download/get-file-for-resolved-associations/C12434,C149365,C149360,C149370/Concept_In_Subset,Has_Pharmaceutical_Intended_Site,Has_Pharmaceutical_Administration_Method,Has_Pharmaceutical_Transformation,Has_Pharmaceutical_State_Of_Matter,Has_Pharmaceutical_Basic_Dose_Form,Has_Pharmaceutical_Release_Characteristics,Is_PCDC_EWS_Permissible_Value_For_Variable/EXCEL/myexcel</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
