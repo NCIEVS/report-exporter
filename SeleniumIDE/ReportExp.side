@@ -8637,6 +8637,340 @@
       "targets": [],
       "value": "Anatomic_Structure_Is_Physical_Part_Of"
     }]
+  }, {
+    "id": "9fbebb5c-ad5d-48cb-a8ad-76445aef52a1",
+    "name": "AssociationResolution",
+    "commands": [{
+      "id": "ce36deaf-8eb9-4724-b0eb-cf62ee8e2a1a",
+      "comment": "",
+      "command": "open",
+      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "728eb257-8b6a-4e0c-bed6-97ca4265aef3",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x959",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f14d3d9e-9649-4533-b0d2-c880bf31e469",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(4) .align-self-end",
+      "targets": [
+        ["css=.card:nth-child(4) .align-self-end", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div[4]/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/a/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b3015ae-430d-45aa-8ca7-8ad8023a4552",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforAssociationsExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1c6e9f82-a778-41c4-a3d7-3c285ff5794f",
+      "comment": "",
+      "command": "type",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforAssociationsExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "C12434"
+    }, {
+      "id": "ba008f78-52c0-4834-81e8-c04b3832613a",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='text']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforAssociationsExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "13dd8e44-6b73-46ed-801c-1a1aae421391",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5c159521-0e53-46d6-8396-dc18d2acd009",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "708c0194-d8d4-4e2d-8a56-40a0497e54f3",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e168a3e2-aff7-42c9-8969-cd17eba96f41",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "db0e3479-9814-4342-b9a0-cc48b39ae564",
+      "comment": "",
+      "command": "click",
+      "target": "id=downloadFormat",
+      "targets": [
+        ["id=downloadFormat", "id"],
+        ["css=#downloadFormat", "css:finder"],
+        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "602ccdfd-d121-48da-86bf-9c4c0457f725",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": "label=CSV (csv) Comma Separated Value Format"
+    }, {
+      "id": "4762d366-88e9-47bd-9a3d-9c777145bbcc",
+      "comment": "",
+      "command": "click",
+      "target": "id=downloadFormat",
+      "targets": [
+        ["id=downloadFormat", "id"],
+        ["css=#downloadFormat", "css:finder"],
+        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a4d4276-0c11-4976-a47d-8467dc51baf5",
+      "comment": "",
+      "command": "select",
+      "target": "id=downloadFormat",
+      "targets": [],
+      "value": "label=EXCEL (xlsx) Microsoft Excel Format"
+    }, {
+      "id": "fe9c969b-4faf-4a40-b1ca-9801435a1279",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "b302409d-f957-4938-b587-40ba354289e5",
+    "name": "AssociationSortingByWeight",
+    "commands": [{
+      "id": "30f892f8-789e-4277-bafc-f96dfd089c6b",
+      "comment": "",
+      "command": "open",
+      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1ac0b6b3-fa41-4f93-a9ac-fc6afeeba5fa",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x959",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f9cfbe02-bc9e-43af-b73a-88e08ab315a4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(4) .align-self-end",
+      "targets": [
+        ["css=.card:nth-child(4) .align-self-end", "css:finder"],
+        ["xpath=(//button[@type='button'])[9]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div[4]/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/a/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b8027c63-b76a-48de-a37b-0105e2184032",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input:nth-child(1)",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input:nth-child(1)", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforAssociationsExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d00e51dc-79bb-4374-bcbe-83f635172bf7",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//div[@id='SelectConceptCodesforAssociationsExport0']/div/div/div/div/form/div/div/div/div/div/input",
+      "targets": [
+        ["css=input:nth-child(4)", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforAssociationsExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C12434,C149360,C149365,C149370"
+    }, {
+      "id": "06d7f6b2-b68c-4a74-a0a4-8fa9d32fb344",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//div[@id='SelectConceptCodesforAssociationsExport0']/div/div/div/div/form/div/div/div/div/div/input",
+      "targets": [
+        ["css=input:nth-child(4)", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforAssociationsExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "3c30c280-4a15-4782-8e4a-f16027bd336b",
+      "comment": "",
+      "command": "click",
+      "target": "css=#read-codes-entry .wizard-btn",
+      "targets": [
+        ["css=#read-codes-entry .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d836596d-83b8-43b5-9f2a-3a069a37c135",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div", "xpath:position"]
+      ],
+      "value": "Concept_In_Subset"
+    }, {
+      "id": "6e670067-1651-4802-9ca7-97f66ca7372d",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(2)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_Intended_Site"
+    }, {
+      "id": "250cb850-75f1-4124-9ee7-a38700eb0c9d",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(3)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_Administration_Method"
+    }, {
+      "id": "a53c110a-d5e9-4f15-abbc-b69200b6813b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(4)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_Transformation"
+    }, {
+      "id": "793f198a-a305-4895-a368-3dd603a7ac68",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(5)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_State_Of_Matter"
+    }, {
+      "id": "367b19aa-eff3-4f9e-9a56-d084a7d3d17f",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(6)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_Basic_Dose_Form"
+    }, {
+      "id": "4756e368-a9d1-4d4c-863c-a852cf298710",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(7)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_Release_Characteristics"
+    }, {
+      "id": "c1af39bb-037d-4d22-9e55-f617451f2332",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(8)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Is_PCDC_EWS_Permissible_Value_For_Variable"
+    }]
   }],
   "suites": [{
     "id": "4788f753-9a11-4c8d-bca4-b6e4d8cf9579",
