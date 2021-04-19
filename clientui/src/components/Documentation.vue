@@ -306,6 +306,22 @@
                               </div>
                           </div>
                           <div class="card">
+                              <div class="card-header" id="accordion-tab-4-heading-2a">
+                                  <h5>
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-2a" aria-expanded="false" aria-controls="accordion-tab-4-content-2a">
+                                        Why are some concept codes not in the roles report?
+                                      </button>
+                                  </h5>
+                              </div>
+                              <div class="collapse" id="accordion-tab-4-content-2a" aria-labelledby="accordion-tab-4-heading-2a" data-parent="#accordion-tab-4">
+                                  <div class="card-body">
+                                    <p>
+                                      Concept codes that do not have roles will be removed from the list and won’t show up in the roles export.
+                                    </p>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="card">
                               <div class="card-header" id="accordion-tab-4-heading-3">
                                   <h5>
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-3" aria-expanded="false" aria-controls="accordion-tab-4-content-3">
@@ -326,7 +342,7 @@
                               <div class="card-header" id="accordion-tab-4-heading-4">
                                   <h5>
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-4" aria-expanded="false" aria-controls="accordion-tab-4-content-4">
-                                        How were roles chosen, ranked, and displayed?
+                                        How are roles chosen, ranked, and displayed?
                                       </button>
                                   </h5>
                               </div>
@@ -346,7 +362,7 @@
                               <div class="card-header" id="accordion-tab-4-heading-5">
                                   <h5>
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-5" aria-expanded="false" aria-controls="accordion-tab-4-content-5">
-                                        Inherited Roles
+                                        What are inherited Roles?
                                       </button>
                                   </h5>
                               </div>
@@ -477,6 +493,22 @@
                               </div>
                           </div>
                           <div class="card">
+                              <div class="card-header" id="accordion-tab-5-heading-2a">
+                                  <h5>
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-2a" aria-expanded="false" aria-controls="accordion-tab-5-content-2a">
+                                        Why are some concept codes not in the associations report?
+                                      </button>
+                                  </h5>
+                              </div>
+                              <div class="collapse" id="accordion-tab-5-content-2a" aria-labelledby="accordion-tab-5-heading-2a" data-parent="#accordion-tab-5">
+                                  <div class="card-body">
+                                    <p>
+                                      Concept codes that do not have associations will be removed from the list and won’t show up in the association export.
+                                    </p>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="card">
                               <div class="card-header" id="accordion-tab-5-heading-3">
                                   <h5>
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-3" aria-expanded="false" aria-controls="accordion-tab-5-content-3">
@@ -497,7 +529,7 @@
                               <div class="card-header" id="accordion-tab-5-heading-4">
                                   <h5>
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-4" aria-expanded="false" aria-controls="accordion-tab-5-content-4">
-                                        How were associations chosen, ranked, and displayed?
+                                        How are associations chosen, ranked, and displayed?
                                       </button>
                                   </h5>
                               </div>
