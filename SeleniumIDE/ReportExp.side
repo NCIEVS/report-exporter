@@ -2,7 +2,7 @@
   "id": "580af3e8-c850-4b90-952c-339744d16b23",
   "version": "2.0",
   "name": "ReportExp",
-  "url": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+  "url": "https://evs-dev.cancer.gov/report-exporter/",
   "tests": [{
     "id": "067aa33f-18ad-482d-9061-994ec790b3f9",
     "name": "ReadEntityAllCatsJSON",
@@ -5009,7 +5009,7 @@
       "id": "4370e76b-d422-45ef-816d-63a6efd53229",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -7076,7 +7076,7 @@
       "id": "794d7199-99f1-4f3c-9ceb-2d4a27d25184",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -7581,7 +7581,7 @@
       "id": "ceea58f9-7ea2-42d0-a12f-ea42ae722618",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -7850,7 +7850,7 @@
       "id": "e84a6cca-e4eb-47ff-a2ac-0a424f81358a",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -8067,14 +8067,7 @@
       "id": "a3c68ba8-cb68-45fb-ab87-a0896453344a",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "d88913d7-023c-474d-b690-5366ba2d04bc",
-      "comment": "",
-      "command": "//setWindowSize",
-      "target": "1886x1038",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -8179,6 +8172,6 @@
     "timeout": 300,
     "tests": ["067aa33f-18ad-482d-9061-994ec790b3f9"]
   }],
-  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/"],
+  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/", "https://evs-dev.cancer.gov/report-exporter/"],
   "plugins": []
 }
