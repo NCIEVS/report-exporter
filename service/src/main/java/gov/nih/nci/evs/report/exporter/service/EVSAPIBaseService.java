@@ -121,9 +121,9 @@ public class EVSAPIBaseService {
 	}
 	
 	public RestEntity getEntity(String code) {	
+		WebClient client = getNewWebClientWithBuffer();
 		try {
-			return WebClient
-					.create()
+			return client
 					.get()
 					.uri(new URI(baseURL + code + summary + "," + maps + "," + parentsParam))
 					.retrieve()
@@ -163,9 +163,8 @@ public class EVSAPIBaseService {
 	}
 	
 	public List<Association> getRestAssociation(String code) {	
-
-		return Stream.of(WebClient
-				.create()
+		WebClient client = getNewWebClientWithBuffer();
+		return Stream.of(client
 				.get()
 				.uri(baseURL + code + associations)
 				.retrieve()
