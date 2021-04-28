@@ -152,9 +152,8 @@ public class EVSAPIBaseService {
 	}
 	
 	public List<Role> getRestRole(String code) {	
-
-		return Stream.of(WebClient
-				.create()
+		WebClient client = getNewWebClientWithBuffer();
+		return Stream.of(client
 				.get()
 				.uri(baseURL + code + roles)
 				.retrieve()
