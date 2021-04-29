@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,9 +26,6 @@ import gov.nih.nci.evs.report.exporter.util.CommonServices;
 @Service
 public class EVSAPIBaseService {
 	
-//	@Autowired
-//	RoleService roleService;
-//	
 	private Logger log = LoggerFactory.getLogger(TimedDeferredResultWrapper.class);
 	
     @Value("${NODE_LIST}")
@@ -121,9 +117,9 @@ public class EVSAPIBaseService {
 	}
 	
 	public RestEntity getEntity(String code) {	
+		WebClient client = getNewWebClientWithBuffer();
 		try {
-			return WebClient
-					.create()
+			return client
 					.get()
 					.uri(new URI(baseURL + code + summary + "," + maps + "," + parentsParam))
 					.retrieve()
@@ -152,9 +148,8 @@ public class EVSAPIBaseService {
 	}
 	
 	public List<Role> getRestRole(String code) {	
-
-		return Stream.of(WebClient
-				.create()
+		WebClient client = getNewWebClientWithBuffer();
+		return Stream.of(client
 				.get()
 				.uri(baseURL + code + roles)
 				.retrieve()
@@ -163,9 +158,8 @@ public class EVSAPIBaseService {
 	}
 	
 	public List<Association> getRestAssociation(String code) {	
-
-		return Stream.of(WebClient
-				.create()
+		WebClient client = getNewWebClientWithBuffer();
+		return Stream.of(client
 				.get()
 				.uri(baseURL + code + associations)
 				.retrieve()
