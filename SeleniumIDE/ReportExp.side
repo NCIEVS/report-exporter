@@ -2,7 +2,7 @@
   "id": "580af3e8-c850-4b90-952c-339744d16b23",
   "version": "2.0",
   "name": "ReportExp",
-  "url": "https://evs-dev.cancer.gov/report-exporter/",
+  "url": "https://evs.cancer.gov/report-exporter/",
   "tests": [{
     "id": "067aa33f-18ad-482d-9061-994ec790b3f9",
     "name": "ReadEntityAllCatsJSON",
@@ -6896,7 +6896,7 @@
         ["xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]", "xpath:position"],
         ["xpath=//li[contains(.,'Children to Resolve: 24068')]", "xpath:innerText"]
       ],
-      "value": " Children to Resolve: 24173"
+      "value": " Children to Resolve: 24433"
     }, {
       "id": "19a9dba3-adfb-4ffe-b9b8-6ecdd4092a67",
       "comment": "",
@@ -8172,6 +8172,6 @@
     "timeout": 300,
     "tests": ["067aa33f-18ad-482d-9061-994ec790b3f9"]
   }],
-  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/", "https://evs-dev.cancer.gov/report-exporter/"],
+  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/", "https://evs-dev.cancer.gov/report-exporter/", "https://evs.cancer.gov/report-exporter/"],
   "plugins": []
 }
