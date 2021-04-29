@@ -1,2 +1,2 @@
 # report-exporter
-export reports from lexevs queries.
+export reports from evs api queries.
