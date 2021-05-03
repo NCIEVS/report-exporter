@@ -7,6 +7,6 @@
 // is specified in package.json.
 module.exports = {
  publicPath: process.env.NODE_ENV === 'production'
-  ? '/reportexporter/'
+  ? '/report-exporter/'
   : '/'
 }

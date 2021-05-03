@@ -214,7 +214,7 @@ checks:
                       this.$notify({
                         group: 'app',
                         title: 'Invalid Concept Code',
-                        text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.',
+                        text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
                         type: 'error',
                         duration: 6000,
                         position: "left bottom"
@@ -235,8 +235,8 @@ checks:
                       // Display error message for this code
                       this.$notify({
                         group: 'app',
-                        title: 'Invalid Concept Code',
-                        text: '<b>' +tempCode+'</b> is not valid. Reason: No Roles for this concept code.',
+                        title: 'Warning',
+                        text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
                         type: 'error',
                         duration: 6000,
                         position: "left bottom"
@@ -257,8 +257,8 @@ checks:
                       // Display error message for this code
                       this.$notify({
                         group: 'app',
-                        title: 'Invalid Concept Code',
-                        text: '<b>' +tempCode+'</b> is not valid. Reason: No Associations for this concept code.',
+                        title: 'Warning',
+                        text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
                         type: 'error',
                         duration: 6000,
                         position: "left bottom"

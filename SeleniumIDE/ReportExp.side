@@ -2,7 +2,7 @@
   "id": "580af3e8-c850-4b90-952c-339744d16b23",
   "version": "2.0",
   "name": "ReportExp",
-  "url": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+  "url": "https://evs-dev.cancer.gov/report-exporter",
   "tests": [{
     "id": "067aa33f-18ad-482d-9061-994ec790b3f9",
     "name": "ReadEntityAllCatsJSON",
@@ -4970,7 +4970,7 @@
       "id": "4370e76b-d422-45ef-816d-63a6efd53229",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -6364,6 +6364,13 @@
       ],
       "value": ""
     }, {
+      "id": "bed7c02c-04c4-497c-ae1c-aa7bdeafc1da",
+      "comment": "",
+      "command": "waitForText",
+      "target": "css=.col-sm-4:nth-child(1) .badge",
+      "targets": [],
+      "value": "10"
+    }, {
       "id": "e5c20888-810b-4612-a321-9f9f059653a0",
       "comment": "",
       "command": "assertText",
@@ -6507,15 +6514,6 @@
       ],
       "value": "0"
     }, {
-      "id": "11d7d0cc-f0cc-4dd9-889e-e9e8f1c3c15d",
-      "comment": "",
-      "command": "click",
-      "target": "css=.fa-angle-double-right",
-      "targets": [
-        ["css=.fa-angle-double-right", "css:finder"]
-      ],
-      "value": ""
-    }, {
       "id": "18b26a13-6fa7-4956-a76b-2ff1b6caffcc",
       "comment": "",
       "command": "click",
@@ -6529,29 +6527,23 @@
       ],
       "value": ""
     }, {
-      "id": "73580397-0088-4087-9a76-69fc9f472ed0",
+      "id": "3ea45480-362e-4a20-86d2-8ea1d3fff51f",
       "comment": "",
       "command": "click",
-      "target": "id=downloadFormat",
-      "targets": [
-        ["id=downloadFormat", "id"],
-        ["css=#downloadFormat", "css:finder"],
-        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
-        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/select", "xpath:idRelative"],
-        ["xpath=//select", "xpath:position"]
-      ],
+      "target": "css=.fa-angle-double-right",
+      "targets": [],
       "value": ""
     }, {
       "id": "5a5e4365-474f-4a3a-9ec4-71f9ef3b60cf",
       "comment": "",
       "command": "click",
-      "target": "id=downloadFormat",
+      "target": "css=#read-codes-entry .wizard-footer-right .wizard-btn",
       "targets": [
-        ["id=downloadFormat", "id"],
-        ["css=#downloadFormat", "css:finder"],
-        ["xpath=//select[@id='downloadFormat']", "xpath:attributes"],
-        ["xpath=//div[@id='SelectFormatandExport2']/div/div/div/form/div/select", "xpath:idRelative"],
-        ["xpath=//select", "xpath:position"]
+        ["css=#read-codes-entry .wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='read-codes-entry']/div/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div[3]/div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
@@ -6828,7 +6820,7 @@
       "command": "waitForText",
       "target": "xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]",
       "targets": [],
-      "value": " Children to Resolve: 24173"
+      "value": " Children to Resolve: 24433"
     }, {
       "id": "36e01c5c-4470-4cc1-bb90-e613d6f37479",
       "comment": "",
@@ -6840,7 +6832,7 @@
         ["xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]", "xpath:position"],
         ["xpath=//li[contains(.,'Children to Resolve: 24068')]", "xpath:innerText"]
       ],
-      "value": " Children to Resolve: 24173"
+      "value": " Children to Resolve: 24433"
     }, {
       "id": "19a9dba3-adfb-4ffe-b9b8-6ecdd4092a67",
       "comment": "",
@@ -7020,7 +7012,7 @@
       "id": "794d7199-99f1-4f3c-9ceb-2d4a27d25184",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -7525,7 +7517,7 @@
       "id": "ceea58f9-7ea2-42d0-a12f-ea42ae722618",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -7768,7 +7760,7 @@
       "id": "e84a6cca-e4eb-47ff-a2ac-0a424f81358a",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -7959,7 +7951,7 @@
       "id": "a3c68ba8-cb68-45fb-ab87-a0896453344a",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -8330,7 +8322,7 @@
       "id": "15e200aa-9356-4f68-9cea-1970cb3336a6",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -8542,7 +8534,7 @@
       "id": "57a7be63-2ff4-4e10-973e-e289929dfb78",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -8644,7 +8636,7 @@
       "id": "ce36deaf-8eb9-4724-b0eb-cf62ee8e2a1a",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -8811,7 +8803,7 @@
       "id": "30f892f8-789e-4277-bafc-f96dfd089c6b",
       "comment": "",
       "command": "open",
-      "target": "https://evsreportexporter-dev.nci.nih.gov/reportexporter/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -8883,10 +8875,17 @@
       ],
       "value": ""
     }, {
+      "id": "892b6fdf-53eb-436a-b52e-8479debd1a5f",
+      "comment": "",
+      "command": "waitForText",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div",
+      "targets": [],
+      "value": "Concept_In_Subset"
+    }, {
       "id": "d836596d-83b8-43b5-9f2a-3a069a37c135",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(1)",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div",
       "targets": [
         ["css=.multi-select-option:nth-child(1)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div", "xpath:idRelative"],
@@ -8894,43 +8893,24 @@
       ],
       "value": "Concept_In_Subset"
     }, {
+      "id": "024de8ff-8de6-4f18-9c60-1e0ccc294f44",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]",
+      "targets": [],
+      "value": "Is_Value_For_GDC_Property"
+    }, {
+      "id": "7039700d-3fff-41d7-84b4-904a4da4a94e",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[3]",
+      "targets": [],
+      "value": "Is_PCDC_ALL_Permissible_Value_For_Variable"
+    }, {
       "id": "6e670067-1651-4802-9ca7-97f66ca7372d",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(2)",
-      "targets": [
-        ["css=.multi-select-option:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
-      ],
-      "value": "Has_Pharmaceutical_Intended_Site"
-    }, {
-      "id": "250cb850-75f1-4124-9ee7-a38700eb0c9d",
-      "comment": "",
-      "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(3)",
-      "targets": [
-        ["css=.multi-select-option:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
-      ],
-      "value": "Has_Pharmaceutical_Administration_Method"
-    }, {
-      "id": "a53c110a-d5e9-4f15-abbc-b69200b6813b",
-      "comment": "",
-      "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(4)",
-      "targets": [
-        ["css=.multi-select-option:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
-      ],
-      "value": "Has_Pharmaceutical_Transformation"
-    }, {
-      "id": "793f198a-a305-4895-a368-3dd603a7ac68",
-      "comment": "",
-      "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(5)",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[4]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
@@ -8938,21 +8918,21 @@
       ],
       "value": "Has_Pharmaceutical_State_Of_Matter"
     }, {
-      "id": "367b19aa-eff3-4f9e-9a56-d084a7d3d17f",
+      "id": "250cb850-75f1-4124-9ee7-a38700eb0c9d",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(6)",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[5]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
         ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
       ],
-      "value": "Has_Pharmaceutical_Basic_Dose_Form"
+      "value": "Has_Pharmaceutical_Transformation"
     }, {
-      "id": "4756e368-a9d1-4d4c-863c-a852cf298710",
+      "id": "a53c110a-d5e9-4f15-abbc-b69200b6813b",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(7)",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[6]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
@@ -8960,10 +8940,65 @@
       ],
       "value": "Has_Pharmaceutical_Release_Characteristics"
     }, {
+      "id": "793f198a-a305-4895-a368-3dd603a7ac68",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[7]",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_Intended_Site"
+    }, {
+      "id": "367b19aa-eff3-4f9e-9a56-d084a7d3d17f",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[8]",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_Administration_Method"
+    }, {
+      "id": "4756e368-a9d1-4d4c-863c-a852cf298710",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[9]",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Has_Pharmaceutical_Basic_Dose_Form"
+    }, {
       "id": "c1af39bb-037d-4d22-9e55-f617451f2332",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(8)",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[10]",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Is_PCDC_AML_Permissible_Value_For_Variable"
+    }, {
+      "id": "a2baae08-fbe3-418b-be23-2f0780d7d7b6",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[11]",
+      "targets": [
+        ["css=.multi-select-option:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Is_PCDC_GCT_Permissible_Value_For_Variable"
+    }, {
+      "id": "490bb3fc-75f6-4bbf-ac3d-3b9d180715a6",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[12]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
@@ -8980,6 +9015,6 @@
     "timeout": 300,
     "tests": ["067aa33f-18ad-482d-9061-994ec790b3f9"]
   }],
-  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/"],
+  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/", "https://evs-dev.cancer.gov/report-exporter"],
   "plugins": []
 }
