@@ -13,6 +13,8 @@ checks:
       have roles.
     associationsRequired: default to false. Determine if concept codes are required to
       have associations.
+    queryEntitySelection: default to "ENTITY". Determine the attribute to populate When
+      calling the api.getCodes() method.
 -->
 
 <template>
@@ -49,7 +51,8 @@ checks:
     props: {
       baseURL: { required: true, type: String },
       rolesRequired: { default: false, type: Boolean },
-      associationsRequired: { default: false, type: Boolean }
+      associationsRequired: { default: false, type: Boolean },
+      queryEntitySelection: { default: "ENTITY", type: String }
     },
 
     components: {
@@ -192,7 +195,7 @@ checks:
             loader: 'dots',
             isFullPage: false,
           });
-          api.getCodes(this.$baseURL, this.userEnteredCodes)
+          api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
             .then((data)=>{
               if (data != null) {
                 // loop through all codes and verify data is returned for each

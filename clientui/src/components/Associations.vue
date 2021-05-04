@@ -24,6 +24,7 @@
                         <entity-selection
                            :baseURL=this.$baseURL
                            :associationsRequired=true
+                           queryEntitySelection="ASSOC"
                           @entitesUpdated= "onEntitiesUpdated">
                        </entity-selection>
                       </div>

@@ -47,6 +47,8 @@ public class CommonServices {
 	
 	public enum Formats{JSON,CSV,TABD,EXCEL};
 	
+	public enum ResType{ENTITY,ROLE,ASSOC};
+	
 	public static Format[] formats = new Format[]
 			{new Format(Formats.JSON.name(), "JavaScript Object Notation Format", "json" ),
 			 new Format(Formats.CSV.name(), "Comma Separated Value Format", "csv" ),

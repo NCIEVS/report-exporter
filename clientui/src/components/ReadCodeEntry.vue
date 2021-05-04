@@ -24,6 +24,7 @@
                         <entity-selection
                            :baseURL=this.$baseURL
                            :rolesRequired=false
+                           queryEntitySelection="ENTITY"
                           @entitesUpdated= "onEntitiesUpdated">
                        </entity-selection>
                       </div>

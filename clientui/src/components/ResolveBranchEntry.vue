@@ -623,7 +623,7 @@ export default {
           });
 
         //console.log(this.selectedTags[0].key +" --- " + this.selectedTags[0].value)
-        api.getCodes(this.$baseURL, this.userEnteredCodes)
+        api.getCodes(this.$baseURL, this.userEnteredCodes, "ENTITY")
           .then((data)=>{
 
             if (data != null) {
