@@ -3,9 +3,9 @@ import axios from 'axios';
 const api = {
 
 
-	getCodes(baseUrl, codes){
+	getCodes(baseUrl, codes, queryEntitySelection){
       return new Promise((resolve)=>{
-          axios.get(baseUrl + 'codereadrest/' + encodeURIComponent(codes))
+          axios.get(baseUrl + 'codereadrestype/' + encodeURIComponent(codes) + '/' + queryEntitySelection)
               .then((response) =>{
                   resolve(response.data);
               })
