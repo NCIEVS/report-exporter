@@ -2,7 +2,7 @@
   "id": "580af3e8-c850-4b90-952c-339744d16b23",
   "version": "2.0",
   "name": "ReportExp",
-  "url": "https://evs-dev.cancer.gov/report-exporter",
+  "url": "http://localhost:8080/",
   "tests": [{
     "id": "067aa33f-18ad-482d-9061-994ec790b3f9",
     "name": "ReadEntityAllCatsJSON",
@@ -8588,6 +8588,13 @@
       ],
       "value": "${KEY_ENTER}"
     }, {
+      "id": "a6724847-08e5-4663-b48f-c4092516e70a",
+      "comment": "",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "ffe6e1ff-c91d-46d3-9066-b6d6486250dc",
       "comment": "",
       "command": "click",
@@ -8601,12 +8608,12 @@
       ],
       "value": ""
     }, {
-      "id": "a6724847-08e5-4663-b48f-c4092516e70a",
+      "id": "8cc02514-2716-44f3-9f67-913d0e2e6dfe",
       "comment": "",
-      "command": "waitForElementPresent",
+      "command": "waitForText",
       "target": "xpath=/html/body/div/div[4]/div/div[1]/div[2]/div[2]/div[2]/div/form/div[3]/div/div[1]/div/div[1]",
       "targets": [],
-      "value": "30000"
+      "value": "Gene_Product_Plays_Role_In_Biological_Process "
     }, {
       "id": "9de6836d-69b2-4fe2-b575-0309e0aba6f7",
       "comment": "",
@@ -8861,6 +8868,13 @@
         ["xpath=//div/div/div/div/input", "xpath:position"]
       ],
       "value": "${KEY_ENTER}"
+    }, {
+      "id": "c461081f-4ddc-4bdf-b707-65bf3e4f637a",
+      "comment": "",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
     }, {
       "id": "3c30c280-4a15-4782-8e4a-f16027bd336b",
       "comment": "",

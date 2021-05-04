@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("evs.api.url")
+@ConfigurationProperties("evs")
 public class ProfileConfiguration {
 	
 	Logger log = LoggerFactory.getLogger(ProfileConfiguration.class);
@@ -19,6 +19,8 @@ public class ProfileConfiguration {
 	String baseurl;
 	@Value("${evs.api.url.metadataurl}")
 	String metadataurl;
+	@Value("${evs.mail.list}")
+	String maillist;
 
 	@Profile("dev")
 	@Bean
