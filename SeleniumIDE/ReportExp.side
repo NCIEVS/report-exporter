@@ -2,7 +2,7 @@
   "id": "580af3e8-c850-4b90-952c-339744d16b23",
   "version": "2.0",
   "name": "ReportExp",
-  "url": "http://localhost:8080/",
+  "url": "https://evs-dev.cancer.gov/report-exporter",
   "tests": [{
     "id": "067aa33f-18ad-482d-9061-994ec790b3f9",
     "name": "ReadEntityAllCatsJSON",
@@ -10,7 +10,7 @@
       "id": "a6840ac3-dd55-4701-95f6-cf91f5548da6",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -193,7 +193,7 @@
       "id": "0eff640a-f6bb-4ccc-bc30-f5698ebbbd4d",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": " ",
       "targets": [],
       "value": ""
     }, {
@@ -434,7 +434,7 @@
       "id": "35afeb30-0f7f-4dcd-9e84-241aab721f58",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -585,7 +585,7 @@
       "id": "c0006f1a-d1a3-4b7b-a4dd-da0b26586955",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -747,7 +747,7 @@
       "id": "7cdb0764-0b68-40f5-9ad4-a3e99aff729a",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -1407,7 +1407,7 @@
       "id": "3518444e-d093-4fc0-98a3-9893ac083159",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -1721,7 +1721,7 @@
       "id": "5231dc9f-00a8-49a2-aee5-e68b0cbec5bc",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -1974,7 +1974,7 @@
       "id": "90ebf530-6887-4e26-a7ef-070f12d07b5b",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -2137,7 +2137,7 @@
       "id": "c443194a-ce8a-4534-86bb-37601d67f0f7",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -2300,7 +2300,7 @@
       "id": "cce2c6ed-a88f-489a-8fff-d6c526062827",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -2483,7 +2483,7 @@
       "id": "23e60ad5-de7e-4cc9-846c-fd342b5feed5",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -2755,7 +2755,7 @@
       "id": "2b44afaa-59ac-4e13-9a16-5711062bf5e0",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -3048,7 +3048,7 @@
       "id": "5a4782a4-8260-4b6b-8a2f-fa4f71666e15",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -3809,7 +3809,7 @@
       "id": "388c232b-8a3b-49d5-b9bb-f46a30ae6ebc",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -4075,7 +4075,7 @@
       "id": "73cc2097-da6a-471b-ba52-33b49a812bb3",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -4296,7 +4296,7 @@
       "id": "78721b73-a009-4565-bcbe-7b4f2728579c",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -4327,7 +4327,7 @@
       "id": "57386727-520c-4ad4-b904-d118abb9af87",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -4945,7 +4945,7 @@
       "id": "72ca36f9-2442-4840-bf2c-66ef16c14007",
       "comment": "",
       "command": "assertTitle",
-      "target": "Issues · NCIEVS/report-exporter · GitHub",
+      "target": "Issues · NCIEVS/report-exporter",
       "targets": [],
       "value": ""
     }, {
@@ -4970,7 +4970,7 @@
       "id": "4370e76b-d422-45ef-816d-63a6efd53229",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -5264,7 +5264,7 @@
       "id": "8ff16c35-aa8e-4ae6-b4eb-524d22e07071",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -6708,7 +6708,7 @@
       "id": "251a9792-1c1c-4a2b-806f-617f99321cdc",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -7012,7 +7012,7 @@
       "id": "794d7199-99f1-4f3c-9ceb-2d4a27d25184",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -7517,7 +7517,7 @@
       "id": "ceea58f9-7ea2-42d0-a12f-ea42ae722618",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -7760,7 +7760,7 @@
       "id": "e84a6cca-e4eb-47ff-a2ac-0a424f81358a",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -7951,7 +7951,7 @@
       "id": "a3c68ba8-cb68-45fb-ab87-a0896453344a",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -8322,7 +8322,7 @@
       "id": "15e200aa-9356-4f68-9cea-1970cb3336a6",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -8534,7 +8534,7 @@
       "id": "57a7be63-2ff4-4e10-973e-e289929dfb78",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -8643,7 +8643,7 @@
       "id": "ce36deaf-8eb9-4724-b0eb-cf62ee8e2a1a",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -8810,7 +8810,7 @@
       "id": "30f892f8-789e-4277-bafc-f96dfd089c6b",
       "comment": "",
       "command": "open",
-      "target": "/",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
