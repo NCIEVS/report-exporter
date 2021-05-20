@@ -1,6 +1,7 @@
 package gov.nih.nci.evs.report.exporter.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +107,19 @@ class CSVAssociationUtilityTest {
 		String test = services.calculateAndProduceSpacedAssociations(association,"C9999", "TestName", ",");
 		System.out.println(test);
 		assertEquals(test, "C9999,TestName,hasAssociationOf,1111,target1");
+	}
+	
+	@Test
+	void getSeparatedStringFromAssociationWithCommaTest() {
+		
+		Association association = new Association();
+		association.setType("hasAssociation, Of");
+		association.setRelatedCode("1111");
+		association.setRelatedName("target, 1");
+		String test = services.calculateAndProduceSpacedCSVAssociations(association,"C9999", "Test, Name", ",");
+		System.out.println(test);
+		assertNotEquals(test, "C9999,Test, Name,hasAssociation, Of,1111,target, 1");
+		assertEquals(test, "C9999,\"Test, Name\",\"hasAssociation, Of\",1111,\"target, 1\"");
 	}
 
 	
