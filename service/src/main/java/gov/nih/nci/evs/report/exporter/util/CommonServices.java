@@ -124,6 +124,23 @@ public class CommonServices {
 		return assocEle.stream().collect(Collectors.joining(separator));
 	}
 	
+	public String calculateAndProduceSpacedCSVAssociations(Association assoc, String code, String name, String separator) {
+		ArrayList<String> assocEle = new ArrayList<String>();
+		assocEle.add(code);
+		assocEle.add(adjustTextForContainedComma(name));
+		assocEle.add(adjustTextForContainedComma(assoc.getType()));
+		assocEle.add(assoc.getRelatedCode());
+		assocEle.add(adjustTextForContainedComma(assoc.getRelatedName()));
+		return assocEle.stream().collect(Collectors.joining(separator));
+	}
+	
+	public String adjustTextForContainedComma(String text) {
+	 if(text.contains(",")) {
+		 return "\"" + text + "\"";
+	 }
+	 else {return text;}
+	}
+	
 	public Row calculateAndProduceSpacedXLSRoles(Row row, Role role, String code, String name, int internalIndex) {
 		row.createCell(internalIndex++).setCellValue(code);
 		row.createCell(internalIndex++).setCellValue(name);
