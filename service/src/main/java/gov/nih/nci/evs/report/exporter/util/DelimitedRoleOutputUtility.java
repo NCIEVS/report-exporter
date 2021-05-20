@@ -38,7 +38,7 @@ public class DelimitedRoleOutputUtility extends FormatUtility {
 						x.getAssociations()
 						.stream()
 						.map(role -> 
-								services.calculateAndProduceSpacedAssociations(role, x.getCode(), x.getName(),separator)).collect(Collectors.joining("\r\n"))));				
+								services.calculateAndProduceSpacedCSVAssociations(role, x.getCode(), x.getName(),separator)).collect(Collectors.joining("\r\n"))));				
 		firstLine.append(services.getAssocHeadings().stream()
 			.collect(Collectors.joining(separator)));
 		oneLine.insert(0, firstLine);
