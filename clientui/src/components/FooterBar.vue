@@ -8,8 +8,6 @@
 						&nbsp; | &nbsp;
 						<a href="http://www.cancer.gov/global/web/policies/accessibility" title="link to NCI Accessibility Policies">Accessibility</a>
 						&nbsp; | &nbsp;
-						<a href="http://www.cancer.gov/global/viewing-files" title="link to NCI Tools for Viewing Files">Viewing Files</a>
-						&nbsp; | &nbsp;
 						<a href="http://www.cancer.gov/global/web/policies/foia" title="link to FOIA">FOIA</a>
 					</p>
 					<p>
