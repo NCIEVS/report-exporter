@@ -9036,7 +9036,7 @@
       "id": "e88ad235-0cd3-4cd4-b64c-d42a4ae8dc82",
       "comment": "",
       "command": "click",
-      "target": "xpath=//div[3]/div/div[2]/div[2]/a/button",
+      "target": "xpath=//div/div[4]/div/div[3]/div/div[1]/div[2]/a/button",
       "targets": [
         ["css=.card:nth-child(1) .align-self-end", "css:finder"],
         ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
@@ -9098,12 +9098,86 @@
         ["xpath=//div[@id='app']/div/span/div/div/div[2]", "xpath:idRelative"],
         ["xpath=//div/div[2]", "xpath:position"]
       ],
-      "value": "C123% is not valid. Reason: Concept Code Not Found."
+      "value": "C123% is not valid.\\nReason: Concept Code Not Found."
     }]
   }, {
-    "id": "e0df2622-f11f-4cbd-ab58-e09181994569",
+    "id": "31fd793a-c305-4fcc-ab3e-72dbf25239c7",
     "name": "BBadCharInURL",
-    "commands": []
+    "commands": [{
+      "id": "e62afef4-7f00-4a26-9fd5-b3fc8d736d48",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5bb6e107-a2b0-4918-afc9-e5bb37c16e88",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/div/div[2]/div[2]/a/button",
+      "targets": [
+        ["css=.card:nth-child(1) .align-self-end", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Start Selecting Concepts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "965c634e-3565-49de-bd59-e3af5c1dd24b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "66526215-09ce-406a-b435-14abf761a248",
+      "comment": "",
+      "command": "type",
+      "target": "css=.tags-input-wrapper-default > input",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C123%"
+    }, {
+      "id": "5152d84a-224b-42fb-a054-592db0c15bc8",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "913a1d1b-c2c0-4db0-8ae5-0ce8dfec6bf5",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=.notification-content",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "8f6e767c-2528-427c-bdea-62472a2ada1f",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.notification-content",
+      "targets": [
+        ["css=.notification-content", "css:finder"],
+        ["xpath=//div[@id='app']/div/span/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div[2]", "xpath:position"]
+      ],
+      "value": "C123% is not valid. Reason: Concept Code Not Found."
+    }]
   }],
   "suites": [{
     "id": "4788f753-9a11-4c8d-bca4-b6e4d8cf9579",
