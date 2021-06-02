@@ -1,5 +1,6 @@
 package gov.nih.nci.evs.report.exporter.service;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +60,8 @@ public class CodeReadService {
 	}
 	
 	public RestEntity getRestEntityWithParent(String code, List<Root> parents){
-		RestEntity entity = service.getEntity(code);
+		RestEntity entity = null;
+			entity = getCuratedEntityForCode(code);
 			entity.setParents(parents);
 		return entity;
 	}
@@ -143,7 +145,7 @@ public class CodeReadService {
 			entity.setRoles(roleService.getRolesForEntityCode(code));
 			entity.setAssociations(associationService.getAssociationsForCode(code));
 		}
-			catch (WebClientResponseException.NotFound nf) {
+			catch (WebClientResponseException.NotFound | URISyntaxException nf) {
 				entity = new RestEntity();
 				entity.setName("");
 				entity.setCode(code);
@@ -177,7 +179,7 @@ public class CodeReadService {
 			entity.setAssociations(associationService.getAssociationsForCode(code));
 			}
 		}
-			catch (WebClientResponseException.NotFound nf) {
+			catch (WebClientResponseException.NotFound | URISyntaxException wu) {
 				entity = new RestEntity();
 				entity.setName("");
 				entity.setCode(code);

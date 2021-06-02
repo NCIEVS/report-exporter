@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -116,19 +117,14 @@ public class EVSAPIBaseService {
 		return roots;
 	}
 	
-	public RestEntity getEntity(String code) {	
+	public RestEntity getEntity(String code) throws URISyntaxException {	
 		WebClient client = getNewWebClientWithBuffer();
-		try {
 			return client
 					.get()
 					.uri(new URI(baseURL + code + summary + "," + maps + "," + parentsParam))
 					.retrieve()
 					.bodyToMono(RestEntity.class)
 					.block();
-		} catch (URISyntaxException e) {
-			log.info("Bad Resource Request, check the URL for special characters: ", e);
-			return null;
-		}
 	}
 	
 	public RestEntity[] getEntities(String codes) {	

@@ -27,6 +27,9 @@ public class AssociationService {
 	@Autowired
 	EVSAPIBaseService service;
 	
+	@Autowired
+    CodeReadService crservice;
+	
 	DelimitedRoleOutputUtility utility;
 	
 	public List<Association> getAssociationsForCode(String code){
@@ -41,14 +44,14 @@ public class AssociationService {
 	
 	
 	public RestEntity getRestEntityForRelNode(String code) {
-		return service.getEntity(code);
+		return crservice.getCuratedEntityForCode(code);
 	}
 	
 	public RestEntity getRestAssociationEntityForRoleNode(String code) {
 
 		RestEntity entity = new RestEntity();
 		
-		RestEntity rEntity = service.getEntity(code);
+		RestEntity rEntity = crservice.getCuratedEntityForCode(code);
 		if(rEntity == null) {throw new RuntimeException("Code has no associations or does not exist");}
 		entity.setCode(rEntity.getCode());
 		entity.setName(rEntity.getName());

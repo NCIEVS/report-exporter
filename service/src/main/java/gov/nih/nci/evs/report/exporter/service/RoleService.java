@@ -26,6 +26,9 @@ public class RoleService {
 	@Autowired
 	EVSAPIBaseService service;
 	
+	@Autowired
+    CodeReadService crservice;
+	
 	DelimitedRoleOutputUtility utility;
 	
 	public List<Role> getRolesForEntityCode(String code){
@@ -40,14 +43,14 @@ public class RoleService {
 	
 	
 	public RestEntity getRestEntityForRoleNode(String code) {
-		return service.getEntity(code);
+		return crservice.getCuratedEntityForCode(code);
 	}
 	
 	public RestEntity getRestRoleEntityForRoleNode(String code) {
 
 		RestEntity entity = new RestEntity();
 		
-		RestEntity rEntity = service.getEntity(code);
+		RestEntity rEntity = crservice.getCuratedEntityForCode(code);
 		if(rEntity == null) {throw new RuntimeException("Code has no roles or does not exist");}
 		entity.setCode(rEntity.getCode());
 		entity.setName(rEntity.getName());

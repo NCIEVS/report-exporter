@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,9 +62,14 @@ class CodeReadUtilityMethodsTest {
 	
 	@Test
 	void testCurationFilterException(){
-		doThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND))
-		.when(service).getEntity( 
-				Mockito.anyString());
+		try {
+			doThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND))
+			.when(service).getEntity( 
+					Mockito.anyString());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	    Exception exception = assertThrows(HttpClientErrorException.class, () -> {
 	    	crservice.getCuratedEntityForCode("CNOTVALID");;
@@ -73,11 +79,27 @@ class CodeReadUtilityMethodsTest {
 	    assertEquals(expected, actual);
 	}
 	
+//	@Test
+//	void testCurationFilterURIException(){
+//
+//	    Exception exception = assertThrows(URISyntaxException.class, () -> {
+//	    	crservice.getCuratedEntityForCode("C%123");
+//	    });
+//	    String expected = "404 NOT_FOUND";
+//	    String actual = exception.getMessage();
+//	    assertEquals(expected, actual);
+//	}
+//	
 	@Test
 	void testCurationFilterRetired(){		
-		doReturn(getEntity())
-		.when(service).getEntity(
-				Mockito.anyString());
+		try {
+			doReturn(getEntity())
+			.when(service).getEntity(
+					Mockito.anyString());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	    RestEntity retiredErrorEnt = crservice.getCuratedEntityForCode("CMUSTBERETIRED");
 	    
