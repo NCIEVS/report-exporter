@@ -550,7 +550,7 @@
         ["xpath=//div[2]/div/div/span", "xpath:position"],
         ["xpath=//span[contains(.,'46')]", "xpath:innerText"]
       ],
-      "value": "46"
+      "value": "47"
     }, {
       "id": "3a17cdf9-51e8-4312-80e2-ac313f828af1",
       "comment": "",
@@ -3769,6 +3769,17 @@
       ],
       "value": ""
     }, {
+      "id": "214eb12c-2431-45a2-9d45-e3c22e5a244c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "b5baf69b-9945-4961-9591-e8013b527790",
       "comment": "",
       "command": "click",
@@ -3794,7 +3805,7 @@
       "id": "a7ae7ecc-296f-48a3-afb9-e556b1dd3fd4",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(46)",
+      "target": "css=.multi-select-option:nth-child(47)",
       "targets": [
         ["css=.multi-select-option:nth-child(46)", "css:finder"],
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div[3]/div/div[46]", "xpath:idRelative"],
@@ -5062,33 +5073,6 @@
       "targets": [],
       "value": ""
     }, {
-      "id": "9a9c035c-920f-4256-8836-ec948b9d691a",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Viewing Files",
-      "targets": [
-        ["linkText=Viewing Files", "linkText"],
-        ["css=p:nth-child(1) > a:nth-child(3)", "css:finder"],
-        ["xpath=//a[contains(text(),'Viewing Files')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div[5]/div/div/div/p/a[3]", "xpath:idRelative"],
-        ["xpath=//a[@href='http://www.cancer.gov/global/viewing-files']", "xpath:href"],
-        ["xpath=//p/a[3]", "xpath:position"],
-        ["xpath=//a[contains(.,'Viewing Files')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "ee9d9485-0f27-4655-a7f9-62992a9d89a3",
-      "comment": "",
-      "command": "assertText",
-      "target": "css=.resize-content > h1",
-      "targets": [
-        ["css=.resize-content > h1", "css:finder"],
-        ["xpath=//div[@id='main']/article/div/h1", "xpath:idRelative"],
-        ["xpath=//h1", "xpath:position"],
-        ["xpath=//h1[contains(.,'Accessibility Policy')]", "xpath:innerText"]
-      ],
-      "value": "Accessibility Policy"
-    }, {
       "id": "5a2476c3-e7b7-480a-a970-899a4ddf1708",
       "comment": "",
       "command": "click",
@@ -5816,6 +5800,24 @@
       "targets": [],
       "value": "NCBI_Taxon_ID"
     }, {
+      "id": "607cd608-7c50-4ae2-8a72-fc57a0d0a92c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b1a2b54e-aa44-4c2f-82e9-8ed65baec010",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "NCI_Drug_Dictionary_ID"
+    }, {
       "id": "0bf7bc7b-72a3-4b4a-a74f-2362ee35d221",
       "comment": "",
       "command": "click",
@@ -6197,7 +6199,7 @@
       "id": "7ff4686f-d98b-4cff-b54a-59123b99c780",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(46)",
+      "target": "css=.multi-select-option:nth-child(47)",
       "targets": [],
       "value": "miRBase_ID"
     }, {
@@ -6820,7 +6822,7 @@
       "command": "waitForText",
       "target": "xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]",
       "targets": [],
-      "value": " Children to Resolve: 24433"
+      "value": " Children to Resolve: 24565"
     }, {
       "id": "36e01c5c-4470-4cc1-bb90-e613d6f37479",
       "comment": "",
@@ -6832,7 +6834,7 @@
         ["xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]", "xpath:position"],
         ["xpath=//li[contains(.,'Children to Resolve: 24068')]", "xpath:innerText"]
       ],
-      "value": " Children to Resolve: 24433"
+      "value": " Children to Resolve: 24565"
     }, {
       "id": "19a9dba3-adfb-4ffe-b9b8-6ecdd4092a67",
       "comment": "",
@@ -9020,6 +9022,88 @@
       ],
       "value": "Is_PCDC_EWS_Permissible_Value_For_Variable"
     }]
+  }, {
+    "id": "0964549c-25e5-43d8-a243-5551f177c73a",
+    "name": "BadCharInURL",
+    "commands": [{
+      "id": "5779b3b6-4517-4e1f-a58e-52e4311e71f9",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e88ad235-0cd3-4cd4-b64c-d42a4ae8dc82",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[3]/div/div[2]/div[2]/a/button",
+      "targets": [
+        ["css=.card:nth-child(1) .align-self-end", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Start Selecting Concepts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "02af89ac-8861-480f-8756-fa48ad4db491",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tags-input-wrapper-default > input",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fcb3d6b1-5490-4900-acd2-8fe25b424aec",
+      "comment": "",
+      "command": "type",
+      "target": "css=.tags-input-wrapper-default > input",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C123%"
+    }, {
+      "id": "f5273eaa-afde-481b-bb3b-d2ffb715fd18",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "css=.tags-input-wrapper-default > input",
+      "targets": [
+        ["css=.tags-input-wrapper-default > input", "css:finder"],
+        ["xpath=(//input[@type='text'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='SelectConceptCodesforEntityExport0']/div/div/div/div/form/div/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "2248fc8a-294f-4faa-9989-5ecc21454b75",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=.notification-content",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "924792b9-9c25-4a32-8e49-8d5ce8294038",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.notification-content",
+      "targets": [
+        ["css=.notification-content", "css:finder"],
+        ["xpath=//div[@id='app']/div/span/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div[2]", "xpath:position"]
+      ],
+      "value": "C123% is not valid. Reason: Concept Code Not Found."
+    }]
+  }, {
+    "id": "e0df2622-f11f-4cbd-ab58-e09181994569",
+    "name": "BBadCharInURL",
+    "commands": []
   }],
   "suites": [{
     "id": "4788f753-9a11-4c8d-bca4-b6e4d8cf9579",
