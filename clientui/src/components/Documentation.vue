@@ -163,10 +163,10 @@
                               <div class="collapse" id="accordion-tab-2-content-5" aria-labelledby="accordion-tab-2-heading-5" data-parent="#accordion-tab-2">
                                   <div class="card-body">
                                     <p>
-                                      The export is successfull if there are no error dialogs and the file is downloaded to your system.
+                                      The export is successful if there are no error dialogs and the file is down-loaded to your system.
                                     </p>
                                     <p>
-                                      There will be a file that is downloaded named entities.json, entities.csv, entities.txt, or entities.xlsx based on the file type selected.
+                                      There will be a file that is down-loaded named entities.json, entities.csv, entities.txt, or entities.xlsx based on the file type selected.
                                     </p>
                                   </div>
                               </div>
@@ -742,6 +742,10 @@
                                     </p>
                                     <p>
                                       The attribute names of the objects correspond to headings you would see in the EXCEL and character delimited files.
+                                    </p>
+                                    <p>
+                                      Inter-terminology maps are displayed as empty when these mappings exist, but maps are not selected for JSON output. 
+                                      Maps are not displayed as an attribute at all if the entity has no mappings to other terminologies.
                                     </p>
                                   </div>
                               </div>
