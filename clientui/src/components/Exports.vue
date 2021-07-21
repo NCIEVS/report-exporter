@@ -22,7 +22,7 @@
 
             <!--  DOWNLOAD TABLE TAB START -->
             <div class="downloadContainer">
-                <p class="lead">The table below has list of deferred downlods that have been requested.
+                <p class="lead">The table below has list of deferred downloads that have been requested.
                   If the download is not here, it may have expired.</p>
 
               <table class="table table-hover">
