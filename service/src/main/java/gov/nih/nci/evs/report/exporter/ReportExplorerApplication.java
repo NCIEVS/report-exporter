@@ -61,6 +61,8 @@ public class ReportExplorerApplication extends SpringBootServletInitializer{
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url,ui_client_co_url);
 					registry.addMapping("/roots/**")
 						.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url,ui_client_co_url);
+					registry.addMapping("/roles/**")
+					.allowedOrigins(prod_co_url,dev_co_url,client_co_url,qa_co_url,stage_co_url,ui_client_co_url);
 				}
 			};
 		}

@@ -16,6 +16,8 @@ import ReportSelection from './components/ReportSelection.vue'
 import ReadCodeEntry from './components/ReadCodeEntry.vue'
 import SearchTermEntry from './components/SearchTermEntry.vue'
 import ResolveBranchEntry from './components/ResolveBranchEntry.vue'
+import Roles from './components/Roles.vue'
+import Associations from './components/Associations.vue'
 
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
@@ -23,6 +25,10 @@ import vMultiselectListbox from 'vue-multiselect-listbox'
 import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 Vue.use(VueFormWizard)
+
+import VueFormGenerator from 'vue-form-generator'
+//import 'vue-form-generator/dist/vfg.css'
+Vue.use(VueFormGenerator)
 
 import Notifications from 'vue-notification'
 import ThemifyIcon from "vue-themify-icons";
@@ -62,6 +68,8 @@ const routes = [
   { path: '/readCodeEntry', component: ReadCodeEntry, props: { msg: "this is it", selectedTags:[] }},
   { path: '/searchTermEntry', component: SearchTermEntry },
   { path: '/resolveBranchEntry', component: ResolveBranchEntry },
+  { path: '/roles', component: Roles },
+  { path: '/associations', component: Associations },
   { path: '/about', component: About },
   { path: '/documentation', component: Documentation },
   { path: '/exports', component: Exports },
@@ -92,7 +100,7 @@ Vue.prototype.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT
 console.log('Base URL:     ' + Vue.prototype.$baseURL)
 //console.log('VUE_APP_GA_CODE:     ' + process.env.VUE_APP_GA_CODE)
 
-// instatinate the vue instance
+// instatiate the vue instance
 new Vue({
   // define the selector for the root component
   //el: '#app',

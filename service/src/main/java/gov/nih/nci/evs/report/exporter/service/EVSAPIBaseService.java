@@ -14,10 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.RestPropertyMetadata;
+import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
@@ -50,6 +53,9 @@ public class EVSAPIBaseService {
 	@Value("${PARENTS}")
 	private String parents;
 	
+	@Value("${ROLES}")
+	private String roles;
+	
 	@Value("${PARENTS_PARAM}")
 	private String parentsParam;
 	
@@ -67,6 +73,20 @@ public class EVSAPIBaseService {
 	
 	@Value("${REST_ROOT_FILTER_LIST:C28428}")
 	private String rootFilterList;
+
+	@Value("${evs.mail.list}")
+	private String emailList;
+	
+	@Value("${SMTP_SERVER}")
+	private String smtpServer;
+	
+	@Value("${DEFAULT_FROM_EMAIL}")
+	private String defaultEmail;
+
+	@Value("${ASSOCIATIONS}")
+	private String associations;
+	
+	
     
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
 		return 
@@ -97,19 +117,14 @@ public class EVSAPIBaseService {
 		return roots;
 	}
 	
-	public RestEntity getEntity(String code) {	
-		try {
-			return WebClient
-					.create()
+	public RestEntity getEntity(String code) throws URISyntaxException {	
+		WebClient client = getNewWebClientWithBuffer();
+			return client
 					.get()
 					.uri(new URI(baseURL + code + summary + "," + maps + "," + parentsParam))
 					.retrieve()
 					.bodyToMono(RestEntity.class)
 					.block();
-		} catch (URISyntaxException e) {
-			log.info("Bad Resource Request, check the URL for special characters: ", e);
-			return null;
-		}
 	}
 	
 	public RestEntity[] getEntities(String codes) {	
@@ -126,6 +141,26 @@ public class EVSAPIBaseService {
 			log.info("Bad Resource Request, check the URL for special characters: ", e);
 			return null;
 		}
+	}
+	
+	public List<Role> getRestRole(String code) {	
+		WebClient client = getNewWebClientWithBuffer();
+		return Stream.of(client
+				.get()
+				.uri(baseURL + code + roles)
+				.retrieve()
+				.bodyToMono(Role[].class)
+				.block()).collect(Collectors.toList());			
+	}
+	
+	public List<Association> getRestAssociation(String code) {	
+		WebClient client = getNewWebClientWithBuffer();
+		return Stream.of(client
+				.get()
+				.uri(baseURL + code + associations)
+				.retrieve()
+				.bodyToMono(Association[].class)
+				.block()).collect(Collectors.toList());			
 	}
 	
 	public Root[] getRestRoots(RestTemplate template){
@@ -199,6 +234,31 @@ public class EVSAPIBaseService {
 
 	public String getRootFilterList() {
 		return rootFilterList;
+	}
+	
+	public String getEmailList() {
+		return emailList;
+	}
+
+	public void setEmailList(String emailList) {
+		this.emailList = emailList;
+	}
+
+	public String getSmtpServer() {
+		return smtpServer;
+	}
+
+	public void setSmtpServer(String smtpServer) {
+		this.smtpServer = smtpServer;
+	}
+
+
+	public String getDefaultEmail() {
+		return defaultEmail;
+	}
+
+	public void setDefaultEmail(String defaultEmail) {
+		this.defaultEmail = defaultEmail;
 	}
 
 	public WebClient getNewWebClientWithBuffer() {

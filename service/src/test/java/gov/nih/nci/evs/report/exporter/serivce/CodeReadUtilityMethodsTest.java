@@ -7,22 +7,30 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
+import gov.nih.nci.evs.report.exporter.service.AssociationService;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.EVSAPIBaseService;
+import gov.nih.nci.evs.report.exporter.service.RoleService;
 
+@RunWith( SpringRunner.class )
+@SpringBootTest
 class CodeReadUtilityMethodsTest {
 	
 	@Autowired
@@ -30,12 +38,20 @@ class CodeReadUtilityMethodsTest {
 	
 	EVSAPIBaseService service;
 	
+	RoleService roleService;
+	
+	AssociationService associationService;
+	
 
 	@BeforeEach
 	void setUp() throws Exception {
 		crservice = new CodeReadService();
 		service = Mockito.mock(EVSAPIBaseService.class);
+		roleService = Mockito.mock(RoleService.class);
+		associationService = Mockito.mock(AssociationService.class);
 		crservice.setService(service);
+		crservice.setRoleService(roleService);
+		crservice.setAssociationService(associationService);
 		}
 
 	@Test
@@ -46,10 +62,14 @@ class CodeReadUtilityMethodsTest {
 	
 	@Test
 	void testCurationFilterException(){
-		//EVSAPIBaseService spyService = Mockito.spy(EVSAPIBaseService.class);
-		doThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND))
-		.when(service).getEntity( 
-				Mockito.anyString());
+		try {
+			doThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND))
+			.when(service).getEntity( 
+					Mockito.anyString());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	    Exception exception = assertThrows(HttpClientErrorException.class, () -> {
 	    	crservice.getCuratedEntityForCode("CNOTVALID");;
@@ -59,12 +79,27 @@ class CodeReadUtilityMethodsTest {
 	    assertEquals(expected, actual);
 	}
 	
+//	@Test
+//	void testCurationFilterURIException(){
+//
+//	    Exception exception = assertThrows(URISyntaxException.class, () -> {
+//	    	crservice.getCuratedEntityForCode("C%123");
+//	    });
+//	    String expected = "404 NOT_FOUND";
+//	    String actual = exception.getMessage();
+//	    assertEquals(expected, actual);
+//	}
+//	
 	@Test
-	void testCurationFilterRetired(){
-//		EVSAPIBaseService spyService = Mockito.spy(EVSAPIBaseService.class);		
-		doReturn(getEntity())
-		.when(service).getEntity(
-				Mockito.anyString());
+	void testCurationFilterRetired(){		
+		try {
+			doReturn(getEntity())
+			.when(service).getEntity(
+					Mockito.anyString());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	    RestEntity retiredErrorEnt = crservice.getCuratedEntityForCode("CMUSTBERETIRED");
 	    

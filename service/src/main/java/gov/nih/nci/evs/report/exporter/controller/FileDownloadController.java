@@ -30,10 +30,12 @@ import org.springframework.web.context.request.async.DeferredResult.DeferredResu
 
 import gov.nih.nci.evs.report.exporter.model.DeferredStatus;
 import gov.nih.nci.evs.report.exporter.model.Format;
+import gov.nih.nci.evs.report.exporter.service.AssociationService;
 import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutService;
 import gov.nih.nci.evs.report.exporter.service.FormattedBranchOutPutServiceDeferredWrapper;
 import gov.nih.nci.evs.report.exporter.service.FormattedOutputService;
+import gov.nih.nci.evs.report.exporter.service.RoleService;
 import gov.nih.nci.evs.report.exporter.service.TimedDeferredResultWrapper;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 import gov.nih.nci.evs.report.exporter.util.TimedEvictionConcurrentMap;
@@ -44,18 +46,9 @@ public class FileDownloadController {
 	
 	private static final Logger log = LoggerFactory.getLogger(FileDownloadController.class);
 	
-//	public enum Formats{JSON,CSV,TABD,EXCEL};
-	public enum BranchFormats{JSON,JSON_FLAT,CSV,TABD,EXCEL};
-	
 	@Value("${RESULT_TIME_OUT:3600000}")
 	public int resultTimeOut;
 	
-//	
-//	public Format[] formats = new Format[]
-//			{new Format(Formats.JSON.name(), "JavaScript Object Notation Format", "json" ),
-//			 new Format(Formats.CSV.name(), "Comma Separated Value Format", "csv" ),
-//			 new Format(Formats.TABD.name(), "Tab Delimited Value Format", "txt" ),
-//			 new Format(Formats.EXCEL.name(), "Microsoft Excel Format", "xlsx" )};
 	
 	@Autowired
 	FormattedOutputService service;
@@ -68,6 +61,12 @@ public class FileDownloadController {
 	
 	@Autowired
 	CodeReadService codeReadService;
+	
+	@Autowired
+	RoleService roleService;
+	
+	@Autowired
+	AssociationService associationService;
 
 	@GetMapping(
 			  value = "/get-file/{id}/JsonFile.json",
@@ -220,10 +219,6 @@ public class FileDownloadController {
 	@GetMapping(value = "deferred/checkFileForHashFormatResponseEntity/{hash}/{format}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<InputStreamResource> getDeferredResponseEntityResult(@PathVariable String hash,
 			@PathVariable String format, @PathVariable String fileName) {
-//		log.info("Hash for download: " + hash);
-//		log.info("Result wrapper exists? " + TimedEvictionConcurrentMap.getdRHash().containsKey(hash));
-//		log.info("DeferredResult exists? " + (TimedEvictionConcurrentMap.getdRHash().get(hash) != null));
-//		log.info("Result exists? " + TimedEvictionConcurrentMap.getdRHash().get(hash).getResult().hasResult());
 		ByteArrayInputStream in = null;
 		try {
 		 in = new ByteArrayInputStream((byte[]) TimedEvictionConcurrentMap.getdRHash()
@@ -265,23 +260,24 @@ public class FileDownloadController {
 					@PathVariable String max,
 					@PathVariable String format,
 					@PathVariable String filename) throws IOException {
-				CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
-				switch(fmt) {
-		            case JSON: 
-		            	return IOUtils.toByteArray(
-		         			    branchService.getJsonBytesForRestChildParams(id, max));
-		            case CSV:
-					    return IOUtils.toByteArray(
-					    		branchService.getChildCSVBytesForRestParams(id, max));
-		            case TABD: 
-					    return IOUtils.toByteArray(
-					    		branchService.getChildTabDelBytesForRestParams(id, max));
-		            default:
-		            	return IOUtils.toByteArray(
-		            			branchService.getJsonBytesForRestChildParams(id, max));
-				}
-
+		CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
+		switch(fmt) {
+            case JSON: 
+            	return IOUtils.toByteArray(
+         			    branchService.getJsonBytesForRestChildParams(id, max));
+            case CSV:
+			    return IOUtils.toByteArray(
+			    		branchService.getChildCSVBytesForRestParams(id, max));
+            case TABD: 
+			    return IOUtils.toByteArray(
+			    		branchService.getChildTabDelBytesForRestParams(id, max));
+            default:
+            	return IOUtils.toByteArray(
+            			branchService.getJsonBytesForRestChildParams(id, max));
+		}
 			}
+	
+
 	
 	@GetMapping("/get-minfile-for-resolved-branch/{id}/{props}/{max}/EXCEL/{filename}")
 	public ResponseEntity<InputStreamResource> minimalFileReportForExcelBranch(@PathVariable String id, 
@@ -292,5 +288,84 @@ public class FileDownloadController {
 	    return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 	}
 	
+	@GetMapping(
+			  value = "/get-file-for-resolved-roles/{codes}/{roles}/{format}/{filename}",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+					)
+					public ResponseEntity<InputStreamResource>  getRoleFileByFormatForBranch(@PathVariable String codes,
+					@PathVariable String roles,
+					@PathVariable String format,
+					@PathVariable String filename) throws IOException {
+					ByteArrayInputStream in;
+					HttpHeaders headers = new HttpHeaders();
+					CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
+				switch(fmt) {
+		            case JSON: 
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) roleService.getJsonBytesForRestRoleParams(codes, roles);
+		            	break;
+		            case CSV:
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".csv");
+		            	in = (ByteArrayInputStream) 
+					    		roleService.getChildCSVBytesForRestRoleParams(codes, roles);
+		            	break;
+		            case TABD:
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".txt");
+		            	in = (ByteArrayInputStream) 
+					    		roleService.getChildTabDelBytesForRestRoleParams(codes, roles);
+		            	break;
+		            case EXCEL:
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+		            	in = roleService.getChildExcelBytesForRestRoleParams(codes, roles);
+		    			break;
+		            default:
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) 
+		            			roleService.getJsonBytesForRestRoleParams(codes, roles);
+				}
+				
+				return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 
+			}
+	
+	@GetMapping(
+			  value = "/get-file-for-resolved-associations/{codes}/{assocs}/{format}/{filename}",
+			  produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+					)
+					public ResponseEntity<InputStreamResource>  getAssociationFileByFormatForBranch(@PathVariable String codes,
+					@PathVariable String assocs,
+					@PathVariable String format,
+					@PathVariable String filename) throws IOException {
+					ByteArrayInputStream in;
+					HttpHeaders headers = new HttpHeaders();
+					CommonServices.Formats fmt = CommonServices.Formats.valueOf(format);
+				switch(fmt) {
+		            case JSON: 
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) associationService.getJsonBytesForRestAssociationParams(codes, assocs);
+		            	break;
+		            case CSV:
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".csv");
+		            	in = (ByteArrayInputStream) 
+					    		associationService.getChildCSVBytesForRestAssociationParams(codes, assocs);
+		            	break;
+		            case TABD:
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".txt");
+		            	in = (ByteArrayInputStream) 
+					    		associationService.getChildTabDelBytesForRestAssociationParams(codes, assocs);
+		            	break;
+		            case EXCEL:
+		    			headers.add("Content-Disposition", "attachment; filename=" + filename + ".xlsx");
+		            	in = associationService.getChildExcelBytesForRestAssociationParams(codes, assocs);
+		    			break;
+		            default:
+		            	headers.add("Content-Disposition", "attachment; filename=" + filename + ".json");
+		            	in = (ByteArrayInputStream) 
+		            			associationService.getJsonBytesForRestAssociationParams(codes, assocs);
+				}
+				
+				return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+
+			}
+	
 }

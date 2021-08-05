@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,9 +24,12 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.Format;
 import gov.nih.nci.evs.report.exporter.model.Property;
 import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
+import gov.nih.nci.evs.report.exporter.model.Rel;
+import gov.nih.nci.evs.report.exporter.model.Role;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
 import gov.nih.nci.evs.report.exporter.model.TypeListAndPositionTuple;
 
@@ -42,6 +46,8 @@ public class CommonServices {
 	private boolean noMaps= false;
 	
 	public enum Formats{JSON,CSV,TABD,EXCEL};
+	
+	public enum ResType{ENTITY,ROLE,ASSOC};
 	
 	public static Format[] formats = new Format[]
 			{new Format(Formats.JSON.name(), "JavaScript Object Notation Format", "json" ),
@@ -98,6 +104,61 @@ public class CommonServices {
 				getOrderedPropertyLists(propHeaderMap), separator);
 	}
 	
+	public String calculateAndProduceSpacedRoles(Role role, String code, String name, String separator) {
+		ArrayList<String> roleEle = new ArrayList<String>();
+		roleEle.add(code);
+		roleEle.add(name);
+		roleEle.add(role.getType());
+		roleEle.add(role.getRelatedCode());
+		roleEle.add(role.getRelatedName());
+		return roleEle.stream().collect(Collectors.joining(separator));
+	}
+	
+	public String calculateAndProduceSpacedAssociations(Association assoc, String code, String name, String separator) {
+		ArrayList<String> assocEle = new ArrayList<String>();
+		assocEle.add(code);
+		assocEle.add(name);
+		assocEle.add(assoc.getType());
+		assocEle.add(assoc.getRelatedCode());
+		assocEle.add(assoc.getRelatedName());
+		return assocEle.stream().collect(Collectors.joining(separator));
+	}
+	
+	public String calculateAndProduceSpacedCSVAssociations(Association assoc, String code, String name, String separator) {
+		ArrayList<String> assocEle = new ArrayList<String>();
+		assocEle.add(code);
+		assocEle.add(adjustTextForContainedComma(name));
+		assocEle.add(adjustTextForContainedComma(assoc.getType()));
+		assocEle.add(assoc.getRelatedCode());
+		assocEle.add(adjustTextForContainedComma(assoc.getRelatedName()));
+		return assocEle.stream().collect(Collectors.joining(separator));
+	}
+	
+	public String adjustTextForContainedComma(String text) {
+	 if(text.contains(",")) {
+		 return "\"" + text + "\"";
+	 }
+	 else {return text;}
+	}
+	
+	public Row calculateAndProduceSpacedXLSRoles(Row row, Role role, String code, String name, int internalIndex) {
+		row.createCell(internalIndex++).setCellValue(code);
+		row.createCell(internalIndex++).setCellValue(name);
+		row.createCell(internalIndex++).setCellValue(role.getType());
+		row.createCell(internalIndex++).setCellValue(role.getRelatedCode());
+		row.createCell(internalIndex++).setCellValue(role.getRelatedName());
+		return row;
+	}
+	
+	public Row calculateAndProduceSpacedXLSAssociations(Row row, Association association, String code, String name, int internalIndex) {
+		row.createCell(internalIndex++).setCellValue(code);
+		row.createCell(internalIndex++).setCellValue(name);
+		row.createCell(internalIndex++).setCellValue(association.getType());
+		row.createCell(internalIndex++).setCellValue(association.getRelatedCode());
+		row.createCell(internalIndex++).setCellValue(association.getRelatedName());
+		return row;
+	}
+	
 	public void clearPropertyListsFromHeaderMap() {
 		getPropHeaderMap()
 		.keySet()
@@ -141,6 +202,16 @@ public class CommonServices {
 		.filter(x -> x != getDefinitionHeaderForIndicator(services))
 		.filter(x -> x != getSynonymHeaderForIndicator(services))
 		.filter(x -> x != getMapHeaderForIndicator(services))
+		.collect(Collectors.toList());
+	}
+	
+	public List<String> getRoleHeadings() {
+		return Stream.of(FormatUtility.ROLE_FIELDS)
+		.collect(Collectors.toList());
+	}
+	
+	public List<String> getAssocHeadings() {
+		return Stream.of(FormatUtility.ASSOCIATION_FIELDS)
 		.collect(Collectors.toList());
 	}
 	
@@ -308,6 +379,33 @@ public class CommonServices {
 
 			return this.flattenListValuesIntoRowCells(getOrderedPropertyLists(propHeaderMap), row, index);
 	  }
+	  
+	 public static void saveOrUpdateWeightedRels(Rel role, Hashtable<String, Rel> wRoles) {
+			Rel rStored = wRoles.get(role.getType());
+			role.setWeight(1);
+			if(rStored == null){wRoles.put(role.getType(), role);
+			}else {rStored.setWeight(rStored.getWeight() + 1);
+			}
+		}
+	 
+		
+		public static List<Rel> getSortedRels(List<? extends Rel> rels){
+			return CommonServices.sortRelListByWeight(getDistinctWeightedRelsForEntityCodes(rels));
+		}
+		
+		public static List<Rel> getDistinctWeightedRelsForEntityCodes(List<? extends Rel> rawRels){
+			Hashtable<String,Rel> distinctRels = new Hashtable<String,Rel>();	
+			rawRels.stream().forEach(x -> CommonServices.saveOrUpdateWeightedRels(x, distinctRels));
+			return distinctRels.values().stream().collect(Collectors.toList());
+		}
+	 
+		public static List<Rel> sortRelListByWeight(List<Rel> rels){
+			Collections.sort(rels, new Comparator<Rel>() {            @Override
+	            public int compare(Rel r1, Rel r2) {
+	            return r2.getWeight() - r1.getWeight();
+	        }});
+			return rels;
+		}
 	  
 	  
 	 public boolean isNoDefinitions() {

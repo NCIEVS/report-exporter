@@ -124,22 +124,15 @@
              <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
                  <form>
-                   <div class="form-group">
-                     <label for="downloadFormat">Select format for export</label>
 
-                     <select v-model="userSelectedFormat"
-                          id="downloadFormat"
-                          class="form-control">
-                       <option
-                          v-for="availableFormat in availableFormats"
-                          :value="availableFormat"
-                          :key="availableFormat.name">
-                          {{ availableFormat.name + ' (' +
-                             availableFormat.extension + ')  ' +
-                             availableFormat.description }}
-                        </option>
-                     </select>
-                    </div>
+                   <!-- Export format pulldown plugin -->
+                   <div class="form-group">
+                     <export-format
+                        :baseURL=this.$baseURL
+                        @formatUpdated= "onFormatUpdated">
+                    </export-format>
+                   </div>
+
                  </form>
               </div>
             </div>
@@ -262,6 +255,7 @@ import axios from 'axios'
 import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VJstree from 'vue-jstree'
+import ExportFormat from './ExportFormat.vue'
 
 export default {
   name: 'resolve-branch-entry',
@@ -275,6 +269,7 @@ export default {
     FormWizard,
     TabContent,
    'v-jstree': VJstree,
+    ExportFormat
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -288,8 +283,7 @@ export default {
       availableProperties: [],
       selectedProperties: [],
       userSelectedProperyNames: [],
-      availableFormats: [],
-      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format","extension":"json"},
+      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
       curratedTopNodes: [],
       userSelectedTopNode: '',
       filename: 'branch',
@@ -450,6 +444,10 @@ export default {
       validateExportStep() {
         // make sure there is an export format selected.
         return this.userSelectedFormat !== null
+      },
+
+      onFormatUpdated (updatedFormat) {
+        this.userSelectedFormat = updatedFormat
       },
 
       onComplete: function() {
@@ -625,7 +623,7 @@ export default {
           });
 
         //console.log(this.selectedTags[0].key +" --- " + this.selectedTags[0].value)
-        api.getCodes(this.$baseURL, this.userEnteredCodes)
+        api.getCodes(this.$baseURL, this.userEnteredCodes, "ENTITY")
           .then((data)=>{
 
             if (data != null) {
@@ -911,11 +909,6 @@ export default {
       api.getProperties(this.$baseURL)
           .then((data)=>{this.availableProperties = data;
         })
-
-      // load the download formats.
-      api.getFormats(this.$baseURL)
-          .then((data)=>{this.availableFormats = data;
-       })
 
       // get the currated tags from the server,
       // then set the input field with these

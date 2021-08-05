@@ -1,8 +1,10 @@
 package gov.nih.nci.evs.report.exporter.service;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,19 @@ import gov.nih.nci.evs.report.exporter.model.PropertyPrime;
 import gov.nih.nci.evs.report.exporter.model.RestEntity;
 import gov.nih.nci.evs.report.exporter.model.Root;
 import gov.nih.nci.evs.report.exporter.model.Synonym;
+import gov.nih.nci.evs.report.exporter.util.CommonServices.ResType;
 
 @Service
 public class CodeReadService {
 	
 	@Autowired
 	EVSAPIBaseService service;
+	
+	@Autowired
+	RoleService roleService;
+	
+	@Autowired
+	AssociationService associationService;
 	
 
 	public static final String NOTFOUND = "Concept Code Not Found";
@@ -42,8 +51,17 @@ public class CodeReadService {
 		return propMeta;
 	}
 	
+	public List<RestEntity> getRestEntities(List<String> codes, ResType type){
+		List<RestEntity> propMeta = 
+				codes.stream().map(code -> 
+				getCuratedEntityForCodeAndType(code, type))
+				.collect(Collectors.toList());
+		return propMeta;
+	}
+	
 	public RestEntity getRestEntityWithParent(String code, List<Root> parents){
-		RestEntity entity = service.getEntity(code);
+		RestEntity entity = null;
+			entity = getCuratedEntityForCode(code);
 			entity.setParents(parents);
 		return entity;
 	}
@@ -124,8 +142,10 @@ public class CodeReadService {
 		RestEntity entity = null;
 		try {
 			entity = service.getEntity(code);
+			entity.setRoles(roleService.getRolesForEntityCode(code));
+			entity.setAssociations(associationService.getAssociationsForCode(code));
 		}
-			catch (WebClientResponseException.NotFound nf) {
+			catch (WebClientResponseException.NotFound | URISyntaxException nf) {
 				entity = new RestEntity();
 				entity.setName("");
 				entity.setCode(code);
@@ -133,14 +153,41 @@ public class CodeReadService {
 				entity.setQueryStatus(NOTFOUND);
 				return entity;
 		}
-		if(entity == null) {
+
+		if(retiredConceptsFilter(entity)) {
 			entity = new RestEntity();
 			entity.setName("");
 			entity.setCode(code);
 			entity.setQueryCode(-1);
-			entity.setQueryStatus(NOTFOUND);
+			entity.setQueryStatus(RETIRED);
 			return entity;
 		}
+		
+		entity.setQueryCode(0);
+		entity.setQueryStatus(VALID);
+		return entity;
+	}
+	
+	public RestEntity getCuratedEntityForCodeAndType(String code, ResType type) {
+		RestEntity entity = null;
+		try {
+			entity = service.getEntity(code);
+			if(type == ResType.ROLE) {
+			entity.setRoles(roleService.getRolesForEntityCode(code));
+			}
+			else if (type == ResType.ASSOC) {
+			entity.setAssociations(associationService.getAssociationsForCode(code));
+			}
+		}
+			catch (WebClientResponseException.NotFound | URISyntaxException wu) {
+				entity = new RestEntity();
+				entity.setName("");
+				entity.setCode(code);
+				entity.setQueryCode(-1);
+				entity.setQueryStatus(NOTFOUND);
+				return entity;
+		}
+
 		if(retiredConceptsFilter(entity)) {
 			entity = new RestEntity();
 			entity.setName("");
@@ -157,5 +204,26 @@ public class CodeReadService {
 	
 	public void setService(EVSAPIBaseService service) {
 		this.service = service;
+	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+	
+	public AssociationService getAssociationService() {
+		return associationService;
+	}
+
+	public void setAssociationService(AssociationService associationService) {
+		this.associationService = associationService;
+		
+	}
+
+	public List<String> getResType() {
+		return Stream.of(ResType.values()).map(resType -> resType.toString()).collect(Collectors.toList());
 	}
 }

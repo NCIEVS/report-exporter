@@ -3,9 +3,9 @@ import axios from 'axios';
 const api = {
 
 
-	getCodes(baseUrl, codes){
+	getCodes(baseUrl, codes, queryEntitySelection){
       return new Promise((resolve)=>{
-          axios.get(baseUrl + 'codereadrest/' + encodeURIComponent(codes))
+          axios.get(baseUrl + 'codereadrestype/' + encodeURIComponent(codes) + '/' + queryEntitySelection)
               .then((response) =>{
                   resolve(response.data);
               })
@@ -19,6 +19,24 @@ const api = {
     getProperties(baseUrl){
         return new Promise((resolve)=>{
             axios.get(baseUrl + 'properties')
+            .then((response) =>{
+            resolve(response.data);
+            })
+        })
+    },
+
+		getRoles(baseUrl, codes){
+        return new Promise((resolve)=>{
+            axios.get(baseUrl + 'sortedroles/' + encodeURIComponent(codes))
+            .then((response) =>{
+            resolve(response.data);
+            })
+        })
+    },
+
+		getAssociations(baseUrl, codes){
+        return new Promise((resolve)=>{
+            axios.get(baseUrl + 'sortedassociations/' + encodeURIComponent(codes))
             .then((response) =>{
             resolve(response.data);
             })
