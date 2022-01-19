@@ -550,7 +550,7 @@
         ["xpath=//div[2]/div/div/span", "xpath:position"],
         ["xpath=//span[contains(.,'46')]", "xpath:innerText"]
       ],
-      "value": "47"
+      "value": "48"
     }, {
       "id": "3a17cdf9-51e8-4312-80e2-ac313f828af1",
       "comment": "",
@@ -3780,6 +3780,17 @@
       ],
       "value": ""
     }, {
+      "id": "09be02aa-3c1e-422d-a92b-c2c6c710c0bd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "b5baf69b-9945-4961-9591-e8013b527790",
       "comment": "",
       "command": "click",
@@ -3805,7 +3816,7 @@
       "id": "a7ae7ecc-296f-48a3-afb9-e556b1dd3fd4",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(47)",
+      "target": "css=.multi-select-option:nth-child(48)",
       "targets": [
         ["css=.multi-select-option:nth-child(46)", "css:finder"],
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div[3]/div/div[46]", "xpath:idRelative"],
@@ -5919,6 +5930,24 @@
       ],
       "value": ""
     }, {
+      "id": "35b0cd2a-ed92-413e-b9b6-74524441310d",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "OLD_SOURCE_ASSOCIATION"
+    }, {
+      "id": "e010a03b-b1ab-4155-a58f-c04c191677bf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "dbf8aaf0-3e7c-4f9f-8928-d8138311f7d2",
       "comment": "",
       "command": "assertText",
@@ -6199,7 +6228,7 @@
       "id": "7ff4686f-d98b-4cff-b54a-59123b99c780",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(47)",
+      "target": "css=.multi-select-option:nth-child(48)",
       "targets": [],
       "value": "miRBase_ID"
     }, {
