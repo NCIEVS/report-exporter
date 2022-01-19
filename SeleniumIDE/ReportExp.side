@@ -550,7 +550,7 @@
         ["xpath=//div[2]/div/div/span", "xpath:position"],
         ["xpath=//span[contains(.,'46')]", "xpath:innerText"]
       ],
-      "value": "47"
+      "value": "48"
     }, {
       "id": "3a17cdf9-51e8-4312-80e2-ac313f828af1",
       "comment": "",
@@ -3780,6 +3780,17 @@
       ],
       "value": ""
     }, {
+      "id": "09be02aa-3c1e-422d-a92b-c2c6c710c0bd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "b5baf69b-9945-4961-9591-e8013b527790",
       "comment": "",
       "command": "click",
@@ -3805,7 +3816,7 @@
       "id": "a7ae7ecc-296f-48a3-afb9-e556b1dd3fd4",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(47)",
+      "target": "css=.multi-select-option:nth-child(48)",
       "targets": [
         ["css=.multi-select-option:nth-child(46)", "css:finder"],
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div[3]/div/div[46]", "xpath:idRelative"],
@@ -5919,6 +5930,24 @@
       ],
       "value": ""
     }, {
+      "id": "35b0cd2a-ed92-413e-b9b6-74524441310d",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "OLD_SOURCE_ASSOCIATION"
+    }, {
+      "id": "e010a03b-b1ab-4155-a58f-c04c191677bf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "dbf8aaf0-3e7c-4f9f-8928-d8138311f7d2",
       "comment": "",
       "command": "assertText",
@@ -6199,7 +6228,7 @@
       "id": "7ff4686f-d98b-4cff-b54a-59123b99c780",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(47)",
+      "target": "css=.multi-select-option:nth-child(48)",
       "targets": [],
       "value": "miRBase_ID"
     }, {
@@ -6822,7 +6851,7 @@
       "command": "waitForText",
       "target": "xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]",
       "targets": [],
-      "value": " Children to Resolve: 24565"
+      "value": " Children to Resolve: 24730"
     }, {
       "id": "36e01c5c-4470-4cc1-bb90-e613d6f37479",
       "comment": "",
@@ -6834,7 +6863,7 @@
         ["xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]", "xpath:position"],
         ["xpath=//li[contains(.,'Children to Resolve: 24068')]", "xpath:innerText"]
       ],
-      "value": " Children to Resolve: 24565"
+      "value": " Children to Resolve: 24730"
     }, {
       "id": "19a9dba3-adfb-4ffe-b9b8-6ecdd4092a67",
       "comment": "",
@@ -9177,6 +9206,198 @@
         ["xpath=//div/div[2]", "xpath:position"]
       ],
       "value": "C123% is not valid. Reason: Concept Code Not Found."
+    }]
+  }, {
+    "id": "e9d21e18-8653-493b-aef3-ebeb9c5472f7",
+    "name": "ZzdHierarchyLevel20",
+    "commands": [{
+      "id": "a412eefd-f5b1-4eec-89d3-2649e2a081e9",
+      "comment": "",
+      "command": "open",
+      "target": " ",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5c81ca0d-188b-4045-9e9a-5a1ad1b76135",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1512x960",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "61b28313-04fb-4fbe-8ce0-303173c0ae3c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(2) .btn",
+      "targets": [
+        ["css=.card:nth-child(2) .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[4]/div/div[3]/div/div[2]/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Start Selecting Root Nodes')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "af4eabbf-3b7f-4dfe-892b-4363b86be8c8",
+      "comment": "",
+      "command": "click",
+      "target": "id=levelSelection",
+      "targets": [
+        ["id=levelSelection", "id"],
+        ["css=#levelSelection", "css:finder"],
+        ["xpath=//select[@id='levelSelection']", "xpath:attributes"],
+        ["xpath=//div[@id='SelectaCode0']/div/div/div/div[2]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f48e42d1-ca25-4dd2-98ff-24bbe4ba0fc9",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//*[@id=\"SelectaCode0\"]/div/div/div/div[1]/div/form/div[1]/div/div[1]/input",
+      "targets": [],
+      "value": "C3262"
+    }, {
+      "id": "b9c605a5-aae0-4ec8-8498-148a78c68818",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//*[@id=\"SelectaCode0\"]/div/div/div/div[1]/div/form/div[1]/div/div[1]/input",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "16be6c1b-17da-48ec-a682-b17c00329214",
+      "comment": "",
+      "command": "select",
+      "target": "id=levelSelection",
+      "targets": [],
+      "value": "label=20 Levels"
+    }, {
+      "id": "cff1a327-76bc-4fe8-8c1f-066efdedc776",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='resolve-branch-entry']/div[2]/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='resolve-branch-entry']/div[2]/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "27abadee-0154-4a1c-be2e-eeecd495130d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "97004b16-3704-4cf7-8041-f4b582c7e195",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option:nth-child(7)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(7)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[7]", "xpath:idRelative"],
+        ["xpath=//div[7]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b00e5338-0542-4185-b3a3-fc8fb223d614",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option:nth-child(8)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(8)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[8]", "xpath:idRelative"],
+        ["xpath=//div[8]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6a9d4902-cdff-4caf-ac8a-bd49bfacfdda",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option:nth-child(12)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(12)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[12]", "xpath:idRelative"],
+        ["xpath=//div[12]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "52f3c887-9d66-4694-a632-f9d0986bbf80",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option:nth-child(20)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(20)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[20]", "xpath:idRelative"],
+        ["xpath=//div[20]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6c00eadb-c679-4cea-992a-925de25fd955",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option:nth-child(33)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(33)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[33]", "xpath:idRelative"],
+        ["xpath=//div[33]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "05bd9d00-b231-42b1-8cc3-7f913283e9cf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.multi-select-option:nth-child(36)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(36)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[36]", "xpath:idRelative"],
+        ["xpath=//div[36]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4994ff6f-cefb-4932-bd07-595308346097",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.col-sm-4:nth-child(2) .badge",
+      "targets": [
+        ["css=.col-sm-4:nth-child(2) .badge", "css:finder"],
+        ["xpath=//div[@id='collapseSummary']/div/div/div[2]/div/div/span", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/span", "xpath:position"]
+      ],
+      "value": "7"
+    }, {
+      "id": "a29d4055-c3f3-4ce6-acff-e121e9642791",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='resolve-branch-entry']/div[2]/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='resolve-branch-entry']/div[2]/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Next Option')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3154201a-82c0-4e3b-8cba-d32186dc22bb",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[@id='resolve-branch-entry']/div[2]/div[3]/div[2]/span/button",
+      "targets": [
+        ["css=.wizard-footer-right .wizard-btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='resolve-branch-entry']/div[2]/div[3]/div[2]/span/button", "xpath:idRelative"],
+        ["xpath=//div[2]/span/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Export')]", "xpath:innerText"]
+      ],
+      "value": ""
     }]
   }],
   "suites": [{

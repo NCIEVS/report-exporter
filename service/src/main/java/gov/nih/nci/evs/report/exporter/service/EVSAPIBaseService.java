@@ -267,7 +267,7 @@ public class EVSAPIBaseService {
 		  exchangeStrategies(ExchangeStrategies.builder()
 				    .codecs(configurer -> configurer
 				      .defaultCodecs()
-				      .maxInMemorySize(16 * 1024 * 1024))
+				      .maxInMemorySize(76 * 256 * 1024))
 				    .build())
 				  .build();
 	}
