@@ -3153,8 +3153,12 @@
       "id": "ebc3bfbc-62eb-4513-ab94-2825bec88104",
       "comment": "",
       "command": "assertText",
-      "target": "css=.msl-multi-select__selected .multi-select-option:nth-child(2)",
-      "targets": [],
+      "target": "css=.multi-select-option:nth-child(7)",
+      "targets": [
+        ["css=.multi-select-option:nth-child(7)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[7]", "xpath:idRelative"],
+        ["xpath=//div[7]", "xpath:position"]
+      ],
       "value": "DEFINITION"
     }, {
       "id": "27e6c0cb-c925-42fa-9a5f-fbc833b1bae4",
@@ -3200,22 +3204,22 @@
       "id": "77604668-b256-4bc6-9ea5-48514fd07d0a",
       "comment": "",
       "command": "assertText",
-      "target": "css=.msl-multi-select__selected .multi-select-option:nth-child(1)",
+      "target": "css=.multi-select-option:nth-child(10)",
       "targets": [
-        ["css=.msl-multi-select__selected .multi-select-option:nth-child(1)", "css:finder"],
-        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div[3]/div/div", "xpath:idRelative"],
-        ["xpath=//div/div[3]/div/div", "xpath:position"]
+        ["css=.multi-select-option:nth-child(10)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[10]", "xpath:idRelative"],
+        ["xpath=//div[10]", "xpath:position"]
       ],
       "value": "Display_Name"
     }, {
       "id": "30ec99a0-70ea-4adb-b838-5da733ad2a0d",
       "comment": "",
       "command": "assertText",
-      "target": "css=.msl-multi-select__selected .multi-select-option:nth-child(2)",
+      "target": "css=.multi-select-option:nth-child(14)",
       "targets": [
-        ["css=.msl-multi-select__selected .multi-select-option:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div[3]/div/div[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div[2]", "xpath:position"]
+        ["css=.multi-select-option:nth-child(14)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[14]", "xpath:idRelative"],
+        ["xpath=//div[14]", "xpath:position"]
       ],
       "value": "FULL_SYN"
     }, {
@@ -3255,11 +3259,11 @@
       "id": "fffbdc56-4b70-49f6-8ed9-194e9a6eb352",
       "comment": "",
       "command": "assertText",
-      "target": "css=.msl-multi-select__selected .multi-select-option",
+      "target": "css=.multi-select-option:nth-child(24)",
       "targets": [
-        ["css=.msl-multi-select__selected .multi-select-option", "css:finder"],
-        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div[3]/div/div", "xpath:idRelative"],
-        ["xpath=//div/div[3]/div/div", "xpath:position"]
+        ["css=.multi-select-option:nth-child(24)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[24]", "xpath:idRelative"],
+        ["xpath=//div[24]", "xpath:position"]
       ],
       "value": "Maps_To"
     }, {
@@ -4967,7 +4971,7 @@
       "id": "72ca36f9-2442-4840-bf2c-66ef16c14007",
       "comment": "",
       "command": "assertTitle",
-      "target": "Issues · NCIEVS/report-exporter",
+      "target": "Issues · NCIEVS/report-exporter · GitHub",
       "targets": [],
       "value": ""
     }, {
@@ -5432,6 +5436,24 @@
       "target": "css=.multi-select-option:nth-child(1)",
       "targets": [],
       "value": "Chemical_Formula"
+    }, {
+      "id": "ee583dc9-d3d7-4237-8707-87f82b871a35",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9cb9792f-6d39-4bf1-938f-98d6ad4dbb8e",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "ClinVar_Variation_ID"
     }, {
       "id": "272400a3-927c-41ed-9691-8769cb8d6521",
       "comment": "",
@@ -5918,24 +5940,6 @@
       "target": "css=.multi-select-option:nth-child(1)",
       "targets": [],
       "value": "OID"
-    }, {
-      "id": "395494f7-ac6f-4999-9947-c2f5e92a25e6",
-      "comment": "",
-      "command": "click",
-      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
-      "targets": [
-        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
-        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
-        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "35b0cd2a-ed92-413e-b9b6-74524441310d",
-      "comment": "",
-      "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(1)",
-      "targets": [],
-      "value": "OLD_SOURCE_ASSOCIATION"
     }, {
       "id": "e010a03b-b1ab-4155-a58f-c04c191677bf",
       "comment": "",
@@ -6851,7 +6855,7 @@
       "command": "waitForText",
       "target": "xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]",
       "targets": [],
-      "value": " Children to Resolve: 24730"
+      "value": " Children to Resolve: 25078"
     }, {
       "id": "36e01c5c-4470-4cc1-bb90-e613d6f37479",
       "comment": "",
@@ -6863,7 +6867,7 @@
         ["xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]", "xpath:position"],
         ["xpath=//li[contains(.,'Children to Resolve: 24068')]", "xpath:innerText"]
       ],
-      "value": " Children to Resolve: 24730"
+      "value": " Children to Resolve: 25078"
     }, {
       "id": "19a9dba3-adfb-4ffe-b9b8-6ecdd4092a67",
       "comment": "",
@@ -9018,7 +9022,7 @@
       ],
       "value": "Has_Pharmaceutical_Basic_Dose_Form"
     }, {
-      "id": "c1af39bb-037d-4d22-9e55-f617451f2332",
+      "id": "490bb3fc-75f6-4bbf-ac3d-3b9d180715a6",
       "comment": "",
       "command": "assertText",
       "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[10]",
@@ -9027,9 +9031,9 @@
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
         ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
       ],
-      "value": "Is_PCDC_AML_Permissible_Value_For_Variable"
+      "value": "Is_PCDC_EWS_Permissible_Value_For_Variable"
     }, {
-      "id": "a2baae08-fbe3-418b-be23-2f0780d7d7b6",
+      "id": "c1af39bb-037d-4d22-9e55-f617451f2332",
       "comment": "",
       "command": "assertText",
       "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[11]",
@@ -9038,18 +9042,7 @@
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
         ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
       ],
-      "value": "Is_PCDC_GCT_Permissible_Value_For_Variable"
-    }, {
-      "id": "490bb3fc-75f6-4bbf-ac3d-3b9d180715a6",
-      "comment": "",
-      "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[12]",
-      "targets": [
-        ["css=.multi-select-option:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
-      ],
-      "value": "Is_PCDC_EWS_Permissible_Value_For_Variable"
+      "value": "Is_PCDC_AML_Permissible_Value_For_Variable"
     }]
   }, {
     "id": "0964549c-25e5-43d8-a243-5551f177c73a",
