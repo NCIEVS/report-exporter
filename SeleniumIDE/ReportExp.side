@@ -2,7 +2,7 @@
   "id": "580af3e8-c850-4b90-952c-339744d16b23",
   "version": "2.0",
   "name": "ReportExp",
-  "url": "https://evs-dev.cancer.gov/report-exporter",
+  "url": "https://evs-qa.cancer.gov/report-exporter",
   "tests": [{
     "id": "067aa33f-18ad-482d-9061-994ec790b3f9",
     "name": "ReadEntityAllCatsJSON",
@@ -3153,13 +3153,9 @@
       "id": "ebc3bfbc-62eb-4513-ab94-2825bec88104",
       "comment": "",
       "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(7)",
-      "targets": [
-        ["css=.multi-select-option:nth-child(7)", "css:finder"],
-        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[7]", "xpath:idRelative"],
-        ["xpath=//div[7]", "xpath:position"]
-      ],
-      "value": "DEFINITION"
+      "target": "css=.msl-multi-select__selected .multi-select-option:nth-child(2)",
+      "targets": [],
+      "value": "Contributing_Source"
     }, {
       "id": "27e6c0cb-c925-42fa-9a5f-fbc833b1bae4",
       "comment": "",
@@ -3193,7 +3189,7 @@
       "id": "be9b12ad-ddb0-464c-9836-353e4c479856",
       "comment": "",
       "command": "click",
-      "target": "css=.multi-select-option:nth-child(14)",
+      "target": "css=.multi-select-option:nth-child(15)",
       "targets": [
         ["css=.multi-select-option:nth-child(14)", "css:finder"],
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[14]", "xpath:idRelative"],
@@ -3210,7 +3206,7 @@
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[10]", "xpath:idRelative"],
         ["xpath=//div[10]", "xpath:position"]
       ],
-      "value": "Display_Name"
+      "value": "DesignNote"
     }, {
       "id": "30ec99a0-70ea-4adb-b838-5da733ad2a0d",
       "comment": "",
@@ -3265,7 +3261,7 @@
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[24]", "xpath:idRelative"],
         ["xpath=//div[24]", "xpath:position"]
       ],
-      "value": "Maps_To"
+      "value": "Macronutrient"
     }, {
       "id": "274af9fb-b2dc-4ede-9748-da456ca2b8bb",
       "comment": "",
@@ -3795,7 +3791,7 @@
       ],
       "value": ""
     }, {
-      "id": "b5baf69b-9945-4961-9591-e8013b527790",
+      "id": "75a74480-20ed-41a4-9723-3b029d0c417b",
       "comment": "",
       "command": "click",
       "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option",
@@ -5456,6 +5452,24 @@
       "value": "ClinVar_Variation_ID"
     }, {
       "id": "272400a3-927c-41ed-9691-8769cb8d6521",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "596ea868-c00d-46fa-980f-265ede68ddfa",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "ClinVar_Variation_ID"
+    }, {
+      "id": "f220f619-bcb3-489e-ae8d-273e4a94f832",
       "comment": "",
       "command": "click",
       "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
@@ -9401,6 +9415,6 @@
     "timeout": 300,
     "tests": ["067aa33f-18ad-482d-9061-994ec790b3f9"]
   }],
-  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/", "https://evs-dev.cancer.gov/report-exporter"],
+  "urls": ["http://localhost:8080/", "https://evsreportexporter-dev.nci.nih.gov/reportexporter/", "https://evsreportexporter-qa.nci.nih.gov/reportexporter/", "https://evs-dev.cancer.gov/report-exporter", "https://evs-qa.cancer.gov/report-exporter", "https://evs.cancer.gov/report-exporter"],
   "plugins": []
 }
