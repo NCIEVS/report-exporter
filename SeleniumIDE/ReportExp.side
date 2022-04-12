@@ -4967,7 +4967,7 @@
       "id": "72ca36f9-2442-4840-bf2c-66ef16c14007",
       "comment": "",
       "command": "assertTitle",
-      "target": "Issues · NCIEVS/report-exporter · GitHub",
+      "target": "Issues · NCIEVS/report-exporter",
       "targets": [],
       "value": ""
     }, {
@@ -5110,6 +5110,38 @@
         ["xpath=//h1[contains(.,'Accessibility Policy')]", "xpath:innerText"]
       ],
       "value": "Freedom of Information Act"
+    }, {
+      "id": "deb64733-dde4-43a2-a281-a463310015d4",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d7d4d4e5-df2b-4391-86bd-433457f92728",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=HHS Vulnerability Disclosure",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "73796eb5-e83a-492a-801a-6acac8eab50a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.field--name-field-full-title",
+      "targets": [
+        ["css=.field--name-field-full-title", "css:finder"],
+        ["xpath=//div[@id='site-content']/div/h1/div", "xpath:idRelative"],
+        ["xpath=//h1/div", "xpath:position"]
+      ],
+      "value": "Vulnerability Disclosure Policy"
+    }, {
+      "id": "8104047c-e437-42d6-ab2f-d563408e5098",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
     }, {
       "id": "d7116b17-cd8d-490b-b076-5aafa92d4375",
       "comment": "",
@@ -8963,17 +8995,10 @@
       "targets": [],
       "value": "Is_Value_For_GDC_Property"
     }, {
-      "id": "7039700d-3fff-41d7-84b4-904a4da4a94e",
-      "comment": "",
-      "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[3]",
-      "targets": [],
-      "value": "Is_PCDC_ALL_Permissible_Value_For_Variable"
-    }, {
       "id": "6e670067-1651-4802-9ca7-97f66ca7372d",
       "comment": "",
       "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[4]",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[6]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
@@ -8995,7 +9020,7 @@
       "id": "a53c110a-d5e9-4f15-abbc-b69200b6813b",
       "comment": "",
       "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[6]",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[8]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
@@ -9006,7 +9031,7 @@
       "id": "793f198a-a305-4895-a368-3dd603a7ac68",
       "comment": "",
       "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[7]",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[3]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
@@ -9017,7 +9042,7 @@
       "id": "367b19aa-eff3-4f9e-9a56-d084a7d3d17f",
       "comment": "",
       "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[8]",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[4]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
@@ -9028,35 +9053,13 @@
       "id": "4756e368-a9d1-4d4c-863c-a852cf298710",
       "comment": "",
       "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[9]",
+      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[7]",
       "targets": [
         ["css=.multi-select-option:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
         ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
       ],
       "value": "Has_Pharmaceutical_Basic_Dose_Form"
-    }, {
-      "id": "490bb3fc-75f6-4bbf-ac3d-3b9d180715a6",
-      "comment": "",
-      "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[10]",
-      "targets": [
-        ["css=.multi-select-option:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
-      ],
-      "value": "Is_PCDC_EWS_Permissible_Value_For_Variable"
-    }, {
-      "id": "c1af39bb-037d-4d22-9e55-f617451f2332",
-      "comment": "",
-      "command": "assertText",
-      "target": "xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[11]",
-      "targets": [
-        ["css=.multi-select-option:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='SelectAssociations1']/div/form/div[3]/div/div/div/div[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div/div/div[2]", "xpath:position"]
-      ],
-      "value": "Is_PCDC_AML_Permissible_Value_For_Variable"
     }]
   }, {
     "id": "0964549c-25e5-43d8-a243-5551f177c73a",
