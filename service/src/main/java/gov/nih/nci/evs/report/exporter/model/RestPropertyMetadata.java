@@ -64,6 +64,7 @@ public void setVersion(String version) {
 
 @Override
 public int compareTo(RestPropertyMetadata o) {
+	if( this.getName() == null) {this.setName("Property Name Not Found");};
 	return this.getName().compareTo(o.getName());
 }
 
