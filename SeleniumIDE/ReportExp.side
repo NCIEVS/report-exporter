@@ -2,7 +2,7 @@
   "id": "580af3e8-c850-4b90-952c-339744d16b23",
   "version": "2.0",
   "name": "ReportExp",
-  "url": "https://evs-qa.cancer.gov/report-exporter",
+  "url": "https://evs-dev.cancer.gov/report-exporter",
   "tests": [{
     "id": "067aa33f-18ad-482d-9061-994ec790b3f9",
     "name": "ReadEntityAllCatsJSON",
@@ -550,7 +550,7 @@
         ["xpath=//div[2]/div/div/span", "xpath:position"],
         ["xpath=//span[contains(.,'46')]", "xpath:innerText"]
       ],
-      "value": "48"
+      "value": "50"
     }, {
       "id": "3a17cdf9-51e8-4312-80e2-ac313f828af1",
       "comment": "",
@@ -3206,7 +3206,7 @@
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[10]", "xpath:idRelative"],
         ["xpath=//div[10]", "xpath:position"]
       ],
-      "value": "DesignNote"
+      "value": "Display_Name"
     }, {
       "id": "30ec99a0-70ea-4adb-b838-5da733ad2a0d",
       "comment": "",
@@ -3217,7 +3217,7 @@
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[14]", "xpath:idRelative"],
         ["xpath=//div[14]", "xpath:position"]
       ],
-      "value": "FULL_SYN"
+      "value": "FDA_UNII_Code"
     }, {
       "id": "8a0bddaa-37c4-4828-a615-40b345117b76",
       "comment": "",
@@ -3261,7 +3261,7 @@
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div[24]", "xpath:idRelative"],
         ["xpath=//div[24]", "xpath:position"]
       ],
-      "value": "Macronutrient"
+      "value": "Maps_To"
     }, {
       "id": "274af9fb-b2dc-4ede-9748-da456ca2b8bb",
       "comment": "",
@@ -3811,7 +3811,7 @@
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div[3]/div/div", "xpath:idRelative"],
         ["xpath=//div[3]/div/div", "xpath:position"]
       ],
-      "value": "ALT_DEFINITION"
+      "value": "Unit"
     }, {
       "id": "a7ae7ecc-296f-48a3-afb9-e556b1dd3fd4",
       "comment": "",
@@ -3822,7 +3822,7 @@
         ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div[3]/div/div[46]", "xpath:idRelative"],
         ["xpath=//div[46]", "xpath:position"]
       ],
-      "value": "miRBase_ID"
+      "value": "US_Recommended_Intake"
     }]
   }, {
     "id": "b3b2e578-6b92-4e5f-a286-fceca3f218f6",
@@ -5161,19 +5161,15 @@
       "id": "7f2135b6-40db-4da9-87c5-7196ddce2410",
       "comment": "",
       "command": "assertText",
-      "target": "id=site-name",
+      "target": "xpath=/html/head/meta[@content=HHS.gov]",
       "targets": [
-        ["id=site-name", "id"],
-        ["linkText=U.S. Department of Health & Human Services", "linkText"],
-        ["css=#site-name", "css:finder"],
-        ["xpath=//a[contains(text(),'U.S. Department of Health & Human Services')]", "xpath:link"],
-        ["xpath=//a[@id='site-name']", "xpath:attributes"],
-        ["xpath=//div[@id='hhs-blue-header']/div/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '/')])[2]", "xpath:href"],
-        ["xpath=//div[2]/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'U.S. Department of Health & Human Services')]", "xpath:innerText"]
+        ["css=#logo > a", "css:finder"],
+        ["xpath=//span[@id='logo']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//span/a", "xpath:position"],
+        ["xpath=//a[contains(.,'HHS.gov')]", "xpath:innerText"]
       ],
-      "value": "U.S. Department of Health & Human Services"
+      "value": "HHS.gov"
     }, {
       "id": "ac40ab6a-88f4-4cef-baa6-dc33109a4354",
       "comment": "",
@@ -5477,24 +5473,6 @@
       "value": ""
     }, {
       "id": "9cb9792f-6d39-4bf1-938f-98d6ad4dbb8e",
-      "comment": "",
-      "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(1)",
-      "targets": [],
-      "value": "ClinVar_Variation_ID"
-    }, {
-      "id": "272400a3-927c-41ed-9691-8769cb8d6521",
-      "comment": "",
-      "command": "click",
-      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
-      "targets": [
-        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
-        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
-        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "596ea868-c00d-46fa-980f-265ede68ddfa",
       "comment": "",
       "command": "assertText",
       "target": "css=.multi-select-option:nth-child(1)",
@@ -6059,7 +6037,43 @@
       "targets": [],
       "value": "PID_ID"
     }, {
+      "id": "56cd22dd-9dc7-4fb9-aa1c-b58699ec6f2e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4ab37d6-4a1d-4857-8466-083e462a9ec4",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Property Name Not Found"
+    }, {
       "id": "845b41ae-b0a0-4f21-aa22-19a8284f1895",
+      "comment": "",
+      "command": "click",
+      "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
+      "targets": [
+        ["css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='SelectProperties1']/div/form/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bcccb15a-f3df-4988-a2b6-80b889b048ca",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.multi-select-option:nth-child(1)",
+      "targets": [],
+      "value": "Property Name Not Found"
+    }, {
+      "id": "fcafb987-e43b-46e1-80f6-f071df2e41c4",
       "comment": "",
       "command": "click",
       "target": "css=.msl-searchable-list:nth-child(1) .multi-select-option:nth-child(1)",
@@ -6274,13 +6288,6 @@
       "target": "css=.multi-select-option:nth-child(1)",
       "targets": [],
       "value": "ALT_DEFINITION"
-    }, {
-      "id": "7ff4686f-d98b-4cff-b54a-59123b99c780",
-      "comment": "",
-      "command": "assertText",
-      "target": "css=.multi-select-option:nth-child(48)",
-      "targets": [],
-      "value": "miRBase_ID"
     }, {
       "id": "0448e0ba-93e3-4a5a-8db1-42f338bdb6eb",
       "comment": "",
@@ -6901,7 +6908,7 @@
       "command": "waitForText",
       "target": "xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]",
       "targets": [],
-      "value": " Children to Resolve: 25078"
+      "value": " Children to Resolve: 25763"
     }, {
       "id": "36e01c5c-4470-4cc1-bb90-e613d6f37479",
       "comment": "",
@@ -6913,7 +6920,7 @@
         ["xpath=//div[2]/div/div/div/div/div[2]/ul/li[3]", "xpath:position"],
         ["xpath=//li[contains(.,'Children to Resolve: 24068')]", "xpath:innerText"]
       ],
-      "value": " Children to Resolve: 25078"
+      "value": " Children to Resolve: 25763"
     }, {
       "id": "19a9dba3-adfb-4ffe-b9b8-6ecdd4092a67",
       "comment": "",
