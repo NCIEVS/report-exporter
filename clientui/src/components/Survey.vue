@@ -139,9 +139,9 @@
                      >
                      <tab-content title="Overview"
                                   icon="ti-info-alt">
-                      <p>EVS is committed to providing you with an elegant and robust mechanism
-                        to retrieve the data of interest to you.</p>
-                      <p>Thank you for taking this brief survey.</p>
+                      EVS is committed to providing you with an elegant and robust mechanism
+                        to retrieve the data of interest to you.
+                      Thank you for taking this brief survey.
                      </tab-content>
                     <tab-content title="Features"
                                  icon="ti-stats-up" :before-change="validateFirstTab">

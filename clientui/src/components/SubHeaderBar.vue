@@ -7,28 +7,25 @@
         <!--div slot="header">
           <h4 class="modal-title">Survey</h4>
         </div-->
-        <div slot="body" v-if="getSurveyCookie()">
+        <template v-slot:body v-if="getSurveyCookie()">
+          You recently took the survey.  Thank you for your feedback.
 
-          <p class="lead">You recently took the survey.  Thank you for your feedback.</p>
-
-        </div>
+        </template>
     </surveyModal>
 
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
       <router-link v-bind:to="'/'" >Home</router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <div :class="navbar-toggler-icon"></div>
       </button>
       <div class="navbar-collapse collapse" id="collapsingNavbarSubHeader">
 
           <ul class="nav navbar-nav ml-auto">
             <li>
               <div class="dropdown">
-                <a class="btn dropdown-toggle" href="#"
-                  role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
+                <!--<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   EVS
-                </a>
+                </a>-->
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                   <a class="dropdown-item" alt="EVS" href="http://evs.nci.nih.gov/" target="_blank">
                     <img  alt="EVS" src="../assets/EVSTile.png"
@@ -65,7 +62,7 @@
               <router-link class="nav-link" v-bind:to="'/documentation'" title="Link to Documentation">Documentation</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://github.com/NCIEVS/report-exporter/issues" target="_blank" title="Link to Help">Help Forum</a>
+              <router-link class="nav-link" href="https://github.com/NCIEVS/report-exporter/issues" target="_blank" title="Link to Help">Help Forum</router-link>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" v-on:click="showModal">Feedback</a>

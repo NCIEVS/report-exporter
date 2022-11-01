@@ -3,36 +3,40 @@
 
     <div class="container">
       <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h3>Report Exporter Downloads</h3>
-        <p class="lead">If your Download ID is not in the <b>Download List</b>,
-          you can search for it in the <b>Download Search</b> tab.</p>
+        <h3 v-if = "show">Report Exporter Downloads</h3>
+        <p class="lead">If your Download ID is not in the <b v-if = "show">Download List</b>,
+          you can search for it in the <b v-if = "show">Download Search</b> tab.</p>
       </div>
 
       <div class="tabContainer">
+
         <ul class="nav nav-tabs" id="exportTab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" id="downloadTable-tab" data-toggle="tab" href="#downloadTable" role="tab" aria-controls="downloadTable" aria-selected="true">Download List</a>
+            <!--<a class="nav-link active" id="downloadTable-tab" data-toggle="tab" href="#downloadTable" role="tab" aria-controls="downloadTable" aria-selected="true">Download List</a>-->
+            <!--<a :class="{'nav-link active': isActive}"></a>-->
+            <a :class="{'nav-link active': isActive}" id="downloadTable-tab" data-toggle="tab" href="#downloadTable" role="tab" aria-controls="downloadTable" aria-selected="true">Download List</a>
+            <a :class="{'nav-link active': isActive}" href="#downloadTable" aria-selected="true">Download List </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="downloadSearch-tab" data-toggle="tab" href="#downloadSearch" role="tab" aria-controls="downloadSearch" aria-selected="false">Download Search</a>
+            <a :class="{'nav-link': isActive}" id="downloadSearch-tab" data-toggle="tab" href="#downloadSearch" role="tab" aria-controls="downloadSearch" aria-selected="false">Download Search</a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="downloadTable" role="tabpanel" aria-labelledby="downloadTable-tab">
 
             <!--  DOWNLOAD TABLE TAB START -->
-            <div class="downloadContainer">
-                <p class="lead">The table below has list of deferred downloads that have been requested.
+            <div :class="{'downloadContainer': isActive}">
+                <p :class="{'lead': isActive}">The table below has list of deferred downloads that have been requested.
                   If the download is not here, it may have expired.</p>
 
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Format</th>
-                    <th scope="col">Submitted Timestamp</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Download</th>
+                    <th scope="col">{{ID}}</th>
+                    <th scope="col">{{Format}}</th>
+                    <th scope="col">{{SubmittedTimestamp}}</th>
+                    <th scope="col">{{Status}}</th>
+                    <th scope="col">{{Download}}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -70,7 +74,7 @@
           <div class="tab-pane fade" id="downloadSearch" role="tabpanel" aria-labelledby="downloadSearch-tab">
             <!--  DOWNLOAD SEARCH TAB START -->
             <div class="downloadContainer">
-              <p class="lead">Enter the Download ID that was created when the the report was exported.</p>
+              <p :class="{'lead' :isActive}">Enter the Download ID that was created when the the report was exported.</p>
               <form class="row form-group">
                   <div class="col-3 col-sm pr-sm-2">
                     <input class="form-control" v-model="searchId"
@@ -115,6 +119,9 @@
 <script>
   import api from '../api.js'
   import axios from 'axios'
+
+
+
 
   export default {
     name: 'downloads',

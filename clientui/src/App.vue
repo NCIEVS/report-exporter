@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+
     <notifications group="app"/>
     <notifications group="download"/>
 
@@ -13,6 +14,7 @@
       </div>
     <FooterBar msg="Bottom"/>
   </div>
+
 </template>
 
 <script>
@@ -21,6 +23,7 @@ import SubHeaderBar from './components/SubHeaderBar.vue'
 import FooterBar from './components/FooterBar.vue'
 // Custom input tags
 // import VoerroTagsInput from '@voerro/vue-tagsinput'
+
 
 export default {
   name: 'app',
@@ -49,6 +52,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style>

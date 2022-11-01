@@ -5,25 +5,25 @@
           <div class="col-lg-4">
               <div class="nav nav-pills faq-nav" id="faq-tabs" role="tablist" aria-orientation="vertical">
                   <a href="#tab1" class="nav-link active" data-toggle="pill" role="tab" aria-controls="tab1" aria-selected="true">
-                      <i class="mdi mdi-help-circle"></i> NCI Report Exporter
+                    <i :class="{'mdi mdi-help-circle': isActive}"></i> NCI Report Exporter
                   </a>
                   <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false">
-                      <i class="mdi mdi-account-settings"></i> Export Entities
+                      <i :class="{'mdi mdi-account-settings': isActive}"></i> Export Entities
                   </a>
                   <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">
-                      <i class="mdi mdi-account-settings"></i> Export Resolved Branch
+                      <i :class="{'mdi mdi-account-settings' : isActive}"></i> Export Resolved Branch
                   </a>
                   <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4" aria-selected="false">
-                      <i class="mdi mdi-account-settings"></i> Export Roles
+                      <i :class="{'mdi mdi-account-settings' : isActive}"></i> Export Roles
                   </a>
                   <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5" aria-selected="false">
-                      <i class="mdi mdi-account-settings"></i> Export Associations
+                      <i :class="{'mdi mdi-account-settings' : isActive}"></i> Export Associations
                   </a>
                   <a href="#tab6" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6" aria-selected="false">
-                      <i class="mdi mdi-account-settings"></i> Downloads
+                      <i :class="{'mdi mdi-account-settings' : isActive}"></i> Downloads
                   </a>
                   <a href="#tab7" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab7" aria-selected="false">
-                      <i class="mdi mdi-account-settings"></i> Programmatic JSON Use
+                      <i :class="{'mdi mdi-account-settings' : isActive}"></i> Programmatic JSON Use
                   </a>
               </div>
           </div>
@@ -34,7 +34,7 @@
                           <div class="card">
                               <div class="card-header" id="accordion-tab-1-heading-1">
                                   <h5>
-                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-1" aria-expanded="false" aria-controls="accordion-tab-1-content-1">
+                                      <button :class="{'btn btn-link': isActive}" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-1" aria-expanded="false" aria-controls="accordion-tab-1-content-1">
                                         What is the NCI Report Exporter
                                       </button>
                                   </h5>
@@ -45,7 +45,7 @@
                                       The NCIt Report Exporter provides curated, filtered, and formatted output from the NCI Thesaurus
                                       in file types designed for typical research and development purposes.
                                     </p>
-                                    <p>
+                                    <div>
                                       The NCIt Report Exporter provides four different exports.
                                       They are presented in a wizard-like format that walks the user through the different steps to take.
                                       The four different exports are:
@@ -63,7 +63,7 @@
                                           <strong>Export Associations</strong>: Enter one or more concept codes, select associations to be exported and the file format.
                                         </li>
                                       </ul>
-                                    </p>
+                                    </div>
                                   </div>
                               </div>
                           </div>
@@ -74,25 +74,40 @@
                           <div class="card">
                               <div class="card-header" id="accordion-tab-2-heading-1">
                                   <h5>
-                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-2-content-1" aria-expanded="false" aria-controls="accordion-tab-2-content-1">
+                                      <button :class="{'btn btn-link': isActive}" data-toggle="collapse" data-target="#accordion-tab-2-content-1" aria-expanded="false" aria-controls="accordion-tab-2-content-1">
                                         How do I enter NCI Thesaurus concept codes?
                                       </button>
                                   </h5>
                               </div>
                               <div class="collapse show" id="accordion-tab-2-content-1" aria-labelledby="accordion-tab-2-heading-1" data-parent="#accordion-tab-2">
                                   <div class="card-body">
-                                    <p>
+
                                         Concept codes can be manually entered one at a time.
                                         After entering a concept code, hit the space bar or enter key.
                                         This will initiate a process to validate and update the concept code with its name.
-                                    </p>
+
                                     <p>
                                         Concept codes can also be copied from a list of codes that are comma separated.
-                                        <br>For example, <strong>C1909, C12434, C61410, C3909</strong>
+                                        <br>{{ ForExample}}<strong>{{Codes1}}</strong>
                                     </p>
+
+
+                                      export default {
+                                        codes() {
+                                          return
+                                          ForExample: 'For example',
+                                          Codes1: 'test'
+                                        }
+                                      }
+
+
+
                                   </div>
                               </div>
                           </div>
+
+
+
                           <div class="card">
                               <div class="card-header" id="accordion-tab-2-heading-2">
                                   <h5>

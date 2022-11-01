@@ -1,4 +1,5 @@
-import Vue from 'vue'
+//import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App'
 import jQuery from 'jquery'
 import 'popper.js'
@@ -24,43 +25,60 @@ import vMultiselectListbox from 'vue-multiselect-listbox'
 
 import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-Vue.use(VueFormWizard)
+//import Vue from "express/lib/router"
+
+//import router from './router'
+//import store from './store'
+
+
+
+const app = createApp(App)
+
+app.use(VueFormWizard)
 
 import VueFormGenerator from 'vue-form-generator'
 //import 'vue-form-generator/dist/vfg.css'
-Vue.use(VueFormGenerator)
+app.use(VueFormGenerator)
 
-import Notifications from 'vue-notification'
+import Notifications from '@kyvg/vue3-notification'
 import ThemifyIcon from "vue-themify-icons";
 
 // busy/loading indicator
-import Loading from 'vue-loading-overlay'
-Vue.use(Loading)
+import Loading from 'vue3-loading-overlay'
+app.use(Loading)
 
-import {Vue2Storage} from 'vue2-storage'
-Vue.use(Vue2Storage, {
+import {Vue3Storage} from 'vue3-storage'
+app.use(Vue3Storage, {
   prefix: 'app_',
   driver: 'local',  // localStorage
   ttl: 60 * 60 * 24 * 1000 // 24 hours
 })
 
-import VueCookies from 'vue-cookies';
-Vue.use(VueCookies);
+import VueCookies from 'vue3-cookies';
+app.use(VueCookies);
 
-import VueMeta from 'vue-meta';
-Vue.use(VueMeta);
+//import { VueMeta } from 'vue-meta';
+//import { createMetaManager } from 'vue-meta'
+
+//createApp(App)
+    //app.use(store)
+   // app.use(VueRouter)
+    //app.use(createMetaManager())
+
+
+//app.use(VueMeta);
 
 // google analytics tracking
-import VueGtag from "vue-gtag";
+import VueGtag from "vue-gtag-next";
 
 // setup jquery
 window.$ = window.jQuery = jQuery
 
-Vue.config.productionTip = false
+app.config.productionTip = false
 
 // tell vue to use the router
-Vue.use(VueRouter)
-Vue.use(Notifications)
+app.use(VueRouter)
+app.use(Notifications)
 
 // define your routes
 const routes = [
@@ -79,29 +97,44 @@ const routes = [
 
 /* eslint-disable no-new */
 // Create the router instance and pass the `routes` option
-const router = new VueRouter({
+//const app = createApp(App)
+//const router = VueRouter.createApp({
+//const router = new VueRouter({
+
+//Vue 3 way to create a router instance
+const router = createApp({
   routes: routes,
   mode: 'history',
   base: process.env.VUE_APP_ROOT_CONTEXT
   //base: '/reportexporter/'
 })
+//router.mount('#router')
 
-Vue.use(VueGtag, {
+app.use(VueGtag, {
   config: { id: process.env.VUE_APP_GA_CODE },
   appName: 'Report Exporter',
 }, router);
 
 // global variable visible to all Vue instances
 // values come from the env.development or env.production files.
-Vue.prototype.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
+//app.prototype.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
+// Vue 3 way to write out the baseURL
+app.config.globalProperties.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
+
 
 //console.log('App Base URL: ' + process.env.VUE_APP_BASE_URL)
 //console.log('Root Context: ' + process.env.VUE_APP_ROOT_CONTEXT)
-console.log('Base URL:     ' + Vue.prototype.$baseURL)
+
+//console.log('Base URL:     ' + app.prototype.$baseURL)
+console.log('Base URL:     ' + app.config.globalProperties.$baseURL)
 //console.log('VUE_APP_GA_CODE:     ' + process.env.VUE_APP_GA_CODE)
 
 // instatiate the vue instance
-new Vue({
+//createApp(app);{
+//createApp(App).mount('#app')({
+//new app({
+   createApp({
+
   // define the selector for the root component
   //el: '#app',
   render: h => h(App),
@@ -111,12 +144,14 @@ new Vue({
   components: {
     App,
     'tags-input': VoerroTagsInput,
-     vMultiselectListbox,
-     ThemifyIcon,
-     Vue2Storage
+    vMultiselectListbox,
+    ThemifyIcon,
+    Vue3Storage
   },
 
   // pass in the router to the Vue instance
   router
 
-}).$mount('#app')
+})
+    //.$mount('#app')
+app.mount('#app')
