@@ -73,7 +73,6 @@ const routes = [
   { path: '/about', component: About },
   { path: '/documentation', component: Documentation },
   { path: '/exports', component: Exports },
-  { path: '/errorPage', component: ErrorPage},
   // if page is unknown, show main selection page.
   { path: '*', component: ErrorPage }
 ]
