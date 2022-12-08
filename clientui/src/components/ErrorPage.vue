@@ -1,6 +1,6 @@
 <template>
   <div id="errorPage">
-    my error page
+    An error has occurred, please press "Home" on top to return to the main page.
   </div>
 </template>
 
