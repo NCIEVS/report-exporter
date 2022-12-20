@@ -11,7 +11,7 @@ import './assets/app.scss'
 import About from './components/About'
 import Exports from './components/Exports'
 import Documentation from './components/Documentation'
-import ErrorPage from './components/ErrorPage.vue'
+// import ErrorPage from './components/ErrorPage.vue'
 import ReportSelection from './components/ReportSelection.vue'
 import ReadCodeEntry from './components/ReadCodeEntry.vue'
 import SearchTermEntry from './components/SearchTermEntry.vue'
@@ -74,7 +74,7 @@ const routes = [
   { path: '/documentation', component: Documentation },
   { path: '/exports', component: Exports },
   // if page is unknown, show main selection page.
-  { path: '*', component: ErrorPage }
+  { path: '*', component: ReportSelection }
 ]
 
 /* eslint-disable no-new */
