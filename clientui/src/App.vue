@@ -10,9 +10,11 @@
       </div>
        <div class="main-content">
           <!-- the router outlet, where all matched components would be viewed -->
-          <router-view></router-view>
+          <!--<router-view></router-view>-->
+         <router-view />
       </div>
-    <FooterBar msg="Bottom"/>
+    <!--<ReportSelection  msg="Bottom"/>-->
+    <FooterBar  msg="Bottom"/>
   </div>
 
 </template>
@@ -34,6 +36,7 @@ export default {
     HeaderBar,
     SubHeaderBar,
     FooterBar,
+   // ReportSelection,
   },
 
   metaInfo: {

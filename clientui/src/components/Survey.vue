@@ -1,4 +1,4 @@
-<script>
+ƒ<script>
   import axios from 'axios';
   import VueFormGenerator from 'vue-form-generator'
    //import 'vue-form-generator/dist/vfg.css'

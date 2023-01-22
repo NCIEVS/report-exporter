@@ -1,40 +1,57 @@
 //import Vue from 'vue'
 import { createApp } from 'vue'
-import App from './App'
+import App from './App.vue'
+import router2 from './router'
 import jQuery from 'jquery'
 import 'popper.js'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import VueRouter from 'vue-router'
+
+
+//import  VueRouter  from "vue-router";
 //import 'axios'
 
+
+
 import './assets/app.scss'
+/*
 import About from './components/About'
 import Exports from './components/Exports'
 import Documentation from './components/Documentation'
-// import ErrorPage from './components/ErrorPage.vue'
+//import ErrorPage from './components/ErrorPage.vue'
 import ReportSelection from './components/ReportSelection.vue'
 import ReadCodeEntry from './components/ReadCodeEntry.vue'
 import SearchTermEntry from './components/SearchTermEntry.vue'
 import ResolveBranchEntry from './components/ResolveBranchEntry.vue'
 import Roles from './components/Roles.vue'
 import Associations from './components/Associations.vue'
-
+*/
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
 
-import VueFormWizard from 'vue-form-wizard'
+//import VueFormWizard from 'vue-form-wizard'
+//import VueFormWizard from 'vue-form-wizard'
+import VueFormWizard from 'form-wizard-vue3'
+
+
+
+
+//Vue 3 Start
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+//Vue 3 End
+
+//import 'form-wizard-vue3/scss/form-wizard-vue3.scss'
 //import Vue from "express/lib/router"
 
 //import router from './router'
 //import store from './store'
 
 
-
 const app = createApp(App)
 
 app.use(VueFormWizard)
+app.use(router2)
+
 
 import VueFormGenerator from 'vue-form-generator'
 //import 'vue-form-generator/dist/vfg.css'
@@ -44,6 +61,7 @@ import Notifications from '@kyvg/vue3-notification'
 import ThemifyIcon from "vue-themify-icons";
 
 // busy/loading indicator
+//import Loading from 'vue-loading-overlay'
 import Loading from 'vue3-loading-overlay'
 app.use(Loading)
 
@@ -77,23 +95,47 @@ window.$ = window.jQuery = jQuery
 app.config.productionTip = false
 
 // tell vue to use the router
-app.use(VueRouter)
+//app.use(VueRouter)
 app.use(Notifications)
 
+
+
 // define your routes
+
+/* Vue 3 Change Code moved to router/index.js - Start
 const routes = [
-  { path: '/', component: ReportSelection },
+
+{ path: "/",
+  name: "Report Selection",
+  component: ReportSelection,
+},
+
+{ path: "/ReportSelection",
+  name: "Report Selection",
+  component: ReportSelection,
+},
+
   { path: '/readCodeEntry', component: ReadCodeEntry, props: { msg: "this is it", selectedTags:[] }},
   { path: '/searchTermEntry', component: SearchTermEntry },
+
+
+
   { path: '/resolveBranchEntry', component: ResolveBranchEntry },
   { path: '/roles', component: Roles },
   { path: '/associations', component: Associations },
   { path: '/about', component: About },
   { path: '/documentation', component: Documentation },
-  { path: '/exports', component: Exports },
+  { path: "/exports", component: Exports },
   // if page is unknown, show main selection page.
-  { path: '*', component: ReportSelection }
+
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: "/ReportSelection",
+  },
+  //{ path: '*', component: ReportSelection }
 ]
+
+ Vue 3 Change Code moved to router/index.js - End */
 
 /* eslint-disable no-new */
 // Create the router instance and pass the `routes` option
@@ -101,9 +143,10 @@ const routes = [
 //const router = VueRouter.createApp({
 //const router = new VueRouter({
 
+
 //Vue 3 way to create a router instance
 const router = createApp({
-  routes: routes,
+ // routes: routes,
   mode: 'history',
   base: process.env.VUE_APP_ROOT_CONTEXT
   //base: '/reportexporter/'
@@ -153,5 +196,13 @@ console.log('Base URL:     ' + app.config.globalProperties.$baseURL)
   router
 
 })
+
+export default
+
+router;
     //.$mount('#app')
+
+//install(app) {
+  app.component('Wizard', VueFormWizard)
+//}
 app.mount('#app')

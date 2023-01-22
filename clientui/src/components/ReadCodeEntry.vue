@@ -1,6 +1,9 @@
 <template>
   <div id="read-codes-entry" class="container">
 
+
+
+
     <!-- WIZARD DECLARATION -->
     <form-wizard
       @on-complete="onComplete"
@@ -162,12 +165,20 @@
 import vMultiselectListbox from 'vue-multiselect-listbox'
 import api from '../api.js'
 import axios from 'axios'
-import {FormWizard, TabContent} from 'vue-form-wizard'
-import 'vue-loading-overlay/dist/vue-loading.css'
+//import {FormWizard, TabContent} from 'vue-form-wizard'
+import {FormWizard, TabContent} from 'vue3-form-wizard'
+//import {FormWizard, TabContent} from 'form-wizard-vue3'
+import 'form-wizard-vue3/dist/form-wizard-vue3.css'
+
+//import 'vue-loading-overlay/dist/vue-loading.css'
 import ExportFormat from './ExportFormat.vue'
 import EntitySelection from './EntitySelection.vue'
 
 export default {
+ //install(app) {
+ //   app.component('form-wizard', FormWizard)
+ // },
+
   name: 'read-code-entry',
   props: {
     msg: String

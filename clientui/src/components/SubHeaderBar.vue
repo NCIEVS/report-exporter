@@ -7,17 +7,23 @@
         <!--div slot="header">
           <h4 class="modal-title">Survey</h4>
         </div-->
+
+      <!--
         <template v-slot:body v-if="getSurveyCookie()">
           You recently took the survey.  Thank you for your feedback.
 
-        </template>
+-->
     </surveyModal>
 
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
-      <router-link v-bind:to="'/'" >Home</router-link>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <div :class="navbar-toggler-icon"></div>
-      </button>
+      <a  href="/report-exporter/" aria-current="page" class="router-link-exact-active router-link-active">Home</a>
+      <button  type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span data-v-f31782d2="" class="navbar-toggler-icon"></span></button>
+
+    <!--Vue 3 update Start-->
+     <!--   <router-link type="button" v-bind:to="'/'" >Home</router-link>
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarSubHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+       </button>-->
       <div class="navbar-collapse collapse" id="collapsingNavbarSubHeader">
 
           <ul class="nav navbar-nav ml-auto">
@@ -26,43 +32,46 @@
                 <!--<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   EVS
                 </a>-->
+
+                <a class="btn dropdown-toggle" href="#"
+                   role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                  EVS
+                </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
                   <a class="dropdown-item" alt="EVS" href="http://evs.nci.nih.gov/" target="_blank">
-                    <img  alt="EVS" src="../assets/EVSTile.png"
-                    width="77" height="38px" border="0">
+                    <img  src="../assets/EVSTile.png" alt="EVS">
                     NCI Enterprise Vocabulary Services
                   </a>
+
                   <a class="dropdown-item" alt="NCIm" href="https://ncim.nci.nih.gov/ncimbrowser" target="_blank">
-                    <img  alt="NCIm" src="../assets/NCImTile.png"
-                      width="77" height="38px" border="0">
+                    <img  alt="NCIm" src="../assets/NCImTile.png">
                     NCI Metathesaurus
                   </a>
                   <a class="dropdown-item" alt="NCI Term Browser" href="https://ncithesaurus.nci.nih.gov/ncitbrowser/" target="_blank">
-                    <img alt="NCI Term Browser" src="../assets/EVSTermsBrowserTile.png"
-                    width="77" height="38px" border="0">
+                    <img alt="NCI Term Browser" src="../assets/EVSTermsBrowserTile.png">
                     NCI Term Browser
                   </a>
                   <a class="dropdown-item" alt="NCI Terminology Resources" href="http://www.cancer.gov/cancertopics/terminologyresources/" target="_blank">
-                    <img alt="NCI Terminology Resources" src="../assets/Cancer_govTile.png"
-                      width="77" height="38px" border="0">
+                    <img alt="NCI Terminology Resources" src="../assets/Cancer_govTile.png">
                     NCI Terminology Resources
                   </a>
                   <a class="dropdown-item" alt="EVS Explore" href="https://evsexplore.nci.nih.gov/evsexplore/welcome" target="_blank">
-                    <img alt="NCI Terminology Explorer" src="../assets/NCItTile.png"
-                      width="77" height="38px" border="0">
+                    <img alt="NCI Terminology Explorer" src="../assets/NCItTile.png">
                     EVS Explore
                   </a>
                 </div>
               </div>
             </li>
-            <li class="nav-item">
+            <li class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
               <router-link class="nav-link" v-bind:to="'/exports'" title="Link to Downloads">Downloads</router-link>
             </li>
-            <li class="nav-item">
-              <router-link class="nav-link" v-bind:to="'/documentation'" title="Link to Documentation">Documentation</router-link>
+            <li class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
+              <router-link class="nav-link" to="/documentation">Documentation</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" href="https://github.com/NCIEVS/report-exporter/issues" target="_blank" title="Link to Help">Help Forum</router-link>
+              <a class="nav-link" href="https://github.com/NCIEVS/report-exporter/issues" target="_blank" title="Link to Help">Help Forum</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" v-on:click="showModal">Feedback</a>
@@ -73,6 +82,7 @@
     </nav>
   </div>
 </template>
+
 
 <script>
   import surveyModal from './Survey.vue';
