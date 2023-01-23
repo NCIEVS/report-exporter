@@ -36,7 +36,7 @@ checks:
     <button type="button"
             v-on:click="clearSelection"
             class="btn btn-primary mb-5 exportButtons">
-      Clear
+            Clear
     </button>
 
   </div>
@@ -46,6 +46,10 @@ checks:
 import api from '../api.js';
 // Custom input tags
 import VoerroTagsInput from '@voerro/vue-tagsinput'
+//import VoerroTagsInput from '@sipec/vue3-tags-input'
+
+
+
 
 export default {
   props: {
@@ -74,6 +78,8 @@ export default {
 
     // clear all of the entitiy codes in the input selection
     clearSelection() {
+
+      alert("this is the data: " + this.selectedTags);
       this.userEnteredCodes = []
       this.selectedTags = []
       this.entityList = []

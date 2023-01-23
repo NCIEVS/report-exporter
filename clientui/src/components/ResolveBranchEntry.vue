@@ -255,7 +255,8 @@ import axios from 'axios'
 //import {FormWizard, TabContent} from 'vue-form-wizard'
 import {FormWizard, TabContent} from 'vue3-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import VJstree from 'vue-jstree'
+//import VJstree2 from 'vue-jstree'
+import VJstree from 'vue3-jstree'
 import ExportFormat from './ExportFormat.vue'
 
 export default {
