@@ -16,12 +16,17 @@ checks:
     queryEntitySelection: default to "ENTITY". Determine the attribute to populate When
       calling the api.getCodes() method.
 -->
+//alert("this is the value intered: " + onTagAdded(value))";
+alert("this is the value entered: " + baseURL);
+
 
 <template>
   <div>
+    <!--
     <label for="tags">Enter NCI Thesaurus concept codes</label>
+
     <div class="form-group">
-      <tags-input element-id="tags"
+      <vue3-tags-input element-id="tags"
                   v-model="selectedTags" placeholder="Type entity code, then click enter"
                   :add-tags-on-comma="true"
                   :add-tags-on-space="true"
@@ -31,13 +36,64 @@ checks:
                   @tag-added="value =>onTagAdded(value)"
                   @tag-removed="value =>onTagRemoved(value)"
                   title="remove selected tag">
+      </vue3-tags-input>
+
+
+    </div>
+  -->
+
+<br>
+    <br>
+    <div>
+      <div class="tags-input-wrapper-default tags-input">
+        <label for="tags-pills">Enter tags</label>
+        <tags-input element-id="tags"
+            input-id="tags-pills"
+            v-model="selectedTags"
+            tag-variant="primary"
+            tag-pills
+            size="lg"
+            separator=" "
+            placeholder="Enter new tags separated by space 456"
+        ></tags-input>
+
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <tags-input element-id="tags"
+                  v-model="selectedTags" placeholder="Type entity code, then click enter123"
+                  :add-tags-on-comma="true"
+                  :add-tags-on-space="true"
+                  :add-tags-on-blur="true"
+                  :case-sensitive-tags="true"
+                  :typeahead="false"
+
+                  @tag-added="value =>onTagAdded(value)"
+                  @tag-removed="value =>onTagRemoved(value)"
+                  title="remove selected tag">
       </tags-input>
     </div>
-    <button type="button"
+
+
+
+
+
+
+
+    <br>
+    <!--<button type="button"
             v-on:click="clearSelection"
             class="btn btn-primary mb-5 exportButtons">
             Clear
-    </button>
+    </button>-->
+
+
+    <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" class="wizard-btn" v-on:click="clearSelection"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
+    </span>
 
   </div>
 </template>
@@ -45,26 +101,31 @@ checks:
 <script>
 import api from '../api.js';
 // Custom input tags
-import VoerroTagsInput from '@voerro/vue-tagsinput'
-//import VoerroTagsInput from '@sipec/vue3-tags-input'
+//import VoerroTagsInput from '@voerro/vue-tagsinput'
+//import VoerroTagsInput from 'vue3-tags-input'
 
 
 
 
 export default {
+
+
+
   props: {
     baseURL: { required: true, type: String },
-    rolesRequired: { default: false, type: Boolean },
-    associationsRequired: { default: false, type: Boolean },
+    rolesRequired: { default: true, type: Boolean },
+    associationsRequired: { default: true, type: Boolean },
     queryEntitySelection: { default: "ENTITY", type: String }
   },
 
-  components: {
-    'tags-input': VoerroTagsInput,
-  },
-
+ // components:
+      //{
+   // 'vue3-tags-input': VoerroTagsInput,
+  //},
+//,
   data() {
     return {
+      value: ['apple', 'orange', 'grape'],
       selectedTags: [],
       userEnteredCodes: [],
       entityList: [],
@@ -74,12 +135,20 @@ export default {
     }
   },
 
+
   methods: {
+
+    Test(){
+      alert("Onblur test")
+    },
 
     // clear all of the entitiy codes in the input selection
     clearSelection() {
-
-      alert("this is the data: " + this.selectedTags);
+      alert (this.baseURL);
+      alert (this.rolesRequired);
+      alert (this.associationsRequired);
+      alert (this.queryEntitySelection);
+      alert("this is the data for clearSelection: " + this.selectedTags);
       this.userEnteredCodes = []
       this.selectedTags = []
       this.entityList = []
@@ -91,6 +160,7 @@ export default {
     },
 
     updateParent() {
+      alert("this is the data for updateParent: " + this.selectedTags);
       this.setSelectedTags()
 
       // Notify users of this plugin that the user selected values changed.
@@ -120,6 +190,7 @@ export default {
     onTagAdded(newCode) {
       // Test if the string entered was pasted in - if it has a comma separated
       // list of values
+      alert("this is the data for onTagAdded2222222: " + newCode.value);
       newCode.value.includes(',') ?
           this.multipleEntitiesSplit = this.cleanString(newCode.value).split(",") :
           this.multipleEntitiesSplit = []
@@ -143,6 +214,7 @@ export default {
       }
 
       else {
+        alert("this is the data for onTagAdded else statement: " + newCode.value);
         if (this.isDuplicateTag(newCode.value))
         {
           // remove the last entered entity code
@@ -170,7 +242,7 @@ export default {
     updateSelectedConceptCodeDescriptions(entities){
       // this.selectedTags[0].key = entities[0].code;
       // this.selectedTags[0].value = entities[0].code + ":" + entities[0].name;
-
+      alert("this is the data for entities: " + entities.value);
       //console.log ("Updating entities: " + entities[0].code + "  " + entities[0].name)
       for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
         //console.log ("key " + this.selectedTags[i].key + "  value " + this.selectedTags[i].value)
@@ -190,6 +262,8 @@ export default {
 
     getEntities(){
       // clear the entry list
+
+      //alert("this is the data for get entity: " + entityList);
       this.entityList = []
       this.setSelectedTags()
       var tempCode = ''
@@ -202,6 +276,7 @@ export default {
         isFullPage: false,
       });
       api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
+
           .then((data)=>{
             if (data != null) {
               // loop through all codes and verify data is returned for each
@@ -315,4 +390,19 @@ export default {
   },
 
 };
+
 </script>
+
+<style>
+.clearButton{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+}
+
+.btn btn-primary mb-5 exportButtons{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+}
+</style>

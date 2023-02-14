@@ -1,12 +1,22 @@
 <template>
   <div id="read-codes-entry" class="container">
 
+    <!--Vue 3 Start-->
+    <div class="vue-form-wizard">
+      <div class="wizard-header">
+        <h4 class="wizard-title">Roles Export</h4>
+        <p class="category">
+          Steps to select concept codes, then their roles and export the results</p>
+      </div>
+    </div>
+    <!--Vue 3 End-->
+
     <!-- WIZARD DECLARATION -->
     <form-wizard
       @on-complete="onComplete"
       step-size="xs"
-      title="Roles Export"
-      subtitle="Steps to select concept codes, then their roles and export the results"
+      title=""
+      subtitle=""
       finish-button-text="Export"
       nextButtonText="Select Next Option"
       color="#017ebe">

@@ -1,18 +1,10 @@
 <template>
-  <!--<div class="report-selection">-->
-  <div id="report-selection">
+  <div class="report-selection">
 
     <nciWarningModal v-show="isModalVisible" @close="closeModal">
-
       <template v-slot:header>
-        Warning
-      </template>
-
-      <!--
-      <div slot="header">
         <h4 class="modal-title">Warning</h4>
-      </div>
-      -->
+      </template>
 
       <template v-slot:body>
         <p>You are accessing a US Government web site which may
@@ -30,10 +22,6 @@
           reveals possible evidence of criminal activity, NIH may provide
           that evidence to law enforcement officials.</p>
       </template>
-
-      <template v-slot:footer>
-      </template>
-
     </nciWarningModal>
 
     <div class="title-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">

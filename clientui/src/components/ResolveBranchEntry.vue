@@ -3,9 +3,10 @@
 
     <!-- Modal -->
     <div class="modal fade" id="treeModal" style="display:none" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
+      <div class="align-content-center">
       <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-footer">
             <h5 class="modal-title" id="treeTitle">NCIt Tree</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -27,16 +28,30 @@
         </div>
       </div>
     </div>
+    </div>
+
+    <!--Vue 3 Start-->
+    <div class="vue-form-wizard">
+      <div class="wizard-header">
+        <h4 class="wizard-title">Resolved Branch Export</h4>
+        <p class="category">Steps to select a top node, then its properties and export the results. Resolutions in the thousands and more will take some time.</p>
+      </div>
+    </div>
+    <!--Vue 3 End-->
 
     <!-- WIZARD DECLARATION -->
+
     <form-wizard
       @on-complete="onComplete"
       step-size="xs"
-      title="Resolved Branch Export"
-      subtitle="Steps to select a top node, then its properties and export the results. Resolutions in the thousands and more will take some time."
+      title=""
+      subtitle=""
       finish-button-text="Export"
       nextButtonText="Select Next Option"
       color="#017ebe">
+
+
+
 
       <!-- STEP 1: SELECT CODES -->
       <tab-content icon="ti-settings" title="Select a Code"
@@ -253,7 +268,10 @@ import vMultiselectListbox from 'vue-multiselect-listbox'
 import api from '../api.js'
 import axios from 'axios'
 //import {FormWizard, TabContent} from 'vue-form-wizard'
+//import  TabContent from 'vue-form-wizard'
 import {FormWizard, TabContent} from 'vue3-form-wizard'
+//import  FormWizard from 'vue3-form-wizard'
+//import   TabContent   from 'vue3-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css'
 //import VJstree2 from 'vue-jstree'
 import VJstree from 'vue3-jstree'
