@@ -42,23 +42,9 @@ alert("this is the value entered: " + baseURL);
     </div>
   -->
 
-<br>
-    <br>
-    <div>
-      <div class="tags-input-wrapper-default tags-input">
-        <label for="tags-pills">Enter tags</label>
-        <tags-input element-id="tags"
-            input-id="tags-pills"
-            v-model="selectedTags"
-            tag-variant="primary"
-            tag-pills
-            size="lg"
-            separator=" "
-            placeholder="Enter new tags separated by space 456"
-        ></tags-input>
 
-        </div>
-    </div>
+
+
 
 
 
@@ -80,10 +66,6 @@ alert("this is the value entered: " + baseURL);
 
 
 
-
-
-
-    <br>
     <!--<button type="button"
             v-on:click="clearSelection"
             class="btn btn-primary mb-5 exportButtons">
@@ -149,6 +131,7 @@ export default {
       alert (this.associationsRequired);
       alert (this.queryEntitySelection);
       alert("this is the data for clearSelection: " + this.selectedTags);
+      this.newTag = []
       this.userEnteredCodes = []
       this.selectedTags = []
       this.entityList = []

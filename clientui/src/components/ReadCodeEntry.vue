@@ -1,3 +1,4 @@
+
 <template>
   <div id="read-codes-entry" class="container">
 
@@ -11,17 +12,21 @@
 
 
 
+
+
+
+
     <!--Vue 3 End-->
 
 
     <!-- WIZARD DECLARATION -->
-    <form-wizard
+    <form-wizard id = "selectNextOption"
       @on-complete="onComplete"
       step-size="xs"
       title=""
       subtitle=""
       finish-button-text="Export"
-      nextButtonText="Select Next OptionNNN"
+      nextButtonText="Select Next Option"
       color="#017ebe">
 
 
@@ -34,68 +39,79 @@
       <!--Vue 3 Entity Label field  End-->
 
       <!--Vue 3 Entity Text field  Start-->
-      <div class="entityText" id = "entityTextID" element-id="tags">
-        <input placeholder="Type entity code, then click enter Other"
+      <div class="entityText" id = "entityTextID" element-id="tag-input">
+        <input placeholder="Type entity code, then click enter"
                :add-tags-on-comma="true"
                :add-tags-on-space="true"
+               :add-tags-on-tab="true"
                :add-tags-on-blur="true"
                :case-sensitive-tags="true"
                :typeahead="false"
-               @tag-added="value =>onTagAdded(value)"
-               @tag-removed="value =>onTagRemoved(value)"
-               class="entityCodeInput" v-model="selectedTags">
-      </div>
+               class="entityCodeInput" v-model="newTag"
+               @keydown.space="addTag(newTag)"
+               @keydown.tab="addTag(newTag)"
+              >
+        <br>
+        <br>
+        <div class = "tag-input"></div>
+          <ul class="tags">
+            <li v-for="tag in tags" :key="tag" class="tag" id="tags2">
+              {{ tag }}
+              <button class="delete" @click="removeTag(index)">x</button>
+            </li>
+          </ul>
+        </div>
+
       <!--Vue 3 Entity Text field  End-->
 
-
-
-
-
-      <div>
-        <div class="tags-input-wrapper-default tags-input">
-          <label for="tags-pills">Enter tags Other</label>
-          <tags-input element-id="tags"
-                      input-id="tags-pills"
-                      v-model="selectedTags"
-                      tag-variant="primary"
-                      tag-pills
-                      size="lg"
-                      separator=" "
-                      placeholder="Enter new tags separated by space 456"
-          ></tags-input>
-
+      <!--Vue 3 step 2 list boxes Start -->
+      <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
+        <div class="container">
+          <form>
+            <div class="form-group">
+              <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
+            </div>
+            <div class="form-group">
+              <div class="msl-multi-select">
+                <div class="msl-searchable-list msl-multi-select__list">
+                  <input placeholder="Search properties" class="msl-search-list-input custom-input-class">
+                  <div class="msl-searchable-list__items">
+                    <div class="multi-select-option msl-searchable-list__item"> ALT_DEFINITION </div>
+                    <div class="multi-select-option msl-searchable-list__item"> Accepted_Therapeutic_Use_For </div>
+                  </div>
+                </div>
+                <div class="msl-multi-select__actions">
+                  <a class="msl-multi-select__action msl-multi-select__action-select-all">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-angle-double-right fa-w-14">
+                      <path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z" class></path>
+                    </svg>
+                  </a>
+                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="exchange-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="multi-select__action-icon svg-inline--fa fa-exchange-alt fa-w-16">
+                    <path fill="currentColor" d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z" class></path>
+                  </svg>
+                  <a class="msl-multi-select__action msl-multi-select__action-unselect-all">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-angle-double-left fa-w-14">
+                      <path fill="currentColor" d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z" class></path>
+                    </svg>
+                  </a>
+                </div>
+                <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                  <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class">
+                  <div class="msl-searchable-list__items">
+                    <div class="multi-select-option msl-searchable-list__item"> Chemical_Formula </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
+      <!--Vue 3 step 2 list boxes End -->
 
 
 
 
 
-
-      <div class="entityText" id = "entityTextID2" element-id="tags">
-      <tags-input element-id="tags"
-                  placeholder="Type entity code, then click enter123"
-                  :add-tags-on-comma="true"
-                  :add-tags-on-space="true"
-                  :add-tags-on-blur="true"
-                  :case-sensitive-tags="true"
-                  :typeahead="false"
-
-                  @tag-added="value =>onTagAdded(value)"
-                  @tag-removed="value =>onTagRemoved(value)"
-                  title="remove selected tag">
-      </tags-input>
-      </div>
-
-
-      <v-text-field
-          value="Select the configuration:"
-          color="grey lighten-43"
-          class="text--darken-3 mt-3 text-xs-center"
-          outline
-          readonly
-          single-line
-      ></v-text-field>
 
       <!-- STEP 1: SELECT CODES -->
 
@@ -172,10 +188,18 @@
            </div>
         </div>
       </tab-content>
-
-
-
     </form-wizard>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -195,7 +219,6 @@
           </center>
 
         </div>
-
 
 
         <div id="accordion" class="pb-3 pt-3">
@@ -218,14 +241,14 @@
               <div class="card bg-light border-dark mb-3">
                 <div class="card-header">
                   Selected Concept Codes
-                  <span class="badge badge-secondary">{{Object.keys(this.selectedTags).length}}</span>
+                  <span class="badge badge-secondary">{{Object.keys(this.newTag).length}}</span>
                 </div>
 
 
                 <div class="card-body">
                   <ul class="list-group" id="selectedTagList">
-                    <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
-                      {{ selectedTag.value }}
+                    <li v-for="newTag in newTag" :key="newTag.key">
+                      {{ tags }}
                     </li>
                   </ul>
                 </div>
@@ -268,7 +291,8 @@
       </div>
     </div>
   </div>
-          </div>
+      </div>
+
         <!-- Vue3 Selection Summary List boxes End  -->
 
 
@@ -336,6 +360,7 @@
 
 <script>
 
+//document.getElementById("SelectProperties1").style.display = "none";
 // Custom input tags
 //import vMultiselectListbox from 'vue-multiselect-listbox'
 import vMultiselectListbox from 'vue-multiselect-listbox-v2'
@@ -347,7 +372,7 @@ import {FormWizard, TabContent} from 'vue3-form-wizard'
 //import {FormWizard, TabContent} from 'form-wizard-vue3'
 //import TabContent from 'vue3-form-wizard'
 //import TabContent from 'form-wizard-vue3'
-
+import {ref} from 'vue'
 
 //import FormWizard from 'form-wizard-vue3'
 //mport FormWizard from 'vue3-form-wizard'
@@ -361,6 +386,9 @@ import EntitySelection from './EntitySelection.vue'
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  0;
+
+
+
 
 export default {
 
@@ -380,6 +408,31 @@ export default {
 
     title: 'EVS Report Exporter - Read Code',
   },
+
+  mounted() {
+    this.hideListBoxsStepTwo();
+  },
+
+  setup(){
+    const tags = ref([]);
+    const newTag = ref('') //keep up with new tag
+    var tagCounter = 0;
+
+    const addTag = (tag) => {
+      tags.value.push(tag);
+      newTag.value = ""; // reset newTag
+      tagCounter = tagCounter + 1;
+    };
+
+    const removeTag = (index) => {
+      tags.value.splice(index, 1);
+      tagCounter = tagCounter  - 1;
+    };
+    return { tags, newTag, addTag,  removeTag, tagCounter }
+  },
+
+
+
   data(){
     return {
       selectedTags: [],
@@ -398,6 +451,11 @@ export default {
   },
 
   methods: {
+
+    hideListBoxsStepTwo() {
+      return document.getElementById("SelectProperties1").style.display = "none";
+    },
+
     gaTrackDownload () {
       // Send Google analytics download event
       this.$gtag.query('event', "Read Concept Code Download", {
@@ -405,6 +463,7 @@ export default {
          'event_label': this.userSelectedFormat.name
       })
     },
+
 
     // Wizard methods
     validateFirstStep() {
@@ -423,6 +482,11 @@ export default {
         //Object.keys(this.selectedTags).values() = 'test345';
         alert(Object.keys(this.selectedTags).length);
         //return Object.keys(this.selectedTags).length>0
+        document.getElementById("entityTextID").style.display = "none";
+        document.getElementById("entityLabelId").style.display = "none";
+        document.getElementById("SelectProperties1").style.display = "";
+        //document.getElementById("SelectProperties2").style.display = "none";
+
         return true
       }
       if (selectNextOptionBTN_counter === 2) {
@@ -431,11 +495,13 @@ export default {
       }
       if (selectNextOptionBTN_counter === 3) {
         alert("counter 3 if statement")
+        document.getElementById("SelectProperties1").style.display = "none";
+        document.getElementById("selectNextOption").style.display = "none";
         this.validateExportStep();
       }
     },
 
-
+    //Vue 3 STEP 2
     validatePropertyStep() {
 
 
@@ -445,6 +511,7 @@ export default {
       //Object.defineProperties("entityTest").hide();
       document.getElementById("entityTextID").style.display = "none";
       document.getElementById("entityLabelId").style.display = "none";
+      document.getElementById("SelectProperties1").style.display = "none";
       alert("step 2vvv");
      // document.getElementById("entityTextID").style.display = " ";
      // document.getElementById("entityLabelId").style.display = " ";
@@ -629,8 +696,6 @@ alert("this method onEntitiesUpdated invoked")
 
 //Vue3 End-->
 
-
-
 </script>
 
 <!-- styling for the component -->
@@ -715,6 +780,29 @@ a.disabled {
   padding-left: 207px;
 }
 
+ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+}
+.tag {
+  background-color: rgb(0, 125, 188);
+  padding: 5px;
+  border-radius: 4px;
+  color: white;
+  white-space: nowrap;
+  transition: 0.1s ease background;
+}
 
+.delete {
+  color: white;
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
 
 </style>
