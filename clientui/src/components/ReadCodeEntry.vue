@@ -79,18 +79,39 @@
                           </option>
                         </select>
                     </div>
-                    <br>
+                    <div class="listBoxButton">
                     <table>
                       <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                         <td><input type = "button" value = ">>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                       </tr>
                     </table>
-                    <td>&nbsp;</td>
+
                     <table>
                       <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                         <td><input type = "button" value = "<<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                       </tr>
                     </table>
+                    </div>
                     <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
                       <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
                         <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
@@ -897,7 +918,6 @@ ul {
   color: white;
   white-space: nowrap;
   transition: 0.1s ease background;
-  display: block;
 }
 
 .fromListBox {
@@ -907,10 +927,12 @@ ul {
   color: white;
   white-space: nowrap;
   transition: 0.1s ease background;
-  display: block;
 }
 
-
+.listBoxButton{
+  margin-top : 110px;
+  display: block;
+}
 
 
 
