@@ -12,10 +12,6 @@
 
 
 
-
-
-
-
     <!--Vue 3 End-->
 
 
@@ -26,7 +22,7 @@
       title=""
       subtitle=""
       finish-button-text="Export"
-      nextButtonText="Select Next Option"
+      nextButtonText="Select Next OptionONN"
       color="#017ebe">
 
 
@@ -55,61 +51,61 @@
         <br>
         <div class = "tag-input"></div>
           <ul class="tags">
-            <li v-for="tag in tags" :key="tag" class="tag" id="tags2">
+            <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
               {{ tag }}
               <button class="delete" @click="removeTag(index)">x</button>
-            </li>
+            </a></li>
           </ul>
         </div>
 
       <!--Vue 3 Entity Text field  End-->
 
+
       <!--Vue 3 step 2 list boxes Start -->
-      <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
-        <div class="container">
-          <form>
-            <div class="form-group">
-              <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
-            </div>
-            <div class="form-group">
-              <div class="msl-multi-select">
-                <div class="msl-searchable-list msl-multi-select__list">
-                  <input placeholder="Search properties" class="msl-search-list-input custom-input-class">
-                  <div class="msl-searchable-list__items">
-                    <div class="multi-select-option msl-searchable-list__item"> ALT_DEFINITION </div>
-                    <div class="multi-select-option msl-searchable-list__item"> Accepted_Therapeutic_Use_For </div>
-                  </div>
-                </div>
-                <div class="msl-multi-select__actions">
-                  <a class="msl-multi-select__action msl-multi-select__action-select-all">
-                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-angle-double-right fa-w-14">
-                      <path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z" class></path>
-                    </svg>
-                  </a>
-                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="exchange-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="multi-select__action-icon svg-inline--fa fa-exchange-alt fa-w-16">
-                    <path fill="currentColor" d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z" class></path>
-                  </svg>
-                  <a class="msl-multi-select__action msl-multi-select__action-unselect-all">
-                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-angle-double-left fa-w-14">
-                      <path fill="currentColor" d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z" class></path>
-                    </svg>
-                  </a>
-                </div>
-                <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
-                  <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class">
-                  <div class="msl-searchable-list__items">
-                    <div class="multi-select-option msl-searchable-list__item"> Chemical_Formula </div>
-                  </div>
-                </div>
+      <div id="app" class="container">
+        <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
+          <div class="container">
+            <form>
+              <div class="form-group">
+                <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
               </div>
-            </div>
-          </form>
+                <div class="form-group">
+                  <div class="msl-multi-select">
+                    <div class="msl-searchable-list msl-multi-select__list">
+                      <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
+                        <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
+                          <option v-for="userLeft in leftUsers" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                            {{ userLeft }}
+                          </option>
+                        </select>
+                    </div>
+                    <br>
+                    <table>
+                      <tr>
+                        <td><input type = "button" value = ">>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      </tr>
+                    </table>
+                    <td>&nbsp;</td>
+                    <table>
+                      <tr>
+                        <td><input type = "button" value = "<<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      </tr>
+                    </table>
+                    <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                      <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
+                        <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
+                          <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
+                            {{ userRight }}
+                          </option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+            </form>
+          </div>
         </div>
       </div>
       <!--Vue 3 step 2 list boxes End -->
-
-
-
 
 
 
@@ -359,11 +355,10 @@
 </template>
 
 <script>
-
 //document.getElementById("SelectProperties1").style.display = "none";
 // Custom input tags
-//import vMultiselectListbox from 'vue-multiselect-listbox'
-import vMultiselectListbox from 'vue-multiselect-listbox-v2'
+import vMultiselectListbox from 'vue-multiselect-listbox'
+//import vMultiselectListbox from 'vue-multiselect-listbox-v2'
 import api from '../api.js'
 import axios from 'axios'
 //import {FormWizard, TabContent} from 'vue-form-wizard'
@@ -383,6 +378,11 @@ import 'form-wizard-vue3/dist/form-wizard-vue3.css'
 //import 'vue-loading-overlay/dist/vue-loading.css'
 import ExportFormat from './ExportFormat.vue'
 import EntitySelection from './EntitySelection.vue'
+
+
+
+
+
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  0;
@@ -446,11 +446,96 @@ export default {
       downloadReturnCode: null,
       invalidTag: '',
       showSummary: true,
-      showSummaryText: ''
-    }
+      showSummaryText: '',
+
+
+
+      leftSelectedUsers:[],
+      leftUsers: [
+        "C12219",
+        "C12508",
+        "C1909",
+        "C22187",
+        "C2916",
+        "C3262",
+        "C61410",
+      ],
+      rightSelectedUsers:[],
+      rightUsers:[]
+
+    };
   },
 
   methods: {
+    moveLeft() {
+        if(!this.rightSelectedUsers.length) return;
+        console.log('moveLeft',this.rightUsers);
+        for(let i=this.rightSelectedUsers.length;i>0;i--) {
+          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+          this.rightUsers.splice(idx, 1);
+          this.leftUsers.push(this.rightSelectedUsers[i-1]);
+          this.rightSelectedUsers.pop();
+        }
+      },
+      moveRight() {
+        if(!this.leftSelectedUsers.length) return;
+        console.log('moveRight', this.leftSelectedUsers);
+        for(let i=this.leftSelectedUsers.length;i>0;i--) {
+          let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+          this.leftUsers.splice(idx, 1);
+          this.rightUsers.push(this.leftSelectedUsers[i-1]);
+          this.leftSelectedUsers.pop();
+      }
+    },
+    //Vue 3 Start Step 2 left Search Function
+    searchPropertiesFilter() {
+      var input;
+      var formattedInput;
+      var listBoxValues;
+      var selectedListBoxValue;
+      var i;
+      var txtValue;
+
+      input = document.getElementById("searchProperties"); //text input
+      formattedInput = input.value.toUpperCase();  //change to upper case
+
+      listBoxValues = document.getElementById("selectSearchProperties");
+      for (i = 0; i < listBoxValues.length; i++) {
+        selectedListBoxValue = listBoxValues[i];
+        txtValue = selectedListBoxValue.textContent || selectedListBoxValue.innerText;
+        if (txtValue.toUpperCase().indexOf(formattedInput) > -1) {
+          listBoxValues[i].style.display = "";
+        } else {
+          listBoxValues[i].style.display = "none";
+        }
+      }
+    },
+    //Vue 3 End
+
+    //Vue 3 Start Step 2 Right Search Function
+    searchSelectedPropertiesFilter() {
+      var input;
+      var formattedInput;
+      var listBoxValues;
+      var selectedListBoxValue;
+      var i;
+      var txtValue;
+
+      input = document.getElementById("selectedProperties"); //text input
+      formattedInput = input.value.toUpperCase();  //change to upper case
+
+      listBoxValues = document.getElementById("selectSelectedProperties");
+      for (i = 0; i < listBoxValues.length; i++) {
+        selectedListBoxValue = listBoxValues[i];
+        txtValue = selectedListBoxValue.textContent || selectedListBoxValue.innerText;
+        if (txtValue.toUpperCase().indexOf(formattedInput) > -1) {
+          listBoxValues[i].style.display = "";
+        } else {
+          listBoxValues[i].style.display = "none";
+        }
+      }
+    },
+    //Vue 3 End
 
     hideListBoxsStepTwo() {
       return document.getElementById("SelectProperties1").style.display = "none";
@@ -473,7 +558,7 @@ export default {
       //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
 
-
+      //Vue 3 STEP 1
       selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
 
       if (selectNextOptionBTN_counter === 1) {
@@ -508,7 +593,7 @@ export default {
 
       // make sure the user has selected at least one property
       alert("step 2");
-      //Object.defineProperties("entityTest").hide();
+     //Hides objects on screen that shouldn't appear in step 2
       document.getElementById("entityTextID").style.display = "none";
       document.getElementById("entityLabelId").style.display = "none";
       document.getElementById("SelectProperties1").style.display = "none";
@@ -804,5 +889,30 @@ ul {
   border: none;
   cursor: pointer;
 }
+
+.toListBox {
+  background-color: rgb(0, 125, 188);
+  padding: 5px;
+  border-radius: 4px;
+  color: white;
+  white-space: nowrap;
+  transition: 0.1s ease background;
+  display: block;
+}
+
+.fromListBox {
+  background-color: rgb(0, 125, 188);
+  padding: 5px;
+  border-radius: 4px;
+  color: white;
+  white-space: nowrap;
+  transition: 0.1s ease background;
+  display: block;
+}
+
+
+
+
+
 
 </style>

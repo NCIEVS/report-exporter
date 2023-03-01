@@ -77,6 +77,11 @@ alert("this is the value entered: " + baseURL);
         <button tabindex="-1" type="button" class="wizard-btn" v-on:click="clearSelection"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
     </span>
 
+    <!--
+    <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" class="wizard-btn"  id = 'back button' style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Real Back </button>
+    </span>
+-->
   </div>
 </template>
 
@@ -126,11 +131,12 @@ export default {
 
     // clear all of the entitiy codes in the input selection
     clearSelection() {
-      alert (this.baseURL);
-      alert (this.rolesRequired);
-      alert (this.associationsRequired);
-      alert (this.queryEntitySelection);
-      alert("this is the data for clearSelection: " + this.selectedTags);
+      //alert (this.baseURL);
+      //alert (this.rolesRequired);
+      //alert (this.associationsRequired);
+      //alert (this.queryEntitySelection);
+      //alert("this is the data for clearSelection: " + this.selectedTags);
+      this.tag = []
       this.newTag = []
       this.userEnteredCodes = []
       this.selectedTags = []
@@ -138,7 +144,7 @@ export default {
       this.multipleEntitiesSplit = []
       this.invalidTag = ''
       this.userSelectedProperyNames = []
-
+      document.getElementById("tags2").style.display = "none";
       this.updateParent()
     },
 
