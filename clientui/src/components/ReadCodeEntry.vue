@@ -371,7 +371,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -583,14 +582,15 @@ export default {
       selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
 
       if (selectNextOptionBTN_counter === 1) {
-        alert("Validation test and check string length: " + Object.keys(this.selectedTags).values());
-        alert("button Counter " + selectNextOptionBTN_counter);
+        //alert("Validation test and check string length: " + Object.keys(this.selectedTags).values());
+        //alert("button Counter " + selectNextOptionBTN_counter);
         //Object.keys(this.selectedTags).values() = 'test345';
-        alert(Object.keys(this.selectedTags).length);
+        //alert(Object.keys(this.selectedTags).length);
         //return Object.keys(this.selectedTags).length>0
         document.getElementById("entityTextID").style.display = "none";
         document.getElementById("entityLabelId").style.display = "none";
         document.getElementById("SelectProperties1").style.display = "";
+        document.getElementsByClassName("wizard-btn").display = "none";
         //document.getElementById("SelectProperties2").style.display = "none";
 
         return true
@@ -613,32 +613,39 @@ export default {
 
 
       // make sure the user has selected at least one property
-      alert("step 2");
      //Hides objects on screen that shouldn't appear in step 2
-      document.getElementById("entityTextID").style.display = "none";
-      document.getElementById("entityLabelId").style.display = "none";
-      document.getElementById("SelectProperties1").style.display = "none";
-      alert("step 2vvv");
      // document.getElementById("entityTextID").style.display = " ";
      // document.getElementById("entityLabelId").style.display = " ";
 
 
-      alert("step 2WWW");
-
-
-      return Object.keys(this.selectedProperties).length>0
+      if (this.rightUsers.length > 0) {
+        document.getElementById("entityTextID").style.display = "none";
+        document.getElementById("entityLabelId").style.display = "none";
+        document.getElementById("SelectProperties1").style.display = "none";
+        this.validateExportStep();
+        return Object.keys(this.rightUsers).length > 0
+      }
     },
 
     validateExportStep() {
       // make sure there is an export format selected.
       alert("step 3");
-      return this.userSelectedFormat !== null
+      if (this.rightUsers !== null) {
+        return this.rightUsers !== null
+      }
     },
-
+/*
     onComplete: function() {
       alert("Valid oncomplete test");
       this.downloadFile();
     },
+*/
+    onComplete() {
+      alert("Valid oncomplete test");
+      this.downloadFile();
+    },
+
+
 
     onFormatUpdated (updatedFormat) {
       this.userSelectedFormat = updatedFormat
