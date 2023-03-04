@@ -50,7 +50,7 @@
         <br>
         <br>
         <div class = "tag-input"></div>
-          <ul class="tags">
+          <ul class="tags" id = "listOfTags">
             <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
               {{ tag }}
               <button class="delete" @click="removeTag(index)">x</button>
@@ -258,12 +258,12 @@
               <div class="card bg-light border-dark mb-3">
                 <div class="card-header">
                   Selected Concept Codes
-                  <span class="badge badge-secondary">{{Object.keys(this.newTag).length}}</span>
+                  <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span>
                 </div>
 
 
                 <div class="card-body">
-                  <ul class="list-group" id="selectedTagList">
+                  <ul class="list-group" id="selectedConceptCodesTags">
                     <li v-for="newTag in newTag" :key="newTag.key">
                       {{ tags }}
                     </li>
@@ -327,7 +327,7 @@
                 <div class="card bg-light border-dark mb-3">
                   <div class="card-header">Selected Concept Codes <span class="badge badge-secondary">{{Object.keys(this.selectedTags).length}}</span></div>
                   <div class="card-body">
-                    <ul class="list-group" id="selectedTagList">
+                    <ul class="list-group" id="selectedConceptCodesTags">
                     <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
                       {{ selectedTag.value }}
                     </li>

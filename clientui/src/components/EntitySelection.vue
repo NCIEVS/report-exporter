@@ -136,6 +136,7 @@ export default {
       //alert (this.associationsRequired);
       //alert (this.queryEntitySelection);
       //alert("this is the data for clearSelection: " + this.selectedTags);
+      var tagCountTotal;
       this.tag = []
       this.newTag = []
       this.userEnteredCodes = []
@@ -144,7 +145,18 @@ export default {
       this.multipleEntitiesSplit = []
       this.invalidTag = ''
       this.userSelectedProperyNames = []
-      document.getElementById("tags2").style.display = "none";
+      this.tags2 = []
+      //this.tags = []
+
+      //document.getElementById("listOfTags").style.display = "none";  // remove tags
+      tagCountTotal = document.getElementById("selectConceptCodesCount").innerText;
+      document.getElementById("selectConceptCodesCount").innerText = 0;
+      document.getElementById("selectedConceptCodesTags").innerText = "";
+      //document.getElementById("selectConceptCodesCount").value = 0;
+      //this.selectConceptCodesCount = 0;
+      (tagCountTotal) => (this.tags.value.splice(tagCountTotal, 1));
+      alert(tagCountTotal);
+
       this.updateParent()
     },
 
