@@ -2,7 +2,7 @@
 <template>
   <div id="read-codes-entry" class="container">
 
-    <!--Vue 3 Start-->
+
     <div class="vue-form-wizard">
       <div class="wizard-header">
         <h4 class="wizard-title">Entity Export</h4>
@@ -10,8 +10,26 @@
       </div>
     </div>
 
-
-
+    <!--Vue 3 Start-->
+    <div class="container" id = "exportStep">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+          <form>
+            <div class="form-group">
+              <div>
+                <label for="downloadFormat">Select format for export</label>
+                <select id="downloadFormat" class="form-control">
+                  <option value="[object Object]"> JSON (json) JavaScript Object Notation Format </option>
+                  <option value="[object Object]"> CSV (csv) Comma Separated Value Format </option>
+                  <option value="[object Object]"> TABD (txt) Tab Delimited Value Format </option>
+                  <option value="[object Object]"> EXCEL (xlsx) Microsoft Excel Format </option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <!--Vue 3 End-->
 
 
@@ -113,11 +131,11 @@
       </span>
 
       <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "nextOption" class="wizard-btn-back" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
+        <button tabindex="-1" type="button" id = "backButton" class="wizard-btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
       </span>
 
       <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "backButton" class="wizard-btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
+        <button tabindex="-1" type="button" id = "nextOption" class="wizard-btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
       </span>
 
 
@@ -255,7 +273,7 @@ export default {
   },
 
   mounted() {
-    this.hideListBoxsStepTwo();
+    this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
   },
 
 
@@ -482,8 +500,11 @@ export default {
     },
     //Vue 3 End
 
-    hideListBoxsStepTwo() {
-      return document.getElementById("SelectProperties1").style.display = "none";
+    //When page loads certain objects like buttons or text boxes will be hidden
+    hideObjectsOnScreen() {
+      document.getElementById("SelectProperties1").style.display = "none";
+      document.getElementById("backButton").style.display = "none";
+      document.getElementById("exportStep").style.display = "none";
     },
 
     gaTrackDownload () {
@@ -506,24 +527,40 @@ export default {
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 1) {
-        if (this.newTag.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
-          document.getElementById("clearButton").style.display = "none";
-          document.getElementById("entityTextID").style.display = "none";
-          document.getElementById("entityLabelId").style.display = "none";
-          document.getElementById("SelectProperties1").style.display = "";
+        if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
+          document.getElementById("clearButton").style.display = "none";    //Hides clear button
+          document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
+          document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
+          document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
+          document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
         }
       }
       if (selectNextOptionBTN_counter === 2) {
         alert("call for step 2");
         this.validatePropertyStep();
+
       }
       if (selectNextOptionBTN_counter === 3) {
         alert("counter 3 if statement")
-        document.getElementById("SelectProperties1").style.display = "none";
+        document.getElementById("exportStep").style.display = "";  //Show Export dropdown
+        document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("selectNextOption").style.display = "none";
         this.validateExportStep();
       }
+    },
+
+    backStep(){
+      alert(selectNextOptionBTN_counter);
+      if (selectNextOptionBTN_counter === 2) {
+        document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
+        document.getElementById("clearButton").style.display = "";    //Shows clear button
+        document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
+        document.getElementById("entityLabelId").style.display = "";  //Shows label on main screen
+        document.getElementById("backButton").style.display = "none";     //Hides back button on main screen
+        selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+      }
+
     },
 
     //Vue 3 STEP 2
@@ -541,8 +578,12 @@ export default {
         document.getElementById("entityTextID").style.display = "none";
         document.getElementById("entityLabelId").style.display = "none";
         document.getElementById("SelectProperties1").style.display = "none";
-        this.validateExportStep();
-        return Object.keys(this.rightUsers).length > 0
+
+        if (Object.keys(this.rightUsers).length > 0) {
+          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
+          this.validateExportStep();
+          return Object.keys(this.rightUsers).length > 0
+        }
       }
     },
 
@@ -553,7 +594,10 @@ export default {
         return this.rightUsers !== null
       }
     },
+
+
 /*
+
     onComplete: function() {
       alert("Valid oncomplete test");
       this.downloadFile();
