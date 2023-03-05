@@ -16,11 +16,12 @@
 
 
     <!-- WIZARD DECLARATION -->
-    <form-wizard id = "selectNextOption"
+    <form-wizard
+
+
+        id = "selectNextOption"
       @on-complete="onComplete"
       step-size="xs"
-      title=""
-      subtitle=""
       finish-button-text="Export"
       nextButtonText="Select Next OptionONN"
       color="#017ebe">
@@ -57,6 +58,10 @@
             </a></li>
           </ul>
         </div>
+
+      <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" class="btn btn-primary mb-5 exportButtons" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
+      </span>
 
       <!--Vue 3 Entity Text field  End-->
 
@@ -433,22 +438,60 @@ export default {
     this.hideListBoxsStepTwo();
   },
 
+
   setup(){
     const tags = ref([]);
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
+    var newTagCounter = 0;
+
 
     const addTag = (tag) => {
       tags.value.push(tag);
       newTag.value = ""; // reset newTag
       tagCounter = tagCounter + 1;
+      newTagCounter = newTagCounter + 1
     };
 
+    //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
       tags.value.splice(index, 1);
       tagCounter = tagCounter  - 1;
     };
-    return { tags, newTag, addTag,  removeTag, tagCounter }
+
+
+    //Vue 3 Removes all tags below text box
+    const removeAllTags = (tagDeleteCounter) => {
+      alert("test2");
+      for(let i = 0; i<=newTagCounter; i++) {
+        tags.value.splice(tagDeleteCounter, newTagCounter);
+        tagDeleteCounter = tagDeleteCounter + 1;
+      }
+
+
+/*
+      this.tag = []
+      this.newTag = []
+      this.userEnteredCodes = []
+      this.selectedTags = []
+      this.entityList = []
+      this.multipleEntitiesSplit = []
+      this.invalidTag = ''
+      this.userSelectedProperyNames = []
+      this.tags2 = []
+*/
+
+
+      //document.getElementById("listOfTags").style.display = "none";  // remove tags
+      //document.getElementById("listOfTags").innerHTML = "";
+
+
+     // document.getElementById("selectConceptCodesCount").innerText = 0;
+    //  document.getElementById("selectedConceptCodesTags").innerText = "";
+      return { tags, newTag, addTag,  removeTag, tagCounter, removeAllTags }
+    };
+
+    return { tags, newTag, addTag,  removeTag, tagCounter, removeAllTags }
   },
 
 
@@ -487,6 +530,70 @@ export default {
   },
 
   methods: {
+
+
+    // clear all of the entitiy codes in the input selection
+    clearSelection() {
+      //alert (this.baseURL);
+      //alert (this.rolesRequired);
+      //alert (this.associationsRequired);
+      //alert (this.queryEntitySelection);
+      //alert("this is the data for clearSelection: " + this.selectedTags);
+
+      this.tag = []
+      this.newTag = []
+      this.userEnteredCodes = []
+      this.selectedTags = []
+      this.entityList = []
+      this.multipleEntitiesSplit = []
+      this.invalidTag = ''
+      this.userSelectedProperyNames = []
+      this.tags2 = []
+      //this.tags = []
+
+
+      //document.getElementById("listOfTags").style.display = "none";  // remove tags
+      //document.getElementById("listOfTags").innerHTML = "";
+      document.getElementById("selectConceptCodesCount").innerText = 0;
+      document.getElementById("selectedConceptCodesTags").innerText = "";
+      // tagsLength = document.getElementById("tags").value.length;
+      //document.getElementById("selectConceptCodesCount").value = 0;
+      //this.selectConceptCodesCount = 0;
+      // (tagCountTotal) => (this.tags.value.splice(tagCountTotal, 1));
+
+
+
+      //  const removeAllTags = (tagDeleteCounter) => {
+
+      //  }
+
+
+
+
+      this.updateParent()
+    },
+
+    updateParent() {
+      alert("this is the data for updateParent: " + this.selectedTags);
+      this.setSelectedTags()
+
+      // Notify users of this plugin that the user selected values changed.
+      this.$emit('entitesUpdated',
+          this.selectedTags,
+          this.entityList,
+          this.userSelectedProperyNames,
+          this.userEnteredCodes)
+    },
+
+
+
+
+
+    removeAllTagsFunc(){
+      alert("test0");
+      this.removeAllTags(1);
+      alert("test1");
+    },
     moveLeft() {
         if(!this.rightSelectedUsers.length) return;
         console.log('moveLeft',this.rightUsers);
@@ -568,6 +675,7 @@ export default {
          'event_label': this.userSelectedFormat.name
       })
     },
+
 
 
     // Wizard methods
@@ -941,7 +1049,11 @@ ul {
   display: block;
 }
 
-
+.clearButton{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+}
 
 
 </style>

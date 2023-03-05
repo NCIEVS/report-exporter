@@ -73,9 +73,6 @@ alert("this is the value entered: " + baseURL);
     </button>-->
 
 
-    <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" class="wizard-btn" v-on:click="clearSelection"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
-    </span>
 
     <!--
     <span role="button" tabindex="0">
@@ -125,9 +122,7 @@ export default {
 
   methods: {
 
-    Test(){
-      alert("Onblur test")
-    },
+
 
     // clear all of the entitiy codes in the input selection
     clearSelection() {
@@ -136,7 +131,7 @@ export default {
       //alert (this.associationsRequired);
       //alert (this.queryEntitySelection);
       //alert("this is the data for clearSelection: " + this.selectedTags);
-      var tagCountTotal;
+
       this.tag = []
       this.newTag = []
       this.userEnteredCodes = []
@@ -148,14 +143,24 @@ export default {
       this.tags2 = []
       //this.tags = []
 
+
       //document.getElementById("listOfTags").style.display = "none";  // remove tags
-      tagCountTotal = document.getElementById("selectConceptCodesCount").innerText;
+      //document.getElementById("listOfTags").innerHTML = "";
       document.getElementById("selectConceptCodesCount").innerText = 0;
       document.getElementById("selectedConceptCodesTags").innerText = "";
+     // tagsLength = document.getElementById("tags").value.length;
       //document.getElementById("selectConceptCodesCount").value = 0;
       //this.selectConceptCodesCount = 0;
-      (tagCountTotal) => (this.tags.value.splice(tagCountTotal, 1));
-      alert(tagCountTotal);
+     // (tagCountTotal) => (this.tags.value.splice(tagCountTotal, 1));
+    //  removeAllTags(1)
+
+
+    //  const removeAllTags = (tagDeleteCounter) => {
+
+    //  }
+
+
+
 
       this.updateParent()
     },
