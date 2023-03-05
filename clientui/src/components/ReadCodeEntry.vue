@@ -25,11 +25,9 @@
       <!--Vue 3 Entity Text field  Start-->
       <div class="entityText" id = "entityTextID" element-id="tag-input">
         <input placeholder="Type entity code, then click enter"
-
                class="entityCodeInput" v-model="newTag"
                @keydown.space="addTag(newTag)"
-               @keydown.tab="addTag(newTag)"
-              >
+               @keydown.tab="addTag(newTag)">
         <br>
         <br>
         <div class = "tag-input"></div>
@@ -114,14 +112,19 @@
         <button tabindex="-1" type="button" id = "clearButton" class="wizard-btn-delete" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
 
-
-    <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "nextOption" class="wizard-btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
+      <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" id = "nextOption" class="wizard-btn-back" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
       </span>
+
+      <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" id = "backButton" class="wizard-btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
+      </span>
+
+
+
+
+
       <!--Vue 3 Entity Text field  End-->
-
-
-
 
 
 
@@ -233,7 +236,7 @@ import 'form-wizard-vue3/dist/form-wizard-vue3.css'
 
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
-let selectNextOptionBTN_counter =  0;
+let selectNextOptionBTN_counter =  1;
 
 
 export default {
@@ -502,23 +505,14 @@ export default {
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
 
       //Vue 3 STEP 1
-      selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
-
       if (selectNextOptionBTN_counter === 1) {
-        //alert("Validation test and check string length: " + Object.keys(this.selectedTags).values());
-        //alert("button Counter " + selectNextOptionBTN_counter);
-        //Object.keys(this.selectedTags).values() = 'test345';
-        //alert(Object.keys(this.selectedTags).length);
-        //return Object.keys(this.selectedTags).length>0
-        document.getElementById("clearButton").style.display = "none";
-        document.getElementById("entityTextID").style.display = "none";
-        document.getElementById("entityLabelId").style.display = "none";
-        document.getElementById("SelectProperties1").style.display = "";
-        document.getElementsByClassName("wizard-btn").display = "none";
-
-        //document.getElementById("SelectProperties2").style.display = "none";
-        selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
-       // return true
+        if (this.newTag.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
+          document.getElementById("clearButton").style.display = "none";
+          document.getElementById("entityTextID").style.display = "none";
+          document.getElementById("entityLabelId").style.display = "none";
+          document.getElementById("SelectProperties1").style.display = "";
+          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
+        }
       }
       if (selectNextOptionBTN_counter === 2) {
         alert("call for step 2");
@@ -884,7 +878,15 @@ ul {
   border-radius: 4px;
   margin-left: 300px;
   width: 158px;
-
 }
 
+.wizard-btn-back{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 277px;
+  width: 158px;
+}
 </style>
