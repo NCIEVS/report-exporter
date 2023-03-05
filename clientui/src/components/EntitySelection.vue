@@ -122,61 +122,6 @@ export default {
 
   methods: {
 
-
-
-    // clear all of the entitiy codes in the input selection
-    clearSelection() {
-      //alert (this.baseURL);
-      //alert (this.rolesRequired);
-      //alert (this.associationsRequired);
-      //alert (this.queryEntitySelection);
-      //alert("this is the data for clearSelection: " + this.selectedTags);
-
-      this.tag = []
-      this.newTag = []
-      this.userEnteredCodes = []
-      this.selectedTags = []
-      this.entityList = []
-      this.multipleEntitiesSplit = []
-      this.invalidTag = ''
-      this.userSelectedProperyNames = []
-      this.tags2 = []
-      //this.tags = []
-
-
-      //document.getElementById("listOfTags").style.display = "none";  // remove tags
-      //document.getElementById("listOfTags").innerHTML = "";
-      document.getElementById("selectConceptCodesCount").innerText = 0;
-      document.getElementById("selectedConceptCodesTags").innerText = "";
-     // tagsLength = document.getElementById("tags").value.length;
-      //document.getElementById("selectConceptCodesCount").value = 0;
-      //this.selectConceptCodesCount = 0;
-     // (tagCountTotal) => (this.tags.value.splice(tagCountTotal, 1));
-    //  removeAllTags(1)
-
-
-    //  const removeAllTags = (tagDeleteCounter) => {
-
-    //  }
-
-
-
-
-      this.updateParent()
-    },
-
-    updateParent() {
-      alert("this is the data for updateParent: " + this.selectedTags);
-      this.setSelectedTags()
-
-      // Notify users of this plugin that the user selected values changed.
-      this.$emit('entitesUpdated',
-          this.selectedTags,
-          this.entityList,
-          this.userSelectedProperyNames,
-          this.userEnteredCodes)
-    },
-
     onTagRemoved(code) {
       this.removeTag(code)
       this.updateParent()

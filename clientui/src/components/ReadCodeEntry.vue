@@ -15,19 +15,6 @@
     <!--Vue 3 End-->
 
 
-    <!-- WIZARD DECLARATION -->
-    <form-wizard
-
-
-        id = "selectNextOption"
-      @on-complete="onComplete"
-      step-size="xs"
-      finish-button-text="Export"
-      nextButtonText="Select Next OptionONN"
-      color="#017ebe">
-
-
-
 
       <!--Vue 3 Entity Label field  Start-->
       <div class="entityLabel" id = "entityLabelId">
@@ -38,12 +25,7 @@
       <!--Vue 3 Entity Text field  Start-->
       <div class="entityText" id = "entityTextID" element-id="tag-input">
         <input placeholder="Type entity code, then click enter"
-               :add-tags-on-comma="true"
-               :add-tags-on-space="true"
-               :add-tags-on-tab="true"
-               :add-tags-on-blur="true"
-               :case-sensitive-tags="true"
-               :typeahead="false"
+
                class="entityCodeInput" v-model="newTag"
                @keydown.space="addTag(newTag)"
                @keydown.tab="addTag(newTag)"
@@ -59,166 +41,84 @@
           </ul>
         </div>
 
-      <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" class="btn btn-primary mb-5 exportButtons" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
-      </span>
 
-      <!--Vue 3 Entity Text field  End-->
-
-
-      <!--Vue 3 step 2 list boxes Start -->
-      <div id="app" class="container">
-        <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
-          <div class="container">
-            <form>
-              <div class="form-group">
-                <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
-              </div>
-                <div class="form-group">
-                  <div class="msl-multi-select">
-                    <div class="msl-searchable-list msl-multi-select__list">
-                      <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
-                        <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
-                          <option v-for="userLeft in leftUsers" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                            {{ userLeft }}
-                          </option>
-                        </select>
-                    </div>
-                    <div class="listBoxButton">
-                    <table>
-                      <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td><input type = "button" value = ">>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                    </table>
-
-                    <table>
-                      <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td><input type = "button" value = "<<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                    </table>
-                    </div>
-                    <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
-                      <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
-                        <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
-                          <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
-                            {{ userRight }}
-                          </option>
-                        </select>
-                    </div>
-                  </div>
-                </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <!--Vue 3 step 2 list boxes End -->
-
-
-
-      <!-- STEP 1: SELECT CODES -->
-
-      <tab-content icon="ti-settings" title="Select Concept Codes for Entity Export"
-        :before-change="validateFirstStep">
-        <div class="container">
-          <div class="container">
-              <div class="row justify-content-center">
-                 <div class="col-12 col-md-8">
-                    <form ref="formSelectCodes">
-
-
-                      <div class="form-group">
-                        <entity-selection
-
-                           :baseURL=this.$baseURL
-                           :rolesRequired=false
-                           queryEntitySelection="ENTITY"
-                          @entitesUpdated= "onEntitiesUpdated">
-                       </entity-selection>
-
-                      </div>
-
-                    </form>
-
-                 </div>
-
-              </div>
-          </div>
-        </div>
-      </tab-content>
-
-
-      <!-- STEP 2: SELECT PROPERTIES -->
-      <tab-content icon="ti-view-list-alt" title="Select Properties"
-        :before-change="validatePropertyStep">
-
+    <!--Vue 3 step 2 list boxes Start -->
+    <div id="app" class="container">
+      <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
         <div class="container">
           <form>
             <div class="form-group">
-              <label for="selectedProperties">Select properties to include in the export</label>
+              <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
             </div>
             <div class="form-group">
-              <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
-                  :reduce-display-property="(option) => option.name"
-                  :reduce-value-property="(option) => option.code"
-                  search-input-class="custom-input-class"
-                  search-options-placeholder="Search properties"
-                  selected-options-placeholder="Search selected properties">
-              </v-multiselect-listbox>
+              <div class="msl-multi-select">
+                <div class="msl-searchable-list msl-multi-select__list">
+                  <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
+                  <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
+                    <option v-for="userLeft in leftUsers" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                      {{ userLeft }}
+                    </option>
+                  </select>
+                </div>
+                <div class="listBoxButton">
+                  <table>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type = "button" value = ">>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+
+                  <table>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type = "button" value = "<<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                  <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
+                  <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
+                    <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
+                      {{ userRight }}
+                    </option>
+                  </select>
+                </div>
+              </div>
             </div>
           </form>
         </div>
-      </tab-content>
-
-      <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
-      <tab-content icon="ti-download" title="Select Format and Export"
-        :before-change="validateExportStep">
-        <div ref="formContainer" class="container">
-            <div class="row justify-content-center">
-               <div class="col-12 col-md-6">
-                <form>
-
-                   <!-- Export format pulldown plugin -->
-                   <div class="form-group">
-                     <export-format
-                        :baseURL=this.$baseURL
-                        @formatUpdated= "onFormatUpdated">
-                    </export-format>
-                   </div>
-
-                </form>
-             </div>
-           </div>
-        </div>
-      </tab-content>
-    </form-wizard>
+      </div>
+    </div>
+    <!--Vue 3 step 2 list boxes End -->
 
 
+      <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" id = "clearButton" class="wizard-btn-delete" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
+      </span>
 
 
-
-
-
-
+    <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" id = "nextOption" class="wizard-btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
+      </span>
+      <!--Vue 3 Entity Text field  End-->
 
 
 
@@ -317,102 +217,23 @@
 
         <!-- Vue3 Selection Summary List boxes End  -->
 
-
-
-
-
-
-
-
-        <div id="collapseSummary" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body pb-1">
-
-            <div class="row p-1">
-              <div class="col-sm-4">
-                <div class="card bg-light border-dark mb-3">
-                  <div class="card-header">Selected Concept Codes <span class="badge badge-secondary">{{Object.keys(this.selectedTags).length}}</span></div>
-                  <div class="card-body">
-                    <ul class="list-group" id="selectedConceptCodesTags">
-                    <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
-                      {{ selectedTag.value }}
-                    </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="card bg-light border-dark mb-3">
-                  <div class="card-header">Selected Properties <span class="badge badge-secondary">{{Object.keys(this.selectedProperties).length}}</span></div>
-                  <div class="card-body">
-
-                    <ul class="list-group" id="selectedPropertyList">
-                      <li v-for="selectedProperty in selectedProperties" :key="selectedProperty.code">
-                        {{ selectedProperty.name }}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="card bg-light border-dark mb-3">
-                  <div class="card-header">Selected Export Format</div>
-                  <div class="card-body">
-                    <ul class="list-group" id="selectedPropertyList">
-                      <li>
-                        {{
-                            userSelectedFormat.length !== 0 ?
-                              userSelectedFormat.name + ' (' +
-                              userSelectedFormat.extension + ')  ' +
-                              userSelectedFormat.description
-                            : 'None'
-                        }}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-//document.getElementById("SelectProperties1").style.display = "none";
+
 // Custom input tags
-import vMultiselectListbox from 'vue-multiselect-listbox'
-//import vMultiselectListbox from 'vue-multiselect-listbox-v2'
+
 import api from '../api.js'
 import axios from 'axios'
-//import {FormWizard, TabContent} from 'vue-form-wizard'
-import {FormWizard, TabContent} from 'vue3-form-wizard'
-//import FormWizard from 'form-wizard-vue3'
-//import {FormWizard, TabContent} from 'form-wizard-vue3'
-//import TabContent from 'vue3-form-wizard'
-//import TabContent from 'form-wizard-vue3'
 import {ref} from 'vue'
-
-//import FormWizard from 'form-wizard-vue3'
-//mport FormWizard from 'vue3-form-wizard'
-//import TabContent from 'vue3-form-wizard'
-
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
-
-//import 'vue-loading-overlay/dist/vue-loading.css'
-import ExportFormat from './ExportFormat.vue'
-import EntitySelection from './EntitySelection.vue'
-
-
-
-
 
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  0;
-
-
 
 
 export default {
@@ -423,11 +244,7 @@ export default {
     msg: String
   },
   components: {
-    'vMultiselectListbox': vMultiselectListbox,
-    FormWizard,
-    TabContent,
-    ExportFormat,
-    EntitySelection
+
   },
   metaInfo: {
 
@@ -462,14 +279,10 @@ export default {
 
     //Vue 3 Removes all tags below text box
     const removeAllTags = (tagDeleteCounter) => {
-      alert("test2");
       for(let i = 0; i<=newTagCounter; i++) {
         tags.value.splice(tagDeleteCounter, newTagCounter);
         tagDeleteCounter = tagDeleteCounter + 1;
       }
-
-
-/*
       this.tag = []
       this.newTag = []
       this.userEnteredCodes = []
@@ -479,7 +292,7 @@ export default {
       this.invalidTag = ''
       this.userSelectedProperyNames = []
       this.tags2 = []
-*/
+
 
 
       //document.getElementById("listOfTags").style.display = "none";  // remove tags
@@ -531,7 +344,9 @@ export default {
 
   methods: {
 
-
+    testCall(){
+      alert("test Call");
+    },
     // clear all of the entitiy codes in the input selection
     clearSelection() {
       //alert (this.baseURL);
@@ -695,13 +510,15 @@ export default {
         //Object.keys(this.selectedTags).values() = 'test345';
         //alert(Object.keys(this.selectedTags).length);
         //return Object.keys(this.selectedTags).length>0
+        document.getElementById("clearButton").style.display = "none";
         document.getElementById("entityTextID").style.display = "none";
         document.getElementById("entityLabelId").style.display = "none";
         document.getElementById("SelectProperties1").style.display = "";
         document.getElementsByClassName("wizard-btn").display = "none";
-        //document.getElementById("SelectProperties2").style.display = "none";
 
-        return true
+        //document.getElementById("SelectProperties2").style.display = "none";
+        selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
+       // return true
       }
       if (selectNextOptionBTN_counter === 2) {
         alert("call for step 2");
@@ -994,11 +811,11 @@ a.disabled {
 }
 
 .entityText{
-  padding-left: 207px;
+  padding-left: 277px;
 }
 
 .entityLabel{
-  padding-left: 207px;
+  padding-left: 277px;
 }
 
 ul {
@@ -1049,11 +866,25 @@ ul {
   display: block;
 }
 
-.clearButton{
+.wizard-btn-delete{
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
   color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 277px;
+  width: 100px;
 }
 
+.wizard-btn-next{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 300px;
+  width: 158px;
+
+}
 
 </style>
