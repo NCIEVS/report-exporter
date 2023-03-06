@@ -867,11 +867,16 @@ alert("this method onEntitiesUpdated invoked")
         alert("filename: " + this.filename);
         alert("selectedFormat Extension: " + this.userSelectedFormat.extension);
 
+       // this.tags = 'C12219';
+       // this.
+
+
+
         //alert (this.queryEntitySelection);
           axios({
                 url: this.$baseURL + 'download/get-file-for-readCodes/'  +
                     this.tags + '/' +
-                    this.userSelectedProperyNames + '/' +
+                    this.rightUsers + '/' +
                     this.userSelectedFormat.name  + '/'+
                     this.filename + '.' +
                     this.userSelectedFormat.extension,
