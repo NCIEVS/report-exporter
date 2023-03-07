@@ -44,8 +44,8 @@
       <div class="entityText" id = "entityTextID" element-id="tag-input">
         <input placeholder="Type entity code, then click enter"
                class="entityCodeInput" v-model="newTag"
-               @keyup.enter.exact="onTagAdded(newTag)"
-               @keyup.space.exact="onTagAdded(newTag)">
+               @keyup.enter.exact="addTag(newTag)"
+               @keyup.space.exact="addTag(newTag)">
         <br>
         <br>
         <div class = "tag-input"></div>
@@ -194,7 +194,7 @@
                 <div class="card-body">
                   <ul class="list-group" id="selectedConceptCodesTags">
                     <li v-for="newTag in newTag" :key="newTag.key">
-                      {{ tags }}
+                      {{ selectedConceptCodes }}
                     </li>
                   </ul>
                 </div>
@@ -276,6 +276,7 @@ export default {
 
   setup(){
     const tags = ref([]);
+    //const selectedConceptCodes = ref([]);
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
@@ -286,9 +287,19 @@ export default {
       tag = tag.replace(',', '')
       if (tag != "") {
         tags.value.push(tag);
-        newTag.value = ""; // reset newTag
+       // this.selectedConceptCodes = tag;
+      //  document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
+        //this.selectedConceptCodesTags.value.push(tag);
+       // selectedConceptCodesTags
+       // this.selectedConceptCodes.value.push("tag");
+        //newTag.value = ""; // reset newTag
+       // this.selectedConceptCodes = tag;
+       // document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
         tagCounter = tagCounter + 1;
-        newTagCounter = newTagCounter + 1
+        newTagCounter = newTagCounter + 1;
+        alert("Before getEntities Call()");
+        getEntities();
+        alert("After getEntities Call()");
       }
     };
 
@@ -382,11 +393,141 @@ alert("test2");
       return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
     };
 
+    const getEntities = () => {
+      // clear the entry list
 
+      alert("first getEntities");
+     // this.entityList = []
+      //setSelectedTags()
+      var tempCode = ''
+      var tempStatus = ''
 
+      /*
+      // show the busy indicator
+      let loader = this.$loading.show({
+        container: this.$refs.formSelectCodes,
+        loader: 'dots',
+        isFullPage: false,
+      });
+       */
 
+      alert("test call 1");
+     // alert("baseURL " + this.$baseURL);
+     // alert("userEnteredCodes " + this.userEnteredCodes);
+    //  alert("queryEntitySelection " + this.queryEntitySelection);
+     // api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
+      api.getCodes('https://evs-dev.cancer.gov/report-exporter/', 'C12219', 'ENTITY')
+          .then((data)=>{
 
-    return { tags, newTag, addTag,  onTagAdded, removeTag, tagCounter, removeAllTags }
+            alert("THis is the data "+ data)
+
+            if (data != null) {
+              // loop through all codes and verify data is returned for each
+              // If a code is retired, the object may be empty.
+              for (let x = data.length -1; x >=0; x--) {
+                if (data[x].queryCode < 0) {
+                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
+                  tempCode =  data[x].code
+                  tempStatus = data[x].queryStatus
+                  data.splice(x,1)
+
+        /*          // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(newTag).length; i++) {
+                    if (tempCode == newTag[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+
+         */
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+                // Check if the concept code must have roles to be valid
+                if (this.rolesRequired && data[x].roles.length < 1) {
+                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
+                  tempCode =  data[x].code
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Warning',
+                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+                // Check if the concept code must have associations to be valid
+                if (this.associationsRequired && data[x].associations.length < 1) {
+                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
+                  tempCode =  data[x].code
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Warning',
+                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+              }
+
+              this.entityList = data;
+              this.updateSelectedConceptCodeDescriptions(data);
+              this.updateParent()
+            }
+            else {
+              // There was a failure making the REST call.
+              this.clearSelection()
+              this.$notify({
+                group: 'app',
+                title: 'Validation Failure',
+                text: 'Could not verify concept code(s).  Possible network issue.',
+                type: 'error',
+                duration: 4000,
+                position: "left bottom"
+              });
+            }
+          }).catch(function(error) {
+        console.error("Error retrieving entities: " + error);
+     // }).finally(function() { loader.hide()})
+    })
+    };
+
+    const setSelectedTags = () => {
+      // clear the internal user codes that are entered
+      this.userEnteredCodes = []
+      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+        // currated top nodes (from the server hava a value of "C12434:Blood")
+        // so we need to strip off everything from the : to the right.
+        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
+      }
+    };
+
+    return { tags, newTag, addTag, setSelectedTags, onTagAdded, removeTag, tagCounter, removeAllTags }
 
 
 
@@ -405,6 +546,7 @@ alert("test2");
       userSelectedFormat: '',
       fileFormat: '',
       selectedExportListName: '',
+      selectedConceptCodes: '',
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -428,6 +570,10 @@ alert("test2");
   },
 
   methods: {
+
+    testCall2(){
+      alert("testCall2");
+    },
 
     // clear all of the entitiy codes in the input selection
     clearSelection() {
@@ -509,7 +655,119 @@ alert("test2");
           this.leftSelectedUsers.pop();
       }
     },
+/*
+    getEntities(){
+      // clear the entry list
 
+      alert("first getEntities");
+      this.entityList = []
+      this.setSelectedTags()
+      var tempCode = ''
+      var tempStatus = ''
+
+      // show the busy indicator
+      let loader = this.$loading.show({
+        container: this.$refs.formSelectCodes,
+        loader: 'dots',
+        isFullPage: false,
+      });
+
+      alert("test call 1");
+      api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
+          .then((data)=>{
+            if (data != null) {
+              // loop through all codes and verify data is returned for each
+              // If a code is retired, the object may be empty.
+              for (let x = data.length -1; x >=0; x--) {
+                if (data[x].queryCode < 0) {
+                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
+                  tempCode =  data[x].code
+                  tempStatus = data[x].queryStatus
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+                // Check if the concept code must have roles to be valid
+                if (this.rolesRequired && data[x].roles.length < 1) {
+                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
+                  tempCode =  data[x].code
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Warning',
+                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+                // Check if the concept code must have associations to be valid
+                if (this.associationsRequired && data[x].associations.length < 1) {
+                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
+                  tempCode =  data[x].code
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Warning',
+                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+              }
+
+              this.entityList = data;
+              this.updateSelectedConceptCodeDescriptions(data);
+              this.updateParent()
+            }
+            else {
+              // There was a failure making the REST call.
+              this.clearSelection()
+              this.$notify({
+                group: 'app',
+                title: 'Validation Failure',
+                text: 'Could not verify concept code(s).  Possible network issue.',
+                type: 'error',
+                duration: 4000,
+                position: "left bottom"
+              });
+            }
+          }).catch(function(error) {
+        console.error("Error retrieving entities: " + error);
+      }).finally(function() { loader.hide()});
+    },
+*/
 /*
     // called when an entity/code is added
     onTagAdded(newCode) {
@@ -701,15 +959,7 @@ alert("test2");
     //Vue 3 End
 
 
-    setSelectedTags() {
-      // clear the internal user codes that are entered
-      this.userEnteredCodes = []
-      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-        // currated top nodes (from the server hava a value of "C12434:Blood")
-        // so we need to strip off everything from the : to the right.
-        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
-      }
-    },
+
     //Vue 3 Start Step 2 Right Search Function
     searchSelectedPropertiesFilter() {
       var input;
