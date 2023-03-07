@@ -17,12 +17,12 @@
           <form>
             <div class="form-group">
               <div>
-                <label for="downloadFormat">Select format for export</label>
-                <select id="downloadFormat" class="form-control">
-                  <option value="[object Object]"> JSON (json) JavaScript Object Notation Format </option>
-                  <option value="[object Object]"> CSV (csv) Comma Separated Value Format </option>
-                  <option value="[object Object]"> TABD (txt) Tab Delimited Value Format </option>
-                  <option value="[object Object]"> EXCEL (xlsx) Microsoft Excel Format </option>
+                <label for="downloadFormatLabel">Select format for export</label>
+                <select id="downloadFormat" class="form-control"  @change="changeSelectedExportList($event)">
+                  <option value="json"> JSON (json) JavaScript Object Notation Format </option>
+                  <option value="csv"> CSV (csv) Comma Separated Value Format </option>
+                  <option value="txt"> TABD (txt) Tab Delimited Value Format </option>
+                  <option value="xlsx"> EXCEL (xlsx) Microsoft Excel Format </option>
                 </select>
               </div>
             </div>
@@ -524,7 +524,9 @@ alert("after call");
       availableProperties: [],
       selectedProperty: [],
       userSelectedProperyNames: [],
-      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
+      //userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
+      userSelectedFormat: [],
+      fileFormat: [],
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -791,11 +793,6 @@ alert("after call");
     },
 
 
-
-    onFormatUpdated (updatedFormat) {
-      this.userSelectedFormat = updatedFormat
-    },
-
     onEntitiesUpdated(updatedTags, updatedEntityCodes, userSelectedProperyNames,userEnteredCodes) {
 alert("this method onEntitiesUpdated invoked")
 
@@ -835,6 +832,27 @@ alert("this method onEntitiesUpdated invoked")
         return false;
       },
 
+    changeSelectedExportList(event){
+      this.userSelectedFormat.value = event.target.value;
+      if (event.target.value === "json") {
+        this.fileFormat = "JSON";
+      }
+
+      if (event.target.value === "csv") {
+        this.fileFormat = "CSV";
+      }
+
+      if (event.target.value === "txt") {
+        this.fileFormat = "TABD";
+      }
+
+      if (event.target.value === "xlsx") {
+        this.fileFormat = "EXCEL";
+      }
+      alert(event.target.value);
+      alert(this.userSelectedFormat.value);
+    },
+
       downloadFile() {
 
         this.$notify({
@@ -859,27 +877,15 @@ alert("this method onEntitiesUpdated invoked")
         this.setSelectedPropertyNames()
         this.gaTrackDownload();
 
-        alert("check 1")
-        alert("base URL: " + this.$baseURL);
-        alert("tags: " + this.tags);
-        alert("selectedPropertyName: " + this.rightUsers);
-        alert("SelectedFormat: " + this.userSelectedFormat.name);
-        alert("filename: " + this.filename);
-        alert("selectedFormat Extension: " + this.userSelectedFormat.extension);
-
-       // this.tags = 'C12219';
-       // this.
-
-
-
+        alert("Export file format: "+ this.userSelectedFormat.value);
         //alert (this.queryEntitySelection);
           axios({
                 url: this.$baseURL + 'download/get-file-for-readCodes/'  +
                     this.tags + '/' +
                     this.rightUsers + '/' +
-                    this.userSelectedFormat.name  + '/'+
+                    this.fileFormat  + '/'+
                     this.filename + '.' +
-                    this.userSelectedFormat.extension,
+                    this.userSelectedFormat.value,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
