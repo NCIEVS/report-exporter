@@ -44,8 +44,8 @@
       <div class="entityText" id = "entityTextID" element-id="tag-input">
         <input placeholder="Type entity code, then click enter"
                class="entityCodeInput" v-model="newTag"
-               @keydown.space="addTag(newTag)"
-        >
+               @keyup.enter.exact="onTagAdded(newTag)"
+               @keyup.space.exact="onTagAdded(newTag)">
         <br>
         <br>
         <div class = "tag-input"></div>
@@ -279,8 +279,6 @@ export default {
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
-    var tempCode = ''
-    var tempStatus = ''
     //this.entityList = []
 
     const addTag = (tag) => {
@@ -291,7 +289,6 @@ export default {
         newTag.value = ""; // reset newTag
         tagCounter = tagCounter + 1;
         newTagCounter = newTagCounter + 1
-        getEntities();
       }
     };
 
@@ -301,6 +298,7 @@ export default {
       tagCounter = tagCounter  - 1;
     };
 
+  /*
     const setSelectedTags = () =>{
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
@@ -310,161 +308,43 @@ export default {
         this.userEnteredCodes.push(this.tags[i].value.split(":",1))
       }
     };
-
-    //Vue 3 Web call get Entity info
-    const getEntities = ()=>{
-      // clear the entry list
-
-      //this.entityList = []
-      setSelectedTags()
-     // var tempCode = ''
-     // var tempStatus = ''
-alert("after call");
-      // show the busy indicator
-      /*
-      let loader = this.$loading.show({
-        container: this.$refs.formSelectCodes,
-        loader: 'dots',
-        isFullPage: false,
-      });
-       */
-      alert("base call " + this.$baseURL);
-      alert("userEnteredCodes " + this.userEnteredCodes);
-      alert("queryEntitySelection " + this.queryEntitySelection);
-
-      api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
-          .then((data)=>{
-
-            alert("Webcall data check: " + data);
-            if (data != null) {
-              // loop through all codes and verify data is returned for each
-              // If a code is retired, the object may be empty.
-              for (let x = data.length -1; x >=0; x--) {
-                if (data[x].queryCode < 0) {
-                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
-                  tempCode =  data[x].code
-                  tempStatus = data[x].queryStatus
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Invalid Concept Code',
-                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have roles to be valid
-                if (this.rolesRequired && data[x].roles.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have associations to be valid
-                if (this.associationsRequired && data[x].associations.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-              }
-
-              this.entityList = data;
-              this.updateSelectedConceptCodeDescriptions(data);
-              this.updateParent()
-            }
-            else {
-              // There was a failure making the REST call.
-              this.clearSelection()
-              this.$notify({
-                group: 'app',
-                title: 'Validation Failure',
-                text: 'Could not verify concept code(s).  Possible network issue.',
-                type: 'error',
-                duration: 4000,
-                position: "left bottom"
-              });
-            }
-          }).catch(function(error) {
-        console.error("Error retrieving entities: " + error);
-        //}).finally(function() { loader.hide()});
-      })//finally(function());
-    };
-
-
-
+*/
 
 
     // called when an entity/code is added
     const onTagAdded = (newTag) =>{
       // Test if the string entered was pasted in - if it has a comma separated
       // list of values
-      newTag.value.includes(',') ?
-          this.multipleEntitiesSplit = this.cleanString(newTag.value).split(",") :
-          this.multipleEntitiesSplit = []
+      alert("onTagAdded Called " + newTag);
 
+      //newTag.value.includes(',') ? newTag = this.cleanString(newTag.value).split(",") : newTag = []
+
+      alert("test1 " + newTag.length);
       // if the user entered multiple values, remove the last entry (which
       // is the comma separated string) and add each one individually.
-      if (this.multipleEntitiesSplit.length > 0) {
-        this.tags.splice(-1,1);
 
+      if (newTag.length > 0) {
+        alert("test2a")
+       // this.tags.splice(-1,1);  add back
+alert("test2");
 
-        for(let x = this.multipleEntitiesSplit.length; x >=0; x-- ) {
+        for(let x = newTag.length; x >=0; x-- ) {
           // Make sure we don't add a duplicate.
           // Check if user entered two commas with no entitiy code inbetween them
           // example:  C101171,  ,C101173
-          if ( (! this.isDuplicateTag(this.multipleEntitiesSplit[x])) &&
-              (this.multipleEntitiesSplit[x] !== undefined) &&
-              (this.multipleEntitiesSplit[x].length > 0)) {
-            this.tags.push({key: this.multipleEntitiesSplit[x], value: this.multipleEntitiesSplit[x]})
+          alert("test3");
+          if ( (! this.isDuplicateTag(newTag[x])) && (newTag[x] !== undefined) && (newTag[x].length > 0)) {
+           // this.tags.value.push({key: newTag[x], value: newTag[x]})
+            this.tags.value.push(newTag);
           }
         }
       }
-
       else {
         if (this.isDuplicateTag(newTag.value))
         {
+          alert("test4");
           // remove the last entered entity code
-          this.selectedTags.splice(-1,1);
+          this.tags.splice(-1,1);
         }
       }
 
@@ -502,7 +382,11 @@ alert("after call");
       return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
     };
 
-    return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
+
+
+
+
+    return { tags, newTag, addTag,  onTagAdded, removeTag, tagCounter, removeAllTags }
 
 
 
@@ -625,6 +509,172 @@ alert("after call");
           this.leftSelectedUsers.pop();
       }
     },
+
+/*
+    // called when an entity/code is added
+    onTagAdded(newCode) {
+      // Test if the string entered was pasted in - if it has a comma separated
+      // list of values
+      alert("onTagAdd Function");
+
+      newCode.value.includes(',') ?
+          this.multipleEntitiesSplit = this.cleanString(newCode.value).split(",") :
+          this.multipleEntitiesSplit = []
+
+      alert(this.multipleEntitiesSplit);
+      // if the user entered multiple values, remove the last entry (which
+      // is the comma separated string) and add each one individually.
+      if (this.multipleEntitiesSplit.length > 0) {
+        this.tags.splice(-1,1);
+
+
+        for(let x = this.multipleEntitiesSplit.length; x >=0; x-- ) {
+          // Make sure we don't add a duplicate.
+          // Check if user entered two commas with no entitiy code inbetween them
+          // example:  C101171,  ,C101173
+          if ( (! this.isDuplicateTag(this.multipleEntitiesSplit[x])) &&
+              (this.multipleEntitiesSplit[x] !== undefined) &&
+              (this.multipleEntitiesSplit[x].length > 0)) {
+            this.selectedTags.push({key: this.multipleEntitiesSplit[x], value: this.multipleEntitiesSplit[x]})
+          }
+        }
+      }
+
+      else {
+        if (this.isDuplicateTag(newCode.value))
+        {
+          // remove the last entered entity code
+          this.selectedTags.splice(-1,1);
+        }
+      }
+
+      // When a top node is entered/selected, verify it.
+      this.getEntities();
+    },
+
+    getEntities(){
+      // clear the entry list
+      this.entityList = []
+      this.setSelectedTags()
+      var tempCode = ''
+      var tempStatus = ''
+
+      // show the busy indicator
+      let loader = this.$loading.show({
+        container: this.$refs.formSelectCodes,
+        loader: 'dots',
+        isFullPage: false,
+      });
+      api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
+          .then((data)=>{
+            if (data != null) {
+              // loop through all codes and verify data is returned for each
+              // If a code is retired, the object may be empty.
+              for (let x = data.length -1; x >=0; x--) {
+                if (data[x].queryCode < 0) {
+                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
+                  tempCode =  data[x].code
+                  tempStatus = data[x].queryStatus
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+                // Check if the concept code must have roles to be valid
+                if (this.rolesRequired && data[x].roles.length < 1) {
+                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
+                  tempCode =  data[x].code
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Warning',
+                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+                // Check if the concept code must have associations to be valid
+                if (this.associationsRequired && data[x].associations.length < 1) {
+                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
+                  tempCode =  data[x].code
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Warning',
+                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+              }
+
+              this.entityList = data;
+              this.updateSelectedConceptCodeDescriptions(data);
+              this.updateParent()
+            }
+            else {
+              // There was a failure making the REST call.
+              this.clearSelection()
+              this.$notify({
+                group: 'app',
+                title: 'Validation Failure',
+                text: 'Could not verify concept code(s).  Possible network issue.',
+                type: 'error',
+                duration: 4000,
+                position: "left bottom"
+              });
+            }
+          }).catch(function(error) {
+        console.error("Error retrieving entities: " + error);
+      }).finally(function() { loader.hide()});
+    },
+
+    isDuplicateTag(newTag){
+      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+        //console.log ('Existing code: ' + this.selectedTags[i].key + ' newTag: ' + newTag);
+        if (this.selectedTags[i].key == newTag) {
+          //console.log ('Removing duplicate entity code: ' + this.selectedTags[i].key);
+          return true;
+        }
+      }
+      return false;
+    },
+    // removes forward slashes and all kinds of Unicode whitespace characters
+*/
+
+
+
     //Vue 3 Start Step 2 left Search Function
     searchPropertiesFilter() {
       var input;
@@ -810,17 +860,7 @@ alert("this method onEntitiesUpdated invoked")
       }
     },
 
-      // Determine if the user entered entity code is unique
-      isDuplicateTag(newTag){
-        for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-          //console.log ('Existing code: ' + this.selectedTags[i].key + ' newTag: ' + newTag);
-          if (this.selectedTags[i].key == newTag) {
-            //console.log ('Removing duplicate entity code: ' + this.selectedTags[i].key);
-            return true;
-          }
-        }
-        return false;
-      },
+
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
     changeSelectedExportList(event){
