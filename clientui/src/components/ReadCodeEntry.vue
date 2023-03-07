@@ -419,7 +419,7 @@ alert("test2");
       api.getCodes('https://evs-dev.cancer.gov/report-exporter/', 'C12219', 'ENTITY')
           .then((data)=>{
 
-            alert("THis is the data "+ data.value)
+            alert("THis is the data "+ data)
 
             if (data != null) {
               // loop through all codes and verify data is returned for each
