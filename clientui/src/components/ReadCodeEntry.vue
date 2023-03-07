@@ -221,13 +221,7 @@
                 <div class="card-body">
                   <ul class="list-group" id="selectedPropertyList">
                 <li>
-                  {{
-                    userSelectedFormat.length !== 0 ?
-                        userSelectedFormat.name + ' (' +
-                        userSelectedFormat.extension + ')  ' +
-                        userSelectedFormat.description
-                        : 'None'
-                  }}
+                  {{ selectedExportListName }}
                 </li>
                </ul>
              </div>
@@ -519,14 +513,14 @@ alert("after call");
   data(){
     return {
       selectedTags: [],
-      userEnteredCodes: "[]",
+      userEnteredCodes: '',
       entityList: [],
       availableProperties: [],
       selectedProperty: [],
-      userSelectedProperyNames: [],
-      //userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
-      userSelectedFormat: [],
-      fileFormat: [],
+      userSelectedProperyNames: '',
+      userSelectedFormat: '',
+      fileFormat: '',
+      selectedExportListName: '',
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -810,13 +804,9 @@ alert("this method onEntitiesUpdated invoked")
     },
 
     setSelectedPropertyNames() {
-      alert("setSelectedPropertyNames Call")
       this.userSelectedProperyNames = []
-      alert("setSelectedPropertyNames variable")
       for (let i = 0; i < this.rightUsers.length; i++) {
-        alert("before push: " + this.rightUsers.length);
         this.userSelectedProperyNames.push(this.rightUsers[i].name)
-        alert("After push: " + this.userSelectedProperyNames.value);
       }
     },
 
@@ -832,25 +822,28 @@ alert("this method onEntitiesUpdated invoked")
         return false;
       },
 
+    //Vue 3 Function controls Select format Export dropdown on Step 3
     changeSelectedExportList(event){
-      this.userSelectedFormat.value = event.target.value;
+      this.userSelectedFormat = event.target.value;
       if (event.target.value === "json") {
         this.fileFormat = "JSON";
+        this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
       }
 
       if (event.target.value === "csv") {
         this.fileFormat = "CSV";
+        this.selectedExportListName = "CSV (csv) Comma Separated Value Format"
       }
 
       if (event.target.value === "txt") {
         this.fileFormat = "TABD";
+        this.selectedExportListName = "TABD (txt) Tab Delimited Value Format"
       }
 
       if (event.target.value === "xlsx") {
         this.fileFormat = "EXCEL";
+        this.selectedExportListName = "EXCEL (xlsx) Microsoft Excel Format"
       }
-      alert(event.target.value);
-      alert(this.userSelectedFormat.value);
     },
 
       downloadFile() {
@@ -864,20 +857,18 @@ alert("this method onEntitiesUpdated invoked")
           position: "bottom left"
         });
 
-        // show the busy indicator
-        /*
-        let loader = this.$loading.show({
-            container: this.$refs.formContainer,
-            loader: 'dots',
-            isFullPage: false,
-          });
-         */
 
         // set the user selected tags and properties
         this.setSelectedPropertyNames()
         this.gaTrackDownload();
 
-        alert("Export file format: "+ this.userSelectedFormat.value);
+        //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
+        if (this.fileFormat === ""){
+          this.userSelectedFormat = 'json';
+          this.fileFormat = 'JSON';
+          this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
+        }
+
         //alert (this.queryEntitySelection);
           axios({
                 url: this.$baseURL + 'download/get-file-for-readCodes/'  +
@@ -885,23 +876,21 @@ alert("this method onEntitiesUpdated invoked")
                     this.rightUsers + '/' +
                     this.fileFormat  + '/'+
                     this.filename + '.' +
-                    this.userSelectedFormat.value,
+                    this.userSelectedFormat,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
-            alert("Check 2")
                   var fileURL = window.URL.createObjectURL(new Blob([response.data]));
                   var fileLink = document.createElement('a');
 
                   fileLink.href = fileURL;
-                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
                   document.body.appendChild(fileLink);
                   fileLink.click();
-            alert("CHeck 3")
 
             }).catch(function(error) {
               console.error("Download Error: " + error);
-              alert("Error Downloading file error message: " + error);
+              //alert("Error Downloading file error message: " + error);
             })
               //.finally(function() { loader.hide()});
         },
