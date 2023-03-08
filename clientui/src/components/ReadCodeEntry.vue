@@ -295,7 +295,7 @@ export default {
         api.getCodes('https://evs-dev.cancer.gov/report-exporter/', tag, 'ENTITY')
             .then((data)=> {
               alert("after call");
-              data = "test";
+              //data = "test";
               if (data != null) {
                 alert("after checks");
                 for (let x = data.length - 1; x >= 0; x--) {
