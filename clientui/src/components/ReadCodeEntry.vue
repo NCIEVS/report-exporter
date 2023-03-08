@@ -1,4 +1,3 @@
-
 <template>
   <div id="read-codes-entry" class="container">
 
@@ -34,28 +33,28 @@
 
 
 
-      <!--Vue 3 Entity Label field  Start-->
-      <div class="entityLabel" id = "entityLabelId">
+    <!--Vue 3 Entity Label field  Start-->
+    <div class="entityLabel" id = "entityLabelId">
       <label for="tags" >Enter NCI Thesaurus concept codes</label>
-      </div>
-      <!--Vue 3 Entity Label field  End-->
+    </div>
+    <!--Vue 3 Entity Label field  End-->
 
-      <!--Vue 3 Entity Text field  Start-->
-      <div class="entityText" id = "entityTextID" element-id="tag-input">
-        <input placeholder="Type entity code, then click enter"
-               class="entityCodeInput" v-model="newTag"
-               @keyup.enter.exact="addTag(newTag)"
-               @keyup.space.exact="addTag(newTag)">
-        <br>
-        <br>
-        <div class = "tag-input"></div>
-          <ul class="tags" id = "listOfTags">
-            <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
-              {{ tag }}
-              <button class="delete" @click="removeTag(index)">x</button>
-            </a></li>
-          </ul>
-        </div>
+    <!--Vue 3 Entity Text field  Start-->
+    <div class="entityText" id = "entityTextID" element-id="tag-input">
+      <input placeholder="Type entity code, then click enter"
+             class="entityCodeInput" v-model="newTag"
+             @keyup.enter.exact="addTag(newTag)"
+             @keyup.space.exact="addTag(newTag)">
+      <br>
+      <br>
+      <div class = "tag-input"></div>
+      <ul class="tags" id = "listOfTags">
+        <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
+          {{ tag }}
+          <button class="delete" @click="removeTag(index)">x</button>
+        </a></li>
+      </ul>
+    </div>
 
 
     <!--Vue 3 step 2 list boxes Start -->
@@ -126,15 +125,15 @@
     <!--Vue 3 step 2 list boxes End -->
 
 
-      <span role="button" tabindex="0">
+    <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
 
-      <span role="button" tabindex="0">
+    <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "backButton" class="btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
       </span>
 
-      <span role="button" tabindex="0">
+    <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "nextOption" class="btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
       </span>
 
@@ -145,7 +144,7 @@
 
 
 
-      <!--Vue 3 Entity Text field  End-->
+    <!--Vue 3 Entity Text field  End-->
 
 
 
@@ -158,7 +157,7 @@
               padding-bottom: 1px;
               padding-top: 1px;
           ">
-            <center>
+          <center>
             <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
               {{this.showSummaryText}}
             </button>
@@ -168,70 +167,70 @@
 
 
         <div id="accordion" class="pb-3 pt-3">
-        <div class="card">
-        <div id="headingOne" class="card-header" style="padding: 1px;">
+          <div class="card">
+            <div id="headingOne" class="card-header" style="padding: 1px;">
 
 
 
-          <!--
-        <center>
-          <button data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary" class="btn btn-link"> Hide Selection Summary </button>
-        </center>
-        -->
-      <!-- Vue3 Selection Summary List boxes Start  -->
-      </div>
-        <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
-        <div class="card-body pb-1">
-          <div class="row p-1">
-            <div class="col-sm-4">
-              <div class="card bg-light border-dark mb-3">
-                <div class="card-header">
-                  Selected Concept Codes
-                  <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span>
-                </div>
+              <!--
+            <center>
+              <button data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary" class="btn btn-link"> Hide Selection Summary </button>
+            </center>
+            -->
+              <!-- Vue3 Selection Summary List boxes Start  -->
+            </div>
+            <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
+              <div class="card-body pb-1">
+                <div class="row p-1">
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">
+                        Selected Concept Codes
+                        <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span>
+                      </div>
 
 
-                <div class="card-body">
-                  <ul class="list-group" id="selectedConceptCodesTags">
-                    <li v-for="newTag in newTag" :key="newTag.key">
-                      {{ selectedConceptCodes }}
-                    </li>
-                  </ul>
+                      <div class="card-body">
+                        <ul class="list-group" id="selectedConceptCodesTags">
+                          <li v-for="newTag in newTag" :key="newTag.key">
+                            {{ tags }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">
+                        Selected Properties
+                        <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
+                      </div>
+                      <div class="card-body">
+                        <ul id="selectedPropertyList" class="list-group">
+                          <li v-for="selectedProperty in selectedProperty" :key="selectedProperty.key">
+                            {{ this.rightUsers }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">Selected Export Format</div>
+                      <div class="card-body">
+                        <ul class="list-group" id="selectedPropertyList">
+                          <li>
+                            {{ selectedExportListName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
-              <div class="card bg-light border-dark mb-3">
-                <div class="card-header">
-                  Selected Properties
-                  <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
-                </div>
-                <div class="card-body">
-                  <ul id="selectedPropertyList" class="list-group">
-                    <li v-for="selectedProperty in selectedProperty" :key="selectedProperty.key">
-                      {{ this.rightUsers }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="card bg-light border-dark mb-3">
-               <div class="card-header">Selected Export Format</div>
-                <div class="card-body">
-                  <ul class="list-group" id="selectedPropertyList">
-                <li>
-                  {{ selectedExportListName }}
-                </li>
-               </ul>
-             </div>
-                </div>
-           </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-      </div>
 
         <!-- Vue3 Selection Summary List boxes End  -->
 
@@ -241,139 +240,50 @@
 </template>
 
 <script>
-
 // Custom input tags
-
 import api from '../api.js'
 import axios from 'axios'
 import {ref} from 'vue'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
-
-
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
-
-
 export default {
-
-
   name: 'read-code-entry',
   props: {
     msg: String
   },
   components: {
-
   },
   metaInfo: {
-
     title: 'EVS Report Exporter - Read Code',
   },
-
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
-    //getAPIParams(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection);
   },
-
-
-
   setup(){
     const tags = ref([]);
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
-    //var tempCode = "";
-   // var tempStatus = "";
-
-    const getAPIParams = (baseUrl, codes, entities) => {
-      alert(baseUrl + " " + codes + " " + entities);
-      return baseUrl, codes, entities;
-    };
-
+    var tempCode = ''
+    var tempStatus = ''
+    //this.entityList = []
     const addTag = (tag) => {
-     // tag = tag.replace(/[\s/]/g, '')
-     // tag = tag.replace(',', '')
-      var description = [];
-      alert("addTagCall");
+      tag = tag.replace(/[\s/]/g, '')
+      tag = tag.replace(',', '')
       if (tag != "") {
-        alert("before call");
-        //alert("check "+ tag);
-        api.getCodes('https://evs-dev.cancer.gov/report-exporter/', 'C12219', 'ENTITY')
-            .then((data)=>{
-              alert("after call");
-        if (data != null) {
-          alert("after checks");
-
-
-
-
-          for (let x = data.length - 1; x >= 0; x--) {
-            alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
-
-
-           description = data;
-            // loop through all codes and verify data is returned for each
-            // If a code is retired, the object may be empty.
-            for (let i = 0; i < description.length; i++) {
-              //if (selectedTag.key== description[i].code) {
-                if ("C12219"== description[i].code) {
-                description.splice(i,1)
-                alert("Description:" + description);
-                break
-              }
-            }
-/*
-            for (let x = 0; x < data; x++) {
-              //console.log ("code " + entities[x].code + "  name " + entities[x].name)
-              if ("C12219" == data[x].code) {
-                selectedTag.value = entities[x].code + ":" + entities[x].name;
-                selectedTag.key = entities[x].code;
-              }
-            }
-            */
-            
-            alert("after for loop");
-            if (data[x].queryCode < 0) {
-              alert("after querycode if statement");
-              alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus);
-              var tempCode = data[x].code
-              var tempStatus = data[x].queryStatus
-              alert("tmpCode " + tempCode);
-              alert("tmpStatus " + tempStatus);
-              alert(data.splice(x, 1));
-              data.splice(x, 1)
-            }
-          }
-        }
-            }).catch(function(error) {
-          console.error("Error retrieving entities: " + error);
-        })
-
-
-
         tags.value.push(tag);
         newTag.value = ""; // reset newTag
-       // this.selectedConceptCodes = tag;
-      //  document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
-        //this.selectedConceptCodesTags.value.push(tag);
-       // selectedConceptCodesTags
-       // this.selectedConceptCodes.value.push("tag");
-        //newTag.value = ""; // reset newTag
-       // this.selectedConceptCodes = tag;
-       // document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
         tagCounter = tagCounter + 1;
-        newTagCounter = newTagCounter + 1;
-        alert("Before getEntities Call()");
-        alert("After getEntities Call()");
+        newTagCounter = newTagCounter + 1
+        getEntities();
       }
     };
-
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
       tags.value.splice(index, 1);
       tagCounter = tagCounter  - 1;
     };
-
-  /*
     const setSelectedTags = () =>{
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
@@ -383,53 +293,149 @@ export default {
         this.userEnteredCodes.push(this.tags[i].value.split(":",1))
       }
     };
-*/
-
-
+    //Vue 3 Web call get Entity info
+    const getEntities = ()=>{
+      // clear the entry list
+      //this.entityList = []
+      setSelectedTags()
+      // var tempCode = ''
+      // var tempStatus = ''
+      alert("after call");
+      // show the busy indicator
+      /*
+      let loader = this.$loading.show({
+        container: this.$refs.formSelectCodes,
+        loader: 'dots',
+        isFullPage: false,
+      });
+       */
+      alert("base call " + this.$baseURL);
+      alert("userEnteredCodes " + this.userEnteredCodes);
+      alert("queryEntitySelection " + this.queryEntitySelection);
+      api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
+          .then((data)=>{
+            alert("Webcall data check: " + data);
+            if (data != null) {
+              // loop through all codes and verify data is returned for each
+              // If a code is retired, the object may be empty.
+              for (let x = data.length -1; x >=0; x--) {
+                if (data[x].queryCode < 0) {
+                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
+                  tempCode =  data[x].code
+                  tempStatus = data[x].queryStatus
+                  data.splice(x,1)
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+                // Check if the concept code must have roles to be valid
+                if (this.rolesRequired && data[x].roles.length < 1) {
+                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
+                  tempCode =  data[x].code
+                  data.splice(x,1)
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Warning',
+                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+                // Check if the concept code must have associations to be valid
+                if (this.associationsRequired && data[x].associations.length < 1) {
+                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
+                  tempCode =  data[x].code
+                  data.splice(x,1)
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Warning',
+                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+              }
+              this.entityList = data;
+              this.updateSelectedConceptCodeDescriptions(data);
+              this.updateParent()
+            }
+            else {
+              // There was a failure making the REST call.
+              this.clearSelection()
+              this.$notify({
+                group: 'app',
+                title: 'Validation Failure',
+                text: 'Could not verify concept code(s).  Possible network issue.',
+                type: 'error',
+                duration: 4000,
+                position: "left bottom"
+              });
+            }
+          }).catch(function(error) {
+        console.error("Error retrieving entities: " + error);
+        //}).finally(function() { loader.hide()});
+      })//finally(function());
+    };
     // called when an entity/code is added
     const onTagAdded = (newTag) =>{
       // Test if the string entered was pasted in - if it has a comma separated
       // list of values
-      alert("onTagAdded Called " + newTag);
-
-      //newTag.value.includes(',') ? newTag = this.cleanString(newTag.value).split(",") : newTag = []
-
-      alert("test1 " + newTag.length);
+      newTag.value.includes(',') ?
+          this.multipleEntitiesSplit = this.cleanString(newTag.value).split(",") :
+          this.multipleEntitiesSplit = []
       // if the user entered multiple values, remove the last entry (which
       // is the comma separated string) and add each one individually.
-
-      if (newTag.length > 0) {
-        alert("test2a")
-       // this.tags.splice(-1,1);  add back
-alert("test2");
-
-        for(let x = newTag.length; x >=0; x-- ) {
+      if (this.multipleEntitiesSplit.length > 0) {
+        this.tags.splice(-1,1);
+        for(let x = this.multipleEntitiesSplit.length; x >=0; x-- ) {
           // Make sure we don't add a duplicate.
           // Check if user entered two commas with no entitiy code inbetween them
           // example:  C101171,  ,C101173
-          alert("test3");
-          if ( (! this.isDuplicateTag(newTag[x])) && (newTag[x] !== undefined) && (newTag[x].length > 0)) {
-           // this.tags.value.push({key: newTag[x], value: newTag[x]})
-            this.tags.value.push(newTag);
+          if ( (! this.isDuplicateTag(this.multipleEntitiesSplit[x])) &&
+              (this.multipleEntitiesSplit[x] !== undefined) &&
+              (this.multipleEntitiesSplit[x].length > 0)) {
+            this.tags.push({key: this.multipleEntitiesSplit[x], value: this.multipleEntitiesSplit[x]})
           }
         }
       }
       else {
         if (this.isDuplicateTag(newTag.value))
         {
-          alert("test4");
           // remove the last entered entity code
-          this.tags.splice(-1,1);
+          this.selectedTags.splice(-1,1);
         }
       }
-
       // When a top node is entered/selected, verify it.
       this.getEntities();
     };
-
-
-
-
     //Vue 3 Removes all tags below text box
     const removeAllTags = (tagDeleteCounter) => {
       for(let i = 0; i<=newTagCounter; i++) {
@@ -445,39 +451,14 @@ alert("test2");
       this.invalidTag = ''
       this.userSelectedProperyNames = []
       this.tags2 = []
-
-
-
       //document.getElementById("listOfTags").style.display = "none";  // remove tags
       //document.getElementById("listOfTags").innerHTML = "";
-
-
-     // document.getElementById("selectConceptCodesCount").innerText = 0;
-    //  document.getElementById("selectedConceptCodesTags").innerText = "";
-      return { tags, newTag, addTag, getAPIParams, onTagAdded, removeTag, tagCounter, removeAllTags }
+      // document.getElementById("selectConceptCodesCount").innerText = 0;
+      //  document.getElementById("selectedConceptCodesTags").innerText = "";
+      return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
     };
-
-
-
-
-    const setSelectedTags = () => {
-      // clear the internal user codes that are entered
-      this.userEnteredCodes = []
-      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-        // currated top nodes (from the server hava a value of "C12434:Blood")
-        // so we need to strip off everything from the : to the right.
-        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
-      }
-    };
-
-    return { tags, newTag, addTag, setSelectedTags, onTagAdded, removeTag, tagCounter, removeAllTags }
-
-
-
+    return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
   },
-
-
-
   data(){
     return {
       selectedTags: [],
@@ -489,7 +470,6 @@ alert("test2");
       userSelectedFormat: '',
       fileFormat: '',
       selectedExportListName: '',
-      selectedConceptCodes: '',
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -508,16 +488,9 @@ alert("test2");
       ],
       rightSelectedUsers:[],
       rightUsers:[]
-
     };
   },
-
   methods: {
-
-  //  testCall2(){
-  //    getAPIParams(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection);
-  //  },
-
     // clear all of the entitiy codes in the input selection
     clearSelection() {
       //alert (this.baseURL);
@@ -525,10 +498,6 @@ alert("test2");
       //alert (this.associationsRequired);
       //alert (this.queryEntitySelection);
       //alert("this is the data for clearSelection: " + this.selectedTags);
-
-
-
-
       this.tag = []
       this.newTag = []
       this.userEnteredCodes = []
@@ -539,8 +508,6 @@ alert("test2");
       this.userSelectedProperyNames = []
       this.tags2 = []
       //this.tags = []
-
-
       //document.getElementById("listOfTags").style.display = "none";  // remove tags
       //document.getElementById("listOfTags").innerHTML = "";
       document.getElementById("selectConceptCodesCount").innerText = 0;
@@ -549,20 +516,13 @@ alert("test2");
       //document.getElementById("selectConceptCodesCount").value = 0;
       //this.selectConceptCodesCount = 0;
       // (tagCountTotal) => (this.tags.value.splice(tagCountTotal, 1));
-
-
-
       //  const removeAllTags = (tagDeleteCounter) => {
-
       //  }
-
       this.updateParent()
     },
-
     updateParent() {
       alert("this is the data for updateParent: " + this.selectedTags);
       this.setSelectedTags()
-
       // Notify users of this plugin that the user selected values changed.
       this.$emit('entitesUpdated',
           this.selectedTags,
@@ -570,316 +530,36 @@ alert("test2");
           this.userSelectedProperyNames,
           this.userEnteredCodes)
     },
-
     removeAllTagsFunc(){
       alert("test0");
       this.removeAllTags(1);
       alert("test1");
     },
     moveLeft() {
-        if(!this.rightSelectedUsers.length) return;
-        console.log('moveLeft',this.rightUsers);
-        for(let i=this.rightSelectedUsers.length;i>0;i--) {
-          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
-          this.rightUsers.splice(idx, 1);
-          this.leftUsers.push(this.rightSelectedUsers[i-1]);
-          //this.leftUsers.push(this.selectedProperties[i-1]);
-          //this.selectedProperties[i-1].pop();
-          alert(this.selectedProperty.value);
-          this.selectedProperty.splice(i, 1);
-          this.rightSelectedUsers.pop();
-        }
-      },
-      moveRight() {
-        if(!this.leftSelectedUsers.length) return;
-        console.log('moveRight', this.leftSelectedUsers);
-        for(let i=this.leftSelectedUsers.length;i>0;i--) {
-          let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
-          this.leftUsers.splice(idx, 1);
-          this.rightUsers.push(this.leftSelectedUsers[i-1]);
-          this.selectedProperty.push(this.leftSelectedUsers[i-1]);
-          this.leftSelectedUsers.pop();
+      if(!this.rightSelectedUsers.length) return;
+      console.log('moveLeft',this.rightUsers);
+      for(let i=this.rightSelectedUsers.length;i>0;i--) {
+        let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+        this.rightUsers.splice(idx, 1);
+        this.leftUsers.push(this.rightSelectedUsers[i-1]);
+        //this.leftUsers.push(this.selectedProperties[i-1]);
+        //this.selectedProperties[i-1].pop();
+        alert(this.selectedProperty.value);
+        this.selectedProperty.splice(i, 1);
+        this.rightSelectedUsers.pop();
       }
     },
-
-
-    getEntities2(){
-      // clear the entry list
-
-      alert("first getEntities");
-      this.entityList = []
-      this.setSelectedTags()
-      var tempCode = ''
-      var tempStatus = ''
-
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formSelectCodes,
-        loader: 'dots',
-        isFullPage: false,
-      });
-
-      alert("test call 1");
-      api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
-          .then((data)=>{
-            if (data != null) {
-              // loop through all codes and verify data is returned for each
-              // If a code is retired, the object may be empty.
-              for (let x = data.length -1; x >=0; x--) {
-                if (data[x].queryCode < 0) {
-                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
-                  tempCode =  data[x].code
-                  tempStatus = data[x].queryStatus
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Invalid Concept Code',
-                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have roles to be valid
-                if (this.rolesRequired && data[x].roles.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have associations to be valid
-                if (this.associationsRequired && data[x].associations.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-              }
-
-              this.entityList = data;
-              this.updateSelectedConceptCodeDescriptions(data);
-              this.updateParent()
-            }
-            else {
-              // There was a failure making the REST call.
-              this.clearSelection()
-              this.$notify({
-                group: 'app',
-                title: 'Validation Failure',
-                text: 'Could not verify concept code(s).  Possible network issue.',
-                type: 'error',
-                duration: 4000,
-                position: "left bottom"
-              });
-            }
-          }).catch(function(error) {
-        console.error("Error retrieving entities: " + error);
-      }).finally(function() { loader.hide()});
-    },
-
-/*
-    // called when an entity/code is added
-    onTagAdded(newCode) {
-      // Test if the string entered was pasted in - if it has a comma separated
-      // list of values
-      alert("onTagAdd Function");
-
-      newCode.value.includes(',') ?
-          this.multipleEntitiesSplit = this.cleanString(newCode.value).split(",") :
-          this.multipleEntitiesSplit = []
-
-      alert(this.multipleEntitiesSplit);
-      // if the user entered multiple values, remove the last entry (which
-      // is the comma separated string) and add each one individually.
-      if (this.multipleEntitiesSplit.length > 0) {
-        this.tags.splice(-1,1);
-
-
-        for(let x = this.multipleEntitiesSplit.length; x >=0; x-- ) {
-          // Make sure we don't add a duplicate.
-          // Check if user entered two commas with no entitiy code inbetween them
-          // example:  C101171,  ,C101173
-          if ( (! this.isDuplicateTag(this.multipleEntitiesSplit[x])) &&
-              (this.multipleEntitiesSplit[x] !== undefined) &&
-              (this.multipleEntitiesSplit[x].length > 0)) {
-            this.selectedTags.push({key: this.multipleEntitiesSplit[x], value: this.multipleEntitiesSplit[x]})
-          }
-        }
+    moveRight() {
+      if(!this.leftSelectedUsers.length) return;
+      console.log('moveRight', this.leftSelectedUsers);
+      for(let i=this.leftSelectedUsers.length;i>0;i--) {
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+        this.leftUsers.splice(idx, 1);
+        this.rightUsers.push(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+        this.leftSelectedUsers.pop();
       }
-
-      else {
-        if (this.isDuplicateTag(newCode.value))
-        {
-          // remove the last entered entity code
-          this.selectedTags.splice(-1,1);
-        }
-      }
-
-      // When a top node is entered/selected, verify it.
-      this.getEntities();
     },
-
-    getEntities(){
-      // clear the entry list
-      this.entityList = []
-      this.setSelectedTags()
-      var tempCode = ''
-      var tempStatus = ''
-
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formSelectCodes,
-        loader: 'dots',
-        isFullPage: false,
-      });
-      api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
-          .then((data)=>{
-            if (data != null) {
-              // loop through all codes and verify data is returned for each
-              // If a code is retired, the object may be empty.
-              for (let x = data.length -1; x >=0; x--) {
-                if (data[x].queryCode < 0) {
-                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
-                  tempCode =  data[x].code
-                  tempStatus = data[x].queryStatus
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Invalid Concept Code',
-                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have roles to be valid
-                if (this.rolesRequired && data[x].roles.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have associations to be valid
-                if (this.associationsRequired && data[x].associations.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-              }
-
-              this.entityList = data;
-              this.updateSelectedConceptCodeDescriptions(data);
-              this.updateParent()
-            }
-            else {
-              // There was a failure making the REST call.
-              this.clearSelection()
-              this.$notify({
-                group: 'app',
-                title: 'Validation Failure',
-                text: 'Could not verify concept code(s).  Possible network issue.',
-                type: 'error',
-                duration: 4000,
-                position: "left bottom"
-              });
-            }
-          }).catch(function(error) {
-        console.error("Error retrieving entities: " + error);
-      }).finally(function() { loader.hide()});
-    },
-
-    isDuplicateTag(newTag){
-      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-        //console.log ('Existing code: ' + this.selectedTags[i].key + ' newTag: ' + newTag);
-        if (this.selectedTags[i].key == newTag) {
-          //console.log ('Removing duplicate entity code: ' + this.selectedTags[i].key);
-          return true;
-        }
-      }
-      return false;
-    },
-    // removes forward slashes and all kinds of Unicode whitespace characters
-*/
-
-
-
     //Vue 3 Start Step 2 left Search Function
     searchPropertiesFilter() {
       var input;
@@ -888,10 +568,8 @@ alert("test2");
       var selectedListBoxValue;
       var i;
       var txtValue;
-
       input = document.getElementById("searchProperties"); //text input
       formattedInput = input.value.toUpperCase();  //change to upper case
-
       listBoxValues = document.getElementById("selectSearchProperties");
       for (i = 0; i < listBoxValues.length; i++) {
         selectedListBoxValue = listBoxValues[i];
@@ -904,9 +582,15 @@ alert("test2");
       }
     },
     //Vue 3 End
-
-
-
+    setSelectedTags() {
+      // clear the internal user codes that are entered
+      this.userEnteredCodes = []
+      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+        // currated top nodes (from the server hava a value of "C12434:Blood")
+        // so we need to strip off everything from the : to the right.
+        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
+      }
+    },
     //Vue 3 Start Step 2 Right Search Function
     searchSelectedPropertiesFilter() {
       var input;
@@ -915,10 +599,8 @@ alert("test2");
       var selectedListBoxValue;
       var i;
       var txtValue;
-
       input = document.getElementById("selectedProperties"); //text input
       formattedInput = input.value.toUpperCase();  //change to upper case
-
       listBoxValues = document.getElementById("selectSelectedProperties");
       for (i = 0; i < listBoxValues.length; i++) {
         selectedListBoxValue = listBoxValues[i];
@@ -931,7 +613,6 @@ alert("test2");
       }
     },
     //Vue 3 End
-
     //When page loads certain objects like buttons or text boxes will be hidden
     hideObjectsOnScreen() {
       document.getElementById("SelectProperties1").style.display = "none";
@@ -939,25 +620,19 @@ alert("test2");
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
     },
-
     gaTrackDownload () {
       // Send Google analytics download event
       this.$gtag.query('event', "Read Concept Code Download", {
-         'event_category': "Download",
-         'event_label': this.userSelectedFormat.name
+        'event_category': "Download",
+        'event_label': this.userSelectedFormat.name
       })
     },
-
-
-
     // Wizard methods
     validateFirstStep() {
       // make sure the user has a code entered
-
       //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
       //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
-
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
         alert("counter 3 if statement")
@@ -966,11 +641,9 @@ alert("test2");
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextButton").style.display = ""; //Hides next button
       }
-
       if (selectNextOptionBTN_counter === 2) {
         this.validatePropertyStep();
       }
-
       if (selectNextOptionBTN_counter === 1) {
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
@@ -981,23 +654,18 @@ alert("test2");
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
         }
       }
-
-
     },
-
     //Vue 3 STEP 2
     validatePropertyStep() {
       // make sure the user has selected at least one property
-     //Hides objects on screen that shouldn't appear in step 2
-     // document.getElementById("entityTextID").style.display = " ";
-     // document.getElementById("entityLabelId").style.display = " ";
-
+      //Hides objects on screen that shouldn't appear in step 2
+      // document.getElementById("entityTextID").style.display = " ";
+      // document.getElementById("entityLabelId").style.display = " ";
       if (this.rightUsers.length > 0) {
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
-
         if (Object.keys(this.rightUsers).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
           return Object.keys(this.rightUsers).length > 0
@@ -1015,7 +683,6 @@ alert("test2");
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
-
       //Shows screen =for step 2
       if (selectNextOptionBTN_counter === 3) {
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
@@ -1025,40 +692,39 @@ alert("test2");
         document.getElementById("exportStep").style.display = "none";  //Hides Export Step
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
-
-
     },
-
     exportStep() {
       this.downloadFile();
     },
-
-
     onEntitiesUpdated(updatedTags, updatedEntityCodes, userSelectedProperyNames,userEnteredCodes) {
-alert("this method onEntitiesUpdated invoked")
-
+      alert("this method onEntitiesUpdated invoked")
       this.selectedTags = updatedTags
       this.entityList = updatedEntityCodes
       this.userSelectedProperyNames = userSelectedProperyNames
       this.userEnteredCodes = userEnteredCodes
     },
-
     updateShowSummary() {
-     // alert("updateShowSummary")
+      // alert("updateShowSummary")
       this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
       this.showSummary = !this.showSummary;
-
     },
-
     setSelectedPropertyNames() {
       this.userSelectedProperyNames = []
       for (let i = 0; i < this.rightUsers.length; i++) {
         this.userSelectedProperyNames.push(this.rightUsers[i].name)
       }
     },
-
-
-
+    // Determine if the user entered entity code is unique
+    isDuplicateTag(newTag){
+      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+        //console.log ('Existing code: ' + this.selectedTags[i].key + ' newTag: ' + newTag);
+        if (this.selectedTags[i].key == newTag) {
+          //console.log ('Removing duplicate entity code: ' + this.selectedTags[i].key);
+          return true;
+        }
+      }
+      return false;
+    },
     //Vue 3 Function controls Select format Export dropdown on Step 3
     changeSelectedExportList(event){
       this.userSelectedFormat = event.target.value;
@@ -1066,91 +732,75 @@ alert("this method onEntitiesUpdated invoked")
         this.fileFormat = "JSON";
         this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
       }
-
       if (event.target.value === "csv") {
         this.fileFormat = "CSV";
         this.selectedExportListName = "CSV (csv) Comma Separated Value Format"
       }
-
       if (event.target.value === "txt") {
         this.fileFormat = "TABD";
         this.selectedExportListName = "TABD (txt) Tab Delimited Value Format"
       }
-
       if (event.target.value === "xlsx") {
         this.fileFormat = "EXCEL";
         this.selectedExportListName = "EXCEL (xlsx) Microsoft Excel Format"
       }
     },
-
-      downloadFile() {
-
-        this.$notify({
-          group: 'download',
-          title: 'Export in Progress',
-          text: 'Your export is running.  Please wait.',
-          type: 'success',
-          duration: 2000,
-          position: "bottom left"
-        });
-
-
-        // set the user selected tags and properties
-        this.setSelectedPropertyNames()
-        this.gaTrackDownload();
-
-        //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
-        if (this.fileFormat === ""){
-          this.userSelectedFormat = 'json';
-          this.fileFormat = 'JSON';
-          this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
-        }
-
-        //alert (this.queryEntitySelection);
-          axios({
-                url: this.$baseURL + 'download/get-file-for-readCodes/'  +
-                    this.tags + '/' +
-                    this.rightUsers + '/' +
-                    this.fileFormat  + '/'+
-                    this.filename + '.' +
-                    this.userSelectedFormat,
-                method: 'GET',
-                responseType: 'blob',
-            }).then((response) => {
-                  var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-                  var fileLink = document.createElement('a');
-
-                  fileLink.href = fileURL;
-                  fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
-                  document.body.appendChild(fileLink);
-                  fileLink.click();
-
-            }).catch(function(error) {
-              console.error("Download Error: " + error);
-              //alert("Error Downloading file error message: " + error);
-            })
-              //.finally(function() { loader.hide()});
-        },
-
-        // removes forward slashes and all kinds of Unicode whitespace characters
-        cleanString(string) {
-            return string.replace(/[\s/]/g, '')
-        }
-    },
-    created() {
-      // scroll to the top of the page
-      window.scrollTo(0,0);
-
-      this.updateShowSummary();
-
-      // load properties after the page is loaded.
-      api.getProperties(this.$baseURL)
-          .then((data)=>{this.availableProperties = data;
+    downloadFile() {
+      this.$notify({
+        group: 'download',
+        title: 'Export in Progress',
+        text: 'Your export is running.  Please wait.',
+        type: 'success',
+        duration: 2000,
+        position: "bottom left"
+      });
+      // set the user selected tags and properties
+      this.setSelectedPropertyNames()
+      this.gaTrackDownload();
+      //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
+      if (this.fileFormat === ""){
+        this.userSelectedFormat = 'json';
+        this.fileFormat = 'JSON';
+        this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
+      }
+      //alert (this.queryEntitySelection);
+      axios({
+        url: this.$baseURL + 'download/get-file-for-readCodes/'  +
+            this.tags + '/' +
+            this.rightUsers + '/' +
+            this.fileFormat  + '/'+
+            this.filename + '.' +
+            this.userSelectedFormat,
+        method: 'GET',
+        responseType: 'blob',
+      }).then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      }).catch(function(error) {
+        console.error("Download Error: " + error);
+        //alert("Error Downloading file error message: " + error);
       })
+      //.finally(function() { loader.hide()});
     },
-
+    // removes forward slashes and all kinds of Unicode whitespace characters
+    cleanString(string) {
+      return string.replace(/[\s/]/g, '')
+    }
+  },
+  created() {
+    // scroll to the top of the page
+    window.scrollTo(0,0);
+    this.updateShowSummary();
+    // load properties after the page is loaded.
+    api.getProperties(this.$baseURL)
+        .then((data)=>{this.availableProperties = data;
+        })
+  },
   // Vue 3 Start
-
   onTagRemoved(code) {
     this.removeTag(code)
     this.updateParent()
@@ -1164,15 +814,8 @@ alert("this method onEntitiesUpdated invoked")
       }
     }
   },
-
-
-
-
-
-  }
-
+}
 //Vue3 End-->
-
 </script>
 
 <!-- styling for the component -->
@@ -1180,7 +823,6 @@ alert("this method onEntitiesUpdated invoked")
 /* #read-codes-entry{
   top: 60;
 } */
-
 .container{
   padding: 5px 15px 5px 15px;
 }
@@ -1189,21 +831,19 @@ alert("this method onEntitiesUpdated invoked")
 }
 /* Summary list box formatting */
 .list-group{
-    max-height: 150px;
-    min-height: 150px;
-    overflow-y:auto;
+  max-height: 150px;
+  min-height: 150px;
+  overflow-y:auto;
 }
-
 .exportButtons {
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
   color: white;
 }
-
 .wizard-btn {
-	background-color: rgb(0, 125, 188) !important;
-	border-color: rgb(0, 125, 188) !important;
-	color: white;
+  background-color: rgb(0, 125, 188) !important;
+  border-color: rgb(0, 125, 188) !important;
+  color: white;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
   background-color: rgb(0, 125, 188);
@@ -1211,52 +851,41 @@ alert("this method onEntitiesUpdated invoked")
   color: white;
 }
 .btn-link {
-	color: rgba(33, 37, 41, 1) !important;
+  color: rgba(33, 37, 41, 1) !important;
 }
 .msl-multi-select {
   /* make the multi-select take up the entire width of the container */
   width: 100%
 }
-
 .vue-form-wizard, .category {
-	color: #767676 !important;
+  color: #767676 !important;
 }
-
 a.disabled {
-	color: #767676 !important;
+  color: #767676 !important;
 }
-
 .active {
-	color: rgb(0, 125, 188) !important;
+  color: rgb(0, 125, 188) !important;
 }
-
 .wizard-header p {
-	color: #767676;
+  color: #767676;
 }
-
 .wizard-nav-pills>li>a{
-    color: rgba(0,0,0,.8) !important;
+  color: rgba(0,0,0,.8) !important;
 }
-
 .msl-searchable-list__no-item{
-	color: #74767a;
-	font-size: 16px
+  color: #74767a;
+  font-size: 16px
 }
-
-
 .entityCodeInput{
   width: 555px;
   position: absolute;
 }
-
 .entityText{
   padding-left: 277px;
 }
-
 .entityLabel{
   padding-left: 277px;
 }
-
 ul {
   list-style: none;
   display: flex;
@@ -1273,7 +902,6 @@ ul {
   white-space: nowrap;
   transition: 0.1s ease background;
 }
-
 .delete {
   color: white;
   background: none;
@@ -1281,7 +909,6 @@ ul {
   border: none;
   cursor: pointer;
 }
-
 .toListBox {
   background-color: rgb(0, 125, 188);
   padding: 5px;
@@ -1290,7 +917,6 @@ ul {
   white-space: nowrap;
   transition: 0.1s ease background;
 }
-
 .fromListBox {
   background-color: rgb(0, 125, 188);
   padding: 5px;
@@ -1299,12 +925,10 @@ ul {
   white-space: nowrap;
   transition: 0.1s ease background;
 }
-
 .listBoxButton{
   margin-top : 110px;
   display: block;
 }
-
 .btn-delete{
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
@@ -1314,7 +938,6 @@ ul {
   margin-left: 277px;
   width: 100px;
 }
-
 .btn-next{
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
@@ -1324,7 +947,6 @@ ul {
   margin-left: 300px;
   width: 158px;
 }
-
 .btn-export{
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
@@ -1334,7 +956,6 @@ ul {
   margin-left: 300px;
   width: 158px;
 }
-
 .btn-back{
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
