@@ -314,7 +314,8 @@ export default {
             // loop through all codes and verify data is returned for each
             // If a code is retired, the object may be empty.
             for (let i = 0; i < description.length; i++) {
-              if (tag.key == description[i].code) {
+              //if (selectedTag.key== description[i].code) {
+                if ("C12219"== description[i].code) {
                 description.splice(i,1)
                 alert("Description:" + description);
                 break
