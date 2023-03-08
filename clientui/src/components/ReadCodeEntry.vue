@@ -292,15 +292,21 @@ export default {
     const addTag = (tag) => {
      // tag = tag.replace(/[\s/]/g, '')
      // tag = tag.replace(',', '')
+      alert("addTagCall");
       if (tag != "") {
+        alert("before call");
         //alert("check "+ tag);
         api.getCodes('https://evs-dev.cancer.gov/report-exporter/', 'C12219', 'ENTITY')
             .then((data)=>{
+              alert("after call");
         if (data != null) {
+          alert("after checks");
           // loop through all codes and verify data is returned for each
           // If a code is retired, the object may be empty.
           for (let x = data.length - 1; x >= 0; x--) {
+            alert("after for loop");
             if (data[x].queryCode < 0) {
+              alert("after querycode if statement");
               alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus);
               var tempCode = data[x].code
               var tempStatus = data[x].queryStatus
