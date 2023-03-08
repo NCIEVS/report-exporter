@@ -308,7 +308,7 @@ export default {
                   alert("After getEntities Call()");
                 }
               }else {
-                tags.value.push(tag + ":" + "Test");
+                tags.value.push(tag + ":" + " ");
                 //tags.value.push(tag);
                 //alert(codeDescription);
                 newTag.value = ""
@@ -459,28 +459,19 @@ export default {
 
 
      setSelectedTags () {
+       var bottomTab = "";
+       var indexBottomTab = 0;
       // clear the internal user codes that are entered
-       alert("select1");
       this.userEnteredCodes = []
-       alert("select2");
-     // for (let i = 0; i < Object.keys(this.tag).length; i++) {
-        for (let i = 0; i < 1; i++) {
-        alert("select3");
+      for (let i = 0; i < Object.keys(this.tag).length; i++) {
+      //  for (let i = 0; i < 1; i++) {
         // currated top nodes (from the server hava a value of "C12434:Blood")
         // so we need to strip off everything from the : to the right.
+        alert("setSelectedTagsTest1");
         if (this.tags[i] !== "undefined") {
-          alert(this.tags[i]);
-          this.tags[i].replace("[", "");
-          this.tags[i].replace("]", "");
-          this.tags[i].replace(" ", "");
-          alert(this.tag[i].split(":", 1));
-          //this.userEnteredCodes.push(this.tags[i].value);
-
-         this.userEnteredCodes = this.tag[i].split(":", 1);
-          this.userEnteredCodes = "C12219"; // Remove this
-            this.userEnteredCodes.push(this.tag.value[i].split(":",1))
-          alert(this.userEnteredCodes);
-          alert("end Select Tags");
+          bottomTab = this.tags[i];
+          indexBottomTab = bottomTab.indexOf(":");
+          this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab))
         }
       }
     },
