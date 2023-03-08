@@ -252,13 +252,7 @@ let selectNextOptionBTN_counter =  1;
 export default {
   name: 'read-code-entry',
   props: {
-    baseURL: { required: true, type: String },
-    rolesRequired: { default: true, type: Boolean },
-    associationsRequired: { default: true, type: Boolean },
-    queryEntitySelection: { default: "ENTITY", type: String },
-    msg: String,
-
-
+    msg: String
   },
   components: {
   },
@@ -302,7 +296,7 @@ export default {
                   alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
                   codeDescription = data[x].name;
                   alert("before push");
-                  tags.value.push(tag + codeDescription);
+                  tags.value.push(tag + ":" + codeDescription);
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
                   newTagCounter = newTagCounter + 1
