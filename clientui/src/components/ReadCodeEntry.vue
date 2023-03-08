@@ -307,7 +307,7 @@ export default {
 
 
           for (let x = data.length - 1; x >= 0; x--) {
-            alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations );
+            alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
 
 
            description = data;
@@ -321,6 +321,16 @@ export default {
                 break
               }
             }
+/*
+            for (let x = 0; x < data; x++) {
+              //console.log ("code " + entities[x].code + "  name " + entities[x].name)
+              if ("C12219" == data[x].code) {
+                selectedTag.value = entities[x].code + ":" + entities[x].name;
+                selectedTag.key = entities[x].code;
+              }
+            }
+            */
+            
             alert("after for loop");
             if (data[x].queryCode < 0) {
               alert("after querycode if statement");
