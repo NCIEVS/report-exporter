@@ -310,11 +310,11 @@ export default {
             alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations );
 
 
-            description = data;
+           description = data;
             // loop through all codes and verify data is returned for each
             // If a code is retired, the object may be empty.
             for (let i = 0; i < description.length; i++) {
-              if (tag.key == this.description[i].code) {
+              if (tag.key == description[i].code) {
                 description.splice(i,1)
                 alert("Description:" + description);
                 break
