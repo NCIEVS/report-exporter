@@ -303,9 +303,10 @@ export default {
           alert("after checks");
           // loop through all codes and verify data is returned for each
           // If a code is retired, the object may be empty.
-          alert("Code: " + data[1].code + " is invalid: " + data[1].queryStatus + "roles: " + data[1].roles + "association: " + data[1].associations );
 
           for (let x = data.length - 1; x >= 0; x--) {
+            alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + "roles: " + data[x].roles + "association: " + data[x].associations );
+
             alert("after for loop");
             if (data[x].queryCode < 0) {
               alert("after querycode if statement");
