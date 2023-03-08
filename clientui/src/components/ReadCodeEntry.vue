@@ -247,10 +247,18 @@ import {ref} from 'vue'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
+
+
 export default {
   name: 'read-code-entry',
   props: {
-    msg: String
+    baseURL: { required: true, type: String },
+    rolesRequired: { default: true, type: Boolean },
+    associationsRequired: { default: true, type: Boolean },
+    queryEntitySelection: { default: "ENTITY", type: String },
+    msg: String,
+
+
   },
   components: {
   },
@@ -259,24 +267,48 @@ export default {
   },
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
+
+    // load properties after the page is loaded.
+    api.getProperties(this.$baseURL)
+        .then((data)=>{this.availableProperties = data;
+        })
+
   },
   setup(){
     const tags = ref([]);
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
-    var tempCode = ''
-    var tempStatus = ''
+   // var tempCode = ''
+   // var tempStatus = ''
     //this.entityList = []
+
+  //  const loadDefaultParms = (baseURL,rolesRequired,associationsRequired, queryEntitySelection  ) =>{
+     // loadDefaultParms(baseURL,rolesRequired,associationsRequired, queryEntitySelection);
+  //  }
+
     const addTag = (tag) => {
+      var codeDescription = [];
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
       if (tag != "") {
-        tags.value.push(tag);
-        newTag.value = ""; // reset newTag
-        tagCounter = tagCounter + 1;
-        newTagCounter = newTagCounter + 1
-        getEntities();
+        api.getCodes('https://evs-dev.cancer.gov/report-exporter/', tag, 'ENTITY')
+            .then((data)=> {
+              alert("after call");
+              data = "test";
+              if (data != null) {
+                alert("after checks");
+                for (let x = data.length - 1; x >= 0; x--) {
+                  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                  codeDescription = data[x].name;
+                  alert("before push");
+                  tags.value.push(tag + codeDescription);
+                  newTag.value = ""; // reset newTag
+                  tagCounter = tagCounter + 1;
+                  newTagCounter = newTagCounter + 1
+                }
+              }
+            })
       }
     };
     //Vue 3 Remotes a tag below text box
@@ -284,6 +316,8 @@ export default {
       tags.value.splice(index, 1);
       tagCounter = tagCounter  - 1;
     };
+
+    /*
     const setSelectedTags = () =>{
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
@@ -293,7 +327,11 @@ export default {
         this.userEnteredCodes.push(this.tags[i].value.split(":",1))
       }
     };
+*/
+
+
     //Vue 3 Web call get Entity info
+    /*
     const getEntities = ()=>{
       // clear the entry list
       //this.entityList = []
@@ -309,6 +347,7 @@ export default {
         isFullPage: false,
       });
        */
+    /*
       alert("base call " + this.$baseURL);
       alert("userEnteredCodes " + this.userEnteredCodes);
       alert("queryEntitySelection " + this.queryEntitySelection);
@@ -404,6 +443,9 @@ export default {
         //}).finally(function() { loader.hide()});
       })//finally(function());
     };
+  */
+
+
     // called when an entity/code is added
     const onTagAdded = (newTag) =>{
       // Test if the string entered was pasted in - if it has a comma separated
@@ -478,8 +520,9 @@ export default {
       tag: "[]",
       leftSelectedUsers:[],
       leftUsers: [
-        "Accepted_Therapeutic_Use_For",
         "ALT_DEFINITION",
+        "Accepted_Therapeutic_Use_For",
+        "CAS_Registry",
         "CHEBI_ID",
         "DEFINITION",
         "DesignNote",
