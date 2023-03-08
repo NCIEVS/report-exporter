@@ -283,26 +283,32 @@ export default {
     //this.entityList = []
 
     const addTag = (tag) => {
+      var codeDescription = [];
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
       if (tag != "") {
-        tags.value.push(tag);
-        // this.selectedConceptCodes = tag;
-        //  document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
-        //this.selectedConceptCodesTags.value.push(tag);
-        // selectedConceptCodesTags
-        // this.selectedConceptCodes.value.push("tag");
-        //newTag.value = ""; // reset newTag
-        // this.selectedConceptCodes = tag;
-        // document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
-        tagCounter = tagCounter + 1;
-        newTagCounter = newTagCounter + 1;
+        api.getCodes('https://evs-dev.cancer.gov/report-exporter/', tag, 'ENTITY')
+            .then((data)=> {
+                  alert("after call");
+                  //data = "test";
+                  if (data != null) {
+                    alert("after checks");
+                    for (let x = data.length - 1; x >= 0; x--) {
+                      alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                      codeDescription = data[x].name;
+                      alert("before push");
+                      tags.value.push(tag + ":" + codeDescription);
+                      newTag.value = ""; // reset newTag
+                      tagCounter = tagCounter + 1;
+                      newTagCounter = newTagCounter + 1
         alert("Before getEntities Call()");
         getEntities();
         alert("After getEntities Call()");
+                    }
+                  }
+            })
       }
     };
-
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
       tags.value.splice(index, 1);
