@@ -271,22 +271,54 @@ export default {
 
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
+    //getAPIParams(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection);
   },
+
 
 
   setup(){
     const tags = ref([]);
-    //const selectedConceptCodes = ref([]);
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
-    //this.entityList = []
+    //var tempCode = "";
+   // var tempStatus = "";
+
+    const getAPIParams = (baseUrl, codes, entities) => {
+      alert(baseUrl + " " + codes + " " + entities);
+      return baseUrl, codes, entities;
+    };
 
     const addTag = (tag) => {
-      tag = tag.replace(/[\s/]/g, '')
-      tag = tag.replace(',', '')
+     // tag = tag.replace(/[\s/]/g, '')
+     // tag = tag.replace(',', '')
       if (tag != "") {
+        //alert("check "+ tag);
+        api.getCodes('https://evs-dev.cancer.gov/report-exporter/', 'C12219', 'ENTITY')
+            .then((data)=>{
+        if (data != null) {
+          // loop through all codes and verify data is returned for each
+          // If a code is retired, the object may be empty.
+          for (let x = data.length - 1; x >= 0; x--) {
+            if (data[x].queryCode < 0) {
+              alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus);
+              var tempCode = data[x].code
+              var tempStatus = data[x].queryStatus
+              alert("tmpCode " + tempCode);
+              alert("tmpStatus " + tempStatus);
+              alert(data.splice(x, 1));
+              data.splice(x, 1)
+            }
+          }
+        }
+            }).catch(function(error) {
+          console.error("Error retrieving entities: " + error);
+        })
+
+
+
         tags.value.push(tag);
+        newTag.value = ""; // reset newTag
        // this.selectedConceptCodes = tag;
       //  document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
         //this.selectedConceptCodesTags.value.push(tag);
@@ -390,7 +422,7 @@ alert("test2");
 
      // document.getElementById("selectConceptCodesCount").innerText = 0;
     //  document.getElementById("selectedConceptCodesTags").innerText = "";
-      return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
+      return { tags, newTag, addTag, getAPIParams, onTagAdded, removeTag, tagCounter, removeAllTags }
     };
 
     const getEntities = () => {
@@ -503,14 +535,8 @@ alert("test2");
             else {
               // There was a failure making the REST call.
               this.clearSelection()
-              this.$notify({
-                group: 'app',
-                title: 'Validation Failure',
-                text: 'Could not verify concept code(s).  Possible network issue.',
-                type: 'error',
-                duration: 4000,
-                position: "left bottom"
-              });
+
+
             }
           }).catch(function(error) {
         console.error("Error retrieving entities: " + error);
@@ -572,9 +598,9 @@ alert("test2");
 
   methods: {
 
-    testCall2(){
-      alert("testCall2");
-    },
+  //  testCall2(){
+  //    getAPIParams(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection);
+  //  },
 
     // clear all of the entitiy codes in the input selection
     clearSelection() {
@@ -583,14 +609,8 @@ alert("test2");
       //alert (this.associationsRequired);
       //alert (this.queryEntitySelection);
       //alert("this is the data for clearSelection: " + this.selectedTags);
-      this.$notify({
-        group: 'app',
-        title: 'Warning',
-        text: 'test',
-        type: 'error',
-        duration: 6000,
-        position: "left bottom"
-      });
+
+
 
 
       this.tag = []
@@ -665,8 +685,9 @@ alert("test2");
           this.leftSelectedUsers.pop();
       }
     },
-/*
-    getEntities(){
+
+
+    getEntities2(){
       // clear the entry list
 
       alert("first getEntities");
@@ -777,7 +798,7 @@ alert("test2");
         console.error("Error retrieving entities: " + error);
       }).finally(function() { loader.hide()});
     },
-*/
+
 /*
     // called when an entity/code is added
     onTagAdded(newCode) {
