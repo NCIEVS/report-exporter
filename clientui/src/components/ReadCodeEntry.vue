@@ -292,6 +292,7 @@ export default {
     const addTag = (tag) => {
      // tag = tag.replace(/[\s/]/g, '')
      // tag = tag.replace(',', '')
+      var description = [];
       alert("addTagCall");
       if (tag != "") {
         alert("before call");
@@ -301,11 +302,21 @@ export default {
               alert("after call");
         if (data != null) {
           alert("after checks");
+          description = data
           // loop through all codes and verify data is returned for each
           // If a code is retired, the object may be empty.
+          for (let i = 0; i < description.length; i++) {
+            if (tag.key == this.description[i].code) {
+              description.splice(i,1)
+              alert("Description:" + description);
+              break
+            }
+          }
+
+
 
           for (let x = data.length - 1; x >= 0; x--) {
-            alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + "roles: " + data[x].roles + "association: " + data[x].associations );
+            alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations );
 
             alert("after for loop");
             if (data[x].queryCode < 0) {
