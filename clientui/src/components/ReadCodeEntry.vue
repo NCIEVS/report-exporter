@@ -421,6 +421,7 @@ alert("test2");
 
             alert("THis is the data "+ data)
 
+
             if (data != null) {
               // loop through all codes and verify data is returned for each
               // If a code is retired, the object may be empty.
@@ -582,6 +583,15 @@ alert("test2");
       //alert (this.associationsRequired);
       //alert (this.queryEntitySelection);
       //alert("this is the data for clearSelection: " + this.selectedTags);
+      this.$notify({
+        group: 'app',
+        title: 'Warning',
+        text: 'test',
+        type: 'error',
+        duration: 6000,
+        position: "left bottom"
+      });
+
 
       this.tag = []
       this.newTag = []
