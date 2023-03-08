@@ -194,7 +194,7 @@
                       <div class="card-body">
                         <ul class="list-group" id="selectedConceptCodesTags">
                           <li v-for="newTag in newTag" :key="newTag.key">
-                            {{ selectedConceptCodes }}
+                            {{ userEnteredCodes }}
                           </li>
                         </ul>
                       </div>
@@ -287,28 +287,38 @@ export default {
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
       if (tag != "") {
+
         api.getCodes('https://evs-dev.cancer.gov/report-exporter/', tag, 'ENTITY')
             .then((data)=> {
-                  alert("after call");
-                  //data = "test";
-                  if (data != null) {
-                    alert("after checks");
-                    for (let x = data.length - 1; x >= 0; x--) {
-                      alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
-                      codeDescription = data[x].name;
-                      alert("before push");
-                      tags.value.push(tag + ":" + codeDescription);
-                      newTag.value = ""; // reset newTag
-                      tagCounter = tagCounter + 1;
-                      newTagCounter = newTagCounter + 1
-        alert("Before getEntities Call()");
-        getEntities();
-        alert("After getEntities Call()");
-                    }
-                  }
+              alert("after call");
+              // data = "test";
+              if (data != null) {
+                alert("after checks");
+                for (let x = data.length - 1; x >= 0; x--) {
+                  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                  codeDescription = data[x].name;
+                  alert("before push");
+                  tags.value.push(tag + ":" + codeDescription);
+
+                  newTag.value = ""; // reset newTag
+                  tagCounter = tagCounter + 1;
+                  newTagCounter = newTagCounter + 1;
+                  alert("Before getEntities Call()");
+                  //getEntities();
+                  alert("After getEntities Call()");
+                }
+              }else {
+                tags.value.push(tag + ":" + "Test");
+                //tags.value.push(tag);
+                //alert(codeDescription);
+                newTag.value = ""
+              }
+
             })
       }
-    };
+    }
+
+
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
       tags.value.splice(index, 1);
@@ -399,141 +409,11 @@ export default {
       return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
     };
 
-    const getEntities = () => {
-      // clear the entry list
 
-      alert("first getEntities");
-      // this.entityList = []
-      //setSelectedTags()
-      var tempCode = ''
-      var tempStatus = ''
 
-      /*
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formSelectCodes,
-        loader: 'dots',
-        isFullPage: false,
-      });
-       */
 
-      alert("test call 1");
-      // alert("baseURL " + this.$baseURL);
-      // alert("userEnteredCodes " + this.userEnteredCodes);
-      //  alert("queryEntitySelection " + this.queryEntitySelection);
-      // api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
-      api.getCodes('https://evs-dev.cancer.gov/report-exporter/', 'C12219', 'ENTITY')
-          .then((data)=>{
 
-            alert("THis is the data "+ data)
-
-            if (data != null) {
-              // loop through all codes and verify data is returned for each
-              // If a code is retired, the object may be empty.
-              for (let x = data.length -1; x >=0; x--) {
-                if (data[x].queryCode < 0) {
-                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
-                  tempCode =  data[x].code
-                  tempStatus = data[x].queryStatus
-                  data.splice(x,1)
-
-                  /*          // need to remove from selectedTags
-                            for (let i = 0; i < Object.keys(newTag).length; i++) {
-                              if (tempCode == newTag[i].value) {
-                                this.selectedTags.splice(i,1)
-                              }
-                            }
-
-                   */
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Invalid Concept Code',
-                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have roles to be valid
-                if (this.rolesRequired && data[x].roles.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have associations to be valid
-                if (this.associationsRequired && data[x].associations.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-              }
-
-              this.entityList = data;
-              this.updateSelectedConceptCodeDescriptions(data);
-              this.updateParent()
-            }
-            else {
-              // There was a failure making the REST call.
-              this.clearSelection()
-              this.$notify({
-                group: 'app',
-                title: 'Validation Failure',
-                text: 'Could not verify concept code(s).  Possible network issue.',
-                type: 'error',
-                duration: 4000,
-                position: "left bottom"
-              });
-            }
-          }).catch(function(error) {
-        console.error("Error retrieving entities: " + error);
-        // }).finally(function() { loader.hide()})
-      })
-    };
-
-    const setSelectedTags = () => {
-      // clear the internal user codes that are entered
-      this.userEnteredCodes = []
-      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-        // currated top nodes (from the server hava a value of "C12434:Blood")
-        // so we need to strip off everything from the : to the right.
-        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
-      }
-    };
-
-    return { tags, newTag, addTag, setSelectedTags, onTagAdded, removeTag, tagCounter, removeAllTags }
+    return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
 
 
 
@@ -577,6 +457,33 @@ export default {
 
   methods: {
 
+
+     setSelectedTags () {
+      // clear the internal user codes that are entered
+       alert("select1");
+      this.userEnteredCodes = []
+       alert("select2");
+     // for (let i = 0; i < Object.keys(this.tag).length; i++) {
+        for (let i = 0; i < 1; i++) {
+        alert("select3");
+        // currated top nodes (from the server hava a value of "C12434:Blood")
+        // so we need to strip off everything from the : to the right.
+        if (this.tags[i] !== "undefined") {
+          alert(this.tags[i]);
+          this.tags[i].replace("[", "");
+          this.tags[i].replace("]", "");
+          this.tags[i].replace(" ", "");
+          alert(this.tag[i].split(":", 1));
+          //this.userEnteredCodes.push(this.tags[i].value);
+
+         this.userEnteredCodes = this.tag[i].split(":", 1);
+          this.userEnteredCodes = "C12219"; // Remove this
+            this.userEnteredCodes.push(this.tag.value[i].split(":",1))
+          alert(this.userEnteredCodes);
+          alert("end Select Tags");
+        }
+      }
+    },
     testCall2(){
       alert("testCall2");
     },
@@ -1157,6 +1064,8 @@ export default {
       // set the user selected tags and properties
       this.setSelectedPropertyNames()
       this.gaTrackDownload();
+      this.setSelectedTags();
+
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
       if (this.fileFormat === ""){
@@ -1165,10 +1074,18 @@ export default {
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
 
+      alert("check 1")
+      alert("base URL: " + this.$baseURL);
+      alert("tags: " + this.userEnteredCodes);
+      alert("selectedPropertyName: " + this.rightUsers);
+      alert("SelectedFormat: " + this.fileFormat);
+      alert("filename: " + this.filename);
+      alert("selectedFormat Extension: " + this.userSelectedFormat);
+
       //alert (this.queryEntitySelection);
       axios({
         url: this.$baseURL + 'download/get-file-for-readCodes/'  +
-            this.tags + '/' +
+            this.userEnteredCodes + '/' +
             this.rightUsers + '/' +
             this.fileFormat  + '/'+
             this.filename + '.' +
