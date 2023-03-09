@@ -192,11 +192,7 @@
 
 
                       <div class="card-body">
-                        <ul class="list-group" id="selectedConceptCodesTags">
-                          <li v-for="selectedConceptCodes in selectedConceptCodes" :key="selectedConceptCodes.key">
-                            {{ this.tags }}
-                          </li>
-                        </ul>
+                      <span class="list-group" id="selectedConceptCodesTags">{{ this.tags }}</span>
                       </div>
                     </div>
                   </div>
@@ -277,12 +273,12 @@ export default {
 
   setup(){
     const tags = ref([]);
-    const selectedConceptCodes = ref([]);
+    //const selectedConceptCodes = ref([]);
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
     //this.entityList = []
-
+   
     const addTag = (tag) => {
       var codeDescription = [];
       tag = tag.replace(/[\s/]/g, '')
@@ -300,7 +296,6 @@ export default {
                   codeDescription = data[x].name;
                   alert("before push");
                   tags.value.push(tag + ":" + codeDescription);
-                  selectedConceptCodes.value.push(tag + ":" + codeDescription);
 
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
@@ -310,9 +305,9 @@ export default {
                   alert("After getEntities Call()");
                 }
               }else {
-
-
                 tags.value.push(tag + ":" + "");
+                alert("test Push");
+               // selectedConceptCodes.value.push("test");
                 //tags.value.push(tag);
                 //alert(codeDescription);
                 newTag.value = ""
@@ -437,6 +432,7 @@ export default {
       fileFormat: '',
       selectedExportListName: '',
       selectedConceptCodes: [],
+      selectedConceptCode: [],
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -560,7 +556,7 @@ export default {
         this.rightUsers.push(this.leftSelectedUsers[i-1]);
         alert(this.leftSelectedUsers[i-1]);
         //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.add(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.push(this.leftSelectedUsers[i-1]);
         this.leftSelectedUsers.pop();
       }
     },
@@ -568,8 +564,8 @@ export default {
     moveRight() {
       this.userSelectedProperyNames = []
       for (let i = 0; i < this.leftSelectedUsers.length; i++) {
-        this.rightUsers.push(this.leftSelectedUsers[i].name)
-        this.selectedProperty.add(this.leftSelectedUsers[1].name);
+        this.rightUsers.push(this.leftSelectedUsers[i])
+        this.selectedProperty.push(this.leftSelectedUsers[i]);
       }
     },
     /*
