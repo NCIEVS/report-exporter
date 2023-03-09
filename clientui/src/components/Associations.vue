@@ -995,32 +995,22 @@ export default {
           alert("before Base URL");
           alert("baseURL " + this.$baseURL);
           alert("EnteredCodes " + this.userEnteredCodes);
-          api.getAssociations(this.$baseURL, this.userEnteredCodes)
-              .then((data)=>{this.availableProperties = data;
+         // api.getAssociations(this.$baseURL, this.userEnteredCodes)
+         // api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
+          api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", "C2219")
+              .then((data)=>{
+
+                alert("Data Response " + data);
+                this.availableProperties = data;
               })
+          alert("After getAssociations call")
+
           // reset what concept codes are used
           this.updateUsedConceptCodes()
 
 
 
-/*
-          api.getAssociations(this.$baseURL, this.userEnteredCode)
-              .then((data)=> {
-                for (let x = data.length - 1; x >= 0; x--) {
-                  this.userLeft.name = data[x].associations;
-                  alert(this.userLeft.name);
-                }
-              })
 
- */
-          /*
-          api.getAssociations(baseURL)
-          this.$baseURL
-          api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
-              .then((data)=> {
-              })
-
-           */
 /*
           if (tag != "") {
             api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
