@@ -974,9 +974,10 @@ export default {
           document.getElementById("enteredCodeLabelLeft").style.display = "";
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
-       //   api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
-        //      .then((data)=> {
-
+          api.getAssociations(baseURL)
+          api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
+              .then((data)=> {
+              })
 /*
           if (tag != "") {
             api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
