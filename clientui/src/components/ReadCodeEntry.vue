@@ -71,7 +71,7 @@
                 <div class="msl-searchable-list msl-multi-select__list">
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
                   <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
-                    <option v-for="userLeft in leftUsers" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                    <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
                       {{ userLeft }}
                     </option>
                   </select>
@@ -193,8 +193,8 @@
 
                       <div class="card-body">
                         <ul class="list-group" id="selectedConceptCodesTags">
-                          <li v-for="newTag in newTag" :key="newTag.key">
-                            {{ userEnteredCodes }}
+                          <li v-for="selectedConceptCodes in selectedConceptCodes" :key="selectedConceptCodes.key">
+                            {{ this.tags }}
                           </li>
                         </ul>
                       </div>
@@ -269,6 +269,7 @@ export default {
     title: 'EVS Report Exporter - Read Code',
   },
 
+
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
   },
@@ -276,7 +277,7 @@ export default {
 
   setup(){
     const tags = ref([]);
-    //const selectedConceptCodes = ref([]);
+    const selectedConceptCodes = ref([]);
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
@@ -299,6 +300,7 @@ export default {
                   codeDescription = data[x].name;
                   alert("before push");
                   tags.value.push(tag + ":" + codeDescription);
+                  selectedConceptCodes.value.push(tag + ":" + codeDescription);
 
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
@@ -308,6 +310,8 @@ export default {
                   alert("After getEntities Call()");
                 }
               }else {
+
+
                 tags.value.push(tag + ":" + "");
                 //tags.value.push(tag);
                 //alert(codeDescription);
@@ -432,7 +436,7 @@ export default {
       userSelectedFormat: '',
       fileFormat: '',
       selectedExportListName: '',
-      selectedConceptCodes: '',
+      selectedConceptCodes: [],
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -540,22 +544,32 @@ export default {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
         this.leftUsers.push(this.rightSelectedUsers[i-1]);
-        //this.leftUsers.push(this.selectedProperties[i-1]);
-        //this.selectedProperties[i-1].pop();
-        alert(this.selectedProperty.value);
         this.selectedProperty.splice(i, 1);
         this.rightSelectedUsers.pop();
       }
     },
+    /*
     moveRight() {
       if(!this.leftSelectedUsers.length) return;
       console.log('moveRight', this.leftSelectedUsers);
       for(let i=this.leftSelectedUsers.length;i>0;i--) {
         let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+        alert("ldx: " + idx);
         this.leftUsers.splice(idx, 1);
+        alert("leftUsers: " + this.leftUsers);
         this.rightUsers.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+        alert(this.leftSelectedUsers[i-1]);
+        //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.add(this.leftSelectedUsers[i-1]);
         this.leftSelectedUsers.pop();
+      }
+    },
+*/
+    moveRight() {
+      this.userSelectedProperyNames = []
+      for (let i = 0; i < this.leftSelectedUsers.length; i++) {
+        this.rightUsers.push(this.leftSelectedUsers[i].name)
+        this.selectedProperty.add(this.leftSelectedUsers[1].name);
       }
     },
     /*
@@ -913,6 +927,12 @@ export default {
       //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
       //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
+//alert (this.availableProperties.value);
+  //    var obj = JSON.parse(this.availableProperties.value);
+     //alert("JSON " + obj);
+    //  document.getElementById("selectSearchProperties").innerHTML = obj.name;
+      //alert("Test2");
+
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
@@ -1104,6 +1124,7 @@ export default {
     }
   },
   created() {
+
     // scroll to the top of the page
     window.scrollTo(0,0);
 
@@ -1113,6 +1134,7 @@ export default {
     api.getProperties(this.$baseURL)
         .then((data)=>{this.availableProperties = data;
         })
+
   },
 
   // Vue 3 Start
