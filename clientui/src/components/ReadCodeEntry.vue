@@ -72,7 +72,7 @@
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
                   <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
                     <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft }}
+                      {{ userLeft.name }}
                     </option>
                   </select>
                 </div>
@@ -203,11 +203,7 @@
                         <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
                       </div>
                       <div class="card-body">
-                        <ul id="selectedPropertyList" class="list-group">
-                          <li v-for="selectedProperty in selectedProperty" :key="selectedProperty.key">
-                            {{ this.rightUsers }}
-                          </li>
-                        </ul>
+                        <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
                       </div>
                     </div>
                   </div>
@@ -268,6 +264,7 @@ export default {
 
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
+    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
   },
 
 
@@ -278,7 +275,7 @@ export default {
     var tagCounter = 0;
     var newTagCounter = 0;
     //this.entityList = []
-   
+
     const addTag = (tag) => {
       var codeDescription = [];
       tag = tag.replace(/[\s/]/g, '')
@@ -306,11 +303,14 @@ export default {
                 }
               }else {
                 tags.value.push(tag + ":" + "");
+                newTag.value = ""
                 alert("test Push");
+                tagCounter = tagCounter + 1;
+                newTagCounter = newTagCounter + 1;
                // selectedConceptCodes.value.push("test");
                 //tags.value.push(tag);
                 //alert(codeDescription);
-                newTag.value = ""
+
               }
 
             })
@@ -383,6 +383,7 @@ export default {
 
     //Vue 3 Removes all tags below text box
     const removeAllTags = (tagDeleteCounter) => {
+      alert("REmove value " + tagDeleteCounter);
       for(let i = 0; i<=newTagCounter; i++) {
         tags.value.splice(tagDeleteCounter, newTagCounter);
         tagDeleteCounter = tagDeleteCounter + 1;
