@@ -86,7 +86,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = ">>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      <td><input type = "button" value = ">" id = "toListBox" class = "toListBox" @click="moveRight"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -102,7 +102,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = "<<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      <td><input type = "button" value = "<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -559,6 +559,7 @@ export default {
         //alert(this.leftSelectedUsers[i-1]);
         //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
         //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+        this.userLeft.name.value.splice(i, 1);
         this.leftSelectedUsers.pop();
       }
     },

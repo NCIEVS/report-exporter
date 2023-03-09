@@ -152,7 +152,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = ">>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      <td><input type = "button" value = ">" id = "toListBox" class = "toListBox" @click="moveRight"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -168,7 +168,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = "<<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      <td><input type = "button" value = "<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -1001,7 +1001,7 @@ export default {
       // make sure the user has a code entered
 
       //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
-      //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
+      //correctly under vue 3.  If value is 1 then it implements validateFirstStep function.  If value is 2 then
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
 //alert (this.availableProperties.value);
       //    var obj = JSON.parse(this.availableProperties.value);
@@ -1031,6 +1031,15 @@ export default {
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
+
+
+          api.getRoles(this.$baseURL, this.userEnteredCode)
+              .then((data)=> {
+                for (let x = data.length - 1; x >= 0; x--) {
+                  this.userLeft.name = data[x].roles;
+                }
+              })
+
         }
       }
 

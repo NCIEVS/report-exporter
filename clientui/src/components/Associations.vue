@@ -90,7 +90,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = ">>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      <td><input type = "button" value = ">" id = "toListBox" class = "toListBox" @click="moveRight"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -106,7 +106,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = "<<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      <td><input type = "button" value = "<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -457,7 +457,7 @@ export default {
       selectedExportListName: '',
       selectedConceptCodes: [],
       selectedConceptCode: [],
-      filename: 'entities',
+      filename: 'associations',
       downloadReturnCode: null,
       invalidTag: '',
       showSummary: true,
@@ -467,7 +467,9 @@ export default {
       leftUsers: [],
       rightSelectedUsers:[],
       rightUsers:[],
-      loadBaseURL: this.$baseURL
+      loadBaseURL: this.$baseURL,
+      availableAssociations: [],
+      selectedAssociations: [],
 
     };
   },
@@ -974,12 +976,50 @@ export default {
           document.getElementById("enteredCodeLabelLeft").style.display = "";
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
+
+          var bottomTab = "";
+          var indexBottomTab = 0;
+          // clear the internal user codes that are entered
+          this.userEnteredCodes = []
+          for (let i = 0; i < Object.keys(this.tags).length; i++) {
+            //  for (let i = 0; i < 1; i++) {
+            // currated top nodes (from the server hava a value of "C12434:Blood")
+            // so we need to strip off everything from the : to the right.
+            if (this.tags[i] !== "undefined") {
+              bottomTab = this.tags[i];
+              indexBottomTab = bottomTab.indexOf(":");
+              this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
+            }
+          }
+
+          alert("before Base URL");
+          alert("baseURL " + this.$baseURL);
+          alert("EnteredCodes " + this.userEnteredCodes);
+          api.getAssociations(this.$baseURL, this.userEnteredCodes)
+              .then((data)=>{this.availableProperties = data;
+              })
+          // reset what concept codes are used
+          this.updateUsedConceptCodes()
+
+
+
+/*
+          api.getAssociations(this.$baseURL, this.userEnteredCode)
+              .then((data)=> {
+                for (let x = data.length - 1; x >= 0; x--) {
+                  this.userLeft.name = data[x].associations;
+                  alert(this.userLeft.name);
+                }
+              })
+
+ */
           /*
           api.getAssociations(baseURL)
+          this.$baseURL
           api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
               .then((data)=> {
               })
-              
+
            */
 /*
           if (tag != "") {
@@ -1051,6 +1091,10 @@ export default {
           return Object.keys(this.rightUsers).length > 0
         }
       }
+
+
+      // reset what concept codes are used
+      this.updateUsedConceptCodes()
     },
     backStep(){
       //Shows screen for step 1
@@ -1203,9 +1247,6 @@ export default {
     this.updateShowSummary();
 
     // load properties after the page is loaded.
-    api.getProperties(this.$baseURL)
-        .then((data)=>{this.availableProperties = data;
-        })
 
   },
 
@@ -1225,6 +1266,67 @@ export default {
     }
   },
 
+
+
+
+  validateAssociationStep() {
+    // make sure the user has selected at least one assocation
+    return Object.keys(this.selectedAssociations).length>0
+  },
+
+
+  setSelectedAssociationNames() {
+    this.userSelectedAssociationNames = []
+
+    for (let i = 0; i < Object.keys(this.selectedAssociations).length; i++) {
+      this.userSelectedAssociationNames.push(this.selectedAssociations[i].type)
+    }
+  },
+
+  getAssociations() {
+    // load Associations for the selected codes
+    alert("before Base URL");
+    alert("baseURL " + this.$baseURL);
+    alert("EnteredCodes " + this.userEnteredCodes);
+    api.getAssociations(this.$baseURL, this.userEnteredCodes)
+        .then((data)=>{this.availableProperties = data;
+        })
+  },
+
+
+  updateUsedConceptCodes() {
+    this.usedCodes = [];
+    this.unusedCodes = [];
+
+    // loop through all concept codes
+    for(let x = this.entityList.length; x >=0; x-- ) {
+      if (this.entityList[x]) {
+        if (this.selectedAssociations.length == 0) {
+          this.unusedCodes.push(this.entityList[x].code);
+        }
+
+        else {
+          // for each concept code, loop through its Associations
+          for(let i = this.selectedAssociations.length; i >=0; i-- ) {
+            if (this.selectedAssociations[i]) {
+              // check if the selected assocation is associated to the concept code
+              // if it is, add concept code
+              const associations = this.entityList[x].associations;
+
+              if (associations.some(item => item.type === this.selectedAssociations[i].type)) {
+                this.usedCodes.push(this.entityList[x].code);
+                break;
+              }
+              else if (i == 0) {
+                this.unusedCodes.push(this.entityList[x].code);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+  },
 
 
 
