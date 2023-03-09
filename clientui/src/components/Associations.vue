@@ -55,6 +55,8 @@
           <button class="delete" @click="removeTag(index)">x</button>
         </a></li>
       </ul>
+
+      <input type="hidden" v-for="baseLink in loadBaseURL" :key="baseLink" id="basURL" name="basURL" value="@{{loadBaseURL.value}}" >
     </div>
 
 
@@ -64,20 +66,15 @@
         <div class="container">
           <form>
             <div class="form-group">
-              <label for="selectedProperties" id = "SelectProperties2">No associations selected for these concept codes</label>
-              <label for="selectedProperties" id = "SelectProperties2">Used concept codes</label>
-            </div>
-            <div id="unusedCodes" class="input-group">flex
-              <span class="badge badge-pill badge-secondary">C12219</span>
-              <div class="pill-padding"></div>
+              <label for="selectedProperties" id = "SelectProperties2">Select associations to include in the export</label>
             </div>
             <div class="form-group">
               <div class="msl-multi-select">
                 <div class="msl-searchable-list msl-multi-select__list">
-                  <input placeholder="Search associations" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
+                  <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
                   <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
-                    <option v-for="userLeft in leftUsers" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft }}
+                    <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                      {{ userLeft.name }}
                     </option>
                   </select>
                 </div>
@@ -115,7 +112,7 @@
                   </table>
                 </div>
                 <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
-                  <input placeholder="Search selected associations" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
+                  <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
                   <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
                     <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
                       {{ userRight }}
@@ -197,26 +194,18 @@
 
 
                       <div class="card-body">
-                        <ul class="list-group" id="selectedConceptCodesTags">
-                          <li v-for="newTag in newTag" :key="newTag.key">
-                            {{ selectedConceptCodes }}
-                          </li>
-                        </ul>
+                        <span class="list-group" id="selectedConceptCodesTags">{{ this.tags }}</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-sm-4">
                     <div class="card bg-light border-dark mb-3">
                       <div class="card-header">
-                        Selected Properties
+                        Selected Associations
                         <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
                       </div>
                       <div class="card-body">
-                        <ul id="selectedPropertyList" class="list-group">
-                          <li v-for="selectedProperty in selectedProperty" :key="selectedProperty.key">
-                            {{ this.rightUsers }}
-                          </li>
-                        </ul>
+                        <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
                       </div>
                     </div>
                   </div>
@@ -274,39 +263,68 @@ export default {
     title: 'EVS Report Exporter - Read Code',
   },
 
+
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
+    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
   },
 
 
   setup(){
     const tags = ref([]);
-    //const selectedConceptCodes = ref([]);
+    //const loadBaseURL = ref([]);
+    //var  url= ref();
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
-    //this.entityList = []
+    //this.entityList = []'
 
+
+    //
     const addTag = (tag) => {
+      var codeDescription = [];
+      //var baseLink = document.getElementById('basURL').value;
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
+
+      // alert(baseLink);
+      // baseLink = document.getElementById('basURL').value;
       if (tag != "") {
-        tags.value.push(tag);
-        // this.selectedConceptCodes = tag;
-        //  document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
-        //this.selectedConceptCodesTags.value.push(tag);
-        // selectedConceptCodesTags
-        // this.selectedConceptCodes.value.push("tag");
-        //newTag.value = ""; // reset newTag
-        // this.selectedConceptCodes = tag;
-        // document.getElementById("selectConceptCodesTags").value.push(this.selectedConceptCodes);
-        tagCounter = tagCounter + 1;
-        newTagCounter = newTagCounter + 1;
-        alert("Before getEntities Call()");
-        getEntities();
-        alert("After getEntities Call()");
+        api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
+            .then((data)=> {
+              alert("after call");
+              // data = "test";
+              if ((data != null) && (data!== undefined)) {
+                alert("after checks");
+                for (let x = data.length - 1; x >= 0; x--) {
+                  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                  codeDescription = data[x].name;
+                  alert("before push");
+                  tags.value.push(tag + ":" + codeDescription);
+
+                  newTag.value = ""; // reset newTag
+                  tagCounter = tagCounter + 1;
+                  newTagCounter = newTagCounter + 1;
+                  alert("Before getEntities Call()");
+                  //getEntities();
+                  alert("After getEntities Call()");
+                }
+              }else {
+                alert("Code entered was not found");
+                tags.value.push(tag + ":" + "");
+                newTag.value = ""
+                tagCounter = tagCounter + 1;
+                newTagCounter = newTagCounter + 1;
+                // selectedConceptCodes.value.push("test");
+                //tags.value.push(tag);
+                //alert(codeDescription);
+
+              }
+
+            })
       }
-    };
+    }
+
 
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
@@ -373,6 +391,7 @@ export default {
 
     //Vue 3 Removes all tags below text box
     const removeAllTags = (tagDeleteCounter) => {
+      alert("REmove value " + tagDeleteCounter);
       for(let i = 0; i<=newTagCounter; i++) {
         tags.value.splice(tagDeleteCounter, newTagCounter);
         tagDeleteCounter = tagDeleteCounter + 1;
@@ -389,6 +408,7 @@ export default {
 
 
 
+
       //document.getElementById("listOfTags").style.display = "none";  // remove tags
       //document.getElementById("listOfTags").innerHTML = "";
 
@@ -398,141 +418,11 @@ export default {
       return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
     };
 
-    const getEntities = () => {
-      // clear the entry list
 
-      alert("first getEntities");
-      // this.entityList = []
-      //setSelectedTags()
-      var tempCode = ''
-      var tempStatus = ''
 
-      /*
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formSelectCodes,
-        loader: 'dots',
-        isFullPage: false,
-      });
-       */
 
-      alert("test call 1");
-      // alert("baseURL " + this.$baseURL);
-      // alert("userEnteredCodes " + this.userEnteredCodes);
-      //  alert("queryEntitySelection " + this.queryEntitySelection);
-      // api.getCodes(this.$baseURL, this.userEnteredCodes, this.queryEntitySelection)
-      api.getCodes('https://evs-dev.cancer.gov/report-exporter/', 'C12219', 'ENTITY')
-          .then((data)=>{
 
-            alert("THis is the data "+ data)
-
-            if (data != null) {
-              // loop through all codes and verify data is returned for each
-              // If a code is retired, the object may be empty.
-              for (let x = data.length -1; x >=0; x--) {
-                if (data[x].queryCode < 0) {
-                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
-                  tempCode =  data[x].code
-                  tempStatus = data[x].queryStatus
-                  data.splice(x,1)
-
-                  /*          // need to remove from selectedTags
-                            for (let i = 0; i < Object.keys(newTag).length; i++) {
-                              if (tempCode == newTag[i].value) {
-                                this.selectedTags.splice(i,1)
-                              }
-                            }
-
-                   */
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Invalid Concept Code',
-                    text: '<b>' +tempCode+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have roles to be valid
-                if (this.rolesRequired && data[x].roles.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO Associations")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-                // Check if the concept code must have associations to be valid
-                if (this.associationsRequired && data[x].associations.length < 1) {
-                  //console.log("Code: " + data[x].code + " is invalid: NO ROLES")
-                  tempCode =  data[x].code
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Warning',
-                    text: '<b>'+tempCode+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-              }
-
-              this.entityList = data;
-              this.updateSelectedConceptCodeDescriptions(data);
-              this.updateParent()
-            }
-            else {
-              // There was a failure making the REST call.
-              this.clearSelection()
-              this.$notify({
-                group: 'app',
-                title: 'Validation Failure',
-                text: 'Could not verify concept code(s).  Possible network issue.',
-                type: 'error',
-                duration: 4000,
-                position: "left bottom"
-              });
-            }
-          }).catch(function(error) {
-        console.error("Error retrieving entities: " + error);
-        // }).finally(function() { loader.hide()})
-      })
-    };
-
-    const setSelectedTags = () => {
-      // clear the internal user codes that are entered
-      this.userEnteredCodes = []
-      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-        // currated top nodes (from the server hava a value of "C12434:Blood")
-        // so we need to strip off everything from the : to the right.
-        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
-      }
-    };
-
-    return { tags, newTag, addTag, setSelectedTags, onTagAdded, removeTag, tagCounter, removeAllTags }
+    return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
 
 
 
@@ -551,7 +441,8 @@ export default {
       userSelectedFormat: '',
       fileFormat: '',
       selectedExportListName: '',
-      selectedConceptCodes: '',
+      selectedConceptCodes: [],
+      selectedConceptCode: [],
       filename: 'entities',
       downloadReturnCode: null,
       invalidTag: '',
@@ -559,23 +450,33 @@ export default {
       showSummaryText: '',
       tag: "[]",
       leftSelectedUsers:[],
-      leftUsers: [
-        "Accepted_Therapeutic_Use_For",
-        "ALT_DEFINITION",
-        "CHEBI_ID",
-        "DEFINITION",
-        "DesignNote",
-        "Contributing_Source",
-        "Concept_Status",
-      ],
+      leftUsers: [],
       rightSelectedUsers:[],
-      rightUsers:[]
+      rightUsers:[],
+      loadBaseURL: this.$baseURL
 
     };
   },
 
   methods: {
 
+
+    setSelectedTags () {
+      var bottomTab = "";
+      var indexBottomTab = 0;
+      // clear the internal user codes that are entered
+      this.userEnteredCodes = []
+      for (let i = 0; i < Object.keys(this.tags).length; i++) {
+        //  for (let i = 0; i < 1; i++) {
+        // currated top nodes (from the server hava a value of "C12434:Blood")
+        // so we need to strip off everything from the : to the right.
+        if (this.tags[i] !== "undefined") {
+          bottomTab = this.tags[i];
+          indexBottomTab = bottomTab.indexOf(":");
+          this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
+        }
+      }
+    },
     testCall2(){
       alert("testCall2");
     },
@@ -642,22 +543,32 @@ export default {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
         this.leftUsers.push(this.rightSelectedUsers[i-1]);
-        //this.leftUsers.push(this.selectedProperties[i-1]);
-        //this.selectedProperties[i-1].pop();
-        alert(this.selectedProperty.value);
         this.selectedProperty.splice(i, 1);
         this.rightSelectedUsers.pop();
       }
     },
+    /*
     moveRight() {
       if(!this.leftSelectedUsers.length) return;
       console.log('moveRight', this.leftSelectedUsers);
       for(let i=this.leftSelectedUsers.length;i>0;i--) {
         let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+        alert("ldx: " + idx);
         this.leftUsers.splice(idx, 1);
+        alert("leftUsers: " + this.leftUsers);
         this.rightUsers.push(this.leftSelectedUsers[i-1]);
+        alert(this.leftSelectedUsers[i-1]);
+        //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
         this.selectedProperty.push(this.leftSelectedUsers[i-1]);
         this.leftSelectedUsers.pop();
+      }
+    },
+*/
+    moveRight() {
+      this.userSelectedProperyNames = []
+      for (let i = 0; i < this.leftSelectedUsers.length; i++) {
+        this.rightUsers.push(this.leftSelectedUsers[i])
+        this.selectedProperty.push(this.leftSelectedUsers[i]);
       }
     },
     /*
@@ -1015,6 +926,12 @@ export default {
       //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
       //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
+//alert (this.availableProperties.value);
+      //    var obj = JSON.parse(this.availableProperties.value);
+      //alert("JSON " + obj);
+      //  document.getElementById("selectSearchProperties").innerHTML = obj.name;
+      //alert("Test2");
+
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
@@ -1156,6 +1073,8 @@ export default {
       // set the user selected tags and properties
       this.setSelectedPropertyNames()
       this.gaTrackDownload();
+      this.setSelectedTags();
+
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
       if (this.fileFormat === ""){
@@ -1164,10 +1083,18 @@ export default {
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
 
+      alert("check 1")
+      alert("base URL: " + this.$baseURL);
+      alert("tags: " + this.userEnteredCodes);
+      alert("selectedPropertyName: " + this.rightUsers);
+      alert("SelectedFormat: " + this.fileFormat);
+      alert("filename: " + this.filename);
+      alert("selectedFormat Extension: " + this.userSelectedFormat);
+
       //alert (this.queryEntitySelection);
       axios({
         url: this.$baseURL + 'download/get-file-for-readCodes/'  +
-            this.tags + '/' +
+            this.userEnteredCodes + '/' +
             this.rightUsers + '/' +
             this.fileFormat  + '/'+
             this.filename + '.' +
@@ -1196,6 +1123,7 @@ export default {
     }
   },
   created() {
+
     // scroll to the top of the page
     window.scrollTo(0,0);
 
@@ -1205,6 +1133,7 @@ export default {
     api.getProperties(this.$baseURL)
         .then((data)=>{this.availableProperties = data;
         })
+
   },
 
   // Vue 3 Start
