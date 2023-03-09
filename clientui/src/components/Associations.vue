@@ -66,6 +66,10 @@
         <div class="container">
           <form>
             <div class="form-group">
+              <label for="selectedProperties" id = "SelectProperties3">No associations selected for these concept codes</label>
+              <br>
+              <label for="selectedProperties" id = "enteredCodeLabelLeft">{{ this.tags }}</label>
+              <br>
               <label for="selectedProperties" id = "SelectProperties2">Select associations to include in the export</label>
             </div>
             <div class="form-group">
@@ -111,7 +115,17 @@
                     </tr>
                   </table>
                 </div>
+
                 <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                  <div class="col">
+                    <label for="selectedProperties" id = "SelectProperties3" class = "UsedLabelRight">Used concept codes</label>
+                    <br>
+                    <label for="selectedProperties" id = "enteredCodeLabelRight" class = "UsedCodeRight">{{ this.tags }}</label>
+                    <br>
+                    <br>
+                  </div>
+
+
                   <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
                   <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
                     <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
@@ -545,6 +559,8 @@ export default {
         this.leftUsers.push(this.rightSelectedUsers[i-1]);
         this.selectedProperty.splice(i, 1);
         this.rightSelectedUsers.pop();
+        document.getElementById("enteredCodeLabelLeft").style.display = "";
+        document.getElementById("enteredCodeLabelRight").style.display = "none";
       }
     },
     /*
@@ -569,6 +585,8 @@ export default {
       for (let i = 0; i < this.leftSelectedUsers.length; i++) {
         this.rightUsers.push(this.leftSelectedUsers[i])
         this.selectedProperty.push(this.leftSelectedUsers[i]);
+        document.getElementById("enteredCodeLabelLeft").style.display = "none";
+        document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
     /*
@@ -953,6 +971,8 @@ export default {
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
+          document.getElementById("enteredCodeLabelLeft").style.display = "";
+          document.getElementById("enteredCodeLabelRight").style.display = "none";
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
         }
       }
@@ -1290,6 +1310,17 @@ ul {
 .listBoxButton{
   margin-top : 110px;
   display: block;
+}
+.UsedLabelRight{
+  margin-top : -111px;
+  display: block;
+  margin-left: -20px;
+}
+
+.UsedCodeRight{
+  margin-top : -25px;
+  display: block;
+  margin-left: -20px;
 }
 
 .btn-delete{

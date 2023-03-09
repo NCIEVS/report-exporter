@@ -74,7 +74,7 @@
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
                   <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
                     <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft }}
+                      {{ userLeft.name }}
                     </option>
                   </select>
                 </div>
@@ -292,22 +292,22 @@ export default {
       if (tag != "") {
         api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
             .then((data)=> {
-              alert("after call");
+             // alert("after call");
               // data = "test";
               if ((data != null) && (data!== undefined)) {
-                alert("after checks");
+                //alert("after checks");
                 for (let x = data.length - 1; x >= 0; x--) {
-                  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
                   codeDescription = data[x].name;
-                  alert("before push");
+                //  alert("before push");
                   tags.value.push(tag + ":" + codeDescription);
 
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
                   newTagCounter = newTagCounter + 1;
-                  alert("Before getEntities Call()");
+               //   alert("Before getEntities Call()");
                   //getEntities();
-                  alert("After getEntities Call()");
+                //  alert("After getEntities Call()");
                 }
               }else {
                 alert("Code entered was not found");
@@ -391,7 +391,7 @@ export default {
 
     //Vue 3 Removes all tags below text box
     const removeAllTags = (tagDeleteCounter) => {
-      alert("REmove value " + tagDeleteCounter);
+     // alert("REmove value " + tagDeleteCounter);
       for(let i = 0; i<=newTagCounter; i++) {
         tags.value.splice(tagDeleteCounter, newTagCounter);
         tagDeleteCounter = tagDeleteCounter + 1;
@@ -1083,13 +1083,13 @@ export default {
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
 
-      alert("check 1")
-      alert("base URL: " + this.$baseURL);
-      alert("tags: " + this.userEnteredCodes);
-      alert("selectedPropertyName: " + this.rightUsers);
-      alert("SelectedFormat: " + this.fileFormat);
-      alert("filename: " + this.filename);
-      alert("selectedFormat Extension: " + this.userSelectedFormat);
+     // alert("check 1")
+    //  alert("base URL: " + this.$baseURL);
+    //  alert("tags: " + this.userEnteredCodes);
+    //  alert("selectedPropertyName: " + this.rightUsers);
+    //  alert("SelectedFormat: " + this.fileFormat);
+    //  alert("filename: " + this.filename);
+    //  alert("selectedFormat Extension: " + this.userSelectedFormat);
 
       //alert (this.queryEntitySelection);
       axios({
