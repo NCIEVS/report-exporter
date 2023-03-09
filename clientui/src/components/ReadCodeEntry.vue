@@ -55,6 +55,8 @@
           <button class="delete" @click="removeTag(index)">x</button>
         </a></li>
       </ul>
+
+      <input type="hidden" v-for="baseLink in loadBaseURL" :key="baseLink" id="basURL" name="basURL" value="@{{loadBaseURL.value}}" >
     </div>
 
 
@@ -270,23 +272,29 @@ export default {
 
   setup(){
     const tags = ref([]);
-    //const selectedConceptCodes = ref([]);
+    //const loadBaseURL = ref([]);
+    //var  url= ref();
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
     var newTagCounter = 0;
-    //this.entityList = []
+    //this.entityList = []'
 
+
+    //
     const addTag = (tag) => {
       var codeDescription = [];
+      //var baseLink = document.getElementById('basURL').value;
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
-      if (tag != "") {
 
-        api.getCodes('https://evs-dev.cancer.gov/report-exporter/', tag, 'ENTITY')
+     // alert(baseLink);
+     // baseLink = document.getElementById('basURL').value;
+      if (tag != "") {
+        api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
             .then((data)=> {
               alert("after call");
               // data = "test";
-              if (data != null) {
+              if ((data != null) && (data!== undefined)) {
                 alert("after checks");
                 for (let x = data.length - 1; x >= 0; x--) {
                   alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
@@ -302,9 +310,9 @@ export default {
                   alert("After getEntities Call()");
                 }
               }else {
+                alert("Code entered was not found");
                 tags.value.push(tag + ":" + "");
                 newTag.value = ""
-                alert("test Push");
                 tagCounter = tagCounter + 1;
                 newTagCounter = newTagCounter + 1;
                // selectedConceptCodes.value.push("test");
@@ -400,6 +408,7 @@ export default {
 
 
 
+
       //document.getElementById("listOfTags").style.display = "none";  // remove tags
       //document.getElementById("listOfTags").innerHTML = "";
 
@@ -441,17 +450,10 @@ export default {
       showSummaryText: '',
       tag: "[]",
       leftSelectedUsers:[],
-      leftUsers: [
-        "Accepted_Therapeutic_Use_For",
-        "ALT_DEFINITION",
-        "CHEBI_ID",
-        "DEFINITION",
-        "DesignNote",
-        "Contributing_Source",
-        "Concept_Status",
-      ],
+      leftUsers: [],
       rightSelectedUsers:[],
-      rightUsers:[]
+      rightUsers:[],
+      loadBaseURL: this.$baseURL
 
     };
   },
