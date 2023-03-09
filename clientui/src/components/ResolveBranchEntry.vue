@@ -622,7 +622,7 @@ export default {
         this.rightSelectedUsers.pop();
       }
     },
-    /*
+
     moveRight() {
       if(!this.leftSelectedUsers.length) return;
       console.log('moveRight', this.leftSelectedUsers);
@@ -634,11 +634,12 @@ export default {
         this.rightUsers.push(this.leftSelectedUsers[i-1]);
         alert(this.leftSelectedUsers[i-1]);
         //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+       // this.selectedProperty.push(this.leftSelectedUsers[i-1]);
         this.leftSelectedUsers.pop();
       }
     },
-*/
+
+    /*
     moveRight() {
       this.userSelectedProperyNames = []
       for (let i = 0; i < this.leftSelectedUsers.length; i++) {
@@ -646,6 +647,8 @@ export default {
         this.selectedProperty.push(this.leftSelectedUsers[i]);
       }
     },
+    */
+    
     /*
         getEntities(){
           // clear the entry list
