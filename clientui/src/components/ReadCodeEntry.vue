@@ -308,7 +308,7 @@ export default {
                   alert("After getEntities Call()");
                 }
               }else {
-                tags.value.push(tag + ":" + " ");
+                tags.value.push(tag + ":" + "");
                 //tags.value.push(tag);
                 //alert(codeDescription);
                 newTag.value = ""
@@ -463,15 +463,14 @@ export default {
        var indexBottomTab = 0;
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
-      for (let i = 0; i < Object.keys(this.tag).length; i++) {
+      for (let i = 0; i < Object.keys(this.tags).length; i++) {
       //  for (let i = 0; i < 1; i++) {
         // currated top nodes (from the server hava a value of "C12434:Blood")
         // so we need to strip off everything from the : to the right.
-        alert("setSelectedTagsTest1");
         if (this.tags[i] !== "undefined") {
           bottomTab = this.tags[i];
           indexBottomTab = bottomTab.indexOf(":");
-          this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab))
+          this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
         }
       }
     },
