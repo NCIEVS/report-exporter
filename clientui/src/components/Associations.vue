@@ -973,6 +973,54 @@ export default {
           document.getElementById("backButton").style.display = "";     //Shows back button
           document.getElementById("enteredCodeLabelLeft").style.display = "";
           document.getElementById("enteredCodeLabelRight").style.display = "none";
+
+
+ 
+/*
+          if (tag != "") {
+            api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
+                .then((data)=> {
+                  alert("after call");
+                  // data = "test";
+                  if ((data != null) && (data!== undefined)) {
+                    alert("after checks");
+                    for (let x = data.length - 1; x >= 0; x--) {
+                      alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                      codeDescription = data[x].name;
+                      alert("before push");
+                      tags.value.push(tag + ":" + codeDescription);
+
+                      newTag.value = ""; // reset newTag
+                      tagCounter = tagCounter + 1;
+                      newTagCounter = newTagCounter + 1;
+                      alert("Before getEntities Call()");
+                      //getEntities();
+                      alert("After getEntities Call()");
+                    }
+                  }else {
+                    alert("Code entered was not found");
+                    tags.value.push(tag + ":" + "");
+                    newTag.value = ""
+                    tagCounter = tagCounter + 1;
+                    newTagCounter = newTagCounter + 1;
+                    // selectedConceptCodes.value.push("test");
+                    //tags.value.push(tag);
+                    //alert(codeDescription);
+
+                  }
+
+                })
+          }
+
+*/
+
+
+
+
+
+
+
+
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
         }
       }

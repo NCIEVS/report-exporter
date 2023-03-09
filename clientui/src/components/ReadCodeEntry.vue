@@ -301,7 +301,6 @@ export default {
                   codeDescription = data[x].name;
                 //  alert("before push");
                   tags.value.push(tag + ":" + codeDescription);
-
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
                   newTagCounter = newTagCounter + 1;
