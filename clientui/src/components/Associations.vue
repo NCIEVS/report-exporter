@@ -1196,7 +1196,7 @@ export default {
       alert("excel export called");
 
       // set the user selected tags and properties
-      this.setSelectedAssociationNames()
+      this.setSelectedAssociationNames();
 
       alert("setSelectedAssociationNames");
       this.gaTrackDownload();

@@ -74,7 +74,7 @@
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
                   <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
                     <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft.role }}
+                      {{ userLeft.type }}
                     </option>
                   </select>
                 </div>
@@ -1101,20 +1101,20 @@ export default {
       for(let x = this.entityList.length; x >=0; x-- ) {
         if (this.entityList[x]) {
 
-          if (this.selectedRoles.length == 0) {
+          if (this.leftSelectedUsers.length == 0) {
             this.unusedCodes.push(this.entityList[x].code);
           }
 
           else {
             // for each concept code, loop through its roles
-            for(let i = this.selectedRoles.length; i >=0; i-- ) {
-              if (this.selectedRoles[i]) {
+            for(let i = this.leftSelectedUsers.length; i >=0; i-- ) {
+              if (this.leftSelectedUsers[i]) {
 
                 // check if the selected role is associated to the concept code
                 // if it is, add concept code
                 const roles = this.entityList[x].roles;
 
-                if (roles.some(item => item.type === this.selectedRoles[i].type)) {
+                if (roles.some(item => item.type === this.leftSelectedUsers[i].type)) {
                   this.usedCodes.push(this.entityList[x].code);
                   break;
                 }
