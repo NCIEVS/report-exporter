@@ -1217,6 +1217,8 @@ export default {
 
       alert("setSelectedAssociationNames");
       this.gaTrackDownload();
+      //this.setSelectedTags();
+      this.setSelectedPropertyNames()
 
       alert("gaTrackDownload");
 
