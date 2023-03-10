@@ -566,20 +566,21 @@ export default {
     moveRight() {
       if(!this.leftSelectedUsers.length) return;
       console.log('moveRight', this.leftSelectedUsers);
-      for(let i=this.leftSelectedUsers.length;i<0;i++) {
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i]);
+      for(let i=this.availableProperties.length;i>0;i--) {
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
         alert("ldx: " + idx);
         this.leftUsers.splice(idx, 1);
         alert("leftUsers: " + this.leftUsers);
-        this.rightUsers.push(this.leftSelectedUsers[i]);
+        this.rightUsers.push(this.leftSelectedUsers[i-1]);
         alert(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.push(this.leftSelectedUsers[i]);
+        //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.push(this.leftSelectedUsers[i-1]);
         this.leftSelectedUsers.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "none";
         document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
-
+/*
     /*
     moveRight() {
       this.userSelectedProperyNames = []
@@ -1080,7 +1081,7 @@ export default {
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
-        
+
 
         if (Object.keys(this.rightUsers).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
