@@ -42,15 +42,15 @@
 
     <div role="tabpanel" id="SelectaCode0" aria-labelledby="step-SelectaCode0" class="wizard-tab-container" style>
       <div class="container">
-        <div class="row justify-content-center">flex
+        <div class="row justify-content-center">
           <div class="col-12 col-md-8">
             <label for="tags">Select one NCI Thesaurus top node code or enter your own</label>
-            <div class="row">flex
+            <div class="row">
               <div class="col-md-12">
                 <form class="row form-group">
                   <div class="col-12 col-sm pr-sm-0">
                     <div class="tags-input-root" style="position: relative;">
-                      <div class="tags-input-wrapper-default tags-input">flex
+                      <div class="tags-input-wrapper-default tags-input">
                         <span class="tags-input-badge tags-input-badge-pill tags-input-badge-selected-default">
                           <span>C12219:Anatomic Structure</span>
                           <span>12508: Cell</span>

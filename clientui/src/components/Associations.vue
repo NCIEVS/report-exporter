@@ -1196,7 +1196,7 @@ export default {
       alert("excel export called");
 
       // set the user selected tags and properties
-      this.setSelectedAssociationNames();
+      this.setSelectedAssociationNames()
 
       alert("setSelectedAssociationNames");
       this.gaTrackDownload();
@@ -1289,9 +1289,9 @@ export default {
   setSelectedAssociationNames() {
     this.userSelectedAssociationNames = [];
 alert("selectedAssociationtest 1");
-    for (let i = 0; i < Object.keys(this.rightSelectedUsers).length; i++) {
+    for (let i = 0; i < Object.keys(this.rightUsers).length; i++) {
       alert("selectedAssociationtest 2");
-      this.userSelectedAssociationNames.push(this.rightSelectedUsers[i].type)
+      this.userSelectedAssociationNames.push(this.rightUsers[i].type)
       alert("selectedAssociationtest 3");
     }
   },

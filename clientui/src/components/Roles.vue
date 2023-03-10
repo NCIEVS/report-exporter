@@ -1133,8 +1133,8 @@ export default {
     setSelectedRoleNames() {
       this.userSelectedRoleNames = []
 
-      for (let i = 0; i < Object.keys(this.leftSelectedUsers).length; i++) {
-        this.userSelectedRoleNames.push(this.leftSelectedUsers[i].type)
+      for (let i = 0; i < Object.keys(this.rightUsers).length; i++) {
+        this.userSelectedRoleNames.push(this.rightUsers[i].type)
       }
     },
 
