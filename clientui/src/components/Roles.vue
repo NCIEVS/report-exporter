@@ -443,7 +443,7 @@ export default {
       selectedExportListName: '',
       selectedConceptCodes: [],
       selectedConceptCode: [],
-      filename: 'entities',
+      filename: 'roles',
       downloadReturnCode: null,
       invalidTag: '',
       showSummary: true,
@@ -955,30 +955,39 @@ export default {
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
+          var bottomTab = "";
+          var indexBottomTab = 0;
+          // clear the internal user codes that are entered
+          this.userEnteredCodes = []
+          for (let i = 0; i < Object.keys(this.tags).length; i++) {
+            //  for (let i = 0; i < 1; i++) {
+            // currated top nodes (from the server hava a value of "C12434:Blood")
+            // so we need to strip off everything from the : to the right.
+            if (this.tags[i] !== "undefined") {
+              bottomTab = this.tags[i];
+              indexBottomTab = bottomTab.indexOf(":");
+              this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
+            }
+          }
+
 
           alert("before Base URL");
           alert("baseURL " + this.$baseURL);
           alert("EnteredCodes " + this.userEnteredCodes);
           // api.getAssociations(this.$baseURL, this.userEnteredCodes)
           // api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
-          api.getRoles("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
+          api.getRoles(this.$baseURL, this.userEnteredCodes)
               .then((data)=>{
                 for (let x = data.length - 1; x >= 0; x--) {
                   alert("Before call results");
                   alert("Data Response " + data[x]);
                   alert("Data Response " + data[x].value);
-                  alert("Data Response " + data[x].associations);
+                  alert("Data Response " + data[x].roles);
                   this.availableProperties.push(data[x]);
                 }
               })
-          alert("After getAssociations call")
+          alert("After get roles call")
 
-              api.getRoles(this.$baseURL, this.userEnteredCode)
-              .then((data)=> {
-                for (let x = data.length - 1; x >= 0; x--) {
-                  this.userLeft.name = data[x].roles;
-                }
-              })
         }
       }
 
@@ -1083,6 +1092,54 @@ export default {
       }
     },
 
+
+    updateUsedConceptCodes() {
+      this.usedCodes = [];
+      this.unusedCodes = [];
+
+      // loop through all concept codes
+      for(let x = this.entityList.length; x >=0; x-- ) {
+        if (this.entityList[x]) {
+
+          if (this.selectedRoles.length == 0) {
+            this.unusedCodes.push(this.entityList[x].code);
+          }
+
+          else {
+            // for each concept code, loop through its roles
+            for(let i = this.selectedRoles.length; i >=0; i-- ) {
+              if (this.selectedRoles[i]) {
+
+                // check if the selected role is associated to the concept code
+                // if it is, add concept code
+                const roles = this.entityList[x].roles;
+
+                if (roles.some(item => item.type === this.selectedRoles[i].type)) {
+                  this.usedCodes.push(this.entityList[x].code);
+                  break;
+                }
+                else if (i == 0) {
+                  this.unusedCodes.push(this.entityList[x].code);
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+
+
+
+    setSelectedRoleNames() {
+      this.userSelectedRoleNames = []
+
+      for (let i = 0; i < Object.keys(this.leftSelectedUsers).length; i++) {
+        this.userSelectedRoleNames.push(this.leftSelectedUsers[i].type)
+      }
+    },
+
     downloadFile() {
 
       this.$notify({
@@ -1096,9 +1153,8 @@ export default {
 
 
       // set the user selected tags and properties
-      this.setSelectedPropertyNames()
+      this.setSelectedRoleNames()
       this.gaTrackDownload();
-      this.setSelectedTags();
 
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
@@ -1118,10 +1174,10 @@ export default {
 
       //alert (this.queryEntitySelection);
       axios({
-        url: this.$baseURL + 'download/get-file-for-readCodes/'  +
+        url: this.$baseURL + 'download/get-file-for-resolved-roles/'  +
             this.userEnteredCodes + '/' +
-            this.rightUsers + '/' +
-            this.fileFormat  + '/'+
+            this.this.rightUsers + '/' +
+            this.this.fileFormat  + '/'+
             this.filename + '.' +
             this.userSelectedFormat,
         method: 'GET',

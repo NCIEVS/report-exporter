@@ -1009,7 +1009,7 @@ export default {
           alert("EnteredCodes " + this.userEnteredCodes);
          // api.getAssociations(this.$baseURL, this.userEnteredCodes)
          // api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
-          api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
+          api.getAssociations(this.$baseURL, this.userEnteredCodes)
               .then((data)=>{
                 for (let x = data.length - 1; x >= 0; x--) {
                   alert("Before call results");
@@ -1193,6 +1193,7 @@ export default {
         position: "bottom left"
       });
 
+      alert("excel export called");
 
       // set the user selected tags and properties
       this.setSelectedAssociationNames()
@@ -1223,7 +1224,7 @@ export default {
             this.this.rightUsers + '/' +
             this.this.fileFormat  + '/'+
             this.filename + '.' +
-            this.userSelectedFormat.extension,
+            this.userSelectedFormat,
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {
@@ -1231,7 +1232,7 @@ export default {
         var fileLink = document.createElement('a');
 
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
         document.body.appendChild(fileLink);
         fileLink.click();
 
