@@ -1178,8 +1178,8 @@ export default {
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-roles/'  +
             this.userEnteredCodes + '/' +
-            this.this.rightUsers + '/' +
-            this.this.fileFormat  + '/'+
+            this.rightUsers + '/' +
+            this.fileFormat  + '/'+
             this.filename + '.' +
             this.userSelectedFormat,
         method: 'GET',
