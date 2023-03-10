@@ -86,7 +86,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = ">" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      <td><input type = "button" value = "=>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -102,7 +102,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = "<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      <td><input type = "button" value = "<=" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>

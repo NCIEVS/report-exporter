@@ -86,7 +86,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = ">" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      <td><input type = "button" value = "=>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -102,7 +102,7 @@
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type = "button" value = "<" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      <td><input type = "button" value = "<=" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -548,29 +548,15 @@ export default {
     },
 
 
-    moveRight(){
-      if(!this.leftSelectedUsers.length) return;
-      console.log('moveLeft',this.leftUsers);
-      for(let i=this.leftSelectedUsers.length;i>0;i--) {
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
-        this.leftUsers.splice(idx, 1);
-        this.rightUsers.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.splice(i, 1);
-        this.leftSelectedUsers.pop();
-        this.leftSelectedUsers.remove();
-      }
-    },
-    /*
 
     moveRight() {
-      alert("right 1")
       for (let i = this.availableProperties.length; i > 0; i--) {
         let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i - 1]);
-        alert("ldx: " + idx);
+        //alert("ldx: " + idx);
         this.leftUsers.splice(idx, 1);
-        alert("leftUsers: " + this.leftUsers);
+        //alert("leftUsers: " + this.leftUsers);
         this.rightUsers.push(this.leftSelectedUsers[i - 1]);
-        alert(this.leftSelectedUsers[i - 1]);
+        //alert(this.leftSelectedUsers[i - 1]);
         //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
         this.selectedProperty.push(this.leftSelectedUsers[i - 1]);
         this.leftSelectedUsers.pop();
@@ -579,7 +565,7 @@ export default {
 
 
 
-
+   /*
     moveRight() {
        alert("right 1")
      //if (!this.leftSelectedUsers.length) return;
