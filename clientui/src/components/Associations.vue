@@ -1197,8 +1197,11 @@ export default {
 
       // set the user selected tags and properties
       this.setSelectedAssociationNames()
+
+      alert("setSelectedAssociationNames");
       this.gaTrackDownload();
 
+      alert("gaTrackDownload");
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
       if (this.fileFormat === ""){
@@ -1286,8 +1289,8 @@ export default {
   setSelectedAssociationNames() {
     this.userSelectedAssociationNames = []
 
-    for (let i = 0; i < Object.keys(this.selectedAssociations).length; i++) {
-      this.userSelectedAssociationNames.push(this.selectedAssociations[i].type)
+    for (let i = 0; i < Object.keys(this.leftSelectedUsers).length; i++) {
+      this.userSelectedAssociationNames.push(this.leftSelectedUsers[i].type)
     }
   },
 
