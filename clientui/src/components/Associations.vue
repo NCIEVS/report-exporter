@@ -78,7 +78,7 @@
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
                   <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
                     <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft }}
+                      {{ userLeft.type }}
                     </option>
                   </select>
                 </div>
@@ -562,23 +562,25 @@ export default {
         document.getElementById("enteredCodeLabelRight").style.display = "none";
       }
     },
-    /*
+
     moveRight() {
       if(!this.leftSelectedUsers.length) return;
       console.log('moveRight', this.leftSelectedUsers);
-      for(let i=this.leftSelectedUsers.length;i>0;i--) {
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+      for(let i=this.leftSelectedUsers.length;i<0;i++) {
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i]);
         alert("ldx: " + idx);
         this.leftUsers.splice(idx, 1);
         alert("leftUsers: " + this.leftUsers);
-        this.rightUsers.push(this.leftSelectedUsers[i-1]);
+        this.rightUsers.push(this.leftSelectedUsers[i]);
         alert(this.leftSelectedUsers[i-1]);
-        //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.push(this.leftSelectedUsers[i]);
         this.leftSelectedUsers.pop();
+        document.getElementById("enteredCodeLabelLeft").style.display = "none";
+        document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
-*/
+
+    /*
     moveRight() {
       this.userSelectedProperyNames = []
       for (let i = 0; i < this.leftSelectedUsers.length; i++) {
@@ -588,6 +590,8 @@ export default {
         document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
+
+     */
     /*
         getEntities(){
           // clear the entry list
@@ -973,7 +977,7 @@ export default {
           document.getElementById("enteredCodeLabelLeft").style.display = "";
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
-
+          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
           var bottomTab = "";
           var indexBottomTab = 0;
           // clear the internal user codes that are entered
@@ -1057,7 +1061,7 @@ export default {
 
 
 
-          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
+
         }
       }
 
@@ -1076,6 +1080,7 @@ export default {
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
+        
 
         if (Object.keys(this.rightUsers).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;

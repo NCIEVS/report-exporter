@@ -955,6 +955,24 @@ export default {
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
+
+          alert("before Base URL");
+          alert("baseURL " + this.$baseURL);
+          alert("EnteredCodes " + this.userEnteredCodes);
+          // api.getAssociations(this.$baseURL, this.userEnteredCodes)
+          // api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
+          api.getRoles("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
+              .then((data)=>{
+                for (let x = data.length - 1; x >= 0; x--) {
+                  alert("Before call results");
+                  alert("Data Response " + data[x]);
+                  alert("Data Response " + data[x].value);
+                  alert("Data Response " + data[x].associations);
+                  this.availableProperties.push(data[x]);
+                }
+              })
+          alert("After getAssociations call")
+
               api.getRoles(this.$baseURL, this.userEnteredCode)
               .then((data)=> {
                 for (let x = data.length - 1; x >= 0; x--) {
