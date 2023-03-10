@@ -554,12 +554,13 @@ export default {
         let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i - 1]);
         //alert("ldx: " + idx);
         this.leftUsers.splice(idx, 1);
+       // this.availableProperties.splice(idx, 1);
         //alert("leftUsers: " + this.leftUsers);
         this.rightUsers.push(this.leftSelectedUsers[i - 1]);
         //alert(this.leftSelectedUsers[i - 1]);
         //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
         this.selectedProperty.push(this.leftSelectedUsers[i - 1]);
-        this.leftSelectedUsers.pop();
+        this.leftUsers.pop();
       }
     },
 

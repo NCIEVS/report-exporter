@@ -572,6 +572,8 @@ export default {
         this.rightUsers.push(this.leftSelectedUsers[i-1]);
         this.selectedProperty.splice(i, 1);
         this.leftSelectedUsers.pop();
+        document.getElementById("enteredCodeLabelLeft").style.display = "none";
+        document.getElementById("enteredCodeLabelRight").style.display = "";
     }
     },
 

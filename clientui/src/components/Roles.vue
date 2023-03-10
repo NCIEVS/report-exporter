@@ -66,7 +66,11 @@
         <div class="container">
           <form>
             <div class="form-group">
-              <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
+              <label for="selectedProperties" id = "SelectProperties2">No roles selected for these concept codes</label>
+              <br>
+              <label for="selectedProperties" id = "enteredCodeLabelLeft">{{ this.tags }}</label>
+              <br>
+              <label for="selectedProperties" id = "SelectProperties2">Select roles to include in the export</label>
             </div>
             <div class="form-group">
               <div class="msl-multi-select">
@@ -111,7 +115,18 @@
                     </tr>
                   </table>
                 </div>
+
+
+
+
                 <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                  <div class="col">
+                    <label for="selectedProperties" id = "SelectProperties3" class = "UsedLabelRight">Used concept codes</label>
+                    <br>
+                    <label for="selectedProperties" id = "enteredCodeLabelRight" class = "UsedCodeRight">{{ this.tags }}</label>
+                    <br>
+                    <br>
+                  </div>
                   <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
                   <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
                     <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
@@ -305,9 +320,9 @@ export default {
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
                   newTagCounter = newTagCounter + 1;
-                  alert("Before getEntities Call()");
+                  //alert("Before getEntities Call()");
                   //getEntities();
-                  alert("After getEntities Call()");
+                  //alert("After getEntities Call()");
                 }
               }else {
                 alert("Code entered was not found");
@@ -545,30 +560,22 @@ export default {
         this.leftUsers.push(this.rightSelectedUsers[i-1]);
         this.selectedProperty.splice(i, 1);
         this.rightSelectedUsers.pop();
+        document.getElementById("enteredCodeLabelLeft").style.display = "";
+        document.getElementById("enteredCodeLabelRight").style.display = "none";
       }
     },
-    /*
+
     moveRight() {
-      if(!this.leftSelectedUsers.length) return;
-      console.log('moveRight', this.leftSelectedUsers);
-      for(let i=this.leftSelectedUsers.length;i>0;i--) {
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
-        alert("ldx: " + idx);
+      if (!this.leftSelectedUsers.length) return;
+      console.log('moveLeft', this.leftUsers);
+      for (let i = this.leftSelectedUsers.length; i > 0; i--) {
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i - 1]);
         this.leftUsers.splice(idx, 1);
-        alert("leftUsers: " + this.leftUsers);
-        this.rightUsers.push(this.leftSelectedUsers[i-1]);
-        alert(this.leftSelectedUsers[i-1]);
-        //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
+        this.selectedProperty.splice(i, 1);
         this.leftSelectedUsers.pop();
-      }
-    },
-*/
-    moveRight() {
-      this.userSelectedProperyNames = []
-      for (let i = 0; i < this.leftSelectedUsers.length; i++) {
-        this.rightUsers.push(this.leftSelectedUsers[i])
-        this.selectedProperty.push(this.leftSelectedUsers[i]);
+        document.getElementById("enteredCodeLabelLeft").style.display = "none";
+        document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
     /*
