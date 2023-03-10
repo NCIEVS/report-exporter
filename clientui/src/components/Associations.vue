@@ -999,8 +999,8 @@ export default {
          // api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
           api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", "C2219")
               .then((data)=>{
-
-                alert("Data Response " + data);
+                alert("Before call results");
+                alert("Data Response " + data.value);
                 this.availableProperties = data.value;
               })
           alert("After getAssociations call")
@@ -1273,6 +1273,7 @@ export default {
     }
   },
 
+  /*
   getAssociations() {
     // load Associations for the selected codes
     alert("before Base URL");
@@ -1282,7 +1283,7 @@ export default {
         .then((data)=>{this.availableProperties = data;
         })
   },
-
+*/
 
   updateUsedConceptCodes() {
     this.usedCodes = [];
