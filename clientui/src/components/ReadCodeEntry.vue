@@ -547,6 +547,45 @@ export default {
       }
     },
 
+
+    moveRight() {
+      this.userSelectedProperyNames = []
+      //for (let i = 0; i < this.leftSelectedUsers.length; i++) {
+      //  this.rightUsers.push(this.leftSelectedUsers[i])
+      //  this.selectedProperty.push(this.leftSelectedUsers[i]);
+      //  this.leftSelectedUsers[i].pop();
+
+
+        for (let i = 0; i < this.availableProperties.length; i++) {
+          this.rightUsers.push(this.leftSelectedUsers[i])
+          this.selectedProperty.push(this.leftSelectedUsers[i]);
+          this.leftSelectedUsers[i].pop();
+          let idx = this.leftSelectedUsers[i].indexOf(this.leftSelectedUsers[i - 1]);
+          this.leftSelectedUsers[i].splice(idx, 1);
+
+
+      }
+    },
+    /*
+
+    moveRight() {
+      alert("right 1")
+      for (let i = this.availableProperties.length; i > 0; i--) {
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i - 1]);
+        alert("ldx: " + idx);
+        this.leftUsers.splice(idx, 1);
+        alert("leftUsers: " + this.leftUsers);
+        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
+        alert(this.leftSelectedUsers[i - 1]);
+        //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.push(this.leftSelectedUsers[i - 1]);
+        this.leftSelectedUsers.pop();
+      }
+    },
+
+
+
+
     moveRight() {
        alert("right 1")
      //if (!this.leftSelectedUsers.length) return;
@@ -555,19 +594,20 @@ export default {
        alert(this.leftSelectedUsers.length);
        alert(this.leftUsers.length);
       //console.log('moveRight', this.leftSelectedUsers);
-      for (let i = 0; i < this.availableProperties.length;  i++) {
-        alert("right 3");
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i]);
-        alert("ldx: " + idx);
-        this.leftUsers.splice(i, 1);
-        alert("leftUsers: " + this.leftUsers);
-        this.rightUsers.push(this.leftSelectedUsers[i]);
-        alert(this.leftSelectedUsers[i - 1]);
-        this.selectedProperty.push(this.leftSelectedUsers[i]);
-        this.leftSelectedUsers.pop();
+      for(let i=this.availableProperties.length;i>0;i--) {
+      //for (let i = 0; i < this.availableProperties.length;  i++) {
+      //  alert("right 3");
+       let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+      //  alert("ldx: " + idx);
+        this.leftUsers.name.splice(idx, 1);
+      //  alert("leftUsers: " + this.leftUsers);
+        this.rightUsers.push(this.availableProperties[i-1]);
+      //  alert(this.leftSelectedUsers[i - 1]);
+        this.selectedProperty.push(this.availableProperties[i]-1);
+        this.availableProperties.pop();
       }
     },
-    /*
+
     moveRight() {
       if(!this.leftSelectedUsers.length) return;
       console.log('moveRight', this.leftSelectedUsers);

@@ -563,6 +563,14 @@ export default {
       }
     },
 
+    moveRight(){
+      for (let i = 0; i < this.availableProperties.length; i++) {
+        this.rightUsers.push(this.leftSelectedUsers[i])
+        this.selectedProperty.push(this.leftSelectedUsers[i]);
+        this.leftSelectedUsers[i].pop();
+      }
+    },
+    /*
     moveRight() {
       if(!this.leftSelectedUsers.length) return;
       console.log('moveRight', this.leftSelectedUsers);
@@ -580,6 +588,8 @@ export default {
         document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
+
+     */
 /*
     /*
     moveRight() {
@@ -1185,9 +1195,8 @@ export default {
 
 
       // set the user selected tags and properties
-      this.setSelectedPropertyNames()
+      this.setSelectedAssociationNames()
       this.gaTrackDownload();
-      this.setSelectedTags();
 
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
@@ -1205,14 +1214,16 @@ export default {
       alert("filename: " + this.filename);
       alert("selectedFormat Extension: " + this.userSelectedFormat);
 
+      //Check Extension
+
       //alert (this.queryEntitySelection);
       axios({
-        url: this.$baseURL + 'download/get-file-for-readCodes/'  +
+        url: this.$baseURL + 'download/get-file-for-resolved-associations/'  +
             this.userEnteredCodes + '/' +
-            this.rightUsers + '/' +
-            this.fileFormat  + '/'+
+            this.this.rightUsers + '/' +
+            this.this.fileFormat  + '/'+
             this.filename + '.' +
-            this.userSelectedFormat,
+            this.userSelectedFormat.extension,
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {
@@ -1220,7 +1231,7 @@ export default {
         var fileLink = document.createElement('a');
 
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
         document.body.appendChild(fileLink);
         fileLink.click();
 
@@ -1228,7 +1239,6 @@ export default {
         console.error("Download Error: " + error);
         //alert("Error Downloading file error message: " + error);
       })
-      //.finally(function() { loader.hide()});
     },
 
     // removes forward slashes and all kinds of Unicode whitespace characters
