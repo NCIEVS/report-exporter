@@ -319,9 +319,6 @@ export default {
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
                   newTagCounter = newTagCounter + 1;
-                  alert("Before getEntities Call()");
-                  //getEntities();
-                  alert("After getEntities Call()");
                 }
               }else {
                 alert("Code entered was not found");
@@ -997,11 +994,11 @@ export default {
           alert("EnteredCodes " + this.userEnteredCodes);
          // api.getAssociations(this.$baseURL, this.userEnteredCodes)
          // api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
-          api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", "C2219")
+          api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
               .then((data)=>{
                 alert("Before call results");
                 alert("Data Response " + data.value);
-                this.availableProperties = data.value;
+                this.availableProperties.push(data.value);
               })
           alert("After getAssociations call")
 
