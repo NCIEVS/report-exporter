@@ -996,9 +996,13 @@ export default {
          // api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
           api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
               .then((data)=>{
-                alert("Before call results");
-                alert("Data Response " + data.value);
-                this.availableProperties.push(data.value);
+                for (let x = data.length - 1; x >= 0; x--) {
+                  alert("Before call results");
+                  alert("Data Response " + data[x]);
+                  alert("Data Response " + data[x].value);
+                  alert("Data Response " + data[x].associations);
+                  this.availableProperties.push(data[x]);
+                }
               })
           alert("After getAssociations call")
 
