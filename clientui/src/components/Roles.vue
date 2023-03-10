@@ -1176,7 +1176,7 @@ export default {
 
       //alert (this.queryEntitySelection);
       axios({
-        url: this.$baseURL + 'download/get-file-for-resolved-associations/'  +
+        url: this.$baseURL + 'download/get-file-for-resolved-roles/'  +
             this.userEnteredCodes + '/' +
             this.this.rightUsers + '/' +
             this.this.fileFormat  + '/'+
@@ -1185,22 +1185,24 @@ export default {
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {
+        alert("Response " + response);
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
         var fileLink = document.createElement('a');
-        alert("check 1");
+
+        alert(fileURL +fileURL);
+        alert(fileLink + fileLink);
+
         fileLink.href = fileURL;
-        alert("check 2");
         fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
-        alert("check 3");
         document.body.appendChild(fileLink);
-        alert("check 4");
         fileLink.click();
-        alert("check 5");
 
       }).catch(function(error) {
         console.error("Download Error: " + error);
-        //alert("Error Downloading file error message: " + error);
+        //
+        // alert("Error Downloading file error message: " + error);
       })
+      //.finally(function() { loader.hide()});
     },
 
     // removes forward slashes and all kinds of Unicode whitespace characters
