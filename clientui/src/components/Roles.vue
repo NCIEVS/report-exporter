@@ -1176,29 +1176,31 @@ export default {
 
       //alert (this.queryEntitySelection);
       axios({
-        url: this.$baseURL + 'download/get-file-for-resolved-roles/'  +
-            "C19635" + '/' +
+        url: this.$baseURL + 'download/get-file-for-resolved-associations/'  +
+            this.userEnteredCodes + '/' +
             this.this.rightUsers + '/' +
             this.this.fileFormat  + '/'+
             this.filename + '.' +
-            this.userSelectedFormat.extension,
+            this.userSelectedFormat,
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
         var fileLink = document.createElement('a');
-
+        alert("check 1");
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+        alert("check 2");
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
+        alert("check 3");
         document.body.appendChild(fileLink);
+        alert("check 4");
         fileLink.click();
+        alert("check 5");
 
       }).catch(function(error) {
         console.error("Download Error: " + error);
-        //
-        // alert("Error Downloading file error message: " + error);
+        //alert("Error Downloading file error message: " + error);
       })
-      //.finally(function() { loader.hide()});
     },
 
     // removes forward slashes and all kinds of Unicode whitespace characters

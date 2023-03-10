@@ -1240,7 +1240,7 @@ export default {
       //alert (this.queryEntitySelection);
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-associations/'  +
-            "C48326" + '/' +
+            this.userEnteredCodes + '/' +
             this.this.rightUsers + '/' +
             this.this.fileFormat  + '/'+
             this.filename + '.' +
