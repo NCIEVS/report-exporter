@@ -564,6 +564,19 @@ export default {
     },
 
     moveRight(){
+      if(!this.leftSelectedUsers.length) return;
+      console.log('moveLeft',this.leftUsers);
+      for(let i=this.leftSelectedUsers.length;i>0;i--) {
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+        this.leftUsers.splice(idx, 1);
+        this.rightUsers.push(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.splice(i, 1);
+        this.leftSelectedUsers.pop();
+    }
+    },
+
+/*
+    moveRight(){
       for (let i = 0; i < this.availableProperties.length; i++) {
         this.rightUsers.push(this.leftSelectedUsers[i])
         this.selectedProperty.push(this.leftSelectedUsers[i]);
@@ -572,6 +585,8 @@ export default {
         document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
+
+ */
     /*
     moveRight() {
       if(!this.leftSelectedUsers.length) return;
@@ -1198,7 +1213,7 @@ export default {
       alert("excel export called");
 
       // set the user selected tags and properties
-      this.setSelectedAssoc()
+      //this.setSelectedAssoc()
 
       alert("setSelectedAssociationNames");
       this.gaTrackDownload();

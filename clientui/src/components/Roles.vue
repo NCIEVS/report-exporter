@@ -1189,13 +1189,14 @@ export default {
         var fileLink = document.createElement('a');
 
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
         document.body.appendChild(fileLink);
         fileLink.click();
 
       }).catch(function(error) {
         console.error("Download Error: " + error);
-        //alert("Error Downloading file error message: " + error);
+        //
+        // alert("Error Downloading file error message: " + error);
       })
       //.finally(function() { loader.hide()});
     },

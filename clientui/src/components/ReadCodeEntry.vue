@@ -548,22 +548,15 @@ export default {
     },
 
 
-    moveRight() {
-      this.userSelectedProperyNames = []
-      //for (let i = 0; i < this.leftSelectedUsers.length; i++) {
-      //  this.rightUsers.push(this.leftSelectedUsers[i])
-      //  this.selectedProperty.push(this.leftSelectedUsers[i]);
-      //  this.leftSelectedUsers[i].pop();
-
-
-        for (let i = 0; i < this.availableProperties.length; i++) {
-          this.rightUsers.push(this.leftSelectedUsers[i])
-          this.selectedProperty.push(this.leftSelectedUsers[i]);
-          this.leftSelectedUsers[i].pop();
-          let idx = this.leftSelectedUsers[i].indexOf(this.leftSelectedUsers[i - 1]);
-          this.leftSelectedUsers[i].splice(idx, 1);
-
-
+    moveRight(){
+      if(!this.leftSelectedUsers.length) return;
+      console.log('moveLeft',this.leftUsers);
+      for(let i=this.leftSelectedUsers.length;i>0;i--) {
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+        this.leftUsers.splice(idx, 1);
+        this.rightUsers.push(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.splice(i, 1);
+        this.leftSelectedUsers.pop();
       }
     },
     /*
