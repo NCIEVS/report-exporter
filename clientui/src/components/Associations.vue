@@ -1240,11 +1240,11 @@ export default {
       //alert (this.queryEntitySelection);
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-associations/'  +
-            this.userEnteredCodes + '/' +
+            "C48326" + '/' +
             this.this.rightUsers + '/' +
             this.this.fileFormat  + '/'+
             this.filename + '.' +
-            this.userSelectedFormat.extension,
+            this.userSelectedFormat,
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {
@@ -1253,7 +1253,7 @@ export default {
         alert("check 1");
         fileLink.href = fileURL;
         alert("check 2");
-        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
         alert("check 3");
         document.body.appendChild(fileLink);
         alert("check 4");

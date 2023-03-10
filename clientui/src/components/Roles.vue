@@ -1177,7 +1177,7 @@ export default {
       //alert (this.queryEntitySelection);
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-roles/'  +
-            this.userEnteredCodes + '/' +
+            "C19635" + '/' +
             this.this.rightUsers + '/' +
             this.this.fileFormat  + '/'+
             this.filename + '.' +
