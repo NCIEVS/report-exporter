@@ -568,6 +568,8 @@ export default {
         this.rightUsers.push(this.leftSelectedUsers[i])
         this.selectedProperty.push(this.leftSelectedUsers[i]);
         this.leftSelectedUsers[i].pop();
+        document.getElementById("enteredCodeLabelLeft").style.display = "none";
+        document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
     /*
@@ -1196,7 +1198,7 @@ export default {
       alert("excel export called");
 
       // set the user selected tags and properties
-      this.setSelectedAssociationNames()
+      this.setSelectedAssoc()
 
       alert("setSelectedAssociationNames");
       this.gaTrackDownload();
@@ -1286,8 +1288,9 @@ export default {
   },
 
 
-  setSelectedAssociationNames() {
-    this.userSelectedAssociationNames = [];
+  setSelectedAssoc() {
+    alert("setassociation Function called");
+    this.userSelectedAssociationNames = []
 alert("selectedAssociationtest 1");
     for (let i = 0; i < Object.keys(this.rightUsers).length; i++) {
       alert("selectedAssociationtest 2");

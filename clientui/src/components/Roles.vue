@@ -969,8 +969,10 @@ export default {
               this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
             }
           }
-
-
+          api.getRoles(this.$baseURL, this.userEnteredCodes)
+              .then((data)=>{this.availableProperties = data;
+              })
+/*
           alert("before Base URL");
           alert("baseURL " + this.$baseURL);
           alert("EnteredCodes " + this.userEnteredCodes);
@@ -987,6 +989,8 @@ export default {
                 }
               })
           alert("After get roles call")
+
+ */
 
         }
       }
@@ -1210,7 +1214,7 @@ export default {
 
     // load properties after the page is loaded.
     api.getProperties(this.$baseURL)
-        .then((data)=>{this.availableProperties = data;
+        .then((data)=>{this.availableFormats = data;
         })
 
   },
