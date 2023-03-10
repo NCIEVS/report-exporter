@@ -1181,7 +1181,7 @@ export default {
             this.this.rightUsers + '/' +
             this.this.fileFormat  + '/'+
             this.filename + '.' +
-            this.userSelectedFormat,
+            this.userSelectedFormat.extension,
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {

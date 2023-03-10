@@ -1191,9 +1191,13 @@ export default {
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
         var fileLink = document.createElement('a');
 
+        alert("check 1");
         fileLink.href = fileURL;
+        alert("check 2");
         fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
+        alert("check 3");
         document.body.appendChild(fileLink);
+        alert("check 4");
         fileLink.click();
 
       }).catch(function(error) {

@@ -557,6 +557,7 @@ export default {
         this.rightUsers.push(this.leftSelectedUsers[i-1]);
         this.selectedProperty.splice(i, 1);
         this.leftSelectedUsers.pop();
+        this.leftSelectedUsers.remove();
       }
     },
     /*
