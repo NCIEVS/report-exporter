@@ -40,6 +40,42 @@
     </div>
     <!--Vue 3 Entity Label field  End-->
 
+    <label for="downloadFormatLabel">NCIt Tree Level 1</label>
+    <select id="downloadFormat" class="form-control"  @change="changeSelectedExportList($event)">
+      <option value="json"> JSON (json) JavaScript Object Notation Format </option>
+      <option value="csv"> CSV (csv) Comma Separated Value Format </option>
+      <option value="txt"> TABD (txt) Tab Delimited Value Format </option>
+      <option value="xlsx"> EXCEL (xlsx) Microsoft Excel Format </option>
+    </select>
+    <br>
+    <br>
+    <label for="downloadFormatLabel">NCIt Tree Level 2</label>
+    <select id="downloadFormat" class="form-control"  @change="changeSelectedExportList($event)">
+      <option value="json"> JSON (json) JavaScript Object Notation Format </option>
+      <option value="csv"> CSV (csv) Comma Separated Value Format </option>
+      <option value="txt"> TABD (txt) Tab Delimited Value Format </option>
+      <option value="xlsx"> EXCEL (xlsx) Microsoft Excel Format </option>
+    </select>
+    <br>
+    <br>
+    <label for="downloadFormatLabel">NCIt Tree Level 3</label>
+    <select id="downloadFormat" class="form-control"  @change="changeSelectedExportList($event)">
+      <option value="json"> JSON (json) JavaScript Object Notation Format </option>
+      <option value="csv"> CSV (csv) Comma Separated Value Format </option>
+      <option value="txt"> TABD (txt) Tab Delimited Value Format </option>
+      <option value="xlsx"> EXCEL (xlsx) Microsoft Excel Format </option>
+    </select>
+    <br>
+    <br>
+    <label for="downloadFormatLabel">NCIt Tree Level 4</label>
+    <select id="downloadFormat" class="form-control"  @change="changeSelectedExportList($event)">
+      <option value="json"> JSON (json) JavaScript Object Notation Format </option>
+      <option value="csv"> CSV (csv) Comma Separated Value Format </option>
+      <option value="txt"> TABD (txt) Tab Delimited Value Format </option>
+      <option value="xlsx"> EXCEL (xlsx) Microsoft Excel Format </option>
+    </select>
+
+
     <div role="tabpanel" id="SelectaCode0" aria-labelledby="step-SelectaCode0" class="wizard-tab-container" style>
       <div class="container">
         <div class="row justify-content-center">
@@ -254,15 +290,21 @@
                   <div class="col-sm-4">
                     <div class="card bg-light border-dark mb-3">
                       <div class="card-header">
-                        Selected Concept Codes
+                        Selected Top Node and Levels
                         <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span>
                       </div>
 
 
                       <div class="card-body">
-                        <ul class="list-group" id="selectedConceptCodesTags">
-                          <li v-for="newTag in newTag" :key="newTag.key">
-                            {{ selectedConceptCodes }}
+                        <ul class="list-group" id="selectedTagList">
+                          <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
+                            {{ selectedTag.value }}
+                          </li>
+                          <li>
+                            Levels to Export: {{ selectedLevel }}
+                          </li>
+                          <li>
+                            Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
                           </li>
                         </ul>
                       </div>

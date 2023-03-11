@@ -541,13 +541,17 @@ export default {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
         alert("Right values pushed " + this.rightSelectedUsers[i-1]);
-        this.availableProperties.push(this.rightSelectedUsers[i-1]);
         this.selectedProperty.splice(i, 1);
+        //this.availableProperties.push(this.rightSelectedUsers[i-1]);
+        this.leftUsers.push(this.rightSelectedUsers[i-1]);
+      //  (1===1).then((this.rightSelectedUsers[i-1])=>{this.availableProperties.push(this.rightSelectedUsers[i-1])});
+
         this.rightSelectedUsers.pop();
       }
     },
 
     moveRight() {
+
       if(!this.leftSelectedUsers.length) return;
       //console.log('moveRight', this.leftSelectedUsers);
       for(let i=this.leftSelectedUsers.length;i>0;i--) {
@@ -1076,6 +1080,15 @@ alert("test");
           api.getProperties(this.$baseURL)
               .then((data)=>{this.availableProperties = data;
               })
+
+          this.leftUsers.pop();
+          alert(Object.keys(this.rightUsers).length);
+          alert(this.rightSelectedUsers.length);
+          alert(this.rightUsers.length);
+
+          for (let i = 0; i <= this.rightUsers.length + 2; i++) {
+            this.rightUsers.pop();
+          }
 
 
         }
