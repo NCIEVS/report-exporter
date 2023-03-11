@@ -547,20 +547,37 @@ export default {
       }
     },
 
-
-
+    //Vue 3 Moves entries in the left list box in step 2 to the right
     moveRight() {
-      for (let i = this.availableProperties.length; i > 0; i--) {
+
+      //var temp = "";
+      if (!this.leftSelectedUsers.length) return;
+      for (let i = this.leftSelectedUsers.length; i > 0; i--) {
         let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i - 1]);
-        //alert("ldx: " + idx);
         this.leftUsers.splice(idx, 1);
-       // this.availableProperties.splice(idx, 1);
-        //alert("leftUsers: " + this.leftUsers);
         this.rightUsers.push(this.leftSelectedUsers[i - 1]);
-        //alert(this.leftSelectedUsers[i - 1]);
-        //this.selectedProperty.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.push(this.leftSelectedUsers[i - 1]);
+        this.selectedProperty.splice(i, 1);
         this.leftUsers.pop();
+
+
+       // temp = this.leftSelectedUsers[i - 1];
+        alert(this.leftSelectedUsers[i - 1]);
+        //api.getProperties(this.$baseURL).then(("")=>{this.availableProperties = ""})
+
+        api.getProperties(this.$baseURL)
+            .then((data)=>{this.availableProperties = data[-1];
+            })
+alert("test");
+        api.getProperties(this.$baseURL)
+            .then((data)=>{this.availableProperties = data;
+            })
+      //  (1===1).then((data1)=>{
+     //     data1 = "test";
+      //    this.availableProperties = data1})
+        this.$delete(this.leftUsers,this.leftSelectedUsers[i - 1]);
+       // this.leftUsers.push(null);
+        //this.leftSelectedUsers.pop();
+
       }
     },
 
@@ -992,6 +1009,7 @@ export default {
         this.validatePropertyStep();
       }
 
+      //Vue 3 (Builds screen on step 2)
       if (selectNextOptionBTN_counter === 1) {
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
@@ -999,7 +1017,12 @@ export default {
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
-          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
+          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
+
+          // load properties after the page is loaded.
+          api.getProperties(this.$baseURL)
+              .then((data)=>{this.availableProperties = data;
+              })
         }
       }
 
@@ -1175,10 +1198,7 @@ export default {
 
     this.updateShowSummary();
 
-    // load properties after the page is loaded.
-    api.getProperties(this.$baseURL)
-        .then((data)=>{this.availableProperties = data;
-        })
+
 
   },
 
