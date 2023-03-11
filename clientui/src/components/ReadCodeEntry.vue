@@ -537,16 +537,30 @@ export default {
     },
     moveLeft() {
       if(!this.rightSelectedUsers.length) return;
-      console.log('moveLeft',this.rightUsers);
       for(let i=this.rightSelectedUsers.length;i>0;i--) {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
-        this.leftUsers.push(this.rightSelectedUsers[i-1]);
+        alert("Right values pushed " + this.rightSelectedUsers[i-1]);
+        this.availableProperties.push(this.rightSelectedUsers[i-1]);
         this.selectedProperty.splice(i, 1);
         this.rightSelectedUsers.pop();
       }
     },
 
+    moveRight() {
+      if(!this.leftSelectedUsers.length) return;
+      //console.log('moveRight', this.leftSelectedUsers);
+      for(let i=this.leftSelectedUsers.length;i>0;i--) {
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+        this.leftUsers.splice(idx, 1);
+        this.rightUsers.push(this.leftSelectedUsers[i-1]);
+        this.selectedProperty.splice(i, 1);
+        this.leftSelectedUsers.pop();
+        this.availableProperties.splice(i-1, 1);
+      }
+    },
+
+ /*
     //Vue 3 Moves entries in the left list box in step 2 to the right
     moveRight() {
 
@@ -557,13 +571,49 @@ export default {
         this.leftUsers.splice(idx, 1);
         this.rightUsers.push(this.leftSelectedUsers[i - 1]);
         this.selectedProperty.splice(i, 1);
+        this.availableProperties.splice(i, 1);
         this.leftUsers.pop();
+        this.availableProperties.remove(this.leftSelectedUsers[i - 1]);
+
+       // this.$delete(this.availableProperties,this.leftSelectedUsers[i - 1]);
 
 
-       // temp = this.leftSelectedUsers[i - 1];
-        alert(this.leftSelectedUsers[i - 1]);
+
+
+       // this.availableProperties = this.availableProperties[1];
+
+      }
+      api.getProperties(this.$baseURL)
+          .then((data)=> {
+            alert(data.length);
+            //this.availableProperties = data[-1];
+            //for (let x = data.length - 1; x >= 0; x--) {
+            //for (let x = 0 ; x < data.length; x++) {
+            for (let x = 0 ; x < data.length; x++) {
+
+              if (data[x].name !== "CHEBI_ID") {
+
+                alert(data[x].name);
+                //this.availableProperties = data[x].name;
+                // this.availableProperties[x].add(data[x].name);
+                // this.availableProperties[x].push(data[x].name);
+                // this.availableProperties[0] = data[0].name;
+                //alert (this.availableProperties[0]);
+                this.availableProperties.push(data[x]);
+              }
+            }
+          })
+      */
+
+
+
+
+
         //api.getProperties(this.$baseURL).then(("")=>{this.availableProperties = ""})
 
+      //  (1==1).then((data)=>{this.availableProperties = data[-1]})
+
+        /*
         api.getProperties(this.$baseURL)
             .then((data)=>{this.availableProperties = data[-1];
             })
@@ -571,15 +621,17 @@ alert("test");
         api.getProperties(this.$baseURL)
             .then((data)=>{this.availableProperties = data;
             })
+
+         */
       //  (1===1).then((data1)=>{
      //     data1 = "test";
       //    this.availableProperties = data1})
-        this.$delete(this.leftUsers,this.leftSelectedUsers[i - 1]);
+      //  this.$delete(this.leftUsers,this.leftSelectedUsers[i - 1]);
        // this.leftUsers.push(null);
         //this.leftSelectedUsers.pop();
 
-      }
-    },
+
+
 
 
 
@@ -1020,9 +1072,12 @@ alert("test");
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
 
           // load properties after the page is loaded.
+
           api.getProperties(this.$baseURL)
               .then((data)=>{this.availableProperties = data;
               })
+
+
         }
       }
 
