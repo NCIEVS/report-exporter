@@ -979,6 +979,9 @@ export default {
           api.getRoles(this.$baseURL, this.userEnteredCodes)
               .then((data)=>{this.availableProperties = data;
               })
+
+          document.getElementById("enteredCodeLabelLeft").style.display = "";
+          document.getElementById("enteredCodeLabelRight").style.display = "none";
 /*
           alert("before Base URL");
           alert("baseURL " + this.$baseURL);
