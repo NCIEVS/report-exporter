@@ -366,7 +366,7 @@ export default {
       let tagDeleteCounter = 0;
       // alert("REmove value " + tagDeleteCounter);
       for (let i = 0; i <= newTagCounter; i++) {
-        tags.value.splice(tagDeleteCounter, newTagCounter);
+        this.tags.splice(tagDeleteCounter, newTagCounter);
         tagDeleteCounter = tagDeleteCounter + 1;
       }
       this.tag = []
