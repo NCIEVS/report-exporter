@@ -129,7 +129,7 @@
 
 
     <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
+        <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
 
     <span role="button" tabindex="0">
@@ -240,14 +240,13 @@
 
 import api from '../api.js'
 import axios from 'axios'
+import {ref} from 'vue'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
 
 
-//Vue 3 counter for (Select Next Option) button due to form-wizard not working
+//vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
-
-//Vue 3 Counter helps control added and removing the blue tags when a code is entered
-var newTagCounter = 0;
+let newTagCounter = 0;
 
 export default {
 
@@ -268,11 +267,161 @@ export default {
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
-
   },
 
 
   setup(){
+    const tags = ref([]);
+    //const loadBaseURL = ref([]);
+    //var  url= ref();
+    const newTag = ref('') //keep up with new tag
+    var tagCounter = 0;
+    var newTagCounter = 0;
+    //this.entityList = []'
+
+
+    //
+    const addTag = (tag) => {
+      var codeDescription = [];
+      //var baseLink = document.getElementById('basURL').value;
+      tag = tag.replace(/[\s/]/g, '')
+      tag = tag.replace(',', '')
+
+     // alert(baseLink);
+     // baseLink = document.getElementById('basURL').value;
+      if (tag != "") {
+        api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
+            .then((data)=> {
+             // alert("after call");
+              // data = "test";
+              if ((data != null) && (data!== undefined)) {
+                //alert("after checks");
+                for (let x = data.length - 1; x >= 0; x--) {
+                //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                  codeDescription = data[x].name;
+                //  alert("before push");
+                  tags.value.push(tag + ":" + codeDescription);
+                  newTag.value = ""; // reset newTag
+                  tagCounter = tagCounter + 1;
+                  newTagCounter = newTagCounter + 1;
+               //   alert("Before getEntities Call()");
+                  //getEntities();
+                //  alert("After getEntities Call()");
+                }
+              }else {
+                alert("Code entered was not found");
+                tags.value.push(tag + ":" + "");
+                newTag.value = ""
+                tagCounter = tagCounter + 1;
+                newTagCounter = newTagCounter + 1;
+               // selectedConceptCodes.value.push("test");
+                //tags.value.push(tag);
+                //alert(codeDescription);
+
+              }
+
+            })
+      }
+    }
+
+
+    //Vue 3 Remotes a tag below text box
+    const removeTag = (index) => {
+      tags.value.splice(index, 1);
+      tagCounter = tagCounter  - 1;
+    };
+
+    /*
+      const setSelectedTags = () =>{
+        // clear the internal user codes that are entered
+        this.userEnteredCodes = []
+        for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+          // currated top nodes (from the server hava a value of "C12434:Blood")
+          // so we need to strip off everything from the : to the right.
+          this.userEnteredCodes.push(this.tags[i].value.split(":",1))
+        }
+      };
+  */
+
+
+    // called when an entity/code is added
+    const onTagAdded = (newTag) =>{
+      // Test if the string entered was pasted in - if it has a comma separated
+      // list of values
+      alert("onTagAdded Called " + newTag);
+
+      //newTag.value.includes(',') ? newTag = this.cleanString(newTag.value).split(",") : newTag = []
+
+      alert("test1 " + newTag.length);
+      // if the user entered multiple values, remove the last entry (which
+      // is the comma separated string) and add each one individually.
+
+      if (newTag.length > 0) {
+        alert("test2a")
+        // this.tags.splice(-1,1);  add back
+        alert("test2");
+
+        for(let x = newTag.length; x >=0; x-- ) {
+          // Make sure we don't add a duplicate.
+          // Check if user entered two commas with no entitiy code inbetween them
+          // example:  C101171,  ,C101173
+          alert("test3");
+          if ( (! this.isDuplicateTag(newTag[x])) && (newTag[x] !== undefined) && (newTag[x].length > 0)) {
+            // this.tags.value.push({key: newTag[x], value: newTag[x]})
+            this.tags.value.push(newTag);
+          }
+        }
+      }
+      else {
+        if (this.isDuplicateTag(newTag.value))
+        {
+          alert("test4");
+          // remove the last entered entity code
+          this.tags.splice(-1,1);
+        }
+      }
+
+      // When a top node is entered/selected, verify it.
+      this.getEntities();
+    };
+
+
+
+
+    //Vue 3 Removes all tags below text box
+    const removeAllTags = (tagDeleteCounter) => {
+     // alert("REmove value " + tagDeleteCounter);
+      for(let i = 0; i<=newTagCounter; i++) {
+        tags.value.splice(tagDeleteCounter, newTagCounter);
+        tagDeleteCounter = tagDeleteCounter + 1;
+      }
+      this.tag = []
+      this.newTag = []
+      this.userEnteredCodes = []
+      this.selectedTags = []
+      this.entityList = []
+      this.multipleEntitiesSplit = []
+      this.invalidTag = ''
+      this.userSelectedProperyNames = []
+      this.tags2 = []
+
+
+
+
+      //document.getElementById("listOfTags").style.display = "none";  // remove tags
+      //document.getElementById("listOfTags").innerHTML = "";
+
+
+      // document.getElementById("selectConceptCodesCount").innerText = 0;
+      //  document.getElementById("selectedConceptCodesTags").innerText = "";
+      return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
+    };
+
+
+
+
+
+    return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
 
 
 
@@ -309,13 +458,30 @@ export default {
   },
 
   methods: {
+    removeAllTags2 () {
+      let tagDeleteCounter = 0;
+      // alert("REmove value " + tagDeleteCounter);
+      for (let i = 0; i <= newTagCounter; i++) {
+        this.tags.splice(tagDeleteCounter, newTagCounter);
+        tagDeleteCounter = tagDeleteCounter + 1;
+      }
+      this.tag = []
+      this.newTag = []
+      this.userEnteredCodes = []
+      this.selectedTags = []
+      this.entityList = []
+      this.multipleEntitiesSplit = []
+      this.invalidTag = ''
+      this.userSelectedProperyNames = []
+      this.tags2 = []
+    },
 
-    //Vue 3 Adds blue tab below search bar showing what codes were entered
+
     addTag1(tag) {
       var codeDescription = [];
       //var baseLink = document.getElementById('basURL').value;
       var tagCounter = 0;
-
+      var newTagCounter = 0;
       //const tags = ref([]);
       //const newTag = ref('') //keep up with new tag
       tag = tag.replace(/[\s/]/g, '')
@@ -362,23 +528,7 @@ export default {
       }
     },
 
-    removeAllTags () {
-      let tagDeleteCounter = 0;
-      // alert("REmove value " + tagDeleteCounter);
-      for (let i = 0; i <= newTagCounter; i++) {
-        this.tags.splice(tagDeleteCounter, newTagCounter);
-        tagDeleteCounter = tagDeleteCounter + 1;
-      }
-      this.tag = []
-      this.newTag = []
-      this.userEnteredCodes = []
-      this.selectedTags = []
-      this.entityList = []
-      this.multipleEntitiesSplit = []
-      this.invalidTag = ''
-      this.userSelectedProperyNames = []
-      this.tags2 = []
-    },
+
 
      setSelectedTags () {
        var bottomTab = "";
@@ -396,7 +546,6 @@ export default {
         }
       }
     },
-
     testCall2(){
       alert("testCall2");
     },
