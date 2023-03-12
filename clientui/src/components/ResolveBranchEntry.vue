@@ -578,63 +578,7 @@ export default {
   methods: {
 
 
-    setSelectedTags () {
-      var bottomTab = "";
-      var indexBottomTab = 0;
-      // clear the internal user codes that are entered
-      this.userEnteredCodes = []
-      for (let i = 0; i < Object.keys(this.tags).length; i++) {
-        //  for (let i = 0; i < 1; i++) {
-        // currated top nodes (from the server hava a value of "C12434:Blood")
-        // so we need to strip off everything from the : to the right.
-        if (this.tags[i] !== "undefined") {
-          bottomTab = this.tags[i];
-          indexBottomTab = bottomTab.indexOf(":");
-          this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
-        }
-      }
-    },
-    testCall2(){
-      alert("testCall2");
-    },
 
-    // clear all of the entitiy codes in the input selection
-    clearSelection() {
-      //alert (this.baseURL);
-      //alert (this.rolesRequired);
-      //alert (this.associationsRequired);
-      //alert (this.queryEntitySelection);
-      //alert("this is the data for clearSelection: " + this.selectedTags);
-
-      this.tag = []
-      this.newTag = []
-      this.userEnteredCodes = []
-      this.selectedTags = []
-      this.entityList = []
-      this.multipleEntitiesSplit = []
-      this.invalidTag = ''
-      this.userSelectedProperyNames = []
-      this.tags2 = []
-      //this.tags = []
-
-
-      //document.getElementById("listOfTags").style.display = "none";  // remove tags
-      //document.getElementById("listOfTags").innerHTML = "";
-      document.getElementById("selectConceptCodesCount").innerText = 0;
-      document.getElementById("selectedConceptCodesTags").innerText = "";
-      // tagsLength = document.getElementById("tags").value.length;
-      //document.getElementById("selectConceptCodesCount").value = 0;
-      //this.selectConceptCodesCount = 0;
-      // (tagCountTotal) => (this.tags.value.splice(tagCountTotal, 1));
-
-
-
-      //  const removeAllTags = (tagDeleteCounter) => {
-
-      //  }
-
-      this.updateParent()
-    },
 
     updateParent() {
       alert("this is the data for updateParent: " + this.selectedTags);
@@ -966,35 +910,7 @@ export default {
         // removes forward slashes and all kinds of Unicode whitespace characters
     */
 
-    updateChildrenToResolve() {
-      // if the selectedTag and selectLevel have changed, set them in the
-      // object and get the NEW childrenCount
-      if ((this.childrenToResolveObj.selectedTag != this.selectedTags[0].key) ||
-          (this.childrenToResolveObj.selectedLevel != this.selectedLevel))
-      {
-        this.childrenToResolveObj.selectedTag = this.selectedTags[0].key
-        this.childrenToResolveObj.selectedLevel = this.selectedLevel
-
-        // show the busy indicator
-        let loader = this.$loading.show({
-          container: this.$refs.formSelectCodes,
-          loader: 'dots',
-          isFullPage: false,
-        });
-
-        api.getChildren(this.$baseURL, this.selectedTags[0].key, this.selectedLevel)
-            .then((children)=>{
-              if (children != null) {
-                this.childrenToResolveObj.childrenCount = children.length
-              }
-              else {
-                this.childrenToResolveObj.childrenCount = 0
-              }
-            }).catch(function(error) {
-          console.error("Error retrieving children to resolve: " + error);
-        }).finally(function() { loader.hide()});
-      }
-    },
+  
 
 
     //Vue 3 Start Step 2 left Search Function
@@ -1057,85 +973,11 @@ export default {
       document.getElementById("exportButton").style.display = "none";
     },
 
-    gaTrackDownload () {
-      // Send Google analytics download event
-      this.$gtag.query('event', "Read Concept Code Download", {
-        'event_category': "Download",
-        'event_label': this.userSelectedFormat.name
-      })
-    },
 
 
 
-    // Wizard methods
-    validateFirstStep() {
-      // make sure the user has a code entered
-
-      //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
-      //correctly under vue 3.  If value is 1 then it implements validateFirstStep function.  If value is 2 then
-      //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
-//alert (this.availableProperties.value);
-      //    var obj = JSON.parse(this.availableProperties.value);
-      //alert("JSON " + obj);
-      //  document.getElementById("selectSearchProperties").innerHTML = obj.name;
-      //alert("Test2");
 
 
-      //Vue 3 STEP 1
-      if (selectNextOptionBTN_counter === 3) {
-        alert("counter 3 if statement")
-        document.getElementById("exportStep").style.display = "";  //Show Export dropdown
-        document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
-        document.getElementById("exportButton").style.display = ""; //Show Export button
-        document.getElementById("nextButton").style.display = ""; //Hides next button
-      }
-
-      if (selectNextOptionBTN_counter === 2) {
-        this.validatePropertyStep();
-      }
-
-      if (selectNextOptionBTN_counter === 1) {
-        if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
-          document.getElementById("clearButton").style.display = "none";    //Hides clear button
-          document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
-          document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
-          document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
-          document.getElementById("backButton").style.display = "";     //Shows back button
-          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
-
-
-          api.getRoles(this.$baseURL, this.userEnteredCode)
-              .then((data)=> {
-                for (let x = data.length - 1; x >= 0; x--) {
-                  this.userLeft.name = data[x].roles;
-                }
-              })
-
-        }
-      }
-
-
-    },
-
-    //Vue 3 STEP 2
-    validatePropertyStep() {
-      // make sure the user has selected at least one property
-      //Hides objects on screen that shouldn't appear in step 2
-      // document.getElementById("entityTextID").style.display = " ";
-      // document.getElementById("entityLabelId").style.display = " ";
-
-      if (this.rightUsers.length > 0) {
-        document.getElementById("exportStep").style.display = "";  //Show Export dropdown
-        document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
-        document.getElementById("exportButton").style.display = ""; //Show Export button
-        document.getElementById("nextOption").style.display = "none"; //Hides next option button
-
-        if (Object.keys(this.rightUsers).length > 0) {
-          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
-          return Object.keys(this.rightUsers).length > 0
-        }
-      }
-    },
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
@@ -1175,19 +1017,7 @@ export default {
       this.userEnteredCodes = userEnteredCodes
     },
 
-    updateShowSummary() {
-      // alert("updateShowSummary")
-      this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
-      this.showSummary = !this.showSummary;
 
-    },
-
-    setSelectedPropertyNames() {
-      this.userSelectedProperyNames = []
-      for (let i = 0; i < this.rightUsers.length; i++) {
-        this.userSelectedProperyNames.push(this.rightUsers[i].name)
-      }
-    },
 
 
 
@@ -1214,6 +1044,512 @@ export default {
         this.selectedExportListName = "EXCEL (xlsx) Microsoft Excel Format"
       }
     },
+
+
+
+
+    gaTrackDownload () {
+      // Send Google analytics download event
+      this.$gtag.query('event', "Branch Resolve Download", {
+        'event_category': "Download",
+        'event_label': this.userSelectedFormat.name
+      })
+    },
+    gaTrackDeferredDownload () {
+      // Send Google analytics deferred download event
+      this.$gtag.query('event', "Branch Resolve Deferred Download", {
+        'event_category': "Download",
+        'event_label': this.userSelectedFormat.name
+      })
+    },
+    // Tree dialog user chose a tree node
+    userSelectTreeBranchNode() {
+      //console.log('userSelectTreeBranchNode - user selected:' + this.treeSelectedCode)
+      if (this.treeSelectedCode !== null) {
+        this.selectedTags = [
+          { key: this.treeSelectedCode, value: this.treeSelectedCode },
+        ]
+      }
+    },
+
+    // tree item clicked
+    itemClick (node) {
+      //console.log(node.model.id + ' clicked !')
+      this.treeSelectedCode = node.model.id;
+    },
+
+    // Wizard methods
+    validateFirstStep() {
+      // make sure the user has a code entered and level.
+      // if they did, then get number of children
+      var stepIsValid = Object.keys(this.selectedTags).length>0 && this.selectedLevel>0
+      return stepIsValid
+    },
+
+    validatePropertyStep() {
+      // make sure the user has selected at least one property
+      return Object.keys(this.selectedProperties).length>0
+    },
+
+    validateExportStep() {
+      // make sure there is an export format selected.
+      return this.userSelectedFormat !== null
+    },
+
+    onFormatUpdated (updatedFormat) {
+      this.userSelectedFormat = updatedFormat
+    },
+
+    onComplete: function() {
+      //this.downloadFile();
+
+      // set the user selected tags and properties
+      this.setSelectedTags()
+      this.setSelectedPropertyNames()
+
+      if (this.exportType == 'exportNow') {
+        // export and wait for it to complete
+        this.initiateDeferredDownloadAndWait()
+      }
+      else {
+        // export and get a URL to go to later
+        this.initiateDeferredDownloadAndReturn()
+      }
+    },
+
+    async pollForStatus(hashId) {
+
+      // show the busy indicator
+      let loader = this.$loading.show({
+        container: this.$refs.formContainer,
+        loader: 'dots',
+        isFullPage: false,
+      });
+
+      // check if a polling url was returned.
+      if (this.deferredStatusUrl != null && this.deferredStatusUrl.length >0) {
+
+        // loop and wait until the status comes back as true
+        while (this.deferredStatus != null &&
+        this.deferredStatus != "ERROR" &&
+        this.deferredStatus != 'TRUE') {
+          this.pollDeferredStatus()
+          await this.sleep(500);
+        }
+        loader.hide()
+
+        if (this.deferredStatus === "ERROR") {
+          alert("Error downloading deferred file");
+        }
+        else {
+          //this.clearDeferredData()
+          // verify status is good and we can download
+          this.downloadDeferredResult(hashId)
+        }
+        this.clearDeferredData()
+      }
+      else {
+        console.log("deferredStatusUrl not good")
+      }
+    },
+
+    // Toggle the Show/Hide Selection Summary title
+    updateShowSummary() {
+      this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
+      this.showSummary = !this.showSummary;
+    },
+
+    // clear the entitiy code in the input selection
+    clearSelection() {
+      this.userEnteredCodes = []
+      this.selectedTags = []
+      this.entityList = []
+    },
+
+    setCurratedTags() {
+      this.curratedTopNodesUI = []
+      //console.log ("length: " + Object.keys(this.curratedTopNodes).length);
+
+      // loop through the curratedTopNodes and create another object array
+      // in the form the the tags input widget requires:
+      // [{ key: 'someKey', value: 'someValue' }];
+      for (let i = 0; i < Object.keys(this.curratedTopNodes).length; i++) {
+        //console.log ("key " + this.curratedTopNodes[i].code + "  value " + this.curratedTopNodes[i].name)
+        this.curratedTopNodesUI.push({"key":this.curratedTopNodes[i].code, "value":this.curratedTopNodes[i].code + ":" +this.curratedTopNodes[i].name})
+      }
+    },
+
+    onTagAdded() {
+      //console.log("Added tag: " + newCode)
+      // When a top node is entered/selected, verify it.
+      this.getEntities();
+      this.updateChildrenToResolve()
+    },
+
+    onLevelChange() {
+      this.updateChildrenToResolve()
+    },
+
+    updateChildrenToResolve() {
+      // if the selectedTag and selectLevel have changed, set them in the
+      // object and get the NEW childrenCount
+      if ((this.childrenToResolveObj.selectedTag != this.selectedTags[0].key) ||
+          (this.childrenToResolveObj.selectedLevel != this.selectedLevel))
+      {
+        this.childrenToResolveObj.selectedTag = this.selectedTags[0].key
+        this.childrenToResolveObj.selectedLevel = this.selectedLevel
+
+        // show the busy indicator
+        let loader = this.$loading.show({
+          container: this.$refs.formSelectCodes,
+          loader: 'dots',
+          isFullPage: false,
+        });
+
+        api.getChildren(this.$baseURL, this.selectedTags[0].key, this.selectedLevel)
+            .then((children)=>{
+              if (children != null) {
+                this.childrenToResolveObj.childrenCount = children.length
+              }
+              else {
+                this.childrenToResolveObj.childrenCount = 0
+              }
+            }).catch(function(error) {
+          console.error("Error retrieving children to resolve: " + error);
+        }).finally(function() { loader.hide()});
+      }
+    },
+
+    setSelectedTags() {
+      // clear the internal user codes that are entered
+      this.userEnteredCodes = []
+
+      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+        // currated top nodes (from the server hava a value of "C12434:Blood")
+        // so we need to strip off everything from the : to the right.
+        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
+      }
+    },
+
+    setSelectedPropertyNames() {
+      this.userSelectedProperyNames = []
+
+      for (let i = 0; i < Object.keys(this.selectedProperties).length; i++) {
+        this.userSelectedProperyNames.push(this.selectedProperties[i].name)
+      }
+    },
+
+    // Update the top node that was entered with the description.
+    // User enters "C12434", the updated value displayed will be "C12434:Blood".
+    // If entered value is not valid, remove it and display an error message.
+    updateSelectedTopNodeDescription(topNode){
+      if (topNode.length >0) {
+        this.selectedTags[0].key = topNode[0].code;
+        this.selectedTags[0].value = topNode[0].code + ":" + topNode[0].name;
+      }
+
+      //console.log ("Updating top node: " + topNode[0].code + "  " + topNode[0].name)
+      //for (let i = 0; i < Object.keys(this.curratedTopNodesUI).length; i++) {
+      //console.log ("key " + this.curratedTopNodesUI[i].key + "  value " + this.curratedTopNodesUI[i].value)
+      //}
+    },
+
+    updateCurratedTopNodes (topNode) {
+      this.userSelectedTopNode = topNode;
+    },
+
+    getEntities(){
+      // clear the entry list
+      this.entityList = []
+      this.setSelectedTags()
+      var tempCode = ''
+      var tempStatus = ''
+
+      // show the busy indicator
+      let loader = this.$loading.show({
+        container: this.$refs.formSelectCodes,
+        loader: 'dots',
+        isFullPage: false,
+      });
+
+      //console.log(this.selectedTags[0].key +" --- " + this.selectedTags[0].value)
+      api.getCodes(this.$baseURL, this.userEnteredCodes, "ENTITY")
+          .then((data)=>{
+
+            if (data != null) {
+              // If a code is retired, the object may be empty.
+              for (let x = data.length -1; x >=0; x--) {
+                if (data[x].queryCode < 0) {
+                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
+                  tempCode =  data[x].code
+                  tempStatus = data[x].queryStatus
+                  data.splice(x,1)
+
+                  // need to remove from selectedTags
+                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
+                    if (tempCode == this.selectedTags[i].value) {
+                      this.selectedTags.splice(i,1)
+                    }
+                  }
+                  // Display error message for this code
+                  this.$notify({
+                    group: 'app',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+              }
+
+              this.entityList = data;
+              this.updateSelectedTopNodeDescription(data);
+            }
+            else {
+              // There was a failure making the REST call.
+              this.clearSelection()
+              this.$notify({
+                group: 'app',
+                title: 'Validation Failure',
+                text: 'Could not verify top node.  Possible network issue.',
+                type: 'error',
+                duration: 4000,
+                position: "left bottom"
+              });
+
+              this.selectedTags = [];
+              //this.getPropertyError=true;
+            }
+          }).catch(function(error) {
+        console.error("Error retrieving branch: " + error);
+      }).finally(function() { loader.hide()});
+    },
+
+    downloadFile() {
+      this.$notify({
+        group: 'download',
+        title: 'Export in Progress',
+        text: 'Your export is running.  Please wait.',
+        type: 'success',
+        duration: 2000,
+        position: "bottom left"
+      });
+
+      // show the busy indicator
+      let loader = this.$loading.show({
+        container: this.$refs.formContainer,
+        loader: 'dots',
+        isFullPage: false,
+      });
+
+      // set the user selected tags and properties
+      this.setSelectedTags()
+      this.setSelectedPropertyNames()
+
+      axios({
+        url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
+            this.userEnteredCodes + '/' +
+            this.userSelectedProperyNames + '/' +
+            this.selectedLevel + '/' +
+            this.userSelectedFormat.name + '/' +
+            this.filename + '.' + this.userSelectedFormat.extension,
+        method: 'GET',
+        responseType: 'blob',
+      }).then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement('a');
+
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      }).catch(function(error) {
+        console.error("Download Error: " + error);
+        alert("Error Downloading file");
+      }).finally(function() { loader.hide()});
+    },
+
+    async initiateDeferredDownloadAndWait() {
+      this.$notify({
+        group: 'download',
+        title: 'Export in Progress',
+        text: 'Your export is running.  Please wait.',
+        type: 'success',
+        duration: 2000,
+        position: "bottom left"
+      });
+      // show the busy indicator
+      let loader = this.$loading.show({
+        container: this.$refs.formContainer,
+        loader: 'dots',
+        isFullPage: false,
+      });
+
+      this.gaTrackDownload();
+
+      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
+          this.userSelectedProperyNames, this.selectedLevel,
+          this.userSelectedFormat.name)
+          .then((data)=>{
+            if (data != null) {
+              this.deferredStatusUrl = data
+              //const hashId = this.getHashFromURL(this.deferredStatusUrl)
+              this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
+              this.pollForStatus(this.deferredStatusHash)
+            }
+            else {
+              this.deferredStatusUrl = null
+              console.log("Error making Deferred call");
+              alert("Error downloading deferred file");
+            }
+          }).finally(function() { loader.hide()});
+    },
+
+    async initiateDeferredDownloadAndReturn() {
+      this.$notify({
+        group: 'download',
+        title: 'Export ID',
+        text: 'Retrieving your Export ID.',
+        type: 'success',
+        duration: 2000,
+        position: "bottom left"
+      });
+      // show the busy indicator
+      let loader = this.$loading.show({
+        container: this.$refs.formContainer,
+        loader: 'dots',
+        isFullPage: false,
+      });
+
+      this.gaTrackDeferredDownload();
+
+      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
+          this.userSelectedProperyNames, this.selectedLevel,
+          this.userSelectedFormat.name)
+          .then((data)=>{
+            if (data != null) {
+              this.deferredStatusUrl = data
+              this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
+              //console.log("Deferred Call made.  return: " + data);
+              //console.log("Deferred Call - Hash " + this.deferredStatusHash);
+
+              this.addHashToLocalStorage(this.deferredStatusHash)
+            }
+            else {
+              this.deferredStatusUrl = null
+              console.log("Error making Deferred call");
+            }
+          }).finally(function() { loader.hide()});
+    },
+
+    pollDeferredStatus: function() {
+      api.pollDeferredDownloadStatus(this.$baseURL, this.deferredStatusUrl)
+          .then((data)=>{
+            if (data != null) {
+              this.deferredStatus = data.status
+            }
+            else {
+              this.deferredStatus = "ERROR"
+            }
+          }).catch(function(error) {
+        this.clearDeferredData()
+        console.error("Polling Deferred Status Error: " + error)
+      });
+    },
+
+    downloadDeferredResult(hashId) {
+      axios({
+        url:this.$baseURL +
+            'download/deferred/checkFileForHashFormatResponseEntity/'  +
+            hashId + '/' +
+            this.userSelectedFormat.name + '/' +
+            this.filename,
+        method: 'GET',
+        responseType: 'blob',
+      }).then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement('a');
+
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      }).catch(function(error) {
+        console.error("Deferred Download Error: " + error);
+        alert("Error Downloading file");
+      }).finally(function() {
+        //this.clearDeferredData()
+      });
+
+    },
+
+    getRoots(){
+      api.getRoots(this.$baseURL)
+          .then((data)=>{
+            if (data != null) {
+              //console.log("got roots : " + data);
+            }
+            else {
+              console.log("Error retrieving roots");
+            }
+          })
+    },
+
+    getChildren(){
+      api.getChildren(this.$baseURL, this.userEnteredCodes, 1)
+          .then((data)=>{
+            if (data != null) {
+              //console.log("got children : " + data);
+            }
+            else {
+              console.log("Error retrieving children");
+            }
+          })
+    },
+
+    // Add to local storage
+    addHashToLocalStorage() {
+      // ensure there is a hashID
+      if (!this.deferredStatusHash) {
+        return;
+      }
+
+      this.saveDeferredDownloads();
+    },
+
+    // save to local storage
+    saveDeferredDownloads() {
+      this.$storage.set(this.deferredStatusHash,
+          {
+            key: this.deferredStatusHash,
+            format: this.userSelectedFormat.name,
+            date: new Date().toLocaleString(),
+            status: "Unknown"
+          },
+          { ttl: 60 * 60 * 1000 })
+
+      localStorage.name = "Cory"
+    },
+
+    clearDeferredData() {
+      this.deferredStatusUrl = ''
+      this.deferredStatusHash = ''
+      this.deferredStatus = false
+    },
+
+    getHashFromURL(hash) {
+      const startIndex = hash.lastIndexOf('/') + 1
+      return hash.substring(startIndex)
+    },
+
+    sleep: function(ms) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+      });
+    }
+  },
+
 
     downloadFile() {
 
@@ -1278,13 +1614,8 @@ export default {
       //.finally(function() { loader.hide()});
     },
 
-    // removes forward slashes and all kinds of Unicode whitespace characters
-    cleanString(string) {
-      return string.replace(/[\s/]/g, '')
-    }
-  },
-  created() {
 
+  created() {
     // scroll to the top of the page
     window.scrollTo(0,0);
 
@@ -1295,28 +1626,14 @@ export default {
         .then((data)=>{this.availableProperties = data;
         })
 
-  },
-
-  // Vue 3 Start
-
-  onTagRemoved(code) {
-    this.removeTag(code)
-    this.updateParent()
-  },
-  removeTag(code) {
-    // find and remove the code from the entity list that is to be removed.
-    for (let i = 0; i < Object.keys(this.entityList).length; i++) {
-      if (code.key == this.entityList[i].code) {
-        this.entityList.splice(i,1)
-        break
-      }
+    // get the currated tags from the server,
+    // then set the input field with these
+    api.getCuratedTopNodes(this.$baseURL)
+        .then((data)=>{
+          this.curratedTopNodes = data;
+          this.setCurratedTags();
+        })
     }
-  },
-
-
-
-
-
 }
 
 //Vue3 End-->

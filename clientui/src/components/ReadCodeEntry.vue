@@ -74,7 +74,7 @@
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
                   <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
                     <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft.name }}
+                      {{ userLeft }}
                     </option>
                   </select>
                 </div>
@@ -453,8 +453,7 @@ export default {
       leftSelectedUsers:[],
       leftUsers: [],
       rightSelectedUsers:[],
-      rightUsers:[],
-      loadBaseURL: this.$baseURL
+      rightUsers:[]
 
     };
   },
@@ -608,34 +607,91 @@ export default {
       alert("test1");
     },
     moveLeft() {
+      var datatemp = [];
+
       if(!this.rightSelectedUsers.length) return;
       for(let i=this.rightSelectedUsers.length;i>0;i--) {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
-        alert("Right values pushed " + this.rightSelectedUsers[i-1]);
-        this.selectedProperty.splice(i, 1);
-        //this.availableProperties.push(this.rightSelectedUsers[i-1]);
-        this.leftUsers.push(this.rightSelectedUsers[i-1]);
-      //  (1===1).then((this.rightSelectedUsers[i-1])=>{this.availableProperties.push(this.rightSelectedUsers[i-1])});
+        //alert("Right values pushed " + this.rightSelectedUsers[i-1]);
 
-        this.rightSelectedUsers.pop();
+        this.selectedProperty.splice(i, 1);
+        alert(this.rightSelectedUsers[i-1]);
+        datatemp = this.rightSelectedUsers[i-1];
+
+        api.getProperties(this.$baseURL)
+            .then((data)=> {
+//alert(data.length);
+
+              for (let x = 0 ; x < data.length; x++) {
+                //alert(data[x].name);
+            //    alert(datatemp);
+                //if (data[x].name === this.rightSelectedUsers[i-1].value) {
+                if (data[x].name === datatemp) {
+                  alert(data[x].name);
+                  this.availableProperties.push(data[x].name);
+                 // this.availableProperties.push(this.rightSelectedUsers[i-1].name)
+                }
+              }
+            })
+
+        //this.availableProperties.push(this.rightSelectedUsers[i-1]);
+
+       // this.availableProperties.refresh();
+       // this.leftUsers.push(this.rightSelectedUsers[i-1]);
+      //  (1===1).then((this.rightSelectedUsers[i-1])=>{this.availableProperties.push(this.rightSelectedUsers[i-1])});
+        this.availableProperties.splice(i-1, 1);
+       this.rightSelectedUsers.pop();
       }
+
     },
 
     moveRight() {
-
+      var datatemp = [];
       if(!this.leftSelectedUsers.length) return;
       //console.log('moveRight', this.leftSelectedUsers);
       for(let i=this.leftSelectedUsers.length;i>0;i--) {
         let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
         this.leftUsers.splice(idx, 1);
-        this.rightUsers.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.splice(i, 1);
-        this.leftSelectedUsers.pop();
+
+        datatemp = this.leftSelectedUsers[i-1];
+        api.getProperties(this.$baseURL)
+            .then((data)=> {
+             // alert(data.length);
+
+              for (let x = 0 ; x < data.length; x++) {
+                //alert(data[x].name);
+            //    alert(datatemp);
+                //if (data[x].name === this.rightSelectedUsers[i-1].value) {
+                if (data[x].name === datatemp) {
+                  alert(data[x].name);
+                  this.rightUsers.push(data[x].name);
+                  // this.availableProperties.push(this.rightSelectedUsers[i-1].name)
+                }
+              }
+            })
+
+        //this.rightUsers.push(this.leftSelectedUsers[i-1]);
+        //this.selectedProperty.splice(i, 1);
+        this.leftSelectedUsers.splice(i-1, 1);
         this.availableProperties.splice(i-1, 1);
+        this.leftSelectedUsers.pop();
+
       }
     },
 
+    /*
+    moveRight() {
+      this.userSelectedProperyNames = []
+      for (let i = 0; i < this.leftSelectedUsers.length; i++) {
+        this.rightUsers.push(this.leftSelectedUsers[i])
+        this.selectedProperty.push(this.leftSelectedUsers[i]);
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
+        this.leftUsers.splice(idx, 1);
+        this.leftSelectedUsers.pop();
+      }
+    },
+*/
  /*
     //Vue 3 Moves entries in the left list box in step 2 to the right
     moveRight() {
@@ -1148,15 +1204,20 @@ alert("test");
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
 
           // load properties after the page is loaded.
-
+/*
           api.getProperties(this.$baseURL)
-              .then((data)=>{this.availableProperties = data;
+              .then((data)=>{this.availableProperties = data[-1];
               })
+*/
+          //
+          api.getProperties(this.$baseURL)
+              .then((data)=> {
+                for (let x = 0 ; x < data.length; x++) {
+                    this.availableProperties.push(data[x].name);
+                  }
+                })
 
-          this.leftUsers.pop();
-          alert(Object.keys(this.rightUsers).length);
-          alert(this.rightSelectedUsers.length);
-          alert(this.rightUsers.length);
+
 
           for (let i = 0; i <= this.rightUsers.length + 2; i++) {
             this.rightUsers.pop();
