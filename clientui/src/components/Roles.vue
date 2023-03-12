@@ -144,7 +144,7 @@
 
 
     <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
+        <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
 
     <span role="button" tabindex="0">

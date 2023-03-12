@@ -245,9 +245,8 @@ import 'form-wizard-vue3/dist/form-wizard-vue3.css'
 
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
-let selectNextOptionBTN_counter =  1;
-let newTagCounter = 0;
 
+let selectNextOptionBTN_counter =  1;
 export default {
 
 
@@ -267,6 +266,7 @@ export default {
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
+
   },
 
 
@@ -276,7 +276,7 @@ export default {
     //var  url= ref();
     const newTag = ref('') //keep up with new tag
     var tagCounter = 0;
-    var newTagCounter = 0;
+    //var newTagCounter = 0;
     //this.entityList = []'
 
 
@@ -286,7 +286,7 @@ export default {
       //var baseLink = document.getElementById('basURL').value;
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
-
+      var newTagCounter = 0;
      // alert(baseLink);
      // baseLink = document.getElementById('basURL').value;
       if (tag != "") {
@@ -304,7 +304,7 @@ export default {
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
                   newTagCounter = newTagCounter + 1;
-               //   alert("Before getEntities Call()");
+                 alert("tag counter " + newTagCounter);
                   //getEntities();
                 //  alert("After getEntities Call()");
                 }
@@ -314,6 +314,7 @@ export default {
                 newTag.value = ""
                 tagCounter = tagCounter + 1;
                 newTagCounter = newTagCounter + 1;
+                alert("tag counter " + newTagCounter);
                // selectedConceptCodes.value.push("test");
                 //tags.value.push(tag);
                 //alert(codeDescription);
@@ -390,6 +391,7 @@ export default {
 
     //Vue 3 Removes all tags below text box
     const removeAllTags = (tagDeleteCounter) => {
+      var newTagCounter = 0;
      // alert("REmove value " + tagDeleteCounter);
       for(let i = 0; i<=newTagCounter; i++) {
         tags.value.splice(tagDeleteCounter, newTagCounter);
@@ -458,11 +460,11 @@ export default {
   },
 
   methods: {
-    removeAllTags2 () {
-      let tagDeleteCounter = 0;
-      // alert("REmove value " + tagDeleteCounter);
-      for (let i = 0; i <= newTagCounter; i++) {
-        this.tags.splice(tagDeleteCounter, newTagCounter);
+    removeAllTags2 (tagDeleteCounter) {
+       alert("REmove value " + tagDeleteCounter);
+      alert("Counter value " + this.tags.length);
+      for (let i = 0; i <= this.tags.length; i++) {
+        this.tags.splice(tagDeleteCounter, this.tags.length);
         tagDeleteCounter = tagDeleteCounter + 1;
       }
       this.tag = []
@@ -512,7 +514,7 @@ export default {
                 this.newTag = ""
                 tagCounter = tagCounter + 1;
                 newTagCounter = newTagCounter + 1;
-
+                alert("tag counter " + newTagCounter);
                 this.$notify({
                   group: 'app',
                   title: 'Validation Failure',
