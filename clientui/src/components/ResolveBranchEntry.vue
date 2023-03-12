@@ -149,9 +149,62 @@
 
 
 
+  <br>
+  <br>
+  <br>
+  <br>
 
 
 
+  <div class="col-12 col-sm pr-sm-0">
+    <tags-input element-id="tags"
+                v-model="selectedTags"
+                :existing-tags=this.curratedTopNodesUI
+                :typeahead="true"
+                :typeahead-always-show="false"
+                :typeahead-hide-discard="true"
+                :add-tags-on-comma="true"
+                :add-tags-on-space="true"
+                :limit=1
+                :typeahead-activation-threshold=0
+                :hide-input-on-limit="true"
+                :case-sensitive-tags="true"
+                placeholder="Add Top Node, or type in your own and click enter"
+                typeahead-style="dropdown"
+                @tag-added="value =>onTagAdded(value)">
+    </tags-input>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="treeStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Tree View </button>
+  </span>
+<br>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="levelSelection">Select how many levels to retrieve</label>
+        <select v-model="selectedLevel" id="levelSelection" class="form-control" v-on:change="onLevelChange()">
+          <option v-for="level in levels"
+                  :value="level.id"
+                  :key="level.name">
+            {{ level.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+
+<br>
+  <br>
+  <br>
+  <br>
 
 
   <div>
@@ -181,13 +234,8 @@
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
 
-      <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Tree View </button>
-      </span>
 
-    <button type="button" class="btn btn-primary btn-md float-right treeViewButton" data-toggle="modal" data-target="#treeModal">
-      Tree View
-    </button>
+
 
     <div class="treeScreen" id="treeModal" style="display:none" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -325,13 +373,11 @@ export default {
     title: 'EVS Report Exporter - Branch Resolve',
   },
 
+  mounted() {
+    this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
+    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
 
-
-
-
-
-
-
+  },
 
 
 
@@ -1407,6 +1453,110 @@ export default {
   border-color: rgb(0, 125, 188);
   color: white;
 }
+
+
+.entityCodeInput{
+  width: 555px;
+  position: absolute;
+}
+
+.entityText{
+  padding-left: 277px;
+}
+
+.entityLabel{
+  padding-left: 277px;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+}
+.tag {
+  background-color: rgb(0, 125, 188);
+  padding: 5px;
+  border-radius: 4px;
+  color: white;
+  white-space: nowrap;
+  transition: 0.1s ease background;
+}
+
+.delete {
+  color: white;
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toListBox {
+  background-color: rgb(0, 125, 188);
+  padding: 5px;
+  border-radius: 4px;
+  color: white;
+  white-space: nowrap;
+  transition: 0.1s ease background;
+}
+
+.fromListBox {
+  background-color: rgb(0, 125, 188);
+  padding: 5px;
+  border-radius: 4px;
+  color: white;
+  white-space: nowrap;
+  transition: 0.1s ease background;
+}
+
+.listBoxButton{
+  margin-top : 110px;
+  display: block;
+}
+
+.btn-delete{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 277px;
+  width: 100px;
+}
+
+.btn-next{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 300px;
+  width: 158px;
+}
+
+.btn-export{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 300px;
+  width: 158px;
+}
+
+.btn-back{
+  background-color: rgb(0, 125, 188);
+  border-color: rgb(0, 125, 188);
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 277px;
+  width: 158px;
+}
+
+
 
 .modalfade{
   margin-top : 110px;
