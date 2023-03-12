@@ -1,149 +1,154 @@
 <template>
 
+  <div class="vue-form-wizard">
+    <div class="wizard-header">
+      <h4 class="wizard-title">Resolved Branch Export</h4>
+      <p class="category">Steps to select a top node, then its properties and export the results. Resolutions in the thousands and more will take some time.</p>
+    </div>
+  </div>
 
 
 
+  <!-- WIZARD DECLARATION -->
+  <form-wizard
+      @on-complete="onComplete"
+      step-size="xs"
+      title="Resolved Branch Export"
+      subtitle="Steps to select a top node, then its properties and export the results. Resolutions in the thousands and more will take some time."
+      finish-button-text="Export"
+      nextButtonText="Select Next Option"
+      color="#017ebe">
 
-    <!-- WIZARD DECLARATION -->
-    <form-wizard
-        @on-complete="onComplete"
-        step-size="xs"
-        title="Resolved Branch Export"
-        subtitle="Steps to select a top node, then its properties and export the results. Resolutions in the thousands and more will take some time."
-        finish-button-text="Export"
-        nextButtonText="Select Next Option"
-        color="#017ebe">
+    <!-- STEP 1: SELECT CODES -->
+    <tab-content icon="ti-settings" title="Select a Code"
+                 :before-change="validateFirstStep">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8">
 
-      <!-- STEP 1: SELECT CODES -->
-      <tab-content icon="ti-settings" title="Select a Code"
-                   :before-change="validateFirstStep">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-8">
-
-              <label for="tags">Select one NCI Thesaurus top node code or enter your own</label>
-              <div class="row">
-                <div class="col-md-12">
-                  <form class="row form-group">
-                    <div class="col-12 col-sm pr-sm-0">
-                      <tags-input element-id="tags"
-                                  v-model="selectedTags"
-                                  :existing-tags=this.curratedTopNodesUI
-                                  :typeahead="true"
-                                  :typeahead-always-show="false"
-                                  :typeahead-hide-discard="true"
-                                  :add-tags-on-comma="true"
-                                  :add-tags-on-space="true"
-                                  :limit=1
-                                  :typeahead-activation-threshold=0
-                                  :hide-input-on-limit="true"
-                                  :case-sensitive-tags="true"
-                                  placeholder="Add Top Node, or type in your own and click enter"
-                                  typeahead-style="dropdown"
-                                  @tag-added="value =>onTagAdded(value)">
-                      </tags-input>
-                    </div>
-                    <div class="col-12 col-sm-auto pl-sm-0">
-                      <button type="button" class="btn btn-primary btn-md float-right treeViewButton" data-toggle="modal" data-target="#treeModal">
-                        Tree View
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="levelSelection">Select how many levels to retrieve</label>
-                    <select v-model="selectedLevel" id="levelSelection" class="form-control" v-on:change="onLevelChange()">
-                      <option v-for="level in levels"
-                              :value="level.id"
-                              :key="level.name">
-                        {{ level.name }}
-                      </option>
-                    </select>
+            <label for="tags">Select one NCI Thesaurus top node code or enter your own</label>
+            <div class="row">
+              <div class="col-md-12">
+                <form class="row form-group">
+                  <div class="col-12 col-sm pr-sm-0">
+                    <tags-input element-id="tags"
+                                v-model="selectedTags"
+                                :existing-tags=this.curratedTopNodesUI
+                                :typeahead="true"
+                                :typeahead-always-show="false"
+                                :typeahead-hide-discard="true"
+                                :add-tags-on-comma="true"
+                                :add-tags-on-space="true"
+                                :limit=1
+                                :typeahead-activation-threshold=0
+                                :hide-input-on-limit="true"
+                                :case-sensitive-tags="true"
+                                placeholder="Add Top Node, or type in your own and click enter"
+                                typeahead-style="dropdown"
+                                @tag-added="value =>onTagAdded(value)">
+                    </tags-input>
                   </div>
-                </div>
+                  <div class="col-12 col-sm-auto pl-sm-0">
+                    <button type="button" class="btn btn-primary btn-md float-right treeViewButton" data-toggle="modal" data-target="#treeModal">
+                      Tree View
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
-          </div>
-
-        </div>
-      </tab-content>
-
-      <!-- STEP 2: SELECT PROPERTIES -->
-      <tab-content icon="ti-view-list-alt" title="Select Properties"
-                   :before-change="validatePropertyStep">
-
-        <div class="container">
-          <form>
-            <div class="form-group">
-              <label for="selectedProperties">Select properties to include in the export</label>
-            </div>
-            <div class="form-group">
-              <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
-                                      :reduce-display-property="(option) => option.name"
-                                      :reduce-value-property="(option) => option.code"
-                                      search-input-class="custom-input-class"
-                                      search-options-placeholder="Search properties"
-                                      selected-options-placeholder="Search selected properties">
-              </v-multiselect-listbox>
-            </div>
-          </form>
-        </div>
-      </tab-content>
-
-      <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
-      <tab-content icon="ti-download" title="Select Format and Export"
-                   :before-change="validateExportStep">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-              <form>
-
-                <!-- Export format pulldown plugin -->
+            <div class="row">
+              <div class="col-md-12">
                 <div class="form-group">
-                  <export-format
-                      :baseURL=this.$baseURL
-                      @formatUpdated= "onFormatUpdated">
-                  </export-format>
+                  <label for="levelSelection">Select how many levels to retrieve</label>
+                  <select v-model="selectedLevel" id="levelSelection" class="form-control" v-on:change="onLevelChange()">
+                    <option v-for="level in levels"
+                            :value="level.id"
+                            :key="level.name">
+                      {{ level.name }}
+                    </option>
+                  </select>
                 </div>
-
-              </form>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-              <div class="alert alert-secondary" role="alert">
-                This report will resolve {{ selectedLevel}} level(s)
-                with a total of {{ this.childrenToResolveObj.childrenCount }} children.
-              </div>
-
-              <label for="exportRadio">Select how to export</label>
-              <div class="custom-control custom-radio">
-                <input type="radio" v-model="exportType" value="exportNow" id="exportNow" checked="" name="exportRadio" class="custom-control-input">
-                <label class="custom-control-label" for="exportNow">Export now</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input type="radio" v-model="exportType" value="exportDeferred" id="exportDeferred" name="exportRadio" class="custom-control-input">
-                <label class="custom-control-label" for="exportDeferred">Export and download later</label>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-              <div class="alert alert-light" role="alert" v-if="exportType == 'exportDeferred'  && this.deferredStatusHash != ''">
-                Use this Download ID on the
-                <b><router-link v-bind:to="'/exports'" title="Link to Downloads">Downloads page</router-link> </b>
-                to retrieve your report: <b>{{ this.deferredStatusHash }} </b>
               </div>
             </div>
           </div>
         </div>
-      </tab-content>
-    </form-wizard>
+
+      </div>
+    </tab-content>
+
+    <!-- STEP 2: SELECT PROPERTIES -->
+    <tab-content icon="ti-view-list-alt" title="Select Properties"
+                 :before-change="validatePropertyStep">
+
+      <div class="container">
+        <form>
+          <div class="form-group">
+            <label for="selectedProperties">Select properties to include in the export</label>
+          </div>
+          <div class="form-group">
+            <v-multiselect-listbox  v-model="selectedProperties" :options="this.availableProperties"
+                                    :reduce-display-property="(option) => option.name"
+                                    :reduce-value-property="(option) => option.code"
+                                    search-input-class="custom-input-class"
+                                    search-options-placeholder="Search properties"
+                                    selected-options-placeholder="Search selected properties">
+            </v-multiselect-listbox>
+          </div>
+        </form>
+      </div>
+    </tab-content>
+
+    <!-- STEP 3: SELECT DOWNLOAD FORMAT AND DOWNLOAD -->
+    <tab-content icon="ti-download" title="Select Format and Export"
+                 :before-change="validateExportStep">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-6">
+            <form>
+
+              <!-- Export format pulldown plugin -->
+              <div class="form-group">
+                <export-format
+                    :baseURL=this.$baseURL
+                    @formatUpdated= "onFormatUpdated">
+                </export-format>
+              </div>
+
+            </form>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-6">
+            <div class="alert alert-secondary" role="alert">
+              This report will resolve {{ selectedLevel}} level(s)
+              with a total of {{ this.childrenToResolveObj.childrenCount }} children.
+            </div>
+
+            <label for="exportRadio">Select how to export</label>
+            <div class="custom-control custom-radio">
+              <input type="radio" v-model="exportType" value="exportNow" id="exportNow" checked="" name="exportRadio" class="custom-control-input">
+              <label class="custom-control-label" for="exportNow">Export now</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" v-model="exportType" value="exportDeferred" id="exportDeferred" name="exportRadio" class="custom-control-input">
+              <label class="custom-control-label" for="exportDeferred">Export and download later</label>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-6">
+            <div class="alert alert-light" role="alert" v-if="exportType == 'exportDeferred'  && this.deferredStatusHash != ''">
+              Use this Download ID on the
+              <b><router-link v-bind:to="'/exports'" title="Link to Downloads">Downloads page</router-link> </b>
+              to retrieve your report: <b>{{ this.deferredStatusHash }} </b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab-content>
+  </form-wizard>
 
 
 
@@ -154,6 +159,11 @@
   <br>
   <br>
 
+
+  <SearchDropdown
+      :options=this.curratedTopNodesUI
+  >
+  </SearchDropdown>
 
 
   <div class="col-12 col-sm pr-sm-0">
@@ -181,7 +191,7 @@
   <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="treeStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Tree View </button>
   </span>
-<br>
+  <br>
   <br>
   <br>
   <br>
@@ -201,7 +211,7 @@
   </div>
 
 
-<br>
+  <br>
   <br>
   <br>
   <br>
@@ -218,118 +228,117 @@
   </div>
 
 
-      <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
+  <span role="button" tabindex="0">
+        <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
 
-      <span role="button" tabindex="0">
+  <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "backButton" class="btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
       </span>
 
-      <span role="button" tabindex="0">
+  <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "nextOption" class="btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
       </span>
 
-      <span role="button" tabindex="0">
+  <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
 
 
 
 
-    <div class="treeScreen" id="treeModal" style="display:none" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="treeTitle">NCIt Tree</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <v-jstree
-                :data="asyncData"
-                :async= "loadData"
-                show-checkbox
-                multiple:false
-                @item-click="itemClick">
-            </v-jstree>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="userSelectTreeBranchNode">Select</button>
-          </div>
+  <div class="treeScreen" id="treeModal" style="display:none" tabindex="-1" role="dialog" aria-labelledby="treeTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="treeTitle">NCIt Tree</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <v-jstree
+              :data="asyncData"
+              :async= "loadData"
+              show-checkbox
+              multiple:false
+              @item-click="itemClick">
+          </v-jstree>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="userSelectTreeBranchNode">Select</button>
         </div>
       </div>
     </div>
+  </div>
 
 
-    <!-- Summary Information -->
-    <div id="accordion" class="pb-3 pt-3">
-      <div class="card">
-        <div class="card-header" id="headingOne" style="
+  <!-- Summary Information -->
+  <div id="accordion" class="pb-3 pt-3">
+    <div class="card">
+      <div class="card-header" id="headingOne" style="
               padding-left: 1px;
               padding-right: 1px;
               padding-bottom: 1px;
               padding-top: 1px;
           ">
-          <center>
-            <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
-              {{this.showSummaryText}}
-            </button>
-          </center>
-        </div>
+        <center>
+          <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
+            {{this.showSummaryText}}
+          </button>
+        </center>
+      </div>
 
-        <div id="collapseSummary" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body pb-1">
-            <div class="row p-1">
-              <div class="col-sm-4">
-                <div class="card bg-light border-dark mb-3">
-                  <div class="card-header">Selected Top Node and Levels <span class="badge badge-secondary">{{ selectedLevel }}</span></div>
-                  <div class="card-body">
-                    <ul class="list-group" id="selectedTagList">
-                      <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
-                        {{ selectedTag.value }}
-                      </li>
-                      <li>
-                        Levels to Export: {{ selectedLevel }}
-                      </li>
-                      <li>
-                        Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
-                      </li>
-                    </ul>
-                  </div>
+      <div id="collapseSummary" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body pb-1">
+          <div class="row p-1">
+            <div class="col-sm-4">
+              <div class="card bg-light border-dark mb-3">
+                <div class="card-header">Selected Top Node and Levels <span class="badge badge-secondary">{{ selectedLevel }}</span></div>
+                <div class="card-body">
+                  <ul class="list-group" id="selectedTagList">
+                    <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
+                      {{ selectedTag.value }}
+                    </li>
+                    <li>
+                      Levels to Export: {{ selectedLevel }}
+                    </li>
+                    <li>
+                      Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div class="col-sm-4">
-                <div class="card bg-light border-dark mb-3">
-                  <div class="card-header">Selected Properties <span class="badge badge-secondary">{{Object.keys(this.selectedProperties).length}}</span></div>
-                  <div class="card-body">
+            </div>
+            <div class="col-sm-4">
+              <div class="card bg-light border-dark mb-3">
+                <div class="card-header">Selected Properties <span class="badge badge-secondary">{{Object.keys(this.selectedProperties).length}}</span></div>
+                <div class="card-body">
 
-                    <ul class="list-group" id="selectedPropertyList">
-                      <li v-for="selectedProperty in selectedProperties" :key="selectedProperty.code">
-                        {{ selectedProperty.name }}
-                      </li>
-                    </ul>
-                  </div>
+                  <ul class="list-group" id="selectedPropertyList">
+                    <li v-for="selectedProperty in selectedProperties" :key="selectedProperty.code">
+                      {{ selectedProperty.name }}
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div class="col-sm-4">
-                <div class="card bg-light border-dark mb-3">
-                  <div class="card-header">Selected Export Format</div>
-                  <div class="card-body">
-                    <ul class="list-group" id="selectedPropertyList">
-                      <li>
-                        {{
-                          userSelectedFormat.length !== 0 ?
-                              userSelectedFormat.name + ' (' +
-                              userSelectedFormat.extension + ')  ' +
-                              userSelectedFormat.description
-                              : 'None'
-                        }}
-                      </li>
-                    </ul>
-                  </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card bg-light border-dark mb-3">
+                <div class="card-header">Selected Export Format</div>
+                <div class="card-body">
+                  <ul class="list-group" id="selectedPropertyList">
+                    <li>
+                      {{
+                        userSelectedFormat.length !== 0 ?
+                            userSelectedFormat.name + ' (' +
+                            userSelectedFormat.extension + ')  ' +
+                            userSelectedFormat.description
+                            : 'None'
+                      }}
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -337,6 +346,7 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -350,6 +360,7 @@ import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import ExportFormat from './ExportFormat.vue'
 import Tree from 'vuejs-tree'
+
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
@@ -376,12 +387,57 @@ export default {
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
+    this.$refs["my-tree"].expandNode(1);
+  },
 
+  computed: {
+    myCustomStyles() {
+      return {
+        tree: {
+          style: {
+            height: "auto",
+            maxHeight: "300px",
+            overflowY: "visible",
+            display: "inline-block",
+            textAlign: "left",
+          },
+        },
+        row: {
+          style: {
+            width: "500px",
+            cursor: "pointer",
+          },
+          child: {
+            class: "",
+            style: {
+              height: "35px",
+            },
+            active: {
+              style: {
+                height: "35px",
+              },
+            },
+          },
+        },
+        rowIndent: {
+          paddingLeft: "20px",
+        },
+        text: {
+          // class: "" // uncomment this line to overwrite the 'capitalize' class, or add a custom class
+          style: {},
+          active: {
+            style: {
+              "font-weight": "bold",
+              color: "#2ECC71",
+            },
+          },
+        },
+      };
+    }
   },
 
 
-
-  data(){
+  data() {
     return {
       selectedTags: [],
       message: 'Hello World!',
@@ -390,41 +446,41 @@ export default {
       availableProperties: [],
       selectedProperties: [],
       userSelectedProperyNames: [],
-      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
+      userSelectedFormat: {"name": "JSON", "description": "JavaScript Object Notation Format", "extension": "json"},
       curratedTopNodes: [],
       userSelectedTopNode: '',
       filename: 'branch',
       downloadReturnCode: null,
-      curratedTopNodesUI:[],
+      curratedTopNodesUI: [],
       getPropertyError: false,
       selectedLevel: 0,
       childrenToResolve: 0,
-      levels:[
-        { id: 1, name: '1 Level' },
-        { id: 2, name: '2 Levels' },
-        { id: 3, name: '3 Levels' },
-        { id: 4, name: '4 Levels' },
-        { id: 5, name: '5 Levels' },
-        { id: 6, name: '6 Levels' },
-        { id: 7, name: '7 Levels' },
-        { id: 8, name: '8 Levels' },
-        { id: 9, name: '9 Levels' },
-        { id: 10, name: '10 Levels' },
-        { id: 11, name: '11 Levels' },
-        { id: 12, name: '12 Levels' },
-        { id: 13, name: '13 Levels' },
-        { id: 14, name: '14 Levels' },
-        { id: 15, name: '15 Levels' },
-        { id: 16, name: '16 Levels' },
-        { id: 17, name: '17 Levels' },
-        { id: 18, name: '18 Levels' },
-        { id: 19, name: '19 Levels' },
-        { id: 20, name: '20 Levels' },
+      levels: [
+        {id: 1, name: '1 Level'},
+        {id: 2, name: '2 Levels'},
+        {id: 3, name: '3 Levels'},
+        {id: 4, name: '4 Levels'},
+        {id: 5, name: '5 Levels'},
+        {id: 6, name: '6 Levels'},
+        {id: 7, name: '7 Levels'},
+        {id: 8, name: '8 Levels'},
+        {id: 9, name: '9 Levels'},
+        {id: 10, name: '10 Levels'},
+        {id: 11, name: '11 Levels'},
+        {id: 12, name: '12 Levels'},
+        {id: 13, name: '13 Levels'},
+        {id: 14, name: '14 Levels'},
+        {id: 15, name: '15 Levels'},
+        {id: 16, name: '16 Levels'},
+        {id: 17, name: '17 Levels'},
+        {id: 18, name: '18 Levels'},
+        {id: 19, name: '19 Levels'},
+        {id: 20, name: '20 Levels'},
       ],
       childrenToResolveObj: {
-        selectedLevel:0,
-        selectedTag:"",
-        childrenCount:0
+        selectedLevel: 0,
+        selectedTag: "",
+        childrenCount: 0
       },
       deferredStatusUrl: '',
       deferredStatusHash: '',
@@ -437,49 +493,44 @@ export default {
       exportType: 'exportNow',
 
 
-
-
       treeDisplayData: [
         {
-          text: "root 1",
-          state: { checked: false, selected: false, expanded: false },
+          text: "Level 1",
+          state: {checked: false, selected: false, expanded: false},
           id: 1,
-          checkable: false,
+          isLeaf: false,
           nodes: [
             {
-              text: "Child 1",
-              state: { checked: true, selected: false, expanded: false },
+              text: "Level 2",
+              state: {checked: true, selected: false, expanded: false},
               id: 3,
               nodes: [
                 {
-                  text: "Grandchild 1",
-                  state: { checked: false, selected: false, expanded: false },
+                  text: "Level 3",
+                  state: {checked: true, selected: false, expanded: false},
                   id: 5,
+                  nodes: []
                 },
                 {
                   text: "Grandchild 2",
-                  state: { checked: false, selected: false, expanded: false },
+                  disabled: {checked: false, selected: false, expanded: false},
                   id: 6,
                 },
               ],
             },
             {
               text: "Child 2",
-              state: { checked: false, selected: false, expanded: false },
+              disabled: {checked: false, selected: false, expanded: false},
               id: 4,
             },
           ],
         },
         {
           text: "Root 2",
-          state: { checked: false, selected: false, expanded: false },
+          state: {checked: false, selected: false, expanded: false},
           id: 2,
         },
       ],
-
-
-
-
 
 
       // function to get tree data
@@ -490,26 +541,34 @@ export default {
         var data = []
         //console.log('id: ' + id)
 
+        alert("test1");
         // if id is null, this is the root.  get all root children
         if (id == null) {
+          alert("test2");
           api.getRoots(this.$baseURL)
-              .then((children)=>{
+              .then((children) => {
                 if (children != null) {
-
-                  for (let x=0; x < children.length; x++){
+                  alert("test3");
+                  for (let x = 0; x < children.length; x++) {
+                    alert("test5");
                     //console.log(children[x].code + '  :  ' + children[x].name)
                     data.push(
                         {
+
+                          //   "id": children[x].code,
+                          //   "text": children[x].code + ' : ' + children[x].name,
+                          //    "isLeaf": false,
+                          //    "disabled": children[x].leaf,
+
                           "id": children[x].code,
                           "text": children[x].code + ' : ' + children[x].name,
-                          "isLeaf": false,
-                          "disabled": children[x].leaf,
+                          "checkable": false,
+                          "state": children[x].leaf,
                         },
                     )
-                  }
+                  }alert("test6");
                   resolve(data)
-                }
-                else {
+                } else {
                   console.log("Error retrieving roots");
                   data.push(
                       {
@@ -526,9 +585,9 @@ export default {
         // Id was not null, get the children
         else {
           api.getChildren(this.$baseURL, id, 1)
-              .then((children)=>{
+              .then((children) => {
                 if (children != null) {
-                  for (let x=0; x < children.length; x++){
+                  for (let x = 0; x < children.length; x++) {
                     //console.log(children[x].code + '  :  ' + children[x].name)
                     data.push(
                         {
@@ -540,8 +599,7 @@ export default {
                     )
                   }
                   resolve(data)
-                }
-                else {
+                } else {
                   console.log("Error retrieving children");
                   data.push(
                       {
@@ -560,6 +618,106 @@ export default {
   },
 
   methods: {
+    myCustomOptions() {
+      return {
+        treeEvents: {
+          expanded: {
+            disabled: false,
+          },
+          collapsed: {
+            disabled: false,
+          },
+          selected: {
+            disabled: true,
+            fn: this.mySelectedFunction,
+            //fn: this.loadData,
+          },
+          checked: {
+            disabled: true,
+            fn: this.myCheckedFunction,
+            // fn: this.loadData,
+          },
+        },
+        events: {
+          expanded: {
+            disabled: true,
+          },
+          selected: {
+            disabled: true,
+          },
+          checked: {
+            disabled: true,
+          },
+          editableName: {
+            disabled: true,
+            calledEvent: "expanded",
+          },
+        },
+        addNode: {
+          disabled: true,
+          fn: this.addNodeFunction,
+          appearOnHover: false,
+        },
+        editNode: {disabled: false, fn: null, appearOnHover: false},
+        deleteNode: {
+          disabled: true,
+          fn: this.deleteNodeFunction,
+          appearOnHover: true,
+        },
+        showTags: true,
+      };
+
+
+    },
+
+
+    myCheckedFunction: function (nodeId, disabled) {
+      this.loadData(nodeId, disabled);
+      console.log(`is ${nodeId} checked ? ${disabled}`);
+      console.log(this.$refs["my-tree"].getCheckedNodes("id"));
+      console.log(this.$refs["my-tree"].getCheckedNodes("text"));
+    },
+    mySelectedFunction: function (nodeId, disabled) {
+      this.loadData(nodeId, disabled);
+      console.log(`is ${nodeId} selected ? ${disabled}`);
+      console.log(this.$refs["my-tree"].getSelectedNode());
+    },
+    deleteNodeFunction: function (node) {
+      const nodePath = this.$refs["my-tree"].findNodePath(node.id);
+      const parentNodeId = nodePath.slice(-2, -1)[0];
+      if (parentNodeId === undefined) {
+        // 'root' node
+        const nodeIndex =
+            this.$refs["my-tree"].nodes.findIndex((x) => x.id !== node.id) - 1;
+        this.$refs["my-tree"].nodes.splice(nodeIndex, 1);
+      } else {
+        // child node
+        const parentNode = this.$refs["my-tree"].findNode(parentNodeId);
+        const nodeIndex =
+            parentNode.nodes.findIndex((x) => x.id !== node.id) - 1;
+        parentNode.nodes.splice(nodeIndex, 1);
+      }
+      console.log("example: remove node", node.id);
+    },
+    addNodeFunction: function (node) {
+      const newNode = {
+        text: "Grandchild 2",
+        id: Math.floor(Math.random() * 100),
+        disabled: { checked: false, selected: false, expanded: false },
+      };
+      console.log("example: add node", newNode);
+      if (node.nodes === undefined) {
+        node.nodes = [newNode];
+      } else {
+        node.nodes.push(newNode);
+      }
+    },
+
+
+
+
+
+
 
     removeAllTags2 (tagDeleteCounter) {
       alert("REmove value " + tagDeleteCounter);
@@ -775,10 +933,9 @@ export default {
       //  document.getElementById("selectSearchProperties").innerHTML = obj.name;
       //alert("Test2");
 
-
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
-        alert("counter 3 if statement")
+        alert("counter 3 if disabledment")
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
@@ -789,38 +946,43 @@ export default {
         this.validatePropertyStep();
       }
 
+
+      alert(selectNextOptionBTN_counter);
+      alert("test c");
+      alert(Object.keys(this.selectedTags).length);
+
       //Vue 3 (Builds screen on step 2)
       if (selectNextOptionBTN_counter === 1) {
-        if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
-          document.getElementById("clearButton").style.display = "none";    //Hides clear button
-          document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
-          document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
-          document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
-          document.getElementById("backButton").style.display = "";     //Shows back button
-          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
+        //  if (Object.keys(this.tags).length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
+        document.getElementById("clearButton").style.display = "none";    //Hides clear button
+        document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
+        document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
+        document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
+        document.getElementById("backButton").style.display = "";     //Shows back button
+        selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
 
-          // load properties after the page is loaded.
-          /*
-                    api.getProperties(this.$baseURL)
-                        .then((data)=>{this.availableProperties = data[-1];
-                        })
-          */
-          //
-          api.getProperties(this.$baseURL)
-              .then((data)=> {
-                for (let x = 0 ; x < data.length; x++) {
-                  this.availableProperties.push(data[x].name);
-                }
-              })
-
-
-
-          for (let i = 0; i <= this.rightUsers.length + 2; i++) {
-            this.rightUsers.pop();
-          }
+        // load properties after the page is loaded.
+        /*
+                  api.getProperties(this.$baseURL)
+                      .then((data)=>{this.availableProperties = data[-1];
+                      })
+        */
+        //
+        api.getProperties(this.$baseURL)
+            .then((data)=> {
+              for (let x = 0 ; x < data.length; x++) {
+                this.availableProperties.push(data[x].name);
+              }
+            })
 
 
+
+        for (let i = 0; i <= this.rightUsers.length + 2; i++) {
+          this.rightUsers.pop();
         }
+
+
+        //}
       }
 
 
@@ -1556,7 +1718,15 @@ ul {
   width: 158px;
 }
 
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 
+}
 
 .modalfade{
   margin-top : 110px;
@@ -1566,3 +1736,4 @@ ul {
 
 
 </style>
+

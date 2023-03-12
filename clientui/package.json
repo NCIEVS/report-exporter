@@ -46,7 +46,8 @@
     "form-wizard-vue3": "1.0.0",
     "vue3-tabs-component": "1.1.2",
     "vue3-simple-alert": "1.0.4",
-    "vuejs-tree": "3.0.2"
+    "vuejs-tree": "3.0.2",
+    "search-dropdown-vue" : "1.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.12",

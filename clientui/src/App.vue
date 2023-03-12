@@ -27,6 +27,7 @@ import FooterBar from './components/FooterBar.vue'
 // import VoerroTagsInput from '@voerro/vue-tagsinput'
 
 
+
 export default {
   name: 'app',
   props: {
@@ -58,7 +59,5 @@ export default {
 
 </script>
 
-<style>
-#app {
-  }
-</style>
+
+
