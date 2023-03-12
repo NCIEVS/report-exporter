@@ -10,6 +10,8 @@ import ResolveBranchEntry from "@/components/ResolveBranchEntry.vue";
 import Roles from "@/components/Roles.vue";
 import Associations from "@/components/Associations.vue";
 
+//Vue 3 routers were added to this new index.js file
+
 const routes = [
     { path: "/",
         name: "Report Selection",
@@ -41,8 +43,5 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
-
-
 
 export default router;

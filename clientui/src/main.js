@@ -12,7 +12,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 //import 'axios'
 
 
-
 import './assets/app.scss'
 /*
 import About from './components/About'
@@ -28,23 +27,8 @@ import Associations from './components/Associations.vue'
 */
 import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
-
-//import VueFormWizard from 'vue-form-wizard'
-//import VueFormWizard from 'vue-form-wizard'
-import VueFormWizard from 'form-wizard-vue3'
-
-
-
-
-//Vue 3 Start
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-//Vue 3 End
-
-//import 'form-wizard-vue3/scss/form-wizard-vue3.scss'
-//import Vue from "express/lib/router"
-
-//import router from './router'
-//import store from './store'
+import VueFormWizard from 'form-wizard-vue3'  //Vue 3
+import 'vue-form-wizard/dist/vue-form-wizard.min.css' // Vue 3
 
 
 const app = createApp(App)
@@ -99,10 +83,10 @@ app.config.productionTip = false
 app.use(Notifications)
 
 
-
+/* Vue 3 Change moved code to router/index.js file - Start
 // define your routes
 
-/* Vue 3 Change Code moved to router/index.js - Start
+
 const routes = [
 
 { path: "/",
@@ -165,12 +149,6 @@ app.use(VueGtag, {
 app.config.globalProperties.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
 
 
-//console.log('App Base URL: ' + process.env.VUE_APP_BASE_URL)
-//console.log('Root Context: ' + process.env.VUE_APP_ROOT_CONTEXT)
-
-//console.log('Base URL:     ' + app.prototype.$baseURL)
-console.log('Base URL:     ' + app.config.globalProperties.$baseURL)
-//console.log('VUE_APP_GA_CODE:     ' + process.env.VUE_APP_GA_CODE)
 
 // instatiate the vue instance
 //createApp(app);{

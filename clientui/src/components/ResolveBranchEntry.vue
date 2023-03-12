@@ -966,6 +966,35 @@ export default {
         // removes forward slashes and all kinds of Unicode whitespace characters
     */
 
+    updateChildrenToResolve() {
+      // if the selectedTag and selectLevel have changed, set them in the
+      // object and get the NEW childrenCount
+      if ((this.childrenToResolveObj.selectedTag != this.selectedTags[0].key) ||
+          (this.childrenToResolveObj.selectedLevel != this.selectedLevel))
+      {
+        this.childrenToResolveObj.selectedTag = this.selectedTags[0].key
+        this.childrenToResolveObj.selectedLevel = this.selectedLevel
+
+        // show the busy indicator
+        let loader = this.$loading.show({
+          container: this.$refs.formSelectCodes,
+          loader: 'dots',
+          isFullPage: false,
+        });
+
+        api.getChildren(this.$baseURL, this.selectedTags[0].key, this.selectedLevel)
+            .then((children)=>{
+              if (children != null) {
+                this.childrenToResolveObj.childrenCount = children.length
+              }
+              else {
+                this.childrenToResolveObj.childrenCount = 0
+              }
+            }).catch(function(error) {
+          console.error("Error retrieving children to resolve: " + error);
+        }).finally(function() { loader.hide()});
+      }
+    },
 
 
     //Vue 3 Start Step 2 left Search Function
