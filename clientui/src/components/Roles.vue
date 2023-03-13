@@ -985,7 +985,7 @@ export default {
       api.getRoles(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
             for (let x = 0 ; x < data.length; x++) {
-              this.availableProperties.push(data[x].roles);
+              this.availableProperties.push(data[x].name);
             }
           })
 
