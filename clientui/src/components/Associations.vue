@@ -1024,8 +1024,8 @@ export default {
       document.getElementById("exportButton").style.display = "none";
 
       api.getAssociations(this.$baseURL, this.userEnteredCodes)
-          .then((data)=> {
-            for (let x = 0 ; x < data.length; x++) {
+          .then((data)=>{
+            for (let x = data.length - 1; x >= 0; x--) {
               this.availableProperties.push(data[x]);
             }
           })

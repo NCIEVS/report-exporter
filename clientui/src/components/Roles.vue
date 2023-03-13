@@ -982,12 +982,15 @@ export default {
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
 
+
       api.getRoles(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
             for (let x = 0 ; x < data.length; x++) {
               this.availableProperties.push(data[x]);
             }
           })
+
+
 
 
 
@@ -1300,7 +1303,7 @@ export default {
     this.updateShowSummary();
 
     // load properties after the page is loaded.
-    api.getProperties(this.$baseURL)
+    api.getFormats(this.$baseURL)
         .then((data)=>{this.availableFormats = data;
         })
 
