@@ -1038,21 +1038,24 @@ export default {
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
           this.setSelectedTags();
-          if(!this.rightUsers.length) return;
-          for(let i=this.rightUsers.length;i>0;i--) {
-            let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
-            this.rightUsers.splice(idx, 1);
-            this.availableProperties.push(this.tempListClear[i - 1])
-            this.rightSelectedUsers.pop();
-            this.tempListClear.pop();
+          if (this.availableProperties.length <= 0) {
+            //    alert("base URL " + this.$baseURL);
+            //    alert("UserEntered Code " + this.userEnteredCodes);
+            api.getRoles(this.$baseURL, this.userEnteredCodes)
+                .then((data) => {
+                  for (let x = data.length - 1; x >= 0; x--) {
+                    //             alert("data " + data[x].type);
+                    this.availableProperties.push(data[x].type);
+                  }
+                })
           }
-          this.availableProperties.sort();
+
 
         }
 
 
 
-          this.updateUsedConceptCodes()
+          //this.updateUsedConceptCodes()
 /*
           alert("before Base URL");
           alert("baseURL " + this.$baseURL);
