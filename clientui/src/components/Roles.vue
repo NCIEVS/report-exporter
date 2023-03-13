@@ -982,10 +982,12 @@ export default {
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
 
-
+      alert("base URL "+ this.$baseURL );
+      alert("UserEntered Code " + this.userEnteredCodes);
       api.getRoles(this.$baseURL, this.userEnteredCodes)
           .then((data)=>{
             for (let x = 0 ; x < data.length; x++) {
+              alert("data " + data[x]);
               this.availableProperties.push(data[x]);
             }
           })
