@@ -1279,12 +1279,12 @@ export default {
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {
-        alert("Response " + response);
+        //alert("Response " + response);
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
         var fileLink = document.createElement('a');
 
-        alert(fileURL +fileURL);
-        alert(fileLink + fileLink);
+       // alert(fileURL +fileURL);
+      //  alert(fileLink + fileLink);
 
         fileLink.href = fileURL;
         fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
