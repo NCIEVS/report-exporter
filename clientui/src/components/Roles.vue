@@ -620,26 +620,23 @@ export default {
     },
     moveLeft() {
       if(!this.rightSelectedUsers.length) return;
-      console.log('moveLeft',this.rightUsers);
       for(let i=this.rightSelectedUsers.length;i>0;i--) {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
-        this.leftUsers.push(this.rightSelectedUsers[i-1]);
-        this.selectedProperty.splice(i, 1);
+        this.availableProperties.push(this.rightSelectedUsers[i - 1])
         this.rightSelectedUsers.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "";
         document.getElementById("enteredCodeLabelRight").style.display = "none";
       }
     },
 
-    moveRight() {
+    moveRight(){
       if (!this.leftSelectedUsers.length) return;
-      console.log('moveLeft', this.leftUsers);
       for (let i = this.leftSelectedUsers.length; i > 0; i--) {
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i - 1]);
-        this.leftUsers.splice(idx, 1);
+        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i-1]);
+        this.availableProperties.splice(idx, 1);
         this.rightUsers.push(this.leftSelectedUsers[i - 1]);
-        this.selectedProperty.splice(i, 1);
+        this.tempListClear.push(this.leftSelectedUsers[i - 1]);
         this.leftSelectedUsers.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "none";
         document.getElementById("enteredCodeLabelRight").style.display = "";
@@ -1041,19 +1038,19 @@ export default {
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
           this.setSelectedTags();
-          if (this.availableProperties.length <= 0) {
-        //    alert("base URL " + this.$baseURL);
-        //    alert("UserEntered Code " + this.userEnteredCodes);
-            api.getRoles(this.$baseURL, this.userEnteredCodes)
-                .then((data) => {
-                  for (let x = data.length - 1; x >= 0; x--) {
-         //           alert("data " + data[x].type);
-                    this.availableProperties.push(data[x].type);
-                  }
-                })
+          if(!this.rightUsers.length) return;
+          for(let i=this.rightUsers.length;i>0;i--) {
+            let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+            this.rightUsers.splice(idx, 1);
+            this.availableProperties.push(this.tempListClear[i - 1])
+            this.rightSelectedUsers.pop();
+            this.tempListClear.pop();
           }
+          this.availableProperties.sort();
 
-          this.setSelectedTags();
+        }
+
+
 
           this.updateUsedConceptCodes()
 /*
@@ -1076,7 +1073,7 @@ export default {
 
  */
 
-        }
+
       }
 
 
