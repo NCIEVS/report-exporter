@@ -1040,6 +1040,7 @@ export default {
           document.getElementById("enteredCodeLabelLeft").style.display = "";
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
+          this.setSelectedTags();
           if (this.availableProperties.length <= 0) {
             alert("base URL " + this.$baseURL);
             alert("UserEntered Code " + this.userEnteredCodes);

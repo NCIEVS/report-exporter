@@ -1079,6 +1079,7 @@ export default {
 
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
+          this.setSelectedTags();
           if (this.availableProperties.length <= 0) {
             alert("base URL " + this.$baseURL);
             alert("UserEntered Code " + this.userEnteredCodes);
