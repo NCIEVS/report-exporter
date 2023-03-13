@@ -983,8 +983,14 @@ export default {
       document.getElementById("exportButton").style.display = "none";
 
       api.getRoles(this.$baseURL, this.userEnteredCodes)
-          .then((data)=>{this.availableProperties = data;
+          .then((data)=>{
+            for (let x = 0 ; x < data.length; x++) {
+              this.availableProperties.push(data[x].name);
+            }
           })
+
+
+
     },
 
     gaTrackDownload () {

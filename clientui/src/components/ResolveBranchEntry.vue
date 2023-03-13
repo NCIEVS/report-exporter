@@ -878,6 +878,8 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
+
+
     },
     validateFirstStep() {
       // make sure the user has a code entered

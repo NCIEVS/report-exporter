@@ -1024,8 +1024,14 @@ export default {
       document.getElementById("exportButton").style.display = "none";
 
       api.getAssociations(this.$baseURL, this.userEnteredCodes)
-          .then((data)=>{this.availableAssociations = data;
+          .then((data)=> {
+            for (let x = 0 ; x < data.length; x++) {
+              this.availableProperties.push(data[x].name);
+            }
           })
+
+
+
     },
 
     gaTrackDownload () {
@@ -1084,7 +1090,7 @@ export default {
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
           //Vue 3 removes enteries from right list box on next screen
-        
+
 
 
 /*
