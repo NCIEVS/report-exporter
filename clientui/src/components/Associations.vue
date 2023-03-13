@@ -1026,7 +1026,7 @@ export default {
       api.getAssociations(this.$baseURL, this.userEnteredCodes)
           .then((data)=> {
             for (let x = 0 ; x < data.length; x++) {
-              this.availableProperties.push(data[x].name);
+              this.availableProperties.push(data[x]);
             }
           })
 
