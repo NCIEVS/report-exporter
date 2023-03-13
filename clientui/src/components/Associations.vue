@@ -1023,15 +1023,8 @@ export default {
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
 
-      alert("base URL "+ this.$baseURL );
-      alert("UserEntered Code " + this.userEnteredCodes);
-      api.getAssociations(this.$baseURL, this.userEnteredCodes)
-          .then((data)=>{
-            for (let x = data.length - 1; x >= 0; x--) {
-              alert("data " + data[x]);
-              this.availableProperties.push(data[x]);
-            }
-          })
+
+
 
 
 
@@ -1086,7 +1079,17 @@ export default {
 
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
-
+          if (this.availableProperties.length <= 0) {
+            alert("base URL " + this.$baseURL);
+            alert("UserEntered Code " + this.userEnteredCodes);
+            api.getAssociations(this.$baseURL, this.userEnteredCodes)
+                .then((data) => {
+                  for (let x = data.length - 1; x >= 0; x--) {
+                    alert("data " + data[x]);
+                    this.availableProperties.push(data[x]);
+                  }
+                })
+          }
           // reset what concept codes are used
           this.updateUsedConceptCodes()
           document.getElementById("enteredCodeLabelLeft").style.display = "";
