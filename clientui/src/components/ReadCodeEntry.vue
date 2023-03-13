@@ -601,39 +601,14 @@ export default {
       alert("test1");
     },
     moveLeft() {
-
-
       if(!this.rightSelectedUsers.length) return;
       for(let i=this.rightSelectedUsers.length;i>0;i--) {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
-        //alert("Right values pushed " + this.rightSelectedUsers[i-1]);
-
-       // this.selectedProperty.splice(i, 1);
-        alert(this.rightSelectedUsers[i-1]);
-        const existingValue = this.availableProperties.value.find(item => item === this.rightSelectedUsers[i - 1].value)
-         alert(existingValue);
-          if (!existingValue) {
-            this.availableProperties.push(this.rightSelectedUsers[i - 1])
-          }
-
-       // this.leftUsers.push(this.rightSelectedUsers[i-1]);
-       // this.availableProperties.splice(i-1, 1);
+        this.availableProperties.push(this.rightSelectedUsers[i - 1])
         this.rightSelectedUsers.pop();
-              }
-
-
-
-
-        //this.availableProperties.push(this.rightSelectedUsers[i-1]);
-
-       // this.availableProperties.refresh();
-       // this.leftUsers.push(this.rightSelectedUsers[i-1]);
-      //  (1===1).then((this.rightSelectedUsers[i-1])=>{this.availableProperties.push(this.rightSelectedUsers[i-1])});
-
+      }
     },
-
-
 
 
     moveRight() {
@@ -851,59 +826,18 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
-/*
-        alert("test");
-        this.rightUsers.pop();
-        this.rightUsers.pop();
-        this.rightSelectedUsers.pop();
-        this.rightUsers = null;
-        this.rightUsers.deleteAll();
-        this.rightSelectedUsers.deleteAll();
-        this.rightSelectedUsers = null;
-        this.rightUsers = "";
-
-        this.leftUsers = null;
-
- */
 
 
-/*
-        api.getProperties(this.$baseURL)
-            .then((data)=> {
-              for (let x = 0 ; x < data.length; x++) {
-                this.availableProperties.push(data[x].name);
-              }
-            })
-            */
 
-        //this.rightUsers.deleteAll();
-
-alert(this.rightUsers.length);
         if(!this.rightUsers.length) return;
-        for(let i=this.rightUsers.length;i>0;i--) {
-          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
-          this.rightUsers.splice(idx, 1);
-          //alert("Right values pushed " + this.rightSelectedUsers[i-1]);
-
-          // this.selectedProperty.splice(i, 1);
-          alert(this.tempListClear[i-1]);
-         // for(let j=0 ;j<this.tempListClear ;j++) {   // Check for duplicates
-          //  const existingValue = this.availableProperties.value.find(item => item === this.tempListClear[i - 1].value)
-          //  alert(existingValue);
-            //if ((!existingValue) && (this.tempListClear[i - 1] !== "") && (this.tempListClear[i - 1] !== null)) {
-           // if (!existingValue)  {
-              this.availableProperties.push(this.tempListClear[i - 1])
-           // }
-         // }
-          // this.leftUsers.push(this.rightSelectedUsers[i-1]);
-          // this.availableProperties.splice(i-1, 1);
-          this.rightSelectedUsers.pop();
-          this.tempListClear.pop();
-        }
-
-
+          for(let i=this.rightUsers.length;i>0;i--) {
+            let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+            this.rightUsers.splice(idx, 1);
+            this.availableProperties.push(this.tempListClear[i - 1])
+            this.rightSelectedUsers.pop();
+            this.tempListClear.pop();
+          }
         this.availableProperties.sort();
-      //  this.leftSelectedUsers.deleteAll();
       }
 
       //Shows screen =for step 2

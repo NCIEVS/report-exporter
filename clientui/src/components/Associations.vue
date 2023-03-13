@@ -44,8 +44,8 @@
     <div class="entityText" id = "entityTextID" element-id="tag-input">
       <input placeholder="Type entity code, then click enter"
              class="entityCodeInput" v-model="newTag"
-             @keyup.enter.exact="addTag(newTag)"
-             @keyup.space.exact="addTag(newTag)">
+             @keyup.enter.exact="addTag2(newTag)"
+             @keyup.space.exact="addTag2(newTag)">
       <br>
       <br>
       <div class = "tag-input"></div>
@@ -143,7 +143,7 @@
 
 
     <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
+        <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
 
     <span role="button" tabindex="0">
@@ -467,7 +467,7 @@ export default {
       loadBaseURL: this.$baseURL,
       availableAssociations: [],
       selectedAssociations: [],
-
+      tempListClear:[]
     };
   },
 
@@ -616,12 +616,10 @@ export default {
     },
     moveLeft() {
       if(!this.rightSelectedUsers.length) return;
-      console.log('moveLeft',this.rightUsers);
       for(let i=this.rightSelectedUsers.length;i>0;i--) {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
-        this.leftUsers.push(this.rightSelectedUsers[i-1]);
-        this.selectedProperty.splice(i, 1);
+        this.availableProperties.push(this.rightSelectedUsers[i - 1])
         this.rightSelectedUsers.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "";
         document.getElementById("enteredCodeLabelRight").style.display = "none";
@@ -629,13 +627,12 @@ export default {
     },
 
     moveRight(){
-      if(!this.leftSelectedUsers.length) return;
-      console.log('moveLeft',this.leftUsers);
-      for(let i=this.leftSelectedUsers.length;i>0;i--) {
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
-        this.leftUsers.splice(idx, 1);
-        this.rightUsers.push(this.leftSelectedUsers[i-1]);
-        this.selectedProperty.splice(i, 1);
+      if (!this.leftSelectedUsers.length) return;
+      for (let i = this.leftSelectedUsers.length; i > 0; i--) {
+        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i-1]);
+        this.availableProperties.splice(idx, 1);
+        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
+        this.tempListClear.push(this.leftSelectedUsers[i - 1]);
         this.leftSelectedUsers.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "none";
         document.getElementById("enteredCodeLabelRight").style.display = "";
@@ -1201,6 +1198,16 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+
+        if(!this.rightUsers.length) return;
+        for(let i=this.rightUsers.length;i>0;i--) {
+          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+          this.rightUsers.splice(idx, 1);
+          this.availableProperties.push(this.tempListClear[i - 1])
+          this.rightSelectedUsers.pop();
+          this.tempListClear.pop();
+        }
+        this.availableProperties.sort();
       }
 
       //Shows screen =for step 2

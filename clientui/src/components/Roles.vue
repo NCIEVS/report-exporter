@@ -44,8 +44,8 @@
     <div class="entityText" id = "entityTextID" element-id="tag-input">
       <input placeholder="Type entity code, then click enter"
              class="entityCodeInput" v-model="newTag"
-             @keyup.enter.exact="addTag(newTag)"
-             @keyup.space.exact="addTag(newTag)">
+             @keyup.enter.exact="addTag2(newTag)"
+             @keyup.space.exact="addTag2(newTag)">
       <br>
       <br>
       <div class = "tag-input"></div>
@@ -468,7 +468,7 @@ export default {
       leftUsers: [],
       rightSelectedUsers:[],
       rightUsers:[],
-      loadBaseURL: this.$baseURL
+      tempListClear:[]
 
     };
   },
@@ -1102,6 +1102,16 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+
+        if(!this.rightUsers.length) return;
+        for(let i=this.rightUsers.length;i>0;i--) {
+          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+          this.rightUsers.splice(idx, 1);
+          this.availableProperties.push(this.tempListClear[i - 1])
+          this.rightSelectedUsers.pop();
+          this.tempListClear.pop();
+        }
+        this.availableProperties.sort();
       }
 
       //Shows screen =for step 2

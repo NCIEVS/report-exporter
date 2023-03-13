@@ -452,6 +452,11 @@ export default {
       getPropertyError: false,
       selectedLevel: 0,
       childrenToResolve: 0,
+      tempListClear:[],
+      leftSelectedUsers:[],
+      leftUsers: [],
+      rightSelectedUsers:[],
+      rightUsers:[],
       levels: [
         {id: 1, name: '1 Level'},
         {id: 2, name: '2 Levels'},
@@ -794,76 +799,24 @@ export default {
     },
 
     moveLeft() {
-      var datatemp = [];
-
       if(!this.rightSelectedUsers.length) return;
       for(let i=this.rightSelectedUsers.length;i>0;i--) {
         let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
         this.rightUsers.splice(idx, 1);
-        //alert("Right values pushed " + this.rightSelectedUsers[i-1]);
-
-        this.selectedProperty.splice(i, 1);
-        alert(this.rightSelectedUsers[i-1]);
-        datatemp = this.rightSelectedUsers[i-1];
-
-        api.getProperties(this.$baseURL)
-            .then((data)=> {
-//alert(data.length);
-
-              for (let x = 0 ; x < data.length; x++) {
-                //alert(data[x].name);
-                //    alert(datatemp);
-                //if (data[x].name === this.rightSelectedUsers[i-1].value) {
-                if (data[x].name === datatemp) {
-                  alert(data[x].name);
-                  this.availableProperties.push(data[x].name);
-                  // this.availableProperties.push(this.rightSelectedUsers[i-1].name)
-                }
-              }
-            })
-
-        //this.availableProperties.push(this.rightSelectedUsers[i-1]);
-
-        // this.availableProperties.refresh();
-        // this.leftUsers.push(this.rightSelectedUsers[i-1]);
-        //  (1===1).then((this.rightSelectedUsers[i-1])=>{this.availableProperties.push(this.rightSelectedUsers[i-1])});
-        this.availableProperties.splice(i-1, 1);
+        this.availableProperties.push(this.rightSelectedUsers[i - 1])
         this.rightSelectedUsers.pop();
       }
-
     },
 
+
     moveRight() {
-      var datatemp = [];
-      if(!this.leftSelectedUsers.length) return;
-      //console.log('moveRight', this.leftSelectedUsers);
-      for(let i=this.leftSelectedUsers.length;i>0;i--) {
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
-        this.leftUsers.splice(idx, 1);
-
-        datatemp = this.leftSelectedUsers[i-1];
-        api.getProperties(this.$baseURL)
-            .then((data)=> {
-              // alert(data.length);
-
-              for (let x = 0 ; x < data.length; x++) {
-                //alert(data[x].name);
-                //    alert(datatemp);
-                //if (data[x].name === this.rightSelectedUsers[i-1].value) {
-                if (data[x].name === datatemp) {
-                  alert(data[x].name);
-                  this.rightUsers.push(data[x].name);
-                  // this.availableProperties.push(this.rightSelectedUsers[i-1].name)
-                }
-              }
-            })
-
-        //this.rightUsers.push(this.leftSelectedUsers[i-1]);
-        //this.selectedProperty.splice(i, 1);
-        this.leftSelectedUsers.splice(i-1, 1);
-        this.availableProperties.splice(i-1, 1);
+      if (!this.leftSelectedUsers.length) return;
+      for (let i = this.leftSelectedUsers.length; i > 0; i--) {
+        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i-1]);
+        this.availableProperties.splice(idx, 1);
+        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
+        this.tempListClear.push(this.leftSelectedUsers[i - 1]);
         this.leftSelectedUsers.pop();
-
       }
     },
 
@@ -1022,6 +975,17 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+
+        if(!this.rightUsers.length) return;
+        for(let i=this.rightUsers.length;i>0;i--) {
+          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+          this.rightUsers.splice(idx, 1);
+          this.availableProperties.push(this.tempListClear[i - 1])
+          this.rightSelectedUsers.pop();
+          this.tempListClear.pop();
+        }
+        this.availableProperties.sort();
+
       }
 
       //Shows screen =for step 2
