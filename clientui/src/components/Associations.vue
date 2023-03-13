@@ -402,7 +402,6 @@ export default {
 
     //Vue 3 Removes all tags below text box
     const removeAllTags = (tagDeleteCounter) => {
-      alert("REmove value " + tagDeleteCounter);
       for(let i = 0; i<=newTagCounter; i++) {
         tags.value.splice(tagDeleteCounter, newTagCounter);
         tagDeleteCounter = tagDeleteCounter + 1;
@@ -1081,16 +1080,18 @@ export default {
 
           this.setSelectedTags();
           if (this.availableProperties.length <= 0) {
-            alert("base URL " + this.$baseURL);
-            alert("UserEntered Code " + this.userEnteredCodes);
+        //    alert("base URL " + this.$baseURL);
+        //    alert("UserEntered Code " + this.userEnteredCodes);
             api.getAssociations(this.$baseURL, this.userEnteredCodes)
                 .then((data) => {
                   for (let x = data.length - 1; x >= 0; x--) {
-                    alert("data " + data[x].type);
+       //             alert("data " + data[x].type);
                     this.availableProperties.push(data[x].type);
                   }
                 })
           }
+
+
           // reset what concept codes are used
           this.updateUsedConceptCodes()
           document.getElementById("enteredCodeLabelLeft").style.display = "";

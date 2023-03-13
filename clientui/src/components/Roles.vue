@@ -1042,17 +1042,20 @@ export default {
 
           this.setSelectedTags();
           if (this.availableProperties.length <= 0) {
-            alert("base URL " + this.$baseURL);
-            alert("UserEntered Code " + this.userEnteredCodes);
+        //    alert("base URL " + this.$baseURL);
+        //    alert("UserEntered Code " + this.userEnteredCodes);
             api.getRoles(this.$baseURL, this.userEnteredCodes)
                 .then((data) => {
-                  for (let x = 0; x < data.length; x++) {
-                    alert("data " + data[x].type);
+                  for (let x = data.length - 1; x >= 0; x--) {
+         //           alert("data " + data[x].type);
                     this.availableProperties.push(data[x].type);
                   }
                 })
           }
 
+          this.setSelectedTags();
+
+          this.updateUsedConceptCodes()
 /*
           alert("before Base URL");
           alert("baseURL " + this.$baseURL);
