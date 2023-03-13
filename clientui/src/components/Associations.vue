@@ -44,8 +44,8 @@
     <div class="entityText" id = "entityTextID" element-id="tag-input">
       <input placeholder="Type entity code, then click enter"
              class="entityCodeInput" v-model="newTag"
-             @keyup.enter.exact="addTag2(newTag)"
-             @keyup.space.exact="addTag2(newTag)">
+             @keyup.enter.exact="addTag1(newTag)"
+             @keyup.space.exact="addTag1(newTag)">
       <br>
       <br>
       <div class = "tag-input"></div>
@@ -508,30 +508,32 @@ export default {
             .then((data)=> {
               // alert("after call");
               // data = "test";
-              if ((data != null) && (data!== undefined)) {
+
                 for (let x = data.length - 1; x >= 0; x--) {
                   //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
-                  codeDescription = data[x].name;
-                  this.tags.push(tag + ":" + codeDescription);
-                  this.newTag = ""; // reset newTag
-                  tagCounter = tagCounter + 1;
-                  newTagCounter = newTagCounter + 1;
-                  //   alert("Before getEntities Call()");
-                  //getEntities();
-                  //  alert("After getEntities Call()");
-                }
-              }else {
-                this.tags.push(tag + ":" + "");
-                this.newTag = ""
-                tagCounter = tagCounter + 1;
-                this.$notify({
-                  group: 'app',
-                  title: 'Validation Failure',
-                  text: 'Could not verify concept code(s).  Possible network issue.',
-                  type: 'error',
-                  duration: 4000,
-                  position: "left bottom"
-                });
+                  if ((data[x].name != null) && (data[x].name!== undefined)) {
+                    codeDescription = data[x].name;
+                    this.tags.push(tag + ":" + codeDescription);
+                    this.newTag = ""; // reset newTag
+                    tagCounter = tagCounter + 1;
+                    newTagCounter = newTagCounter + 1;
+                    //   alert("Before getEntities Call()");
+                    //getEntities();
+                    //  alert("After getEntities Call()");
+
+                  }else {
+                    this.tags.push(tag + ":" + "");
+                    this.newTag = ""
+                    tagCounter = tagCounter + 1;
+                    this.$notify({
+                      group: 'app',
+                      title: 'Validation Failure',
+                      text: 'Could not verify concept code(s).  Possible network issue.',
+                      type: 'error',
+                      duration: 4000,
+                      position: "left bottom"
+                    });
+                  }
 
               }
 
@@ -1307,13 +1309,13 @@ export default {
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
 
-      alert("check 1")
-      alert("base URL: " + this.$baseURL);
-      alert("tags: " + this.userEnteredCodes);
-      alert("selectedPropertyName: " + this.rightUsers);
-      alert("SelectedFormat: " + this.fileFormat);
-      alert("filename: " + this.filename);
-      alert("selectedFormat Extension: " + this.userSelectedFormat);
+    //  alert("check 1")
+    //  alert("base URL: " + this.$baseURL);
+    //  alert("tags: " + this.userEnteredCodes);
+    //  alert("selectedPropertyName: " + this.rightUsers);
+    //  alert("SelectedFormat: " + this.fileFormat);
+    //  alert("filename: " + this.filename);
+    //  alert("selectedFormat Extension: " + this.userSelectedFormat);
 
       //Check Extension
 

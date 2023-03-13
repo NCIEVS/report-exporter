@@ -44,8 +44,8 @@
     <div class="entityText" id = "entityTextID" element-id="tag-input">
       <input placeholder="Type entity code, then click enter"
              class="entityCodeInput" v-model="newTag"
-             @keyup.enter.exact="addTag2(newTag)"
-             @keyup.space.exact="addTag2(newTag)">
+             @keyup.enter.exact="addTag1(newTag)"
+             @keyup.space.exact="addTag1(newTag)">
       <br>
       <br>
       <div class = "tag-input"></div>
