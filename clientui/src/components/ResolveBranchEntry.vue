@@ -8,7 +8,6 @@
   </div>
 
 
-
   <!-- WIZARD DECLARATION -->
   <form-wizard
       @on-complete="onComplete"
@@ -160,10 +159,7 @@
   <br>
 
 
-  <SearchDropdown
-      :options=this.curratedTopNodesUI
-  >
-  </SearchDropdown>
+
 
 
   <div class="col-12 col-sm pr-sm-0">
@@ -217,13 +213,14 @@
   <br>
 
 
-  <div>
+  <div id="app">
     <Tree
         id="my-tree-id"
         ref="my-tree"
         :custom-options="myCustomOptions"
         :custom-styles="myCustomStyles"
         :nodes="treeDisplayData"
+        @dblclick="getNodeValue()"
     ></Tree>
   </div>
 
@@ -498,39 +495,47 @@ export default {
           text: "Level 1",
           state: {checked: false, selected: false, expanded: false},
           id: 1,
-          isLeaf: false,
+          checkable: false,
           nodes: [
+              {
+            text: "Level 2",
+            state: {checked: false, selected: true, expanded: false},
+            id: 2,
+            checkable: true,
+            nodes: [           {
+              text: "level 3",
+              state: {checked: false, selected: true, expanded: false},
+              checkable: true,
+              id: 5,
+              nodes: [],
+
+            },],
+          },
+          ],
+        },
             {
               text: "Level 2",
-              state: {checked: true, selected: false, expanded: false},
-              id: 3,
-              nodes: [
-                {
-                  text: "Level 3",
-                  state: {checked: true, selected: false, expanded: false},
+              state: {checked: false, selected: true, expanded: false},
+              id: 2,
+              checkable: true,
+              nodes: [],
+            },
+           {
+                  text: "level 3",
+                  state: {checked: false, selected: true, expanded: false},
+                  checkable: true,
                   id: 5,
-                  nodes: []
-                },
-                {
-                  text: "Grandchild 2",
-                  disabled: {checked: false, selected: false, expanded: false},
-                  id: 6,
-                },
-              ],
+                  nodes: [],
+
             },
             {
               text: "Child 2",
-              disabled: {checked: false, selected: false, expanded: false},
+              state: { checked: false, selected: false, expanded: false },
+              checkable: true,
               id: 4,
             },
-          ],
-        },
-        {
-          text: "Root 2",
-          state: {checked: false, selected: false, expanded: false},
-          id: 2,
-        },
-      ],
+        ] ,
+
 
 
       // function to get tree data
@@ -618,56 +623,56 @@ export default {
   },
 
   methods: {
+
+    getNodeValue(){
+      alert("test");
+    },
     myCustomOptions() {
       return {
         treeEvents: {
           expanded: {
-            disabled: false,
+            state: false,
           },
           collapsed: {
-            disabled: false,
+            state: false,
           },
           selected: {
-            disabled: true,
+            state: true,
             fn: this.mySelectedFunction,
-            //fn: this.loadData,
           },
           checked: {
-            disabled: true,
+            state: true,
             fn: this.myCheckedFunction,
-            // fn: this.loadData,
           },
         },
         events: {
           expanded: {
-            disabled: true,
+            state: true,
           },
           selected: {
-            disabled: true,
+            state: true,
           },
           checked: {
-            disabled: true,
+            state: true,
           },
           editableName: {
-            disabled: true,
+            state: true,
             calledEvent: "expanded",
           },
         },
         addNode: {
-          disabled: true,
+          state: true,
           fn: this.addNodeFunction,
           appearOnHover: false,
         },
-        editNode: {disabled: false, fn: null, appearOnHover: false},
+        editNode: { state: false, fn: null, appearOnHover: false },
         deleteNode: {
-          disabled: true,
+          state: true,
           fn: this.deleteNodeFunction,
           appearOnHover: true,
         },
         showTags: true,
       };
-
-
     },
 
 
@@ -1718,15 +1723,6 @@ ul {
   width: 158px;
 }
 
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-
-}
 
 .modalfade{
   margin-top : 110px;

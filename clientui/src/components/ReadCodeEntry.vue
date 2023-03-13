@@ -304,7 +304,6 @@ export default {
                   newTag.value = ""; // reset newTag
                   tagCounter = tagCounter + 1;
                   newTagCounter = newTagCounter + 1;
-                 alert("tag counter " + newTagCounter);
                   //getEntities();
                 //  alert("After getEntities Call()");
                 }
@@ -314,7 +313,6 @@ export default {
                 newTag.value = ""
                 tagCounter = tagCounter + 1;
                 newTagCounter = newTagCounter + 1;
-                alert("tag counter " + newTagCounter);
                // selectedConceptCodes.value.push("test");
                 //tags.value.push(tag);
                 //alert(codeDescription);
@@ -453,8 +451,8 @@ export default {
       leftSelectedUsers:[],
       leftUsers: [],
       rightSelectedUsers:[],
-      rightUsers:[]
-
+      rightUsers:[],
+      tempListClear:[]
     };
   },
 
@@ -495,11 +493,9 @@ export default {
               // alert("after call");
               // data = "test";
               if ((data != null) && (data!== undefined)) {
-                alert("after checks");
                 for (let x = data.length - 1; x >= 0; x--) {
                   //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
                   codeDescription = data[x].name;
-                  alert("before push");
                   this.tags.push(tag + ":" + codeDescription);
                   this.newTag = ""; // reset newTag
                   tagCounter = tagCounter + 1;
@@ -512,8 +508,6 @@ export default {
                 this.tags.push(tag + ":" + "");
                 this.newTag = ""
                 tagCounter = tagCounter + 1;
-                newTagCounter = newTagCounter + 1;
-                alert("tag counter " + newTagCounter);
                 this.$notify({
                   group: 'app',
                   title: 'Validation Failure',
@@ -607,7 +601,7 @@ export default {
       alert("test1");
     },
     moveLeft() {
-      var datatemp = [];
+
 
       if(!this.rightSelectedUsers.length) return;
       for(let i=this.rightSelectedUsers.length;i>0;i--) {
@@ -615,72 +609,72 @@ export default {
         this.rightUsers.splice(idx, 1);
         //alert("Right values pushed " + this.rightSelectedUsers[i-1]);
 
-        this.selectedProperty.splice(i, 1);
+       // this.selectedProperty.splice(i, 1);
         alert(this.rightSelectedUsers[i-1]);
-        datatemp = this.rightSelectedUsers[i-1];
+        const existingValue = this.availableProperties.value.find(item => item === this.rightSelectedUsers[i - 1].value)
+         alert(existingValue);
+          if (!existingValue) {
+            this.availableProperties.push(this.rightSelectedUsers[i - 1])
+          }
 
-        api.getProperties(this.$baseURL)
-            .then((data)=> {
-//alert(data.length);
-
-              for (let x = 0 ; x < data.length; x++) {
-                //alert(data[x].name);
-            //    alert(datatemp);
-                //if (data[x].name === this.rightSelectedUsers[i-1].value) {
-                if (data[x].name === datatemp) {
-                  alert(data[x].name);
-                  this.availableProperties.push(data[x].name);
-                 // this.availableProperties.push(this.rightSelectedUsers[i-1].name)
-                }
+       // this.leftUsers.push(this.rightSelectedUsers[i-1]);
+       // this.availableProperties.splice(i-1, 1);
+        this.rightSelectedUsers.pop();
               }
-            })
+
+
+
 
         //this.availableProperties.push(this.rightSelectedUsers[i-1]);
 
        // this.availableProperties.refresh();
        // this.leftUsers.push(this.rightSelectedUsers[i-1]);
       //  (1===1).then((this.rightSelectedUsers[i-1])=>{this.availableProperties.push(this.rightSelectedUsers[i-1])});
-        this.availableProperties.splice(i-1, 1);
-       this.rightSelectedUsers.pop();
-      }
 
     },
 
+
+
+
     moveRight() {
-      var datatemp = [];
+      if (!this.leftSelectedUsers.length) return;
+      for (let i = this.leftSelectedUsers.length; i > 0; i--) {
+        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i-1]);
+        this.availableProperties.splice(idx, 1);
+        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
+        this.tempListClear.push(this.leftSelectedUsers[i - 1]);
+        this.leftSelectedUsers.pop();
+      }
+    },
+
+
+       // Check for duplicates
+
+    /*
+    moveRight() {
       if(!this.leftSelectedUsers.length) return;
       //console.log('moveRight', this.leftSelectedUsers);
       for(let i=this.leftSelectedUsers.length;i>0;i--) {
-        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i-1]);
-        this.leftUsers.splice(idx, 1);
+        let idx = this.leftUsers.indexOf(this.leftSelectedUsers[i - 1]);
+        alert("leftUsers Indexof " + idx);
+         //this.leftUsers.splice(idx, 1);
+        this.leftUsers.splice(0, 1);
 
-        datatemp = this.leftSelectedUsers[i-1];
-        api.getProperties(this.$baseURL)
-            .then((data)=> {
-             // alert(data.length);
+        //this.availableProperties.splice(idx, 1);
 
-              for (let x = 0 ; x < data.length; x++) {
-                //alert(data[x].name);
-            //    alert(datatemp);
-                //if (data[x].name === this.rightSelectedUsers[i-1].value) {
-                if (data[x].name === datatemp) {
-                  alert(data[x].name);
-                  this.rightUsers.push(data[x].name);
-                  // this.availableProperties.push(this.rightSelectedUsers[i-1].name)
-                }
-              }
-            })
 
-        //this.rightUsers.push(this.leftSelectedUsers[i-1]);
+        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
+       // this.selectedProperty.splice(idx, 1);
+       // this.leftSelectedUsers.splice(idx, 1);
         //this.selectedProperty.splice(i, 1);
-        this.leftSelectedUsers.splice(i-1, 1);
-        this.availableProperties.splice(i-1, 1);
-        this.leftSelectedUsers.pop();
+      //  this.leftSelectedUsers.pop();
+        this.selectedProperty.pop();
+        //this.leftSelectedUsers.refreshData();
 
       }
-    },
+      },
 
-
+*/
 
 
 
@@ -742,6 +736,13 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
+
+      api.getProperties(this.$baseURL)
+          .then((data)=> {
+            for (let x = 0 ; x < data.length; x++) {
+              this.availableProperties.push(data[x].name);
+            }
+          })
     },
 
     gaTrackDownload () {
@@ -797,19 +798,22 @@ export default {
               .then((data)=>{this.availableProperties = data[-1];
               })
 */
-          //
-          api.getProperties(this.$baseURL)
-              .then((data)=> {
-                for (let x = 0 ; x < data.length; x++) {
-                    this.availableProperties.push(data[x].name);
-                  }
-                })
+         // this.leftSelectedUsers.value = null;
+
+          //this.leftSelectedUsers.pop();
+          //this.rightUsers.pop();
+          //this.rightUsers.deleteAll();
 
 
 
-          for (let i = 0; i <= this.rightUsers.length + 2; i++) {
-            this.rightUsers.pop();
-          }
+
+
+
+
+
+          //for (let i = 0; i <= this.rightUsers.length + 2; i++) {
+          //  this.rightUsers.pop();
+         // }
 
 
         }
@@ -847,6 +851,59 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+/*
+        alert("test");
+        this.rightUsers.pop();
+        this.rightUsers.pop();
+        this.rightSelectedUsers.pop();
+        this.rightUsers = null;
+        this.rightUsers.deleteAll();
+        this.rightSelectedUsers.deleteAll();
+        this.rightSelectedUsers = null;
+        this.rightUsers = "";
+
+        this.leftUsers = null;
+
+ */
+
+
+/*
+        api.getProperties(this.$baseURL)
+            .then((data)=> {
+              for (let x = 0 ; x < data.length; x++) {
+                this.availableProperties.push(data[x].name);
+              }
+            })
+            */
+
+        //this.rightUsers.deleteAll();
+
+alert(this.rightUsers.length);
+        if(!this.rightUsers.length) return;
+        for(let i=this.rightUsers.length;i>0;i--) {
+          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+          this.rightUsers.splice(idx, 1);
+          //alert("Right values pushed " + this.rightSelectedUsers[i-1]);
+
+          // this.selectedProperty.splice(i, 1);
+          alert(this.tempListClear[i-1]);
+         // for(let j=0 ;j<this.tempListClear ;j++) {   // Check for duplicates
+          //  const existingValue = this.availableProperties.value.find(item => item === this.tempListClear[i - 1].value)
+          //  alert(existingValue);
+            //if ((!existingValue) && (this.tempListClear[i - 1] !== "") && (this.tempListClear[i - 1] !== null)) {
+           // if (!existingValue)  {
+              this.availableProperties.push(this.tempListClear[i - 1])
+           // }
+         // }
+          // this.leftUsers.push(this.rightSelectedUsers[i-1]);
+          // this.availableProperties.splice(i-1, 1);
+          this.rightSelectedUsers.pop();
+          this.tempListClear.pop();
+        }
+
+
+        this.availableProperties.sort();
+      //  this.leftSelectedUsers.deleteAll();
       }
 
       //Shows screen =for step 2

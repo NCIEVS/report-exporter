@@ -474,6 +474,71 @@ export default {
   },
 
   methods: {
+    removeAllTags2 (tagDeleteCounter) {
+      alert("REmove value " + tagDeleteCounter);
+      alert("Counter value " + this.tags.length);
+      for (let i = 0; i <= this.tags.length; i++) {
+        this.tags.splice(tagDeleteCounter, this.tags.length);
+        tagDeleteCounter = tagDeleteCounter + 1;
+      }
+      this.tag = []
+      this.newTag = []
+      this.userEnteredCodes = []
+      this.selectedTags = []
+      this.entityList = []
+      this.multipleEntitiesSplit = []
+      this.invalidTag = ''
+      this.userSelectedProperyNames = []
+      this.tags2 = []
+    },
+
+
+    addTag1(tag) {
+      var codeDescription = [];
+      //var baseLink = document.getElementById('basURL').value;
+      var tagCounter = 0;
+      var newTagCounter = 0;
+      //const tags = ref([]);
+      //const newTag = ref('') //keep up with new tag
+      tag = tag.replace(/[\s/]/g, '')
+      tag = tag.replace(',', '')
+
+
+      if (tag != "") {
+        api.getCodes( this.$baseURL, tag, 'ENTITY')
+            .then((data)=> {
+              // alert("after call");
+              // data = "test";
+              if ((data != null) && (data!== undefined)) {
+                for (let x = data.length - 1; x >= 0; x--) {
+                  //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                  codeDescription = data[x].name;
+                  this.tags.push(tag + ":" + codeDescription);
+                  this.newTag = ""; // reset newTag
+                  tagCounter = tagCounter + 1;
+                  newTagCounter = newTagCounter + 1;
+                  //   alert("Before getEntities Call()");
+                  //getEntities();
+                  //  alert("After getEntities Call()");
+                }
+              }else {
+                this.tags.push(tag + ":" + "");
+                this.newTag = ""
+                tagCounter = tagCounter + 1;
+                this.$notify({
+                  group: 'app',
+                  title: 'Validation Failure',
+                  text: 'Could not verify concept code(s).  Possible network issue.',
+                  type: 'error',
+                  duration: 4000,
+                  position: "left bottom"
+                });
+
+              }
+
+            })
+      }
+    },
 
 
     setSelectedTags () {
