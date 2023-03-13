@@ -1047,8 +1047,8 @@ export default {
             api.getRoles(this.$baseURL, this.userEnteredCodes)
                 .then((data) => {
                   for (let x = 0; x < data.length; x++) {
-                    alert("data " + data[x]);
-                    this.availableProperties.push(data[x]);
+                    alert("data " + data[x].type);
+                    this.availableProperties.push(data[x].type);
                   }
                 })
           }

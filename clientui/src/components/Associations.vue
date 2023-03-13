@@ -1086,8 +1086,8 @@ export default {
             api.getAssociations(this.$baseURL, this.userEnteredCodes)
                 .then((data) => {
                   for (let x = data.length - 1; x >= 0; x--) {
-                    alert("data " + data[x]);
-                    this.availableProperties.push(data[x]);
+                    alert("data " + data[x].type);
+                    this.availableProperties.push(data[x].type);
                   }
                 })
           }
