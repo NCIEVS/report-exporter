@@ -932,13 +932,13 @@ export default {
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
 
-      alert("check 1")
-      alert("base URL: " + this.$baseURL);
-      alert("tags: " + this.userEnteredCodes);
-      alert("selectedPropertyName: " + this.rightUsers);
-      alert("SelectedFormat: " + this.fileFormat);
-      alert("filename: " + this.filename);
-      alert("selectedFormat Extension: " + this.userSelectedFormat);
+      //alert("check 1")
+      //alert("base URL: " + this.$baseURL);
+      //alert("tags: " + this.userEnteredCodes);
+      //alert("selectedPropertyName: " + this.rightUsers);
+      //alert("SelectedFormat: " + this.fileFormat);
+      //alert("filename: " + this.filename);
+      //alert("selectedFormat Extension: " + this.userSelectedFormat);
 
       //alert (this.queryEntitySelection);
       axios({

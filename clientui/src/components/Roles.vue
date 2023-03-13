@@ -282,6 +282,10 @@ export default {
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
+
+    api.getRoles(this.$baseURL, this.userEnteredCodes)
+        .then((data)=>{this.availableProperties = data;
+        })
   },
 
 
@@ -1027,23 +1031,8 @@ export default {
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
-          var bottomTab = "";
-          var indexBottomTab = 0;
-          // clear the internal user codes that are entered
-          this.userEnteredCodes = []
-          for (let i = 0; i < Object.keys(this.tags).length; i++) {
-            //  for (let i = 0; i < 1; i++) {
-            // currated top nodes (from the server hava a value of "C12434:Blood")
-            // so we need to strip off everything from the : to the right.
-            if (this.tags[i] !== "undefined") {
-              bottomTab = this.tags[i];
-              indexBottomTab = bottomTab.indexOf(":");
-              this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
-            }
-          }
-          api.getRoles(this.$baseURL, this.userEnteredCodes)
-              .then((data)=>{this.availableProperties = data;
-              })
+
+
 
           document.getElementById("enteredCodeLabelLeft").style.display = "";
           document.getElementById("enteredCodeLabelRight").style.display = "none";
@@ -1251,13 +1240,13 @@ export default {
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
 
-      alert("check 1")
-      alert("base URL: " + this.$baseURL);
-      alert("tags: " + this.userEnteredCodes);
-      alert("selectedPropertyName: " + this.rightUsers);
-      alert("SelectedFormat: " + this.fileFormat);
-      alert("filename: " + this.filename);
-      alert("selectedFormat Extension: " + this.userSelectedFormat);
+      //alert("check 1")
+      //alert("base URL: " + this.$baseURL);
+      //alert("tags: " + this.userEnteredCodes);
+      //alert("selectedPropertyName: " + this.rightUsers);
+      //alert("SelectedFormat: " + this.fileFormat);
+      //alert("filename: " + this.filename);
+      //alert("selectedFormat Extension: " + this.userSelectedFormat);
 
       //alert (this.queryEntitySelection);
       axios({
