@@ -283,9 +283,7 @@ export default {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
 
-    api.getRoles(this.$baseURL, this.userEnteredCodes)
-        .then((data)=>{this.availableProperties = data;
-        })
+
   },
 
 
@@ -983,6 +981,10 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
+
+      api.getRoles(this.$baseURL, this.userEnteredCodes)
+          .then((data)=>{this.availableProperties = data;
+          })
     },
 
     gaTrackDownload () {

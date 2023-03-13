@@ -1022,6 +1022,10 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
+
+      api.getAssociations(this.$baseURL, this.userEnteredCodes)
+          .then((data)=>{this.availableAssociations = data;
+          })
     },
 
     gaTrackDownload () {
@@ -1072,37 +1076,7 @@ export default {
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
-          var bottomTab = "";
-          var indexBottomTab = 0;
-          // clear the internal user codes that are entered
-          this.userEnteredCodes = []
-          for (let i = 0; i < Object.keys(this.tags).length; i++) {
-            //  for (let i = 0; i < 1; i++) {
-            // currated top nodes (from the server hava a value of "C12434:Blood")
-            // so we need to strip off everything from the : to the right.
-            if (this.tags[i] !== "undefined") {
-              bottomTab = this.tags[i];
-              indexBottomTab = bottomTab.indexOf(":");
-              this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
-            }
-          }
 
-          alert("before Base URL");
-          alert("baseURL " + this.$baseURL);
-          alert("EnteredCodes " + this.userEnteredCodes);
-         // api.getAssociations(this.$baseURL, this.userEnteredCodes)
-         // api.getAssociations("https://evs-dev.cancer.gov/report-exporter/", this.userEnteredCodes)
-          api.getAssociations(this.$baseURL, this.userEnteredCodes)
-              .then((data)=>{
-                for (let x = data.length - 1; x >= 0; x--) {
-                  alert("Before call results");
-                  alert("Data Response " + data[x]);
-                  alert("Data Response " + data[x].value);
-                  alert("Data Response " + data[x].associations);
-                  this.availableProperties.push(data[x]);
-                }
-              })
-          alert("After getAssociations call")
 
           // reset what concept codes are used
           this.updateUsedConceptCodes()
@@ -1110,8 +1084,7 @@ export default {
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
           //Vue 3 removes enteries from right list box on next screen
-          this.rightUsers.pop();
-
+        
 
 
 /*
@@ -1290,17 +1263,17 @@ export default {
         position: "bottom left"
       });
 
-      alert("excel export called");
+      //alert("excel export called");
 
       // set the user selected tags and properties
       //this.setSelectedAssoc()
 
-      alert("setSelectedAssociationNames");
+     // alert("setSelectedAssociationNames");
       this.gaTrackDownload();
       //this.setSelectedTags();
       this.setSelectedPropertyNames()
 
-      alert("gaTrackDownload");
+     // alert("gaTrackDownload");
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
       if (this.fileFormat === ""){
