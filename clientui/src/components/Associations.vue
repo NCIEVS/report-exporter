@@ -383,7 +383,7 @@ export default {
               if ((data !== null) && (data!== undefined) && (data!== "")) {
                 for (let x = data.length - 1; x >= 0; x--) {
                   alert(data[x].name);
-                  if ((data[x].name != null) && (data[x].name!== undefined)) {
+                  if ((data[x].name != null) && (data[x].name!== undefined)  && (data[x].length < 1)) {
                     //  if ((data[x].name.length > 0) && (data[x].name!== undefined)) {
 
                     //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
@@ -416,9 +416,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 }else{
-                  //    this.tags.push(tag + ":" + "");   //take out after testing
-                  //    this.newTag = ""                  //take out after testing
-                  //     this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  //      this.tags.push(tag + ":" + "");   //take out after testing
+                  //      this.newTag = ""                  //take out after testing
+                  //       this.tagCounter = this.tagCounter + 1;  //take out after testing
                   this.$notify({
                     group: 'app',
                     title: 'Validation Failure',
@@ -432,7 +432,6 @@ export default {
             })
       }
     },
-
 
 
     setSelectedTags () {
