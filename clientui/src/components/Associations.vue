@@ -393,9 +393,9 @@ export default {
                       this.newTag = [];
                       dupTagCheck = false;
                     }else{
-                      this.tags.push(tag + ":" + "");   //take out after testing
-                      this.newTag = ""                  //take out after testing
-                      this.tagCounter = this.tagCounter + 1;
+                  //    this.tags.push(tag + ":" + "");   //take out after testing
+                  //    this.newTag = ""                  //take out after testing
+                  //    this.tagCounter = this.tagCounter + 1;  //take out after testing
                       this.$notify({
                         group: 'app',
                         title: 'Validation Failure',
@@ -418,9 +418,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 }else{
-                  this.tags.push(tag + ":" + "");   //take out after testing
-                  this.newTag = ""                  //take out after testing
-                  this.tagCounter = this.tagCounter + 1;
+             //     this.tags.push(tag + ":" + "");   //take out after testing
+             //     this.newTag = ""                  //take out after testing
+             //     this.tagCounter = this.tagCounter + 1;  //take out after testing
                   this.$notify({
                     group: 'app',
                     title: 'Validation Failure',
