@@ -271,6 +271,7 @@
   </div>
 
 
+
   <!-- Summary Information -->
   <div id="accordion" class="pb-3 pt-3">
     <div class="card">
@@ -357,6 +358,7 @@ import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import ExportFormat from './ExportFormat.vue'
 import Tree from 'vuejs-tree'
+
 
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
@@ -498,9 +500,9 @@ export default {
       treeDisplayData: [
         {
           text: "Level 1",
-          state: {checked: false, selected: false, expanded: false},
+          state: {checked: false, selected: true, expanded: false},
           id: 1,
-          checkable: false,
+          checkable: true,
           nodes: [
               {
             text: "Level 2",
@@ -661,7 +663,7 @@ export default {
             state: true,
           },
           editableName: {
-            state: true,
+            state: false,
             calledEvent: "expanded",
           },
         },

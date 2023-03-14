@@ -408,7 +408,7 @@ export default {
 
     //Vue 3 Removes all tags below text box
     const removeAllTags = (tagDeleteCounter) => {
-      alert("REmove value " + tagDeleteCounter);
+     // alert("REmove value " + tagDeleteCounter);
       for(let i = 0; i<=newTagCounter; i++) {
         tags.value.splice(tagDeleteCounter, newTagCounter);
         tagDeleteCounter = tagDeleteCounter + 1;
