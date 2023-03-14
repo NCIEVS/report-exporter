@@ -254,8 +254,8 @@
 
 import api from '../api.js'
 import axios from 'axios'
-import {ref} from 'vue'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
+import {ref} from "vue";
 
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
@@ -281,161 +281,26 @@ export default {
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
-  },
 
+  },
 
   setup(){
     const tags = ref([]);
     //const loadBaseURL = ref([]);
     //var  url= ref();
     const newTag = ref('') //keep up with new tag
-    var tagCounter = 0;
-    var newTagCounter = 0;
+    var tagCounter1 = 0;
+    //var newTagCounter = 0;
     //this.entityList = []'
-
-
-    //
-    const addTag = (tag) => {
-      var codeDescription = [];
-      //var baseLink = document.getElementById('basURL').value;
-      tag = tag.replace(/[\s/]/g, '')
-      tag = tag.replace(',', '')
-
-      // alert(baseLink);
-      // baseLink = document.getElementById('basURL').value;
-      if (tag != "") {
-        api.getCodes( "https://evs-dev.cancer.gov/report-exporter/", tag, 'ENTITY')
-            .then((data)=> {
-              alert("after call");
-              // data = "test";
-              if ((data != null) && (data!== undefined)) {
-                alert("after checks");
-                for (let x = data.length - 1; x >= 0; x--) {
-                  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
-                  codeDescription = data[x].name;
-                  alert("before push");
-                  tags.value.push(tag + ":" + codeDescription);
-
-                  newTag.value = ""; // reset newTag
-                  tagCounter = tagCounter + 1;
-                  newTagCounter = newTagCounter + 1;
-                }
-              }else {
-                alert("Code entered was not found");
-                tags.value.push(tag + ":" + "");
-                newTag.value = ""
-                tagCounter = tagCounter + 1;
-                newTagCounter = newTagCounter + 1;
-                // selectedConceptCodes.value.push("test");
-                //tags.value.push(tag);
-                //alert(codeDescription);
-
-              }
-
-            })
-      }
-    }
 
 
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
       tags.value.splice(index, 1);
-      tagCounter = tagCounter  - 1;
+      tagCounter1 = tagCounter1  - 1;
     };
 
-    /*
-      const setSelectedTags = () =>{
-        // clear the internal user codes that are entered
-        this.userEnteredCodes = []
-        for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-          // currated top nodes (from the server hava a value of "C12434:Blood")
-          // so we need to strip off everything from the : to the right.
-          this.userEnteredCodes.push(this.tags[i].value.split(":",1))
-        }
-      };
-  */
-
-
-    // called when an entity/code is added
-    const onTagAdded = (newTag) =>{
-      // Test if the string entered was pasted in - if it has a comma separated
-      // list of values
-      alert("onTagAdded Called " + newTag);
-
-      //newTag.value.includes(',') ? newTag = this.cleanString(newTag.value).split(",") : newTag = []
-
-      alert("test1 " + newTag.length);
-      // if the user entered multiple values, remove the last entry (which
-      // is the comma separated string) and add each one individually.
-
-      if (newTag.length > 0) {
-        alert("test2a")
-        // this.tags.splice(-1,1);  add back
-        alert("test2");
-
-        for(let x = newTag.length; x >=0; x-- ) {
-          // Make sure we don't add a duplicate.
-          // Check if user entered two commas with no entitiy code inbetween them
-          // example:  C101171,  ,C101173
-          alert("test3");
-          if ( (! this.isDuplicateTag(newTag[x])) && (newTag[x] !== undefined) && (newTag[x].length > 0)) {
-            // this.tags.value.push({key: newTag[x], value: newTag[x]})
-            this.tags.value.push(newTag);
-          }
-        }
-      }
-      else {
-        if (this.isDuplicateTag(newTag.value))
-        {
-          alert("test4");
-          // remove the last entered entity code
-          this.tags.splice(-1,1);
-        }
-      }
-
-      // When a top node is entered/selected, verify it.
-      this.getEntities();
-    };
-
-
-
-
-    //Vue 3 Removes all tags below text box
-    const removeAllTags = (tagDeleteCounter) => {
-      for(let i = 0; i<=newTagCounter; i++) {
-        tags.value.splice(tagDeleteCounter, newTagCounter);
-        tagDeleteCounter = tagDeleteCounter + 1;
-      }
-      this.tag = []
-      this.newTag = []
-      this.userEnteredCodes = []
-      this.selectedTags = []
-      this.entityList = []
-      this.multipleEntitiesSplit = []
-      this.invalidTag = ''
-      this.userSelectedProperyNames = []
-      this.tags2 = []
-
-
-
-
-      //document.getElementById("listOfTags").style.display = "none";  // remove tags
-      //document.getElementById("listOfTags").innerHTML = "";
-
-
-      // document.getElementById("selectConceptCodesCount").innerText = 0;
-      //  document.getElementById("selectedConceptCodesTags").innerText = "";
-      return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
-    };
-
-
-
-
-
-    return { tags, newTag, addTag, onTagAdded, removeTag, tagCounter, removeAllTags }
-
-
-
+    return { tags, newTag, removeTag, tagCounter1 }
   },
 
 
@@ -466,7 +331,9 @@ export default {
       loadBaseURL: this.$baseURL,
       availableAssociations: [],
       selectedAssociations: [],
-      tempListClear:[]
+      tempListClear:[],
+      tagCounter: 0,
+      newTagCounter: 0
     };
   },
 
@@ -494,51 +361,81 @@ export default {
     addTag1(tag) {
       var codeDescription = [];
       //var baseLink = document.getElementById('basURL').value;
-      var tagCounter = 0;
-      var newTagCounter = 0;
+      //    var this.tagCounter = 0;
+      //    var this.newTagCounter = 0;
+      var dupTagCheck = false;
       //const tags = ref([]);
       //const newTag = ref('') //keep up with new tag
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
 
-
+      this.setSelectedTags()
+      //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
-              // alert("after call");
-              // data = "test";
-
+              if ((data != null) && (data!== undefined)) {
                 for (let x = data.length - 1; x >= 0; x--) {
-                  //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
                   if ((data[x].name != null) && (data[x].name!== undefined)) {
+                    //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
                     codeDescription = data[x].name;
                     this.tags.push(tag + ":" + codeDescription);
                     this.newTag = ""; // reset newTag
-                    tagCounter = tagCounter + 1;
-                    newTagCounter = newTagCounter + 1;
-                    //   alert("Before getEntities Call()");
-                    //getEntities();
-                    //  alert("After getEntities Call()");
+                    this.tagCounter = this.tagCounter + 1;
+                    this.newTagCounter = this.newTagCounter + 1;
+                  }else{
+                    for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
+                      if (this.userEnteredCodes[i] === tag) {
+                        dupTagCheck = true;
+                      }
+                    }
+                    if (dupTagCheck === true) {
+                      this.newTag = [];
+                      dupTagCheck = false;
+                    }else{
+                      this.tags.push(tag + ":" + "");   //take out after testing
+                      this.newTag = ""                  //take out after testing
+                      this.tagCounter = this.tagCounter + 1;
+                      this.$notify({
+                        group: 'app',
+                        title: 'Validation Failure',
+                        text: 'Could not verify concept code(s).  Possible network issue.',
+                        type: 'error',
+                        duration: 4000,
+                        position: "left bottom"
+                      });
+                    }
 
-                  }else {
-                    this.tags.push(tag + ":" + "");
-                    this.newTag = ""
-                    tagCounter = tagCounter + 1;
-                    this.$notify({
-                      group: 'app',
-                      title: 'Validation Failure',
-                      text: 'Could not verify concept code(s).  Possible network issue.',
-                      type: 'error',
-                      duration: 4000,
-                      position: "left bottom"
-                    });
                   }
-
+                }
+              }else {
+                for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
+                  if (this.userEnteredCodes[i] === tag) {
+                    dupTagCheck = true;
+                  }
+                }
+                if (dupTagCheck === true) {
+                  this.newTag = [];
+                  dupTagCheck = false;
+                }else{
+                  this.tags.push(tag + ":" + "");   //take out after testing
+                  this.newTag = ""                  //take out after testing
+                  this.tagCounter = this.tagCounter + 1;
+                  this.$notify({
+                    group: 'app',
+                    title: 'Validation Failure',
+                    text: 'Could not verify concept code(s).  Possible network issue.',
+                    type: 'error',
+                    duration: 4000,
+                    position: "left bottom"
+                  });
+                }
               }
-
             })
       }
     },
+
+
 
     setSelectedTags () {
       var bottomTab = "";
@@ -1120,8 +1017,8 @@ export default {
                       tags.value.push(tag + ":" + codeDescription);
 
                       newTag.value = ""; // reset newTag
-                      tagCounter = tagCounter + 1;
-                      newTagCounter = newTagCounter + 1;
+                      this.tagCounter = this.tagCounter + 1;
+                      this.newTagCounter = this.newTagCounter + 1;
                       alert("Before getEntities Call()");
                       //getEntities();
                       alert("After getEntities Call()");
@@ -1130,8 +1027,8 @@ export default {
                     alert("Code entered was not found");
                     tags.value.push(tag + ":" + "");
                     newTag.value = ""
-                    tagCounter = tagCounter + 1;
-                    newTagCounter = newTagCounter + 1;
+                    this.tagCounter = this.tagCounter + 1;
+                    this.newTagCounter = this.newTagCounter + 1;
                     // selectedConceptCodes.value.push("test");
                     //tags.value.push(tag);
                     //alert(codeDescription);
@@ -1352,11 +1249,12 @@ export default {
   },
 
   // Vue 3 Start
-
+/*
   onTagRemoved(code) {
     this.removeTag(code)
     this.updateParent()
   },
+
   removeTag(code) {
     // find and remove the code from the entity list that is to be removed.
     for (let i = 0; i < Object.keys(this.entityList).length; i++) {
@@ -1366,7 +1264,7 @@ export default {
       }
     }
   },
-
+*/
 
 
 
