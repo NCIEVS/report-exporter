@@ -380,8 +380,7 @@ export default {
       if (tag != "") {
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
-              alert(data);
-              if ((data != null) && (data!== undefined) && (data!== "")) {
+              if ((data !== null) && (data!== undefined) && (data!== "")) {
                 for (let x = data.length - 1; x >= 0; x--) {
                   alert(data[x].name);
                   if ((data[x].name != null) && (data[x].name!== undefined)) {

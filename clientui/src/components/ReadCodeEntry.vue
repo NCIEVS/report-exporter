@@ -281,7 +281,7 @@ export default {
 
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
-      alert(index);
+      //alert(index);
       tags.value.splice(index, 1);
       tagCounter1 = tagCounter1  - 1;
     };
@@ -343,8 +343,8 @@ export default {
     addTag1(tag) {
       var codeDescription = [];
       //var baseLink = document.getElementById('basURL').value;
-  //    var this.tagCounter = 0;
-  //    var this.newTagCounter = 0;
+      //    var this.tagCounter = 0;
+      //    var this.newTagCounter = 0;
       var dupTagCheck = false;
       //const tags = ref([]);
       //const newTag = ref('') //keep up with new tag
@@ -352,61 +352,55 @@ export default {
       tag = tag.replace(',', '')
 
       this.setSelectedTags()
+
+      for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
+        if (this.userEnteredCodes[i] === tag) {
+          dupTagCheck = true;
+        }
+      }
       //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
-              alert(data);
-              if ((data != null) && (data!== undefined)) {
+              if ((data !== null) && (data!== undefined) && (data!== "")) {
                 for (let x = data.length - 1; x >= 0; x--) {
                   alert(data[x].name);
                   if ((data[x].name != null) && (data[x].name!== undefined)) {
-                  //  if ((data[x].name.length > 0) && (data[x].name!== undefined)) {
+                    //  if ((data[x].name.length > 0) && (data[x].name!== undefined)) {
 
                     //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
-                    codeDescription = data[x].name;
-                    this.tags.push(tag + ":" + codeDescription);
-                    this.newTag = ""; // reset newTag
-                    this.tagCounter = this.tagCounter + 1;
-                    this.newTagCounter = this.newTagCounter + 1;
-                  }else{
-                    for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
-                      if (this.userEnteredCodes[i] === tag) {
-                        dupTagCheck = true;
-                      }
-                    }
                     if (dupTagCheck === true) {
                       this.newTag = [];
                       dupTagCheck = false;
-                    }else{
-                 //     this.tags.push(tag + ":" + "");   //take out after testing
-                 //     this.newTag = ""                  //take out after testing
-                 //     this.tagCounter = this.tagCounter + 1;  //take out after testing
-                      this.$notify({
-                        group: 'app',
-                        title: 'Validation Failure',
-                        text: 'Could not verify concept code(s). ',
-                        type: 'error',
-                        duration: 4000,
-                        position: "left bottom"
-                      });
+                    }else {
+                      codeDescription = data[x].name;
+                      this.tags.push(tag + ":" + codeDescription);
+                      this.newTag = ""; // reset newTag
+                      this.tagCounter = this.tagCounter + 1;
+                      this.newTagCounter = this.newTagCounter + 1;
                     }
-
+                  }else{
+                    this.$notify({
+                      //    this.tags.push(tag + ":" + "");   //take out after testing
+                      //    this.newTag = ""                  //take out after testing
+                      //     this.tagCounter = this.tagCounter + 1;  //take out after testing
+                      group: 'app',
+                      title: 'Validation Failure',
+                      text: 'Could not verify concept code(s).  Possible network issue.',
+                      type: 'error',
+                      duration: 4000,
+                      position: "left bottom"
+                    });
                   }
                 }
               }else {
-                for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
-                  if (this.userEnteredCodes[i] === tag) {
-                    dupTagCheck = true;
-                  }
-                }
                 if (dupTagCheck === true) {
                   this.newTag = [];
                   dupTagCheck = false;
                 }else{
-              //    this.tags.push(tag + ":" + "");   //take out after testing
-              //    this.newTag = ""                  //take out after testing
-             //     this.tagCounter = this.tagCounter + 1;  //take out after testing
+                      this.tags.push(tag + ":" + "");   //take out after testing
+                      this.newTag = ""                  //take out after testing
+                       this.tagCounter = this.tagCounter + 1;  //take out after testing
                   this.$notify({
                     group: 'app',
                     title: 'Validation Failure',
@@ -420,6 +414,7 @@ export default {
             })
       }
     },
+
     /*
     //Vue 3 Remotes a tag below text box
     removeTag (index)  {
