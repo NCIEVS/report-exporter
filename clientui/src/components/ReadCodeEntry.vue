@@ -360,8 +360,8 @@ export default {
               if ((data != null) && (data!== undefined)) {
                 for (let x = data.length - 1; x >= 0; x--) {
                   alert(data[x].name);
-                  //if ((data[x].name != null) && (data[x].name!== undefined)) {
-                    if ((data[x].name.length > 0) && (data[x].name!== undefined)) {
+                  if ((data[x].name != null) && (data[x].name!== undefined)) {
+                  //  if ((data[x].name.length > 0) && (data[x].name!== undefined)) {
 
                     //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
                     codeDescription = data[x].name;
