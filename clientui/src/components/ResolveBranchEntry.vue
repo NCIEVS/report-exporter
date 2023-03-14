@@ -220,7 +220,7 @@
         :custom-options="myCustomOptions"
         :custom-styles="myCustomStyles"
         :nodes="treeDisplayData"
-        @dblclick="getNodeValue()"
+        :@dblclick="getNodeValue"
     ></Tree>
   </div>
 
@@ -495,11 +495,11 @@ export default {
       showSummary: true,
       showSummaryText: '',
       exportType: 'exportNow',
-
+      treeLevel: 'LEVEL 1',
 
       treeDisplayData: [
         {
-          text: "Level 1",
+          text: this.treeLevel,
           state: {checked: false, selected: true, expanded: false},
           id: 1,
           checkable: true,
@@ -632,9 +632,11 @@ export default {
   methods: {
 
     getNodeValue(){
+      this.treeLevel = "TEST"
       alert("test");
     },
     myCustomOptions() {
+
       return {
         treeEvents: {
           expanded: {
@@ -658,9 +660,11 @@ export default {
           },
           selected: {
             state: true,
+            fn: this.mySelectedFunction,
           },
           checked: {
             state: true,
+            fn: this.mySelectedFunction,
           },
           editableName: {
             state: false,
@@ -683,11 +687,12 @@ export default {
     },
 
 
-    myCheckedFunction: function (nodeId, disabled) {
+    myCheckedFunction (nodeId, disabled) {
+      alert("myCHeckedFunction");
       this.loadData(nodeId, disabled);
       console.log(`is ${nodeId} checked ? ${disabled}`);
-      console.log(this.$refs["my-tree"].getCheckedNodes("id"));
-      console.log(this.$refs["my-tree"].getCheckedNodes("text"));
+      alert(this.$refs["my-tree"].getCheckedNodes("id"));
+      alert(this.$refs["my-tree"].getCheckedNodes("text"));
     },
     mySelectedFunction: function (nodeId, disabled) {
       this.loadData(nodeId, disabled);

@@ -477,8 +477,8 @@ export default {
 
   methods: {
     removeAllTags2 (tagDeleteCounter) {
-      alert("REmove value " + tagDeleteCounter);
-      alert("Counter value " + this.tags.length);
+     // alert("REmove value " + tagDeleteCounter);
+     // alert("Counter value " + this.tags.length);
       for (let i = 0; i <= this.tags.length; i++) {
         this.tags.splice(tagDeleteCounter, this.tags.length);
         tagDeleteCounter = tagDeleteCounter + 1;
