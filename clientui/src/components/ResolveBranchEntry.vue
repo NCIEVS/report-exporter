@@ -9,63 +9,7 @@
       </div>
     </div>
 
-    <!--Vue 3 Start-->
-    <div class="container" id = "exportStep">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-          <form>
-            <div class="form-group">
-              <div>
-                <label for="downloadFormatLabel">Select format for export</label>
-                <select id="downloadFormat" class="form-control"  @change="changeSelectedExportList($event)">
-                  <option value="json"> JSON (json) JavaScript Object Notation Format </option>
-                  <option value="csv"> CSV (csv) Comma Separated Value Format </option>
-                  <option value="txt"> TABD (txt) Tab Delimited Value Format </option>
-                  <option value="xlsx"> EXCEL (xlsx) Microsoft Excel Format </option>
-                </select>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!--Vue 3 End-->
 
-
-
-    <!--Vue 3 Entity Label field  Start-->
-    <div class="entityLabel" id = "entityLabelId">
-      <label for="tags" >Enter NCI Thesaurus concept codes</label>
-    </div>
-    <!--Vue 3 Entity Label field  End-->
-
-    <!--Vue 3 Entity Text field  Start-->
-    <div class="entityText" id = "entityTextID" element-id="tag-input">
-      <input placeholder="Type entity code, then click enter"
-             class="entityCodeInput" v-model="newTag"
-             @keyup.enter.exact="addTag1(newTag)"
-             @keyup.space.exact="addTag1(newTag)">
-      <br>
-      <br>
-      <div class = "tag-input"></div>
-      <ul class="tags" id = "listOfTags">
-        <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
-          {{ tag }}
-          <button class="delete" @click="removeTag(index)">x</button>
-        </a></li>
-      </ul>
-
-
-      <label for="levelSelection" class = "levels-label">Select how many levels to retrieve</label>
-      <br>
-      <select v-model="selectedLevel" id="levelSelection" class="levelsDropdown" v-on:change="onLevelChange()">
-        <option v-for="level in levels"
-                :value="level.id"
-                :key="level.name">
-          {{ level.name }}
-        </option>
-      </select>
-    </div>
 
 
 
