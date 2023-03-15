@@ -409,6 +409,9 @@ export default {
   },
 
   methods: {
+    testMethod(){
+      alert("tree test alert")
+    },
 
     gaTrackDownload () {
       // Send Google analytics download event
