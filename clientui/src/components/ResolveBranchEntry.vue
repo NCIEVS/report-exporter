@@ -551,9 +551,12 @@ export default {
       alert(this.$refs["my-tree"].getCheckedNodes("text"));
     },
     mySelectedFunction: function (nodeId, disabled) {
+      alert("mySelectedFunction");
       this.loadData(nodeId, disabled);
       console.log(`is ${nodeId} selected ? ${disabled}`);
       console.log(this.$refs["my-tree"].getSelectedNode());
+      alert(`is ${nodeId} selected ? ${disabled}`);
+      alert(this.$refs["my-tree"].getSelectedNode());
     },
     deleteNodeFunction: function (node) {
       const nodePath = this.$refs["my-tree"].findNodePath(node.id);
