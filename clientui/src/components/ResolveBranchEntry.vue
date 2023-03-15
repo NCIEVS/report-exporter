@@ -969,7 +969,7 @@ export default {
 }
 .btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
   background-color: rgb(0, 125, 188);
-  border-color: rgb(0, 125, 188); 
+  border-color: rgb(0, 125, 188);
   color: white;
 }
 </style>
