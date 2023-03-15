@@ -28,6 +28,21 @@
       </div>
     </div>
 
+    <div id="app"  class = "tree-display">
+      <Tree
+          id="my-tree-id"
+          ref="my-tree"
+          :custom-options="myCustomOptions"
+          :custom-styles="myCustomStyles"
+          :nodes="treeDisplayData"
+          :@dblclick="getNodeValue"
+      ></Tree>
+    </div>
+    <br>
+
+
+
+
     <!-- WIZARD DECLARATION -->
     <form-wizard
         @on-complete="onComplete"
@@ -256,6 +271,7 @@ import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VJstree from 'vue-jstree'
 import ExportFormat from './ExportFormat.vue'
+import Tree from "vuejs-tree"
 
 export default {
   name: 'resolve-branch-entry',
@@ -269,12 +285,13 @@ export default {
     FormWizard,
     TabContent,
     'v-jstree': VJstree,
-    ExportFormat
+    ExportFormat,
+    Tree,
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
   },
-  data(){
+  data() {
     return {
       selectedTags: [],
       message: 'Hello World!',
@@ -283,41 +300,46 @@ export default {
       availableProperties: [],
       selectedProperties: [],
       userSelectedProperyNames: [],
-      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
+      userSelectedFormat: {"name": "JSON", "description": "JavaScript Object Notation Format", "extension": "json"},
       curratedTopNodes: [],
       userSelectedTopNode: '',
       filename: 'branch',
       downloadReturnCode: null,
-      curratedTopNodesUI:[],
+      curratedTopNodesUI: [],
       getPropertyError: false,
       selectedLevel: 0,
       childrenToResolve: 0,
-      levels:[
-        { id: 1, name: '1 Level' },
-        { id: 2, name: '2 Levels' },
-        { id: 3, name: '3 Levels' },
-        { id: 4, name: '4 Levels' },
-        { id: 5, name: '5 Levels' },
-        { id: 6, name: '6 Levels' },
-        { id: 7, name: '7 Levels' },
-        { id: 8, name: '8 Levels' },
-        { id: 9, name: '9 Levels' },
-        { id: 10, name: '10 Levels' },
-        { id: 11, name: '11 Levels' },
-        { id: 12, name: '12 Levels' },
-        { id: 13, name: '13 Levels' },
-        { id: 14, name: '14 Levels' },
-        { id: 15, name: '15 Levels' },
-        { id: 16, name: '16 Levels' },
-        { id: 17, name: '17 Levels' },
-        { id: 18, name: '18 Levels' },
-        { id: 19, name: '19 Levels' },
-        { id: 20, name: '20 Levels' },
+      tempListClear:[],
+      leftSelectedUsers:[],
+      leftUsers: [],
+      rightSelectedUsers:[],
+      rightUsers:[],
+      levels: [
+        {id: 1, name: '1 Level'},
+        {id: 2, name: '2 Levels'},
+        {id: 3, name: '3 Levels'},
+        {id: 4, name: '4 Levels'},
+        {id: 5, name: '5 Levels'},
+        {id: 6, name: '6 Levels'},
+        {id: 7, name: '7 Levels'},
+        {id: 8, name: '8 Levels'},
+        {id: 9, name: '9 Levels'},
+        {id: 10, name: '10 Levels'},
+        {id: 11, name: '11 Levels'},
+        {id: 12, name: '12 Levels'},
+        {id: 13, name: '13 Levels'},
+        {id: 14, name: '14 Levels'},
+        {id: 15, name: '15 Levels'},
+        {id: 16, name: '16 Levels'},
+        {id: 17, name: '17 Levels'},
+        {id: 18, name: '18 Levels'},
+        {id: 19, name: '19 Levels'},
+        {id: 20, name: '20 Levels'},
       ],
       childrenToResolveObj: {
-        selectedLevel:0,
-        selectedTag:"",
-        childrenCount:0
+        selectedLevel: 0,
+        selectedTag: "",
+        childrenCount: 0
       },
       deferredStatusUrl: '',
       deferredStatusHash: '',
@@ -328,37 +350,92 @@ export default {
       showSummary: true,
       showSummaryText: '',
       exportType: 'exportNow',
+      treeLevel: 'LEVEL 1',
+
+      treeDisplayData: [
+        {
+          text: "level 1",
+          state: {checked: false, selected: true, expanded: false},
+          id: 1,
+          checkable: true,
+          nodes: [
+            {
+              text: "Level 2a",
+              state: {checked: false, selected: true, expanded: false},
+              id: 2,
+              checkable: true,
+              nodes: [           {
+                text: "level 2b",
+                state: {checked: false, selected: true, expanded: false},
+                checkable: true,
+                id: 5,
+                nodes: [],
+
+              },],
+            },
+          ],
+        },
+        {
+          text: "Level 2",
+          state: {checked: false, selected: true, expanded: false},
+          id: 2,
+          checkable: true,
+          nodes: [],
+        },
+        {
+          text: "level 3",
+          state: {checked: false, selected: true, expanded: false},
+          checkable: true,
+          id: 5,
+          nodes: [],
+
+        },
+        {
+          text: "Child 2",
+          state: { checked: false, selected: false, expanded: false },
+          checkable: true,
+          id: 4,
+        },
+      ] ,
+
+
 
       // function to get tree data
       loadData: function (oriNode, resolve) {
         // set id to the node to retrieve children for.
         // set to null to indicate this is the root.
-        alert(oriNode);
-        alert(resolve);
         var id = oriNode.data.id ? oriNode.data.id : null
         var data = []
         //console.log('id: ' + id)
 
+        alert("test1");
         // if id is null, this is the root.  get all root children
         if (id == null) {
+          alert("test2");
           api.getRoots(this.$baseURL)
-              .then((children)=>{
+              .then((children) => {
                 if (children != null) {
-
-                  for (let x=0; x < children.length; x++){
+                  alert("test3");
+                  for (let x = 0; x < children.length; x++) {
+                    alert("test5");
                     //console.log(children[x].code + '  :  ' + children[x].name)
                     data.push(
                         {
+
+                          //   "id": children[x].code,
+                          //   "text": children[x].code + ' : ' + children[x].name,
+                          //    "isLeaf": false,
+                          //    "disabled": children[x].leaf,
+
                           "id": children[x].code,
                           "text": children[x].code + ' : ' + children[x].name,
-                          "isLeaf": false,
-                          "disabled": children[x].leaf,
+                          "checkable": false,
+                          "state": children[x].leaf,
                         },
                     )
-                  }
+                  }alert("test6");
                   resolve(data)
-                }
-                else {
+                } else {
                   console.log("Error retrieving roots");
                   data.push(
                       {
@@ -375,9 +452,9 @@ export default {
         // Id was not null, get the children
         else {
           api.getChildren(this.$baseURL, id, 1)
-              .then((children)=>{
+              .then((children) => {
                 if (children != null) {
-                  for (let x=0; x < children.length; x++){
+                  for (let x = 0; x < children.length; x++) {
                     //console.log(children[x].code + '  :  ' + children[x].name)
                     data.push(
                         {
@@ -389,8 +466,7 @@ export default {
                     )
                   }
                   resolve(data)
-                }
-                else {
+                } else {
                   console.log("Error retrieving children");
                   data.push(
                       {
@@ -408,7 +484,110 @@ export default {
     }
   },
 
+
   methods: {
+
+    getNodeValue(){
+      //this.treeLevel = "TEST"
+      alert("test");
+    },
+    myCustomOptions() {
+
+      return {
+        treeEvents: {
+          expanded: {
+            state: false,
+          },
+          collapsed: {
+            state: false,
+          },
+          selected: {
+            state: true,
+            fn: this.mySelectedFunction,
+          },
+          checked: {
+            state: true,
+            fn: this.myCheckedFunction,
+          },
+        },
+        events: {
+          expanded: {
+            state: true,
+          },
+          selected: {
+            state: true,
+            fn: this.mySelectedFunction,
+          },
+          checked: {
+            state: true,
+            fn: this.mySelectedFunction,
+          },
+          editableName: {
+            state: false,
+            calledEvent: "expanded",
+          },
+        },
+        addNode: {
+          state: true,
+          fn: this.addNodeFunction,
+          appearOnHover: false,
+        },
+        editNode: { state: false, fn: null, appearOnHover: false },
+        deleteNode: {
+          state: true,
+          fn: this.deleteNodeFunction,
+          appearOnHover: true,
+        },
+        showTags: true,
+      };
+    },
+
+
+    myCheckedFunction (nodeId, disabled) {
+      alert("myCHeckedFunction");
+      this.loadData(nodeId, disabled);
+      console.log(`is ${nodeId} checked ? ${disabled}`);
+      alert(this.$refs["my-tree"].getCheckedNodes("id"));
+      alert(this.$refs["my-tree"].getCheckedNodes("text"));
+    },
+    mySelectedFunction: function (nodeId, disabled) {
+      this.loadData(nodeId, disabled);
+      console.log(`is ${nodeId} selected ? ${disabled}`);
+      console.log(this.$refs["my-tree"].getSelectedNode());
+    },
+    deleteNodeFunction: function (node) {
+      const nodePath = this.$refs["my-tree"].findNodePath(node.id);
+      const parentNodeId = nodePath.slice(-2, -1)[0];
+      if (parentNodeId === undefined) {
+        // 'root' node
+        const nodeIndex =
+            this.$refs["my-tree"].nodes.findIndex((x) => x.id !== node.id) - 1;
+        this.$refs["my-tree"].nodes.splice(nodeIndex, 1);
+      } else {
+        // child node
+        const parentNode = this.$refs["my-tree"].findNode(parentNodeId);
+        const nodeIndex =
+            parentNode.nodes.findIndex((x) => x.id !== node.id) - 1;
+        parentNode.nodes.splice(nodeIndex, 1);
+      }
+      console.log("example: remove node", node.id);
+    },
+    addNodeFunction: function (node) {
+      const newNode = {
+        text: "Grandchild 2",
+        id: Math.floor(Math.random() * 100),
+        disabled: { checked: false, selected: false, expanded: false },
+      };
+      console.log("example: add node", newNode);
+      if (node.nodes === undefined) {
+        node.nodes = [newNode];
+      } else {
+        node.nodes.push(newNode);
+      }
+    },
+
+
+
 
     gaTrackDownload () {
       // Send Google analytics download event
