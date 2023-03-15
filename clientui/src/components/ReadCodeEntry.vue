@@ -5,7 +5,7 @@
 
     <div class="vue-form-wizard">
       <div class="wizard-header">
-        <h4 class="wizard-title">Entity Export</h4>
+        <h4 class="wizard-title">Entity Export1</h4>
         <p class="category">Steps to select concept codes, then their properties and export the results</p>
       </div>
     </div>
