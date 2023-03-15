@@ -29,14 +29,13 @@ import VoerroTagsInput from '@voerro/vue-tagsinput'
 import vMultiselectListbox from 'vue-multiselect-listbox'
 import VueFormWizard from 'form-wizard-vue3'  //Vue 3
 import 'vue-form-wizard/dist/vue-form-wizard.min.css' // Vue 3
-//import { createMetaManager } from 'vue-meta'
 
 
 const app = createApp(App)
 
 app.use(VueFormWizard)
 app.use(router2)
-//app.use(createMetaManager()) // add this line
+
 
 import VueFormGenerator from 'vue-form-generator'
 //import 'vue-form-generator/dist/vfg.css'
@@ -148,6 +147,7 @@ app.use(VueGtag, {
 //app.prototype.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
 // Vue 3 way to write out the baseURL
 app.config.globalProperties.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
+
 
 
 // instatiate the vue instance
