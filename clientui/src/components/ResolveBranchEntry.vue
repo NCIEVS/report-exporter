@@ -169,6 +169,13 @@
       </tab-content>
     </form-wizard>
 
+
+    <div class="demo">
+      <vue3-router-tree :items="routes"> </vue3-router-tree>
+    </div>
+
+
+
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
       <div class="card">
@@ -254,13 +261,17 @@ import api from '../api.js'
 import axios from 'axios'
 import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import VJstree from 'vue-jstree'
 import ExportFormat from './ExportFormat.vue'
+import { defineComponent } from 'vue';
+import Vue3RouterTree from 'vue3-router-tree';
+
+
 
 export default {
   name: 'resolve-branch-entry',
   props: {
-    msg: String
+    msg: String,
+    defineComponent
   },
   components: {
     'tags-input': VoerroTagsInput,
@@ -268,8 +279,8 @@ export default {
     //'v-select': vSelect,
     FormWizard,
     TabContent,
-    'v-jstree': VJstree,
-    ExportFormat
+    ExportFormat,
+    Vue3RouterTree
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -328,6 +339,52 @@ export default {
       showSummary: true,
       showSummaryText: '',
       exportType: 'exportNow',
+      routes: [
+        {
+          path: '/',
+          name: 'Home',
+          hasIcon: true,
+        },
+        {
+          path: '/dashboard',
+          name: 'Dashboard',
+          hasIcon: true,
+        },
+        {
+          path: '/component',
+          name: 'Components',
+          hasIcon: true,
+          children: [
+            {
+              path: '/alerts',
+              name: 'Alerts',
+            },
+            {
+              path: '/avatars',
+              name: 'Avatars',
+            },
+            {
+              path: '/buttons',
+              name: 'Buttons',
+            },
+            {
+              path: '/forms',
+              name: 'Forms',
+              children: [
+                {
+                  path: '/autocompletes',
+                  name: 'Autocompletes',
+                },
+                {
+                  path: '/checkboxes',
+                  name: 'Checkboxes',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+
 
       // function to get tree data
       loadData: function (oriNode, resolve) {
@@ -409,9 +466,6 @@ export default {
   },
 
   methods: {
-    testMethod(){
-      alert("tree test alert")
-    },
 
     gaTrackDownload () {
       // Send Google analytics download event
