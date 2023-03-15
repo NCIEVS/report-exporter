@@ -1363,6 +1363,7 @@ export default {
         console.error("Polling Deferred Status Error: " + error)
       });
     },
+    
 
     downloadDeferredResult(hashId) {
       axios({
