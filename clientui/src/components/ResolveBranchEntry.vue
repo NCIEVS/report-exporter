@@ -185,18 +185,6 @@
           </center>
         </div>
 
-        <div id="app"  class = "tree-display">
-          <Tree
-              id="my-tree-id"
-              ref="my-tree"
-              :custom-options="myCustomOptions"
-              :custom-styles="myCustomStyles"
-              :nodes="treeDisplayData"
-              :@dblclick="getNodeValue"
-          ></Tree>
-        </div>
-        <br>
-
         <div id="collapseSummary" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
           <div class="card-body pb-1">
             <div class="row p-1">
@@ -257,21 +245,17 @@
   </div>
 </template>
 
-
 <script>
 
 // Custom input tags
+import VoerroTagsInput from '@voerro/vue-tagsinput'
+import vMultiselectListbox from 'vue-multiselect-listbox'
 import api from '../api.js'
 import axios from 'axios'
+import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import Tree from 'vuejs-tree'
-import {ref} from "vue";
-
-
-
-//vue 3 counter for (Select Next Option) button due to form-wizard not working
-let selectNextOptionBTN_counter =  1;
-
+import VJstree from 'vue-jstree'
+import ExportFormat from './ExportFormat.vue'
 
 export default {
   name: 'resolve-branch-entry',
@@ -279,86 +263,18 @@ export default {
     msg: String
   },
   components: {
-    Tree,
+    'tags-input': VoerroTagsInput,
+    'vMultiselectListbox': vMultiselectListbox,
+    //'v-select': vSelect,
+    FormWizard,
+    TabContent,
+    'v-jstree': VJstree,
+    ExportFormat
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
   },
-
-  mounted() {
-    this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
-    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
-    this.$refs["my-tree"].expandNode(1);
-  },
-  setup(){
-    const tags = ref([]);
-    //const loadBaseURL = ref([]);
-    //var  url= ref();
-    const newTag = ref('') //keep up with new tag
-    var tagCounter1 = 0;
-    //var newTagCounter = 0;
-    //this.entityList = []'
-
-
-    //Vue 3 Remotes a tag below text box
-    const removeTag = (index) => {
-      alert(index.value);
-      tags.value.splice(index, 1);
-      tagCounter1 = tagCounter1  - 1;
-    };
-
-    return { tags, newTag, removeTag, tagCounter1 }
-  },
-
-
-  computed: {
-    myCustomStyles() {
-      return {
-        tree: {
-          style: {
-            height: "auto",
-            maxHeight: "300px",
-            overflowY: "visible",
-            display: "inline-block",
-            textAlign: "left",
-          },
-        },
-        row: {
-          style: {
-            width: "500px",
-            cursor: "pointer",
-          },
-          child: {
-            class: "",
-            style: {
-              height: "35px",
-            },
-            active: {
-              style: {
-                height: "35px",
-              },
-            },
-          },
-        },
-        rowIndent: {
-          paddingLeft: "20px",
-        },
-        text: {
-          // class: "" // uncomment this line to overwrite the 'capitalize' class, or add a custom class
-          style: {},
-          active: {
-            style: {
-              "font-weight": "bold",
-              color: "#2ECC71",
-            },
-          },
-        },
-      };
-    }
-  },
-
-
-  data() {
+  data(){
     return {
       selectedTags: [],
       message: 'Hello World!',
@@ -367,46 +283,41 @@ export default {
       availableProperties: [],
       selectedProperties: [],
       userSelectedProperyNames: [],
-      userSelectedFormat: {"name": "JSON", "description": "JavaScript Object Notation Format", "extension": "json"},
+      userSelectedFormat: {"name":"JSON","description":"JavaScript Object Notation Format", "extension":"json" },
       curratedTopNodes: [],
       userSelectedTopNode: '',
       filename: 'branch',
       downloadReturnCode: null,
-      curratedTopNodesUI: [],
+      curratedTopNodesUI:[],
       getPropertyError: false,
       selectedLevel: 0,
       childrenToResolve: 0,
-      tempListClear:[],
-      leftSelectedUsers:[],
-      leftUsers: [],
-      rightSelectedUsers:[],
-      rightUsers:[],
-      levels: [
-        {id: 1, name: '1 Level'},
-        {id: 2, name: '2 Levels'},
-        {id: 3, name: '3 Levels'},
-        {id: 4, name: '4 Levels'},
-        {id: 5, name: '5 Levels'},
-        {id: 6, name: '6 Levels'},
-        {id: 7, name: '7 Levels'},
-        {id: 8, name: '8 Levels'},
-        {id: 9, name: '9 Levels'},
-        {id: 10, name: '10 Levels'},
-        {id: 11, name: '11 Levels'},
-        {id: 12, name: '12 Levels'},
-        {id: 13, name: '13 Levels'},
-        {id: 14, name: '14 Levels'},
-        {id: 15, name: '15 Levels'},
-        {id: 16, name: '16 Levels'},
-        {id: 17, name: '17 Levels'},
-        {id: 18, name: '18 Levels'},
-        {id: 19, name: '19 Levels'},
-        {id: 20, name: '20 Levels'},
+      levels:[
+        { id: 1, name: '1 Level' },
+        { id: 2, name: '2 Levels' },
+        { id: 3, name: '3 Levels' },
+        { id: 4, name: '4 Levels' },
+        { id: 5, name: '5 Levels' },
+        { id: 6, name: '6 Levels' },
+        { id: 7, name: '7 Levels' },
+        { id: 8, name: '8 Levels' },
+        { id: 9, name: '9 Levels' },
+        { id: 10, name: '10 Levels' },
+        { id: 11, name: '11 Levels' },
+        { id: 12, name: '12 Levels' },
+        { id: 13, name: '13 Levels' },
+        { id: 14, name: '14 Levels' },
+        { id: 15, name: '15 Levels' },
+        { id: 16, name: '16 Levels' },
+        { id: 17, name: '17 Levels' },
+        { id: 18, name: '18 Levels' },
+        { id: 19, name: '19 Levels' },
+        { id: 20, name: '20 Levels' },
       ],
       childrenToResolveObj: {
-        selectedLevel: 0,
-        selectedTag: "",
-        childrenCount: 0
+        selectedLevel:0,
+        selectedTag:"",
+        childrenCount:0
       },
       deferredStatusUrl: '',
       deferredStatusHash: '',
@@ -417,92 +328,37 @@ export default {
       showSummary: true,
       showSummaryText: '',
       exportType: 'exportNow',
-      treeLevel: 'LEVEL 1',
-
-      treeDisplayData: [
-        {
-          text: "level 1",
-          state: {checked: false, selected: true, expanded: false},
-          id: 1,
-          checkable: true,
-          nodes: [
-              {
-            text: "Level 2a",
-            state: {checked: false, selected: true, expanded: false},
-            id: 2,
-            checkable: true,
-            nodes: [           {
-              text: "level 2b",
-              state: {checked: false, selected: true, expanded: false},
-              checkable: true,
-              id: 5,
-              nodes: [],
-
-            },],
-          },
-          ],
-        },
-            {
-              text: "Level 2",
-              state: {checked: false, selected: true, expanded: false},
-              id: 2,
-              checkable: true,
-              nodes: [],
-            },
-           {
-                  text: "level 3",
-                  state: {checked: false, selected: true, expanded: false},
-                  checkable: true,
-                  id: 5,
-                  nodes: [],
-
-            },
-            {
-              text: "Child 2",
-              state: { checked: false, selected: false, expanded: false },
-              checkable: true,
-              id: 4,
-            },
-        ] ,
-
-
 
       // function to get tree data
       loadData: function (oriNode, resolve) {
         // set id to the node to retrieve children for.
         // set to null to indicate this is the root.
+        alert(oriNode);
+        alert(resolve);
         var id = oriNode.data.id ? oriNode.data.id : null
         var data = []
         //console.log('id: ' + id)
 
-        alert("test1");
         // if id is null, this is the root.  get all root children
         if (id == null) {
-          alert("test2");
           api.getRoots(this.$baseURL)
-              .then((children) => {
+              .then((children)=>{
                 if (children != null) {
-                  alert("test3");
-                  for (let x = 0; x < children.length; x++) {
-                    alert("test5");
+
+                  for (let x=0; x < children.length; x++){
                     //console.log(children[x].code + '  :  ' + children[x].name)
                     data.push(
                         {
-
-                          //   "id": children[x].code,
-                          //   "text": children[x].code + ' : ' + children[x].name,
-                          //    "isLeaf": false,
-                          //    "disabled": children[x].leaf,
-
                           "id": children[x].code,
                           "text": children[x].code + ' : ' + children[x].name,
-                          "checkable": false,
-                          "state": children[x].leaf,
+                          "isLeaf": false,
+                          "disabled": children[x].leaf,
                         },
                     )
-                  }alert("test6");
+                  }
                   resolve(data)
-                } else {
+                }
+                else {
                   console.log("Error retrieving roots");
                   data.push(
                       {
@@ -519,9 +375,9 @@ export default {
         // Id was not null, get the children
         else {
           api.getChildren(this.$baseURL, id, 1)
-              .then((children) => {
+              .then((children)=>{
                 if (children != null) {
-                  for (let x = 0; x < children.length; x++) {
+                  for (let x=0; x < children.length; x++){
                     //console.log(children[x].code + '  :  ' + children[x].name)
                     data.push(
                         {
@@ -533,7 +389,8 @@ export default {
                     )
                   }
                   resolve(data)
-                } else {
+                }
+                else {
                   console.log("Error retrieving children");
                   data.push(
                       {
@@ -552,426 +409,6 @@ export default {
   },
 
   methods: {
-
-    getNodeValue(){
-      this.treeLevel = "TEST"
-      alert("test");
-    },
-    myCustomOptions() {
-
-      return {
-        treeEvents: {
-          expanded: {
-            state: false,
-          },
-          collapsed: {
-            state: false,
-          },
-          selected: {
-            state: true,
-            fn: this.mySelectedFunction,
-          },
-          checked: {
-            state: true,
-            fn: this.myCheckedFunction,
-          },
-        },
-        events: {
-          expanded: {
-            state: true,
-          },
-          selected: {
-            state: true,
-            fn: this.mySelectedFunction,
-          },
-          checked: {
-            state: true,
-            fn: this.mySelectedFunction,
-          },
-          editableName: {
-            state: false,
-            calledEvent: "expanded",
-          },
-        },
-        addNode: {
-          state: true,
-          fn: this.addNodeFunction,
-          appearOnHover: false,
-        },
-        editNode: { state: false, fn: null, appearOnHover: false },
-        deleteNode: {
-          state: true,
-          fn: this.deleteNodeFunction,
-          appearOnHover: true,
-        },
-        showTags: true,
-      };
-    },
-
-
-    myCheckedFunction (nodeId, disabled) {
-      alert("myCHeckedFunction");
-      this.loadData(nodeId, disabled);
-      console.log(`is ${nodeId} checked ? ${disabled}`);
-      alert(this.$refs["my-tree"].getCheckedNodes("id"));
-      alert(this.$refs["my-tree"].getCheckedNodes("text"));
-    },
-    mySelectedFunction: function (nodeId, disabled) {
-      this.loadData(nodeId, disabled);
-      console.log(`is ${nodeId} selected ? ${disabled}`);
-      console.log(this.$refs["my-tree"].getSelectedNode());
-    },
-    deleteNodeFunction: function (node) {
-      const nodePath = this.$refs["my-tree"].findNodePath(node.id);
-      const parentNodeId = nodePath.slice(-2, -1)[0];
-      if (parentNodeId === undefined) {
-        // 'root' node
-        const nodeIndex =
-            this.$refs["my-tree"].nodes.findIndex((x) => x.id !== node.id) - 1;
-        this.$refs["my-tree"].nodes.splice(nodeIndex, 1);
-      } else {
-        // child node
-        const parentNode = this.$refs["my-tree"].findNode(parentNodeId);
-        const nodeIndex =
-            parentNode.nodes.findIndex((x) => x.id !== node.id) - 1;
-        parentNode.nodes.splice(nodeIndex, 1);
-      }
-      console.log("example: remove node", node.id);
-    },
-    addNodeFunction: function (node) {
-      const newNode = {
-        text: "Grandchild 2",
-        id: Math.floor(Math.random() * 100),
-        disabled: { checked: false, selected: false, expanded: false },
-      };
-      console.log("example: add node", newNode);
-      if (node.nodes === undefined) {
-        node.nodes = [newNode];
-      } else {
-        node.nodes.push(newNode);
-      }
-    },
-
-
-
-
-
-
-
-    removeAllTags2 (tagDeleteCounter) {
-      alert("REmove value " + tagDeleteCounter);
-      alert("Counter value " + this.tags.length);
-      for (let i = 0; i <= this.tags.length; i++) {
-        this.tags.splice(tagDeleteCounter, this.tags.length);
-        tagDeleteCounter = tagDeleteCounter + 1;
-      }
-      this.tag = []
-      this.newTag = []
-      this.userEnteredCodes = []
-      this.selectedTags = []
-      this.entityList = []
-      this.multipleEntitiesSplit = []
-      this.invalidTag = ''
-      this.userSelectedProperyNames = []
-      this.tags2 = []
-    },
-
-    addTag1(tag) {
-      var codeDescription = [];
-      //var baseLink = document.getElementById('basURL').value;
-      var tagCounter = 0;
-      var newTagCounter = 0;
-      //const tags = ref([]);
-      //const newTag = ref('') //keep up with new tag
-      tag = tag.replace(/[\s/]/g, '')
-      tag = tag.replace(',', '')
-
-
-      if (tag != "") {
-        api.getCodes( this.$baseURL, tag, 'ENTITY')
-            .then((data)=> {
-              // alert("after call");
-              // data = "test";
-              if ((data != null) && (data!== undefined)) {
-                alert("after checks");
-                for (let x = data.length - 1; x >= 0; x--) {
-                  //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
-                  codeDescription = data[x].name;
-                  alert("before push");
-                  this.tags.push(tag + ":" + codeDescription);
-                  this.newTag = ""; // reset newTag
-                  tagCounter = tagCounter + 1;
-                  newTagCounter = newTagCounter + 1;
-                  //   alert("Before getEntities Call()");
-                  //getEntities();
-                  //  alert("After getEntities Call()");
-                }
-              }else {
-                this.tags.push(tag + ":" + "");
-                this.newTag = ""
-                tagCounter = tagCounter + 1;
-                newTagCounter = newTagCounter + 1;
-                alert("tag counter " + newTagCounter);
-                this.$notify({
-                  group: 'app',
-                  title: 'Validation Failure',
-                  text: 'Could not verify concept code(s).  Possible network issue.',
-                  type: 'error',
-                  duration: 4000,
-                  position: "left bottom"
-                });
-
-              }
-
-            })
-      }
-    },
-
-    moveLeft() {
-      if(!this.rightSelectedUsers.length) return;
-      for(let i=this.rightSelectedUsers.length;i>0;i--) {
-        let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
-        this.rightUsers.splice(idx, 1);
-        this.availableProperties.push(this.rightSelectedUsers[i - 1])
-        this.rightSelectedUsers.pop();
-      }
-    },
-
-
-    moveRight() {
-      if (!this.leftSelectedUsers.length) return;
-      for (let i = this.leftSelectedUsers.length; i > 0; i--) {
-        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i-1]);
-        this.availableProperties.splice(idx, 1);
-        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
-        this.tempListClear.push(this.leftSelectedUsers[i - 1]);
-        this.leftSelectedUsers.pop();
-      }
-    },
-
-    //Vue 3 Start Step 2 left Search Function
-    searchPropertiesFilter() {
-      var input;
-      var formattedInput;
-      var listBoxValues;
-      var selectedListBoxValue;
-      var i;
-      var txtValue;
-
-      input = document.getElementById("searchProperties"); //text input
-      formattedInput = input.value.toUpperCase();  //change to upper case
-
-      listBoxValues = document.getElementById("selectSearchProperties");
-      for (i = 0; i < listBoxValues.length; i++) {
-        selectedListBoxValue = listBoxValues[i];
-        txtValue = selectedListBoxValue.textContent || selectedListBoxValue.innerText;
-        if (txtValue.toUpperCase().indexOf(formattedInput) > -1) {
-          listBoxValues[i].style.display = "";
-        } else {
-          listBoxValues[i].style.display = "none";
-        }
-      }
-    },
-    //Vue 3 End
-
-
-
-    //Vue 3 Start Step 2 Right Search Function
-    searchSelectedPropertiesFilter() {
-      var input;
-      var formattedInput;
-      var listBoxValues;
-      var selectedListBoxValue;
-      var i;
-      var txtValue;
-
-      input = document.getElementById("selectedProperties"); //text input
-      formattedInput = input.value.toUpperCase();  //change to upper case
-
-      listBoxValues = document.getElementById("selectSelectedProperties");
-      for (i = 0; i < listBoxValues.length; i++) {
-        selectedListBoxValue = listBoxValues[i];
-        txtValue = selectedListBoxValue.textContent || selectedListBoxValue.innerText;
-        if (txtValue.toUpperCase().indexOf(formattedInput) > -1) {
-          listBoxValues[i].style.display = "";
-        } else {
-          listBoxValues[i].style.display = "none";
-        }
-      }
-    },
-    //Vue 3 End
-
-    //When page loads certain objects like buttons or text boxes will be hidden
-    hideObjectsOnScreen() {
-      document.getElementById("SelectProperties1").style.display = "none";
-      document.getElementById("backButton").style.display = "none";
-      document.getElementById("exportStep").style.display = "none";
-      document.getElementById("exportButton").style.display = "none";
-
-
-    },
-    validateFirstStep() {
-      // make sure the user has a code entered
-
-      //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
-      //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
-      //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
-//alert (this.availableProperties.value);
-      //    var obj = JSON.parse(this.availableProperties.value);
-      //alert("JSON " + obj);
-      //  document.getElementById("selectSearchProperties").innerHTML = obj.name;
-      //alert("Test2");
-
-      //Vue 3 STEP 1
-      if (selectNextOptionBTN_counter === 3) {
-        alert("counter 3 if disabledment")
-        document.getElementById("exportStep").style.display = "";  //Show Export dropdown
-        document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
-        document.getElementById("exportButton").style.display = ""; //Show Export button
-        document.getElementById("nextButton").style.display = ""; //Hides next button
-      }
-
-      if (selectNextOptionBTN_counter === 2) {
-        this.validatePropertyStep();
-      }
-
-
-      alert(selectNextOptionBTN_counter);
-      alert("test c");
-      alert(Object.keys(this.selectedTags).length);
-
-      //Vue 3 (Builds screen on step 2)
-      if (selectNextOptionBTN_counter === 1) {
-        //  if (Object.keys(this.tags).length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
-        document.getElementById("clearButton").style.display = "none";    //Hides clear button
-        document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
-        document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
-        document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
-        document.getElementById("backButton").style.display = "";     //Shows back button
-        selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
-
-        // load properties after the page is loaded.
-        /*
-                  api.getProperties(this.$baseURL)
-                      .then((data)=>{this.availableProperties = data[-1];
-                      })
-        */
-        //
-        api.getProperties(this.$baseURL)
-            .then((data)=> {
-              for (let x = 0 ; x < data.length; x++) {
-                this.availableProperties.push(data[x].name);
-              }
-            })
-
-
-
-        for (let i = 0; i <= this.rightUsers.length + 2; i++) {
-          this.rightUsers.pop();
-        }
-
-
-        //}
-      }
-
-
-    },
-
-    //Vue 3 STEP 2
-    validatePropertyStep() {
-      // make sure the user has selected at least one property
-      //Hides objects on screen that shouldn't appear in step 2
-      // document.getElementById("entityTextID").style.display = " ";
-      // document.getElementById("entityLabelId").style.display = " ";
-
-      if (this.rightUsers.length > 0) {
-        document.getElementById("exportStep").style.display = "";  //Show Export dropdown
-        document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
-        document.getElementById("exportButton").style.display = ""; //Show Export button
-        document.getElementById("nextOption").style.display = "none"; //Hides next option button
-
-        if (Object.keys(this.rightUsers).length > 0) {
-          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
-          return Object.keys(this.rightUsers).length > 0
-        }
-      }
-    },
-    backStep(){
-      //Shows screen for step 1
-      if (selectNextOptionBTN_counter === 2) {
-        document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
-        document.getElementById("clearButton").style.display = "";    //Shows clear button
-        document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
-        document.getElementById("entityLabelId").style.display = "";  //Shows label on main screen
-        document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
-        document.getElementById("nextOption").style.display = "";     //Shows next button
-        selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
-
-        if(!this.rightUsers.length) return;
-        for(let i=this.rightUsers.length;i>0;i--) {
-          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
-          this.rightUsers.splice(idx, 1);
-          this.availableProperties.push(this.tempListClear[i - 1])
-          this.rightSelectedUsers.pop();
-          this.tempListClear.pop();
-        }
-        this.availableProperties.sort();
-
-      }
-
-      //Shows screen =for step 2
-      if (selectNextOptionBTN_counter === 3) {
-        document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
-        document.getElementById("backButton").style.display = "";     //Shows back button on main screen
-        document.getElementById("exportButton").style.display = "none"; //Hides Export button
-        document.getElementById("nextOption").style.display = ""; //Hides next button
-        document.getElementById("exportStep").style.display = "none";  //Hides Export Step
-        selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
-      }
-    },
-
-    setSelectedPropertyNames() {
-      this.userSelectedProperyNames = []
-      for (let i = 0; i < this.rightUsers.length; i++) {
-        this.userSelectedProperyNames.push(this.rightUsers[i].name)
-      }
-    },
-
-
-
-    //Vue 3 Function controls Select format Export dropdown on Step 3
-    changeSelectedExportList(event){
-      this.userSelectedFormat = event.target.value;
-      if (event.target.value === "json") {
-        this.fileFormat = "JSON";
-        this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
-      }
-
-      if (event.target.value === "csv") {
-        this.fileFormat = "CSV";
-        this.selectedExportListName = "CSV (csv) Comma Separated Value Format"
-      }
-
-      if (event.target.value === "txt") {
-        this.fileFormat = "TABD";
-        this.selectedExportListName = "TABD (txt) Tab Delimited Value Format"
-      }
-
-      if (event.target.value === "xlsx") {
-        this.fileFormat = "EXCEL";
-        this.selectedExportListName = "EXCEL (xlsx) Microsoft Excel Format"
-      }
-    },
-
-
-    exportStep() {
-      this.downloadFile();
-    },
-
-
-
-
-
 
     gaTrackDownload () {
       // Send Google analytics download event
@@ -1001,6 +438,19 @@ export default {
     itemClick (node) {
       //console.log(node.model.id + ' clicked !')
       this.treeSelectedCode = node.model.id;
+    },
+
+    // Wizard methods
+    validateFirstStep() {
+      // make sure the user has a code entered and level.
+      // if they did, then get number of children
+      var stepIsValid = Object.keys(this.selectedTags).length>0 && this.selectedLevel>0
+      return stepIsValid
+    },
+
+    validatePropertyStep() {
+      // make sure the user has selected at least one property
+      return Object.keys(this.selectedProperties).length>0
     },
 
     validateExportStep() {
@@ -1143,6 +593,13 @@ export default {
       }
     },
 
+    setSelectedPropertyNames() {
+      this.userSelectedProperyNames = []
+
+      for (let i = 0; i < Object.keys(this.selectedProperties).length; i++) {
+        this.userSelectedProperyNames.push(this.selectedProperties[i].name)
+      }
+    },
 
     // Update the top node that was entered with the description.
     // User enters "C12434", the updated value displayed will be "C12434:Blood".
@@ -1363,7 +820,6 @@ export default {
       });
     },
 
-
     downloadDeferredResult(hashId) {
       axios({
         url:this.$baseURL +
@@ -1475,7 +931,6 @@ export default {
         })
   }
 }
-
 </script>
 
 <!-- styling for the component -->
@@ -1499,6 +954,7 @@ export default {
 /* .form-group {
     margin-bottom: 0rem;
 } */
+
 .modal-active{
   display:block;
 }
@@ -1516,128 +972,4 @@ export default {
   border-color: rgb(0, 125, 188);
   color: white;
 }
-.tree-display{
-  padding-left: 400px;
-}
-
-.levels-label{
-  padding-left: 1px;
-
-}
-
-.levelsDropdown{
-
-  width: 555px;
-  position: absolute;
-}
-.entityCodeInput{
-  width: 555px;
-  position: absolute;
-}
-
-.entityText{
-  padding-left: 277px;
-}
-
-.entityLabel{
-  padding-left: 277px;
-}
-
-ul {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin: 0;
-  padding: 0;
-}
-.tag {
-  background-color: rgb(0, 125, 188);
-  padding: 5px;
-  border-radius: 4px;
-  color: white;
-  white-space: nowrap;
-  transition: 0.1s ease background;
-}
-
-.delete {
-  color: white;
-  background: none;
-  outline: none;
-  border: none;
-  cursor: pointer;
-}
-
-.toListBox {
-  background-color: rgb(0, 125, 188);
-  padding: 5px;
-  border-radius: 4px;
-  color: white;
-  white-space: nowrap;
-  transition: 0.1s ease background;
-}
-
-.fromListBox {
-  background-color: rgb(0, 125, 188);
-  padding: 5px;
-  border-radius: 4px;
-  color: white;
-  white-space: nowrap;
-  transition: 0.1s ease background;
-}
-
-.listBoxButton{
-  margin-top : 110px;
-  display: block;
-}
-
-.btn-delete{
-  background-color: rgb(0, 125, 188);
-  border-color: rgb(0, 125, 188);
-  color: white;
-  padding: 5px;
-  border-radius: 4px;
-  margin-left: 277px;
-  width: 100px;
-}
-
-.btn-next{
-  background-color: rgb(0, 125, 188);
-  border-color: rgb(0, 125, 188);
-  color: white;
-  padding: 5px;
-  border-radius: 4px;
-  margin-left: 300px;
-  width: 158px;
-}
-
-.btn-export{
-  background-color: rgb(0, 125, 188);
-  border-color: rgb(0, 125, 188);
-  color: white;
-  padding: 5px;
-  border-radius: 4px;
-  margin-left: 300px;
-  width: 158px;
-}
-
-.btn-back{
-  background-color: rgb(0, 125, 188);
-  border-color: rgb(0, 125, 188);
-  color: white;
-  padding: 5px;
-  border-radius: 4px;
-  margin-left: 277px;
-  width: 158px;
-}
-
-
-.modalfade{
-  margin-top : 110px;
-  margin-left: 277px;
-}
-
-
-
 </style>
-
