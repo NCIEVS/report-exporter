@@ -281,7 +281,7 @@ export default {
 
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
-      //alert(index);
+      alert(index.value);
       tags.value.splice(index, 1);
       tagCounter1 = tagCounter1  - 1;
     };
@@ -381,10 +381,10 @@ export default {
                       this.newTagCounter = this.newTagCounter + 1;
                     }
                   }else{
+                          this.tags.push(tag + ":" + "");   //take out after testing
+                          this.newTag = ""                  //take out after testing
+                          this.tagCounter = this.tagCounter + 1;  //take out after testing
                     this.$notify({
-                      //    this.tags.push(tag + ":" + "");   //take out after testing
-                      //    this.newTag = ""                  //take out after testing
-                      //     this.tagCounter = this.tagCounter + 1;  //take out after testing
                       group: 'app',
                       title: 'Validation Failure',
                       text: 'Could not verify concept code(s).  Possible network issue.',
@@ -399,9 +399,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 }else{
-                //      this.tags.push(tag + ":" + "");   //take out after testing
-                //      this.newTag = ""                  //take out after testing
-                //       this.tagCounter = this.tagCounter + 1;  //take out after testing
+                      this.tags.push(tag + ":" + "");   //take out after testing
+                      this.newTag = ""                  //take out after testing
+                      this.tagCounter = this.tagCounter + 1;  //take out after testing
                   this.$notify({
                     group: 'app',
                     title: 'Validation Failure',
