@@ -149,7 +149,6 @@ app.use(VueGtag, {
 app.config.globalProperties.$baseURL = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_ROOT_CONTEXT
 
 
-
 // instatiate the vue instance
 //createApp(app);{
 //createApp(App).mount('#app')({

@@ -422,18 +422,18 @@ export default {
 
       treeDisplayData: [
         {
-          text: this.treeLevel,
+          text: "level 1",
           state: {checked: false, selected: true, expanded: false},
           id: 1,
           checkable: true,
           nodes: [
               {
-            text: "Level 2",
+            text: "Level 2a",
             state: {checked: false, selected: true, expanded: false},
             id: 2,
             checkable: true,
             nodes: [           {
-              text: "level 3",
+              text: "level 2b",
               state: {checked: false, selected: true, expanded: false},
               checkable: true,
               id: 5,
@@ -1363,7 +1363,7 @@ export default {
         console.error("Polling Deferred Status Error: " + error)
       });
     },
-    
+
 
     downloadDeferredResult(hashId) {
       axios({

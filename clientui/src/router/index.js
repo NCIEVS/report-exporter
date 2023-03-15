@@ -18,7 +18,12 @@ const routes = [
         component: ReportSelection,
     },
 
-    { path: "/ReportSelection",
+  //  { path: "/ReportSelection",
+  //      name: "Report Selection",
+  //      component: ReportSelection,
+  //  },
+
+    { path: "/report-exporter",
         name: "Report Selection",
         component: ReportSelection,
     },
