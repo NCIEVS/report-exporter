@@ -44,7 +44,19 @@
       <input placeholder="Type entity code, then click enter"
              class="entityCodeInput" v-model="newTag"
              @keyup.enter.exact="addTag1(newTag)"
-             @keyup.space.exact="addTag1(newTag)">
+             @keyup.space.exact="addTag1(newTag)"
+             onchange = "addTag1(newTag)"
+             list="entityList">
+      <br>
+      <datalist id="entityList">
+        <option value="C12219:Anatomic Structure System or Substance"></option>
+        <option value="C12508:Cell"></option>
+        <option value="C1909:Pharmacologic Substance"></option>
+        <option value="C22187:Experimental Organism Diagnosis"></option>
+        <option value="C2916:Carcinoma"></option>
+        <option value="C3262:Neoplasm"></option>
+        <option value="C61410:Clinical Data Interchange Standards Consortium Terminology"></option>
+      </datalist>
       <br>
       <br>
       <div class = "tag-input"></div>
