@@ -1,5 +1,5 @@
 <template>
-
+  <div id="read-codes-entry" class="container">
 
 
     <div class="vue-form-wizard">
@@ -32,16 +32,127 @@
     <!--Vue 3 End-->
 
 
-    <div id="app"  >
-      <Tree
-          id="my-tree-id"
-          ref="my-tree"
-          :custom-options="myCustomOptions"
-          :custom-styles="myCustomStyles"
-          :nodes="treeDisplayData"
-      ></Tree>
+
+    <!--Vue 3 Entity Label field  Start-->
+    <div class="entityLabel" id = "entityLabelId">
+      <label for="tags" >Enter NCI Thesaurus concept codes</label>
+    </div>
+    <!--Vue 3 Entity Label field  End-->
+
+    <!--Vue 3 Entity Text field  Start-->
+    <div class="entityText" id = "entityTextID" element-id="tag-input">
+      <input placeholder="Type entity code, then click enter"
+             class="entityCodeInput" v-model="newTag"
+             @keyup.enter.exact="addTag1(newTag)"
+             @keyup.space.exact="addTag1(newTag)"
+             onchange = "addTag1(newTag)"
+             list="entityList">
+      <br>
+      <datalist id="entityList">
+        <option value="C12219:Anatomic Structure System or Substance"></option>
+        <option value="C12508:Cell"></option>
+        <option value="C1909:Pharmacologic Substance"></option>
+        <option value="C22187:Experimental Organism Diagnosis"></option>
+        <option value="C2916:Carcinoma"></option>
+        <option value="C3262:Neoplasm"></option>
+        <option value="C61410:Clinical Data Interchange Standards Consortium Terminology"></option>
+      </datalist>
+      <br>
+      <br>
+      <div class = "tag-input"></div>
+      <ul class="tags" id = "listOfTags">
+        <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
+          {{ tag }}
+          <button class="delete" @click="removeTag(index)">x</button>
+        </a></li>
+      </ul>
+
+
+      <label for="levelSelection" class = "levels-label">Select how many levels to retrieve</label>
+      <br>
+      <select v-model="selectedLevel" id="levelSelection" class="levelsDropdown" v-on:change="onLevelChange()">
+        <option v-for="level in levels"
+                :value="level.id"
+                :key="level.name">
+          {{ level.name }}
+        </option>
+      </select>
+      <br>
+      <br>
+      <br>
+      <strong><label for="ncitLabel" class = "levels-label">NCIt Tree:</label></strong>
+      <br>
+
     </div>
     <br>
+
+    <!--Vue 3 step 2 list boxes Start -->
+    <div id="app" class="container">
+      <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
+        <div class="container">
+          <form>
+            <div class="form-group">
+              <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
+            </div>
+            <div class="form-group">
+              <div class="msl-multi-select">
+                <div class="msl-searchable-list msl-multi-select__list">
+                  <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
+                  <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
+                    <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                      {{ userLeft }}
+                    </option>
+                  </select>
+                </div>
+                <div class="listBoxButton">
+                  <table>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type = "button" value = "=>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+
+                  <table>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type = "button" value = "<=" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                  <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
+                  <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
+                    <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
+                      {{ userRight }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--Vue 3 step 2 list boxes End -->
+
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
@@ -59,6 +170,95 @@
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
 
+
+
+
+
+    <!--Vue 3 Entity Text field  End-->
+
+
+
+    <!-- Summary Information -->
+    <div id="accordion" class="pb-3 pt-3">
+      <div class="card">
+        <div class="card-header" id="headingOne"  style="
+              padding-left: 1px;
+              padding-right: 1px;
+              padding-bottom: 1px;
+              padding-top: 1px;
+          ">
+          <center>
+            <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
+              {{this.showSummaryText}}
+            </button>
+          </center>
+
+        </div>
+
+
+        <div id="accordion" class="pb-3 pt-3">
+          <div class="card">
+            <div id="headingOne" class="card-header" style="padding: 1px;">
+
+
+
+              <!--
+            <center>
+              <button data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary" class="btn btn-link"> Hide Selection Summary </button>
+            </center>
+            -->
+              <!-- Vue3 Selection Summary List boxes Start  -->
+            </div>
+            <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
+              <div class="card-body pb-1">
+                <div class="row p-1">
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">
+                        Selected Concept Codes
+                        <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span>
+                      </div>
+
+
+                      <div class="card-body">
+                        <span class="list-group" id="selectedConceptCodesTags">{{ this.tags }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">
+                        Selected Properties
+                        <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
+                      </div>
+                      <div class="card-body">
+                        <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">Selected Export Format</div>
+                      <div class="card-body">
+                        <ul class="list-group" id="selectedPropertyList">
+                          <li>
+                            {{ selectedExportListName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vue3 Selection Summary List boxes End  -->
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -67,7 +267,7 @@
 import api from '../api.js'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import Tree from 'vuejs-tree'
+//import Tree from 'vuejs-tree'
 import {ref} from "vue";
 
 
@@ -82,7 +282,7 @@ export default {
     msg: String
   },
   components: {
-    Tree,
+   // Tree,
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -1443,5 +1643,6 @@ ul {
 
 
 </style>
+
 
 
