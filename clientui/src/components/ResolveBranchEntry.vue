@@ -214,14 +214,20 @@
                 <div class="row p-1">
                   <div class="col-sm-4">
                     <div class="card bg-light border-dark mb-3">
-                      <div class="card-header">
-                        Selected Concept Codes
-                        <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span>
-                      </div>
-
-
+                      <div class="card-header">Selected Top Node and Levels
+                        <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span></div>
                       <div class="card-body">
-                        <span class="list-group" id="selectedConceptCodesTags">{{ this.tags }}</span>
+                        <ul class="list-group" id="selectedTagList">
+                          <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
+                            {{ this.tags }}
+                          </li>
+                          <li>
+                            Levels to Export: {{ selectedLevel }}
+                          </li>
+                          <li>
+                            Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
