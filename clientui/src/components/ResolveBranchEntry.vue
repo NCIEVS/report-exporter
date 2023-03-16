@@ -229,7 +229,7 @@
                         <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span></div>
                       <div class="card-body">
                         <ul class="list-group" id="selectedTagList">
-                          <li v-for="selectedTag in selectedTags" :key="selectedTag.key">
+                          <li>
                             {{ this.tags }}
                           </li>
                           <li>
