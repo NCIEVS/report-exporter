@@ -107,6 +107,7 @@
 
 import nciWarningModal from './NCIWarning.vue';
 
+
 export default {
   name: 'ReportSelection',
   props: {
@@ -131,10 +132,12 @@ export default {
   methods: {
     showModal() {
       var warningCookie = this.$cookies.get(this.warningCookie);
+      alert(warningCookie);
       if (!warningCookie) {
         this.isModalVisible = true;
       }
     },
+
 
 
     closeModal() {
