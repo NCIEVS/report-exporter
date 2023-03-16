@@ -85,9 +85,9 @@
 
 
       <br>
-      <div id="app"  class = "tree-display">
+      <div id="app"  class = "tree-display" @dblclick="getNodeValue()">
       <Tree
-          id="my-tree-id"
+          id="this.my_tree_id"
           ref="my-tree"
           :custom-options="myCustomOptions"
           :custom-styles="myCustomStyles"
@@ -401,6 +401,7 @@ export default {
       leftUsers: [],
       rightSelectedUsers:[],
       rightUsers:[],
+     // my_tree_id,
       levels: [
         {id: 1, name: '1 Level'},
         {id: 2, name: '2 Levels'},
@@ -574,8 +575,9 @@ export default {
   methods: {
 
     getNodeValue(){
-      this.treeLevel = "TEST"
-      alert("test");
+      //this.treeLevel = "TEST"
+      //alert("This is the selected node " + selectedNode);
+      alert("This is the selected node " );
     },
     myCustomOptions() {
 
@@ -1482,10 +1484,15 @@ export default {
     this.updateShowSummary();
 
     // load properties after the page is loaded.
+   // api.getProperties(this.$baseURL)
+   //     .then((data)=>{this.availableProperties = data;
+   //     })
     api.getProperties(this.$baseURL)
-        .then((data)=>{this.availableProperties = data;
+        .then((data)=> {
+          for (let x = 0 ; x < data.length; x++) {
+            this.availableProperties.push(data[x].name);
+          }
         })
-
     // get the currated tags from the server,
     // then set the input field with these
     api.getCuratedTopNodes(this.$baseURL)
