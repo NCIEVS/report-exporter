@@ -32,14 +32,13 @@
     <!--Vue 3 End-->
 
 
-    <div id="app"  class = "tree-display">
+    <div id="app"  >
       <Tree
           id="my-tree-id"
           ref="my-tree"
           :custom-options="myCustomOptions"
           :custom-styles="myCustomStyles"
           :nodes="treeDisplayData"
-          :@dblclick="myCheckedFunction"
       ></Tree>
     </div>
     <br>
