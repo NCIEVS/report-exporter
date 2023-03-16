@@ -81,8 +81,19 @@
       <br>
       <br>
       <strong><label for="ncitLabel" class = "levels-label">NCIt Tree:</label></strong>
-      <br>
 
+
+
+      <br>
+      <div id="app"  class = "tree-display">
+      <Tree
+          id="my-tree-id"
+          ref="my-tree"
+          :custom-options="myCustomOptions"
+          :custom-styles="myCustomStyles"
+          :nodes="treeDisplayData"
+      ></Tree>
+      </div>
     </div>
     <br>
 
@@ -273,7 +284,7 @@
 import api from '../api.js'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
-//import Tree from 'vuejs-tree'
+import Tree from 'vuejs-tree'
 import {ref} from "vue";
 
 
@@ -288,7 +299,7 @@ export default {
     msg: String
   },
   components: {
-   // Tree,
+    Tree,
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -1526,7 +1537,7 @@ export default {
   color: white;
 }
 .tree-display{
-  padding-left: 400px;
+  padding-left: 100px;
 }
 
 .levels-label{
