@@ -28,8 +28,30 @@
           </form>
         </div>
       </div>
-    </div>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+          <div role="alert" class="alert alert-secondary"> This report will resolve 2 level(s) with a total of 123 children. </div>
+          <label for="exportRadio">Select how to export</label>
+          <div class="custom-control custom-radio">
+            <input type="radio" value="exportNow" id="exportNow" checked="checked" name="exportRadio" class="custom-control-input">
+            <label for="exportNow" class="custom-control-label">
+              "Export now"
+            </label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" value="exportDeferred" id="exportDeferred" name="exportRadio" class="custom-control-input">
+            <label for="exportDeferred" class="custom-control-label">
+              "Export and download later"
+            </label>
+          </div>
+        </div>
+        </div>
+      </div>
     <!--Vue 3 End-->
+
+
+
+
 
 
 
@@ -322,7 +344,7 @@ export default {
 
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
-      alert(index.value);
+      alert(index);
       tags.value.splice(index, 1);
       tagCounter1 = tagCounter1  - 1;
     };
@@ -443,19 +465,19 @@ export default {
       treeDisplayData: [
         {
           text: "level 1",
-          state: {checked: false, selected: true, expanded: false},
+          state: {checked: false, selected: true, expanded: true},
           id: 1,
-          checkable: false,
+          checkable: true,
           nodes: [
             {
               text: "Level 2a",
               state: {checked: false, selected: true, expanded: false},
               id: 2,
-              checkable: false,
+              checkable: true,
               nodes: [           {
                 text: "level 2b",
                 state: {checked: false, selected: true, expanded: false},
-                checkable: false,
+                checkable: true,
                 id: 5,
                 nodes: [],
 
@@ -577,8 +599,17 @@ export default {
     getNodeValue(){
       //this.treeLevel = "TEST"
       //alert("This is the selected node " + selectedNode);
+      var test1;
+      test1 = document.getElementById('this.my_tree_id').value
       alert("This is the selected node " );
+      alert("This is the element " + test1);
+      alert(this.$refs["my-tree"].getSelectedNode());
+      this.myCustomOptions();
+      this.myCheckedFunction();
+
+
     },
+
     myCustomOptions() {
 
       return {
@@ -633,16 +664,32 @@ export default {
 
     myCheckedFunction (nodeId, disabled) {
       alert("myCHeckedFunction");
+      alert("this is the node id " + nodeId);
+      alert("this is disabled " + disabled);
       this.loadData(nodeId, disabled);
-      console.log(`is ${nodeId} checked ? ${disabled}`);
+      alert(`is ${nodeId} checked ? ${disabled}`);
       alert(this.$refs["my-tree"].getCheckedNodes("id"));
       alert(this.$refs["my-tree"].getCheckedNodes("text"));
     },
+
+
     mySelectedFunction: function (nodeId, disabled) {
+      alert("mySelectedFunction invoked")
       this.loadData(nodeId, disabled);
-      console.log(`is ${nodeId} selected ? ${disabled}`);
-      console.log(this.$refs["my-tree"].getSelectedNode());
+      alert(`is ${nodeId} selected ? ${disabled}`);
+      alert(this.$refs["my-tree"].getSelectedNode());
     },
+
+    functiontest2()
+    {
+      alert("second function");
+    },
+
+
+
+
+
+
     deleteNodeFunction: function (node) {
       const nodePath = this.$refs["my-tree"].findNodePath(node.id);
       const parentNodeId = nodePath.slice(-2, -1)[0];
@@ -701,50 +748,75 @@ export default {
     addTag1(tag) {
       var codeDescription = [];
       //var baseLink = document.getElementById('basURL').value;
-      var tagCounter = 0;
-      var newTagCounter = 0;
+      //    var this.tagCounter = 0;
+      //    var this.newTagCounter = 0;
+      var dupTagCheck = false;
       //const tags = ref([]);
       //const newTag = ref('') //keep up with new tag
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
 
+      this.setSelectedTags()
 
+      for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
+        if (this.userEnteredCodes[i] === tag) {
+          dupTagCheck = true;
+        }
+      }
+      //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
-              // alert("after call");
-              // data = "test";
-              if ((data != null) && (data!== undefined)) {
-                alert("after checks");
+              if ((data !== null) && (data!== undefined) && (data!== "")) {
                 for (let x = data.length - 1; x >= 0; x--) {
-                  //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
-                  codeDescription = data[x].name;
-                  alert("before push");
-                  this.tags.push(tag + ":" + codeDescription);
-                  this.newTag = ""; // reset newTag
-                  tagCounter = tagCounter + 1;
-                  newTagCounter = newTagCounter + 1;
-                  //   alert("Before getEntities Call()");
-                  //getEntities();
-                  //  alert("After getEntities Call()");
+                  //  alert(data[x].name);
+                  //  if ((data[x].name != null) && (data[x].name!== undefined)  && (data[x].length < 1)) {
+                  //  if ((data[x].name.length > 0) && (data[x].name!== undefined)) {
+                  if ((data[x].name.length > 0)  &&  (data[x].name != null)){
+
+                    //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
+                    if (dupTagCheck === true) {
+                      this.newTag = [];
+                      dupTagCheck = false;
+                    }else {
+                      codeDescription = data[x].name;
+                      this.tags.push(tag + ":" + codeDescription);
+                      this.newTag = ""; // reset newTag
+                      this.tagCounter = this.tagCounter + 1;
+                      this.newTagCounter = this.newTagCounter + 1;
+                    }
+                  }else{
+                    this.tags.push(tag + ":" + "");   //take out after testing
+                    this.newTag = ""                  //take out after testing
+                    this.tagCounter = this.tagCounter + 1;  //take out after testing
+                    this.$notify({
+                      group: 'app',
+                      title: 'Validation Failure',
+                      text: 'Could not verify concept code(s).  Possible network issue.',
+                      type: 'error',
+                      duration: 4000,
+                      position: "left bottom"
+                    });
+                  }
                 }
               }else {
-                this.tags.push(tag + ":" + "");
-                this.newTag = ""
-                tagCounter = tagCounter + 1;
-                newTagCounter = newTagCounter + 1;
-                alert("tag counter " + newTagCounter);
-                this.$notify({
-                  group: 'app',
-                  title: 'Validation Failure',
-                  text: 'Could not verify concept code(s).  Possible network issue.',
-                  type: 'error',
-                  duration: 4000,
-                  position: "left bottom"
-                });
-
+                if (dupTagCheck === true) {
+                  this.newTag = [];
+                  dupTagCheck = false;
+                }else{
+                  this.tags.push(tag + ":" + "");   //take out after testing
+                  this.newTag = ""                  //take out after testing
+                  this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  this.$notify({
+                    group: 'app',
+                    title: 'Validation Failure',
+                    text: 'Could not verify concept code(s).  Possible network issue.',
+                    type: 'error',
+                    duration: 4000,
+                    position: "left bottom"
+                  });
+                }
               }
-
             })
       }
     },

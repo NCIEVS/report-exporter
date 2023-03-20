@@ -48,6 +48,8 @@
     "vue3-simple-alert": "1.0.4",
     "vuejs-tree": "3.0.2",
     "search-dropdown-vue" : "1.0.3",
+    "vue3-router-tree" : "0.2.4",
+    "vue3-treeselect" : "0.1.10",
     "vue3-router-tree" : "0.2.4"
 
   },

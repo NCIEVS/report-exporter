@@ -281,7 +281,7 @@ export default {
 
     //Vue 3 Remotes a tag below text box
     const removeTag = (index) => {
-      alert(index.value);
+      alert(index);
       tags.value.splice(index, 1);
       tagCounter1 = tagCounter1  - 1;
     };
