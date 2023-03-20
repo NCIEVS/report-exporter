@@ -1,3 +1,5 @@
+TREE 4 Green and part Purple 3/20/23 4:45 am
+
 <template>
   <div id="read-codes-entry" class="container">
 
@@ -45,8 +47,8 @@
             </label>
           </div>
         </div>
-        </div>
       </div>
+    </div>
     <!--Vue 3 End-->
 
 
@@ -108,16 +110,25 @@
 
       <br>
       <div id="app"  class = "tree-display" @dblclick="getNodeValue()">
-      <Tree
-          id="this.my_tree_id"
-          ref="my-tree"
-          :custom-options="myCustomOptions"
-          :custom-styles="myCustomStyles"
-          :nodes="treeDisplayData"
-      ></Tree>
+        <Tree
+            id="this.my_tree_id"
+            ref="my-tree"
+            :custom-options="myCustomOptions"
+            :custom-styles="myCustomStyles"
+            :nodes="treeDisplayData"
+        ></Tree>
       </div>
     </div>
     <br>
+    <div class="demo"  @dblclick="checkRoutes">
+      <vue3-router-tree :items="routes"> </vue3-router-tree>
+    </div>
+    <br>
+
+
+
+
+
 
     <!--Vue 3 step 2 list boxes Start -->
     <div id="app" class="container">
@@ -308,6 +319,9 @@ import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import Tree from 'vuejs-tree'
 import {ref} from "vue";
+import { defineComponent } from 'vue';
+
+import Vue3RouterTree from 'vue3-router-tree';
 
 
 
@@ -318,10 +332,12 @@ let selectNextOptionBTN_counter =  1;
 export default {
   name: 'resolve-branch-entry',
   props: {
-    msg: String
+    msg: String,
+    defineComponent
   },
   components: {
     Tree,
+    Vue3RouterTree
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -423,7 +439,57 @@ export default {
       leftUsers: [],
       rightSelectedUsers:[],
       rightUsers:[],
-     // my_tree_id,
+      routes: [
+        {
+          path: '/',
+          name: 'Home',
+          hasIcon: true,
+        },
+        {
+          path: '/dashboard',
+          name: 'Dashboard',
+          hasIcon: true,
+        },
+        {
+          path: '/component',
+          name: 'Components',
+          hasIcon: true,
+          children: [
+            {
+              path: '/alerts',
+              name: 'Alerts',
+            },
+            {
+              path: '/avatars',
+              name: 'Avatars',
+            },
+            {
+              path: '/buttons',
+              name: 'Buttons',
+            },
+            {
+              path: '/forms',
+              name: 'Forms',
+              children: [
+                {
+                  path: '/autocompletes',
+                  name: 'Autocompletes',
+                },
+                {
+                  path: '/checkboxes',
+                  name: 'Checkboxes',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+
+
+
+
+
+
       levels: [
         {id: 1, name: '1 Level'},
         {id: 2, name: '2 Levels'},
@@ -595,6 +661,9 @@ export default {
   },
 
   methods: {
+    checkRoutes(){
+      alert("routes Check" + this.routes[1].length);
+    },
 
     getNodeValue(){
       //this.treeLevel = "TEST"
@@ -1226,6 +1295,7 @@ export default {
       }
     },
 
+    /*
     setSelectedTags() {
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
@@ -1234,6 +1304,24 @@ export default {
         // currated top nodes (from the server hava a value of "C12434:Blood")
         // so we need to strip off everything from the : to the right.
         this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
+      }
+    },
+*/
+
+    setSelectedTags () {
+      var bottomTab = "";
+      var indexBottomTab = 0;
+      // clear the internal user codes that are entered
+      this.userEnteredCodes = []
+      for (let i = 0; i < Object.keys(this.tags).length; i++) {
+        //  for (let i = 0; i < 1; i++) {
+        // currated top nodes (from the server hava a value of "C12434:Blood")
+        // so we need to strip off everything from the : to the right.
+        if (this.tags[i] !== "undefined") {
+          bottomTab = this.tags[i];
+          indexBottomTab = bottomTab.indexOf(":");
+          this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
+        }
       }
     },
 
@@ -1335,6 +1423,7 @@ export default {
         position: "bottom left"
       });
 
+      /*
       // show the busy indicator
       let loader = this.$loading.show({
         container: this.$refs.formContainer,
@@ -1342,17 +1431,30 @@ export default {
         isFullPage: false,
       });
 
+
+       */
       // set the user selected tags and properties
       this.setSelectedTags()
       this.setSelectedPropertyNames()
 
+      alert("check 1");
+      alert("base URL: " + this.$baseURL);
+      alert("tags: " + this.userEnteredCodes);
+      alert("userSelectedProperyNames" + this.userSelectedProperyNames);
+      alert("selectedLevel" + this.selectedLevel);
+      alert("selectedPropertyName: " + this.rightUsers);
+      alert("SelectedFormat: " + this.fileFormat);
+      alert("filename: " + this.filename);
+      alert("selectedFormat Extension: " + this.userSelectedFormat);
+
+
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
             this.userEnteredCodes + '/' +
-            this.userSelectedProperyNames + '/' +
+            this.this.rightUsers + '/' +
             this.selectedLevel + '/' +
-            this.userSelectedFormat.name + '/' +
-            this.filename + '.' + this.userSelectedFormat.extension,
+            this.userSelectedFormat + '/' +
+            this.filename + '.' + this.userSelectedFormat,
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {
@@ -1360,13 +1462,14 @@ export default {
         var fileLink = document.createElement('a');
 
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
         document.body.appendChild(fileLink);
         fileLink.click();
       }).catch(function(error) {
         console.error("Download Error: " + error);
         alert("Error Downloading file");
-      }).finally(function() { loader.hide()});
+      })
+          //.finally(function() { loader.hide()});
     },
 
     async initiateDeferredDownloadAndWait() {
@@ -1379,11 +1482,14 @@ export default {
         position: "bottom left"
       });
       // show the busy indicator
+      /*
       let loader = this.$loading.show({
         container: this.$refs.formContainer,
         loader: 'dots',
         isFullPage: false,
       });
+
+       */
 
       this.gaTrackDownload();
 
@@ -1402,7 +1508,8 @@ export default {
               console.log("Error making Deferred call");
               alert("Error downloading deferred file");
             }
-          }).finally(function() { loader.hide()});
+          })
+          //.finally(function() { loader.hide()});
     },
 
     async initiateDeferredDownloadAndReturn() {
@@ -1556,9 +1663,9 @@ export default {
     this.updateShowSummary();
 
     // load properties after the page is loaded.
-   // api.getProperties(this.$baseURL)
-   //     .then((data)=>{this.availableProperties = data;
-   //     })
+    // api.getProperties(this.$baseURL)
+    //     .then((data)=>{this.availableProperties = data;
+    //     })
     api.getProperties(this.$baseURL)
         .then((data)=> {
           for (let x = 0 ; x < data.length; x++) {
@@ -1739,6 +1846,7 @@ ul {
 
 
 </style>
+
 
 
 
