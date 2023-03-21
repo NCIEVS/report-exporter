@@ -1,4 +1,4 @@
-TREE 4 Green and part Purple 3/20/23 4:45 am
+
 
 <template>
   <div id="read-codes-entry" class="container">
@@ -20,7 +20,7 @@ TREE 4 Green and part Purple 3/20/23 4:45 am
               <div>
                 <label for="downloadFormatLabel">Select format for export</label>
                 <select id="downloadFormat" class="form-control"  @change="changeSelectedExportList($event)">
-                  <option value="json"> JSON (json) JavaScript Object Notation Format </option>
+                  <option value="json"> JSON (json) JavaScript Object Notation Format1 </option>
                   <option value="csv"> CSV (csv) Comma Separated Value Format </option>
                   <option value="txt"> TABD (txt) Tab Delimited Value Format </option>
                   <option value="xlsx"> EXCEL (xlsx) Microsoft Excel Format </option>
@@ -69,10 +69,9 @@ TREE 4 Green and part Purple 3/20/23 4:45 am
              class="entityCodeInput" v-model="newTag"
              @keyup.enter.exact="addTag1(newTag)"
              @keyup.space.exact="addTag1(newTag)"
-             onchange = "addTag1(newTag)"
              list="entityList">
       <br>
-      <datalist id="entityList">
+      <datalist id="entityList" >
         <option value="C12219:Anatomic Structure System or Substance"></option>
         <option value="C12508:Cell"></option>
         <option value="C1909:Pharmacologic Substance"></option>
@@ -108,109 +107,108 @@ TREE 4 Green and part Purple 3/20/23 4:45 am
 
 
 
+      <Tree
+          :nodes="data"
+          :search-text="searchText"
+          :use-checkbox="true"
+          :use-icon="false"
+          use-row-delete
+          show-child-count
+          @nodeExpanded="onNodeExpanded"
+          @update:nodes="onUpdate"
+          @nodeClick="onNodeClick"
+      />
+
+
+</div>
       <br>
-      <div id="app"  class = "tree-display" @dblclick="getNodeValue()">
-        <Tree
-            id="this.my_tree_id"
-            ref="my-tree"
-            :custom-options="myCustomOptions"
-            :custom-styles="myCustomStyles"
-            :nodes="treeDisplayData"
-        ></Tree>
-      </div>
-    </div>
-    <br>
-    <div class="demo"  @dblclick="checkRoutes">
-      <vue3-router-tree :items="routes"> </vue3-router-tree>
-    </div>
-    <br>
 
 
 
 
 
 
-    <!--Vue 3 step 2 list boxes Start -->
-    <div id="app" class="container">
-      <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
-        <div class="container">
-          <form>
-            <div class="form-group">
-              <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
-            </div>
-            <div class="form-group">
-              <div class="msl-multi-select">
-                <div class="msl-searchable-list msl-multi-select__list">
-                  <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
-                  <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
-                    <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft }}
-                    </option>
-                  </select>
-                </div>
-                <div class="listBoxButton">
-                  <table>
-                    <tr>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td><input type = "button" value = "=>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                    </tr>
-                  </table>
+      <!--Vue 3 step 2 list boxes Start -->
+      <div id="app" class="container">
+        <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
+          <div class="container">
+            <form>
+              <div class="form-group">
+                <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
+              </div>
+              <div class="form-group">
+                <div class="msl-multi-select">
+                  <div class="msl-searchable-list msl-multi-select__list">
+                    <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
+                    <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
+                      <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                        {{ userLeft }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="listBoxButton">
+                    <table>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td><input type = "button" value = "=>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                    </table>
 
-                  <table>
-                    <tr>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td><input type = "button" value = "<=" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
-                  <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
-                  <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
-                    <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
-                      {{ userRight }}
-                    </option>
-                  </select>
+                    <table>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td><input type = "button" value = "<=" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                    <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
+                    <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
+                      <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
+                        {{ userRight }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    <!--Vue 3 step 2 list boxes End -->
+      <!--Vue 3 step 2 list boxes End -->
 
 
-    <span role="button" tabindex="0">
+      <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
 
-    <span role="button" tabindex="0">
+      <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "backButton" class="btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
       </span>
 
-    <span role="button" tabindex="0">
+      <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "nextOption" class="btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
       </span>
 
-    <span role="button" tabindex="0">
+      <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
 
@@ -218,83 +216,84 @@ TREE 4 Green and part Purple 3/20/23 4:45 am
 
 
 
-    <!--Vue 3 Entity Text field  End-->
+      <!--Vue 3 Entity Text field  End-->
 
 
 
-    <!-- Summary Information -->
-    <div id="accordion" class="pb-3 pt-3">
-      <div class="card">
-        <div class="card-header" id="headingOne"  style="
+      <!-- Summary Information -->
+      <div id="accordion" class="pb-3 pt-3">
+        <div class="card">
+          <div class="card-header" id="headingOne"  style="
               padding-left: 1px;
               padding-right: 1px;
               padding-bottom: 1px;
               padding-top: 1px;
           ">
-          <center>
-            <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
-              {{this.showSummaryText}}
-            </button>
-          </center>
-
-        </div>
-
-
-        <div id="accordion" class="pb-3 pt-3">
-          <div class="card">
-            <div id="headingOne" class="card-header" style="padding: 1px;">
-
-
-
-              <!--
             <center>
-              <button data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary" class="btn btn-link"> Hide Selection Summary </button>
+              <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
+                {{this.showSummaryText}}
+              </button>
             </center>
-            -->
-              <!-- Vue3 Selection Summary List boxes Start  -->
-            </div>
-            <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
-              <div class="card-body pb-1">
-                <div class="row p-1">
-                  <div class="col-sm-4">
-                    <div class="card bg-light border-dark mb-3">
-                      <div class="card-header">Selected Top Node and Levels
-                        <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span></div>
-                      <div class="card-body">
-                        <ul class="list-group" id="selectedTagList">
-                          <li>
-                            {{ this.tags }}
-                          </li>
-                          <li>
-                            Levels to Export: {{ selectedLevel }}
-                          </li>
-                          <li>
-                            Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
-                          </li>
-                        </ul>
+
+          </div>
+
+
+          <div id="accordion" class="pb-3 pt-3">
+            <div class="card">
+              <div id="headingOne" class="card-header" style="padding: 1px;">
+
+
+
+                <!--
+              <center>
+                <button data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary" class="btn btn-link"> Hide Selection Summary </button>
+              </center>
+              -->
+                <!-- Vue3 Selection Summary List boxes Start  -->
+              </div>
+              <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
+                <div class="card-body pb-1">
+                  <div class="row p-1">
+                    <div class="col-sm-4">
+                      <div class="card bg-light border-dark mb-3">
+                        <div class="card-header">Selected Top Node and Levels
+                          <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span></div>
+                        <div class="card-body">
+                          <ul class="list-group" id="selectedTagList">
+                            <li>
+                              {{ this.tags }}
+                            </li>
+                            <li>
+                              Levels to Export: {{ selectedLevel }}
+                            </li>
+                            <li>
+                              Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="card bg-light border-dark mb-3">
-                      <div class="card-header">
-                        Selected Properties
-                        <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
-                      </div>
-                      <div class="card-body">
-                        <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
+                    <div class="col-sm-4">
+                      <div class="card bg-light border-dark mb-3">
+                        <div class="card-header">
+                          Selected Properties
+                          <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
+                        </div>
+                        <div class="card-body">
+                          <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="card bg-light border-dark mb-3">
-                      <div class="card-header">Selected Export Format</div>
-                      <div class="card-body">
-                        <ul class="list-group" id="selectedPropertyList">
-                          <li>
-                            {{ selectedExportListName }}
-                          </li>
-                        </ul>
+                    <div class="col-sm-4">
+                      <div class="card bg-light border-dark mb-3">
+                        <div class="card-header">Selected Export Format</div>
+                        <div class="card-body">
+                          <ul class="list-group" id="selectedPropertyList">
+                            <li>
+                              {{ selectedExportListName }}
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -302,13 +301,12 @@ TREE 4 Green and part Purple 3/20/23 4:45 am
               </div>
             </div>
           </div>
+
+          <!-- Vue3 Selection Summary List boxes End  -->
+
         </div>
-
-        <!-- Vue3 Selection Summary List boxes End  -->
-
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -317,11 +315,9 @@ TREE 4 Green and part Purple 3/20/23 4:45 am
 import api from '../api.js'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import Tree from 'vuejs-tree'
 import {ref} from "vue";
-import { defineComponent } from 'vue';
-
-import Vue3RouterTree from 'vue3-router-tree';
+import Tree from "vue3-tree";
+import "vue3-tree/dist/style.css";
 
 
 
@@ -333,11 +329,9 @@ export default {
   name: 'resolve-branch-entry',
   props: {
     msg: String,
-    defineComponent
   },
   components: {
     Tree,
-    Vue3RouterTree
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -345,7 +339,7 @@ export default {
 
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
-    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
+    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format2"
     this.$refs["my-tree"].expandNode(1);
   },
   setup(){
@@ -365,7 +359,54 @@ export default {
       tagCounter1 = tagCounter1  - 1;
     };
 
-    return { tags, newTag, removeTag, tagCounter1 }
+    const data = ref([
+      {
+        id: 1,
+        label: "Level 1",
+        nodes: [
+          {
+            id: 2,
+            label: "Level 2",
+          },
+          {
+            id: 3,
+            label: "Level 3",
+            nodes: [
+              {
+                id: 4,
+                label: "Level 3 Child 1",
+              },
+              {
+                id: 5,
+                label: "Level 3 Child 2",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 6,
+        label: "Level 4",
+      },
+    ]);
+    const searchText = ref("");
+    const onNodeExpanded = (node, state) => {
+      console.log("state: ", state);
+      console.log("node: ", node);
+    };
+
+    const onUpdate = (nodes) => {
+      console.log("nodes:", nodes);
+    };
+
+
+    const onNodeClick = (node) => {
+     node.label = Object.values(node.label).replace(',', '');
+      alert("This node was selected: " + Object.values(node.label));
+
+    };
+
+    return { tags, newTag, removeTag,onNodeClick,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
   },
 
 
@@ -425,10 +466,11 @@ export default {
       availableProperties: [],
       selectedProperties: [],
       userSelectedProperyNames: [],
-      userSelectedFormat: {"name": "JSON", "description": "JavaScript Object Notation Format", "extension": "json"},
+      userSelectedFormat: '',
       curratedTopNodes: [],
       userSelectedTopNode: '',
       filename: 'branch',
+      fileFormat: '',
       downloadReturnCode: null,
       curratedTopNodesUI: [],
       getPropertyError: false,
@@ -522,16 +564,17 @@ export default {
       deferredStatus: false,
       showTree: true,
       asyncData: [],
+      selectedExportListName: '',
       treeSelectedCode: null,
       showSummary: true,
       showSummaryText: '',
       exportType: 'exportNow',
-      treeLevel: 'LEVEL 1',
+      treeLevel: '',
 
       treeDisplayData: [
         {
-          text: "level 1",
-          state: {checked: false, selected: true, expanded: true},
+          text: this.treeLevel = "level 1",
+          state: {checked: false, selected: false, expanded: true},
           id: 1,
           checkable: true,
           nodes: [
@@ -665,11 +708,12 @@ export default {
       alert("routes Check" + this.routes[1].length);
     },
 
-    getNodeValue(){
+    getNodeValue(value){
       //this.treeLevel = "TEST"
-      //alert("This is the selected node " + selectedNode);
+      alert("this is the function value " + value);
       var test1;
       test1 = document.getElementById('this.my_tree_id').value
+      alert("this is the tree level: " + this.treeDisplayData[0].selected);
       alert("This is the selected node " );
       alert("This is the element " + test1);
       alert(this.$refs["my-tree"].getSelectedNode());
@@ -1104,10 +1148,11 @@ export default {
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
     changeSelectedExportList(event){
+      alert("ChangeDropDrownTest " + event.target.value)
       this.userSelectedFormat = event.target.value;
       if (event.target.value === "json") {
         this.fileFormat = "JSON";
-        this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
+        this.selectedExportListName = "JSON (json) JavaScript Object Notation Format3"
       }
 
       if (event.target.value === "csv") {
@@ -1434,14 +1479,21 @@ export default {
 
        */
       // set the user selected tags and properties
-      this.setSelectedTags()
-      this.setSelectedPropertyNames()
+      this.setSelectedTags();
+      this.setSelectedPropertyNames();
+
+      //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
+      if (this.fileFormat === ""){
+        this.userSelectedFormat = 'json';
+        this.fileFormat = 'JSON';
+        this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format4';
+      }
 
       alert("check 1");
       alert("base URL: " + this.$baseURL);
       alert("tags: " + this.userEnteredCodes);
       alert("userSelectedProperyNames" + this.userSelectedProperyNames);
-      alert("selectedLevel" + this.selectedLevel);
+      alert("selectedLevel " + this.selectedLevel);
       alert("selectedPropertyName: " + this.rightUsers);
       alert("SelectedFormat: " + this.fileFormat);
       alert("filename: " + this.filename);
@@ -1451,25 +1503,29 @@ export default {
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
             this.userEnteredCodes + '/' +
-            this.this.rightUsers + '/' +
+            this.rightUsers + '/' +
             this.selectedLevel + '/' +
-            this.userSelectedFormat + '/' +
-            this.filename + '.' + this.userSelectedFormat,
+            this.fileFormat + '/' +
+            this.userSelectedFormat,
         method: 'GET',
         responseType: 'blob',
       }).then((response) => {
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        alert("test 1");
         var fileLink = document.createElement('a');
-
+        alert("test 2");
         fileLink.href = fileURL;
+        alert("test 3");
         fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
+        alert("test4");
         document.body.appendChild(fileLink);
+        alert("test5");
         fileLink.click();
       }).catch(function(error) {
         console.error("Download Error: " + error);
         alert("Error Downloading file");
       })
-          //.finally(function() { loader.hide()});
+      //.finally(function() { loader.hide()});
     },
 
     async initiateDeferredDownloadAndWait() {
@@ -1509,7 +1565,7 @@ export default {
               alert("Error downloading deferred file");
             }
           })
-          //.finally(function() { loader.hide()});
+      //.finally(function() { loader.hide()});
     },
 
     async initiateDeferredDownloadAndReturn() {
@@ -1837,6 +1893,14 @@ ul {
   width: 158px;
 }
 
+.tree-display {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 
 .modalfade{
   margin-top : 110px;
