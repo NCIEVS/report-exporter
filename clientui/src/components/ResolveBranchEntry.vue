@@ -20,7 +20,7 @@
               <div>
                 <label for="downloadFormatLabel">Select format for export</label>
                 <select id="downloadFormat" class="form-control"  @change="changeSelectedExportList($event)">
-                  <option value="json"> JSON (json) JavaScript Object Notation Format1 </option>
+                  <option value="json"> JSON (json) JavaScript Object Notation Format </option>
                   <option value="csv"> CSV (csv) Comma Separated Value Format </option>
                   <option value="txt"> TABD (txt) Tab Delimited Value Format </option>
                   <option value="xlsx"> EXCEL (xlsx) Microsoft Excel Format </option>
@@ -35,13 +35,13 @@
           <div role="alert" class="alert alert-secondary"> This report will resolve 2 level(s) with a total of 123 children. </div>
           <label for="exportRadio">Select how to export</label>
           <div class="custom-control custom-radio">
-            <input type="radio" value="exportNow" id="exportNow" checked="checked" name="exportRadio" class="custom-control-input">
+            <input type="radio" v-model="exportType" value="exportNow" id="exportNow" checked="checked" name="exportRadio" class="custom-control-input">
             <label for="exportNow" class="custom-control-label">
               "Export now"
             </label>
           </div>
           <div class="custom-control custom-radio">
-            <input type="radio" value="exportDeferred" id="exportDeferred" name="exportRadio" class="custom-control-input">
+            <input type="radio" v-model="exportType" value="exportDeferred" id="exportDeferred" name="exportRadio" class="custom-control-input">
             <label for="exportDeferred" class="custom-control-label">
               "Export and download later"
             </label>
@@ -209,7 +209,7 @@
       </span>
 
       <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
+        <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="ExportNowOrLater()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
 
 
@@ -339,7 +339,7 @@ export default {
 
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
-    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format2"
+    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
     this.$refs["my-tree"].expandNode(1);
   },
   setup(){
@@ -1152,7 +1152,7 @@ export default {
       this.userSelectedFormat = event.target.value;
       if (event.target.value === "json") {
         this.fileFormat = "JSON";
-        this.selectedExportListName = "JSON (json) JavaScript Object Notation Format3"
+        this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
       }
 
       if (event.target.value === "csv") {
@@ -1227,6 +1227,7 @@ export default {
       this.setSelectedTags()
       this.setSelectedPropertyNames()
 
+      /*
       if (this.exportType == 'exportNow') {
         // export and wait for it to complete
         this.initiateDeferredDownloadAndWait()
@@ -1235,16 +1236,21 @@ export default {
         // export and get a URL to go to later
         this.initiateDeferredDownloadAndReturn()
       }
+
+       */
     },
 
     async pollForStatus(hashId) {
 
+      /*
       // show the busy indicator
       let loader = this.$loading.show({
         container: this.$refs.formContainer,
         loader: 'dots',
         isFullPage: false,
       });
+
+       */
 
       // check if a polling url was returned.
       if (this.deferredStatusUrl != null && this.deferredStatusUrl.length >0) {
@@ -1256,7 +1262,7 @@ export default {
           this.pollDeferredStatus()
           await this.sleep(500);
         }
-        loader.hide()
+        //loader.hide()
 
         if (this.deferredStatus === "ERROR") {
           alert("Error downloading deferred file");
@@ -1486,7 +1492,7 @@ export default {
       if (this.fileFormat === ""){
         this.userSelectedFormat = 'json';
         this.fileFormat = 'JSON';
-        this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format4';
+        this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
 
       alert("check 1");
@@ -1550,8 +1556,8 @@ export default {
       this.gaTrackDownload();
 
       api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
-          this.userSelectedProperyNames, this.selectedLevel,
-          this.userSelectedFormat.name)
+          this.rightUsers, this.selectedLevel,
+          this.userSelectedFormat)
           .then((data)=>{
             if (data != null) {
               this.deferredStatusUrl = data
@@ -1578,18 +1584,41 @@ export default {
         position: "bottom left"
       });
       // show the busy indicator
+      /*
       let loader = this.$loading.show({
         container: this.$refs.formContainer,
         loader: 'dots',
         isFullPage: false,
       });
 
+       */
+
       this.gaTrackDeferredDownload();
+      this.setSelectedTags();
+      this.setSelectedPropertyNames();
+
+      //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
+      if (this.fileFormat === ""){
+        this.userSelectedFormat = 'json';
+        this.fileFormat = 'JSON';
+        this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
+      }
+      alert("check 2")
+      alert("base URL: " + this.$baseURL);
+      alert("tags: " + this.userEnteredCodes);
+      alert("selectedPropertyName: " + this.rightUsers);
+      alert("selectedLevel " + this.selectedLevel)
+      //alert("SelectedFormat: " + this.fileFormat);
+      //alert("filename: " + this.filename);
+      alert("selectedFormat Extension: " + this.userSelectedFormat);
+
+
 
       api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
-          this.userSelectedProperyNames, this.selectedLevel,
-          this.userSelectedFormat.name)
+          this.rightUsers, this.selectedLevel,
+          this.userSelectedFormat)
           .then((data)=>{
+            alert("deferral data " + data);
             if (data != null) {
               this.deferredStatusUrl = data
               this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
@@ -1602,8 +1631,23 @@ export default {
               this.deferredStatusUrl = null
               console.log("Error making Deferred call");
             }
-          }).finally(function() { loader.hide()});
+          })
+          //.finally(function() { loader.hide()});
     },
+
+    ExportNowOrLater(){
+      alert("Export selection: " + this.exportType);
+      if (this.exportType == 'exportNow') {
+        // export and wait for it to complete
+        this.downloadFile();
+      }
+      else {
+        // export and get a URL to go to later
+        this.initiateDeferredDownloadAndReturn();
+      }
+    },
+
+
 
     pollDeferredStatus: function() {
       api.pollDeferredDownloadStatus(this.$baseURL, this.deferredStatusUrl)
@@ -1626,7 +1670,7 @@ export default {
         url:this.$baseURL +
             'download/deferred/checkFileForHashFormatResponseEntity/'  +
             hashId + '/' +
-            this.userSelectedFormat.name + '/' +
+            this.fileFormat + '/' +
             this.filename,
         method: 'GET',
         responseType: 'blob',
@@ -1635,7 +1679,7 @@ export default {
         var fileLink = document.createElement('a');
 
         fileLink.href = fileURL;
-        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat.extension);
+        fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
         document.body.appendChild(fileLink);
         fileLink.click();
       }).catch(function(error) {
