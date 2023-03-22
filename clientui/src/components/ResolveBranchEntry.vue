@@ -48,6 +48,16 @@
           </div>
         </div>
       </div>
+      <br>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+          <div class="alert alert-light" role="alert" v-if="exportType == 'exportDeferred'  && this.deferredStatusHash != ''">
+            Use this Download ID on the
+            <b><router-link v-bind:to="'/exports'" title="Link to Downloads">Downloads page</router-link> </b>
+            to retrieve your report: <b>{{ this.deferredStatusHash }} </b>
+          </div>
+        </div>
+      </div>
     </div>
     <!--Vue 3 End-->
 
@@ -318,6 +328,9 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import {ref} from "vue";
 import Tree from "vue3-tree";
 import "vue3-tree/dist/style.css";
+//import {useStorage} from "vue3-storage";
+import { defineComponent } from "vue";
+import { useStorage } from "vue3-storage-secure";
 
 
 
@@ -328,7 +341,7 @@ let selectNextOptionBTN_counter =  1;
 export default {
   name: 'resolve-branch-entry',
   props: {
-    msg: String,
+    msg: String, defineComponent,
   },
   components: {
     Tree,
@@ -401,7 +414,7 @@ export default {
 
 
     const onNodeClick = (node) => {
-     node.label = Object.values(node.label).replace(',', '');
+    // node.label = Object.values(node.label).replace(',', '');
       alert("This node was selected: " + Object.values(node.label));
 
     };
@@ -1031,7 +1044,6 @@ export default {
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
-        alert("counter 3 if disabledment")
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
@@ -1043,44 +1055,42 @@ export default {
       }
 
 
-      alert(selectNextOptionBTN_counter);
-      alert("test c");
-      alert(Object.keys(this.selectedTags).length);
+    //  alert(selectNextOptionBTN_counter);
+    //  alert("test c");
+    //  alert(Object.keys(this.selectedTags).length);
 
-      //Vue 3 (Builds screen on step 2)
       if (selectNextOptionBTN_counter === 1) {
-        //  if (Object.keys(this.tags).length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
-        document.getElementById("clearButton").style.display = "none";    //Hides clear button
-        document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
-        document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
-        document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
-        document.getElementById("backButton").style.display = "";     //Shows back button
-        selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
+        if ((this.tags.length > 0) && (this.selectedLevel > 0)) {  // checks to make sure that a code was entered before proceeding to next screen
+          document.getElementById("clearButton").style.display = "none";    //Hides clear button
+          document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
+          document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
+          document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
+          document.getElementById("backButton").style.display = "";     //Shows back button
+          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
 
-        // load properties after the page is loaded.
-        /*
+          // load properties after the page is loaded.
+          /*
                   api.getProperties(this.$baseURL)
                       .then((data)=>{this.availableProperties = data[-1];
                       })
         */
-        //
-        api.getProperties(this.$baseURL)
-            .then((data)=> {
-              for (let x = 0 ; x < data.length; x++) {
-                this.availableProperties.push(data[x].name);
-              }
-            })
+          //
+          api.getProperties(this.$baseURL)
+              .then((data) => {
+                for (let x = 0; x < data.length; x++) {
+                  this.availableProperties.push(data[x].name);
+                }
+              })
 
 
+          for (let i = 0; i <= this.rightUsers.length + 2; i++) {
+            this.rightUsers.pop();
+          }
 
-        for (let i = 0; i <= this.rightUsers.length + 2; i++) {
-          this.rightUsers.pop();
+
+          //}
         }
-
-
-        //}
       }
-
 
     },
 
@@ -1517,15 +1527,10 @@ export default {
         responseType: 'blob',
       }).then((response) => {
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        alert("test 1");
         var fileLink = document.createElement('a');
-        alert("test 2");
         fileLink.href = fileURL;
-        alert("test 3");
         fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
-        alert("test4");
         document.body.appendChild(fileLink);
-        alert("test5");
         fileLink.click();
       }).catch(function(error) {
         console.error("Download Error: " + error);
@@ -1610,26 +1615,31 @@ export default {
       alert("selectedLevel " + this.selectedLevel)
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
-      alert("selectedFormat Extension: " + this.userSelectedFormat);
+      alert("selectedFormat Extension: " + this.userSelectedFormat.name);
 
 
 
       api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
           this.rightUsers, this.selectedLevel,
-          this.userSelectedFormat)
+          this.fileFormat)
           .then((data)=>{
             alert("deferral data " + data);
             if (data != null) {
+             // alert("test1");
               this.deferredStatusUrl = data
+             // alert("test2");
               this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
+            //  alert("test3");
               //console.log("Deferred Call made.  return: " + data);
               //console.log("Deferred Call - Hash " + this.deferredStatusHash);
 
               this.addHashToLocalStorage(this.deferredStatusHash)
+              alert("test4 last step");
             }
             else {
+              alert("test5");
               this.deferredStatusUrl = null
-              console.log("Error making Deferred call");
+              alert("Error making Deferred call");
             }
           })
           //.finally(function() { loader.hide()});
@@ -1718,25 +1728,60 @@ export default {
     // Add to local storage
     addHashToLocalStorage() {
       // ensure there is a hashID
+      alert("deferredStatusHash "+ this.deferredStatusHash);
+
       if (!this.deferredStatusHash) {
         return;
       }
 
+      alert("test7");
       this.saveDeferredDownloads();
+      alert("test8");
     },
 
     // save to local storage
     saveDeferredDownloads() {
+
+      alert("deferredStatusHash " + this.deferredStatusHash );
+      alert("this.userSelectedFormat " + this.userSelectedFormat.name);
+      alert(new Date().toLocaleString())
+
+/*
       this.$storage.set(this.deferredStatusHash,
           {
             key: this.deferredStatusHash,
-            format: this.userSelectedFormat.name,
+            format: this.fileFormat,
+            date: new Date().toLocaleString(),
+            status: "Unknown"
+          }
+        //  { ttl: 60 * 60 * 1000 }
+      )
+*/
+
+      const storage = useStorage();
+
+      storage.setStorage(
+          {
+            key: this.deferredStatusHash,
+            format: this.fileFormat,
             date: new Date().toLocaleString(),
             status: "Unknown"
           },
-          { ttl: 60 * 60 * 1000 })
+            { ttl: 60 * 60 * 1000 }
+      )
 
+/*
+      storage.setStorage({
+            key: this.deferredStatusHash,
+            format: this.fileFormat,
+            date: new Date().toLocaleString(),
+            status: "Unknown"
+          })
+*/
+
+      alert("before storage assignment");
       localStorage.name = "Cory"
+      alert(localStorage.name);
     },
 
     clearDeferredData() {

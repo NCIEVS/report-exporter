@@ -151,6 +151,7 @@ export default {
       // clear out the clearDeferredData
       this.deferredData = []
 
+      alert("keys length " + keys.length);
       // make local copy of deferred status Information
       // it is originally stored in localStorage, but that
       // is not reactive in vue, so need a local object
@@ -224,8 +225,10 @@ export default {
     },
 
     removeExpiredDownloads() {
+      alert("before keys " );
       var keys = this.$storage.keys()
 
+      alert("expired Keys " + keys);
       for (var i=0; i< keys.length; i++) {
         if (keys[i].startsWith("app_")) {
           var status = this.getLocalStatus(keys[i])
@@ -272,6 +275,8 @@ export default {
     },
 
     refreshDataRequestedFromUser(){
+
+      alert("refresh requested 1");
       this.$notify({
         group: 'download',
         title: 'Export Status',
@@ -280,20 +285,23 @@ export default {
         duration: 2000,
         position: "bottom left"
       });
+      /*
       // show the busy indicator
       let loader = this.$loading.show({
         container: this.$refs.formContainer,
         loader: 'dots',
         isFullPage: false,
       });
-
+*/
+      alert("refresh requested 2");
       this.refreshData()
-
+      alert("refresh requested 3");
       // hide the busy indicator
-      loader.hide()
+     // loader.hide()
     },
 
     async refreshData() {
+      /*
       // show the busy indicator
       let loader = this.$loading.show({
         container: this.$refs.formContainer,
@@ -301,11 +309,21 @@ export default {
         isFullPage: false,
       });
 
+       */
+
+      alert("refresh data 1 ");
       this.removeExpiredDownloads()
+
+      alert("refresh data 2");
       // clear the deferred keys
+
+      alert("refresh data 3 ");
       this.deferredKeys = []
+
+      alert("refresh data 4 ");
       this.getKeys()
 
+      alert("refresh data 5 ");
       let promise1 = new Promise((resolve) => {
         this.getAllStatusUpdates()
             .then(()=>{
@@ -315,18 +333,26 @@ export default {
 
       // need to wait to get status from server, before we set the local
       // values
+
+      alert("refresh data 6 ");
       await promise1;
+
+      alert("refresh data 7 ");
       this.setLocalValues()
-      loader.hide()
+      //loader.hide()
     },
 
     downloadDeferredResult(id, format) {
       // show the busy indicator
+      /*
       let loader = this.$loading.show({
         container: this.$refs.formContainer,
         loader: 'dots',
         isFullPage: false,
       });
+
+       */
+
 
       this.gaTrackDeferredDownload(format);
 
@@ -351,8 +377,9 @@ export default {
       }).catch(function(error) {
         console.error("Deferred Download Error: " + error);
         alert("Error Downloading file");
-      }).finally(function() {
-        loader.hide()
+      }).finally(
+          function() {
+       // loader.hide()
         here.removeDeferredDownload(id)
         here.downloadSearchResult.status = 'none'
       });
@@ -386,11 +413,14 @@ export default {
 
     downloadSearch() {
       // show the busy indicator
+      /*
       let loader = this.$loading.show({
         container: this.$refs.formContainer,
         loader: 'dots',
         isFullPage: false,
       });
+
+       */
 
       api.pollDeferredDownloadStatus(this.$baseURL, "deferred/checkURLHashForDeferredStatus/" + this.searchId)
           .then((response)=>{
@@ -400,7 +430,7 @@ export default {
             this.downloadSearchResult.format = response.format
           }).finally(function() {
         // hide the busy indicator
-        loader.hide()
+        //loader.hide()
       });
     }
   },
