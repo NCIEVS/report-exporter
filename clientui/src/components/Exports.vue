@@ -169,6 +169,21 @@ export default {
     },
 
     getKeys() {
+
+
+
+
+
+
+
+
+
+
+
+      alert("getKeys function call"  + this.deferredDownloadData );
+      //alert("result data Exports" +   this.result.data );
+     // alert("result data Exports" +   Object.values(this.result) );
+     // alert("result data Exports" +   Object.values(this.result.data) );
       var keys = this.$storage.keys()
 
       for (var i=0; i< keys.length; i++) {
@@ -226,9 +241,11 @@ export default {
 
     removeExpiredDownloads() {
       alert("before keys " );
-      var keys = this.$storage.keys()
+      alert("storage value "+ this.storage);
+      var keys = this.$storage.key;
+     // var keys = this.storage.key;
 
-      alert("expired Keys " + keys);
+      alert("expired Keys " + keys.length);
       for (var i=0; i< keys.length; i++) {
         if (keys[i].startsWith("app_")) {
           var status = this.getLocalStatus(keys[i])
@@ -311,8 +328,8 @@ export default {
 
        */
 
-      alert("refresh data 1 ");
-      this.removeExpiredDownloads()
+      alert("refresh data 1 add this back later ");
+     // this.removeExpiredDownloads()
 
       alert("refresh data 2");
       // clear the deferred keys

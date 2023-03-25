@@ -328,9 +328,10 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import {ref} from "vue";
 import Tree from "vue3-tree";
 import "vue3-tree/dist/style.css";
-//import {useStorage} from "vue3-storage";
 import { defineComponent } from "vue";
-import { useStorage } from "vue3-storage-secure";
+import { useStorage } from "vue3-storage";
+//import ExportFormat from './ExportFormat.vue'
+//import { CallbackResult } from "vue3-storage";
 
 
 
@@ -345,6 +346,7 @@ export default {
   },
   components: {
     Tree,
+  //  ExportFormat
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -581,6 +583,7 @@ export default {
       treeSelectedCode: null,
       showSummary: true,
       showSummaryText: '',
+      deferredDownloadData: '',
       exportType: 'exportNow',
       treeLevel: '',
 
@@ -1608,14 +1611,14 @@ export default {
         this.fileFormat = 'JSON';
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
-      alert("check 2")
-      alert("base URL: " + this.$baseURL);
-      alert("tags: " + this.userEnteredCodes);
-      alert("selectedPropertyName: " + this.rightUsers);
-      alert("selectedLevel " + this.selectedLevel)
+     // alert("check 2")
+     // alert("base URL: " + this.$baseURL);
+     // alert("tags: " + this.userEnteredCodes);
+     // alert("selectedPropertyName: " + this.rightUsers);
+     // alert("selectedLevel " + this.selectedLevel)
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
-      alert("selectedFormat Extension: " + this.userSelectedFormat.name);
+    //  alert("selectedFormat Extension: " + this.userSelectedFormat.name);
 
 
 
@@ -1634,7 +1637,7 @@ export default {
               //console.log("Deferred Call - Hash " + this.deferredStatusHash);
 
               this.addHashToLocalStorage(this.deferredStatusHash)
-              alert("test4 last step");
+           //   alert("test4 last step");
             }
             else {
               alert("test5");
@@ -1646,7 +1649,7 @@ export default {
     },
 
     ExportNowOrLater(){
-      alert("Export selection: " + this.exportType);
+    //  alert("Export selection: " + this.exportType);
       if (this.exportType == 'exportNow') {
         // export and wait for it to complete
         this.downloadFile();
@@ -1728,23 +1731,121 @@ export default {
     // Add to local storage
     addHashToLocalStorage() {
       // ensure there is a hashID
-      alert("deferredStatusHash "+ this.deferredStatusHash);
+     // alert("deferredStatusHash "+ this.deferredStatusHash);
 
       if (!this.deferredStatusHash) {
         return;
       }
 
-      alert("test7");
+     // alert("test7");
       this.saveDeferredDownloads();
-      alert("test8");
+     // alert("test8");
     },
 
     // save to local storage
     saveDeferredDownloads() {
 
-      alert("deferredStatusHash " + this.deferredStatusHash );
-      alert("this.userSelectedFormat " + this.userSelectedFormat.name);
-      alert(new Date().toLocaleString())
+   //   alert("deferredStatusHash " + this.deferredStatusHash );
+   //   alert("this.userSelectedFormat " + this.userSelectedFormat.name);
+    //  alert(new Date().toLocaleString())
+
+      //const storageData = { a: 11, b: 221 };
+
+
+alert("set Storage");
+
+      const storageData = { key1: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status2: "Unknown"};
+      const storage = useStorage("test_");
+
+
+      storage.setStorage({
+        key: this.deferredStatusHash,
+        data: storageData,
+        success: () => {
+          console.log("========");
+        }
+      });
+
+      alert("get Storage");
+      storage.getStorage({
+            key: this.deferredStatusHash,
+            success: result => {
+              alert("result data " +   Object.values(result.data) );
+             // alert("result key  " + Object.values(result.data.key1) );
+
+
+              var tmpkeys = Object.values(result.data);
+              alert("after data 2 key length " + tmpkeys.length);
+             // for (var i=1; i< tmpkeys.length; i++) {
+                alert("after loop temp keys " + tmpkeys[0]);
+                //if (tmpkeys[i].startsWith(this.keyPrefix)) {
+                  alert("after if statement");
+                //var formattedKey = String(Object.values(tmpkeys[0].key1)).replace(/,/g, "");
+                //alert("formatted Key " + formattedKey);
+                  var row = {
+                    //"key":tmpkeys[i].substring(this.keyPrefix.length),
+                    "key": tmpkeys[0],
+                    "format": tmpkeys[1],
+                    "date": tmpkeys[2],
+                    "status": tmpkeys[3]
+                  }
+                  alert("after var row assignment");
+                  alert("this is the row " + Object.values(row));
+              this.deferredData.push(row)
+              alert("after push " + this.deferredData);
+              //  }
+             // }
+
+
+
+
+
+          //    alert("before push");
+          //    this.deferredData.push(Object.values(result.data));
+          //    alert("after push");
+          //    alert("pushed deferred Data " + this.deferredData )
+            },
+            fail: res => {
+              alert("Failed------ " + Object.values(res));
+
+            }
+
+          }
+
+          )
+          .catch(reason => {
+           alert("reason why it failed------ " + Object.values(reason));
+          });
+
+      /*
+      const deleteData = () => {
+        storage.removeStorageSync("szs");
+      };
+
+      return { deleteData };
+
+       */
+     // storage.setStorageSync("test-key", "testdata22");
+
+
+      /*
+      storage.setStorageSync(
+          { key: this.deferredStatusHash,},
+          { format: this.fileFormat,},
+          { date: new Date().toLocaleString()}
+      )
+*/
+
+
+/*
+      const storage = useStorage();
+
+      storage.setStorage({
+        key: "test-key",
+        data: "testdata22"
+      });
+*/
+
 
 /*
       this.$storage.set(this.deferredStatusHash,
@@ -1758,31 +1859,75 @@ export default {
       )
 */
 
-      const storage = useStorage();
+    //  const storage = useStorage();
 
-      storage.setStorage(
+      /*
+      this.$storage.setStorage(
           {
             key: this.deferredStatusHash,
-            format: this.fileFormat,
-            date: new Date().toLocaleString(),
-            status: "Unknown"
-          },
-            { ttl: 60 * 60 * 1000 }
+            data: this.fileFormat,
+            expire: new Date().toLocaleString(),
+           // status: "Unknown"
+          }
+         //   { ttl: 60 * 60 * 1000 }
       )
+*/
+
+
+     // storage.setStorageSync("test-key", "testdata22");
+   //   storage.setStorageSync("test-key2", "testdata23");
+     // storage.setStorageSync(this.deferredStatusHash, this.fileFormat);
+     // return {};
 
 /*
-      storage.setStorage({
+      this.storage.setStorage({
             key: this.deferredStatusHash,
             format: this.fileFormat,
             date: new Date().toLocaleString(),
             status: "Unknown"
           })
 */
+    //  alert("before key check ");
+    //  alert(Object.values(storage.key));
+     // alert(Object.values(storage.data));
+ //     alert("key check :" + storage.getStorage.length);
+      //alert("key check: " + storage.key);
+     // alert("data check: " + storage.data);
 
-      alert("before storage assignment");
-      localStorage.name = "Cory"
-      alert(localStorage.name);
+
+   //   localStorage.name = "Cory"
+   //   alert(localStorage.name);
     },
+
+
+    getFormat(key) {
+      var data = this.getData(key)
+      if (data) {
+        return data.value.format
+      }
+      else {
+        return "Unknown"
+      }
+    },
+    getTimestamp(key) {
+      var data = this.getData(key)
+      if (data) {
+        return data.value.date
+      }
+      else {
+        return "Unknown"
+      }
+    },
+    getLocalStatus(key) {
+      var data = this.getData(key)
+      if (data) {
+        return data.value.status
+      }
+      else {
+        return "Unknown"
+      }
+    },
+
 
     clearDeferredData() {
       this.deferredStatusUrl = ''
