@@ -329,7 +329,7 @@ import {ref} from "vue";
 import Tree from "vue3-tree";
 import "vue3-tree/dist/style.css";
 import { defineComponent } from "vue";
-import { useStorage } from "vue3-storage";
+//import { useStorage } from "vue3-storage";
 //import ExportFormat from './ExportFormat.vue'
 //import { CallbackResult } from "vue3-storage";
 
@@ -346,7 +346,7 @@ export default {
   },
   components: {
     Tree,
-  //  ExportFormat
+   // ExportFormat
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -577,6 +577,8 @@ export default {
       deferredStatusUrl: '',
       deferredStatusHash: '',
       deferredStatus: false,
+      deferredData: '',
+      deferredDataFormatted: '',
       showTree: true,
       asyncData: [],
       selectedExportListName: '',
@@ -1754,45 +1756,48 @@ export default {
 
 alert("set Storage");
 
-      const storageData = { key1: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status2: "Unknown"};
-      const storage = useStorage("test_");
+      //const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "Unknown"};
+      const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};
+      alert("step 1");
+       localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));
+      alert("step 2");
+
+     // this.deferredData = localStorage.getItem(this.deferredStatusHash);
+      this.deferredData = localStorage.getItem("1976882361");
+
+      alert("Before parsed Data " + this.deferredData);
+
+      alert("step 3");
+
+     this.deferredDataFormatted = (JSON.parse(this.deferredData));
+
+     // this.deferredData = localStorage.getItem(this.deferredStatusHash);
+
+     // this.deferredData = JSON.parse(this.deferredData);
+
+      //alert("data pushed " + Object.values(this.deferredData[0]));
+      alert("step 4");
+
+      alert("Parsed Data " + Object.values(this.deferredDataFormatted));
 
 
-      storage.setStorage({
-        key: this.deferredStatusHash,
-        data: storageData,
-        success: () => {
-          console.log("========");
-        }
-      });
-
-      alert("get Storage");
-      storage.getStorage({
-            key: this.deferredStatusHash,
-            success: result => {
-              alert("result data " +   Object.values(result.data) );
-             // alert("result key  " + Object.values(result.data.key1) );
+      //alert("after push of row ");
+      localStorage.name = "Cory"
 
 
-              var tmpkeys = Object.values(result.data);
-              alert("after data 2 key length " + tmpkeys.length);
-             // for (var i=1; i< tmpkeys.length; i++) {
-                alert("after loop temp keys " + tmpkeys[0]);
-                //if (tmpkeys[i].startsWith(this.keyPrefix)) {
-                  alert("after if statement");
-                //var formattedKey = String(Object.values(tmpkeys[0].key1)).replace(/,/g, "");
-                //alert("formatted Key " + formattedKey);
-                  var row = {
-                    //"key":tmpkeys[i].substring(this.keyPrefix.length),
-                    "key": tmpkeys[0],
-                    "format": tmpkeys[1],
-                    "date": tmpkeys[2],
-                    "status": tmpkeys[3]
-                  }
-                  alert("after var row assignment");
-                  alert("this is the row " + Object.values(row));
-              this.deferredData.push(row)
-              alert("after push " + this.deferredData);
+
+
+
+
+
+
+
+
+
+/*
+
+            //  this.deferredData.push(this.deferredDownloadData)
+            //  alert("after push " + this.deferredData);
               //  }
              // }
 
@@ -1817,7 +1822,7 @@ alert("set Storage");
            alert("reason why it failed------ " + Object.values(reason));
           });
 
-      /*
+
       const deleteData = () => {
         storage.removeStorageSync("szs");
       };

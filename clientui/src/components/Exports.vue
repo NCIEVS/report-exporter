@@ -147,8 +147,16 @@ export default {
       })
     },
     setLocalValues() {
+      alert("setLocalValues Call")
+      this.deferredData.push(this.deferredDataFormatted);
+
+      alert("after push")
+      this.deferredData.push(this.deferredData)
+
       var keys = this.$storage.keys()
       // clear out the clearDeferredData
+
+
       this.deferredData = []
 
       alert("keys length " + keys.length);
@@ -170,22 +178,44 @@ export default {
 
     getKeys() {
 
+      alert("get Keys")
+
+      var values = [],
+          keys1 = Object.keys(localStorage),
+          j = keys1.length;
+
+      while ( j-- ) {
+        values.push(localStorage.getItem(keys1[j]));
+      }
+     // values = JSON.parse(values);
+      this.deferredData.push(values);
+      alert("all storage Keys " + values);
 
 
 
 
 
+      alert(this.deferredDataFormatted);
+      //this.deferredData.push(this.deferredDataFormatted);
+      this.deferredData.push(JSON.parse(localStorage.getItem("1976882361")));  //WORKING!!
+
+
+
+      alert("getKeys" + JSON.parse(localStorage.getItem("1976882361")));
 
 
 
 
+     // alert("getKey call");
 
-      alert("getKeys function call"  + this.deferredDownloadData );
+     // alert("getKeys function call"  + Object.values(this.deferredDownloadData) );
+     // this.deferredKeys.push(this.deferredDownloadData);
       //alert("result data Exports" +   this.result.data );
      // alert("result data Exports" +   Object.values(this.result) );
      // alert("result data Exports" +   Object.values(this.result.data) );
       var keys = this.$storage.keys()
 
+      alert("key storage");
       for (var i=0; i< keys.length; i++) {
         if (keys[i].startsWith("app_")) {
           this.deferredKeys.push(keys[i])
