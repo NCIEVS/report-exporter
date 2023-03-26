@@ -178,6 +178,7 @@ export default {
     },
 
     getKeys() {
+      //this.deferredData.push(Object.values(JSON.parse(localStorage.getItem("1976882361"))));
 
       alert("get Keys")
 
@@ -185,22 +186,63 @@ export default {
           var keys1 = Object.keys(localStorage),
           j = keys1.length;
 
+          alert("key length " + j);
+
       while ( j-- ) {
-        this.storageValues.push(localStorage.getItem(keys1[j]));
+       // localStorage.removeItem(keys1[j])
+      //  alert ("this is the list of keys " + keys1[j]);
+
+
+
+
+       // this.storageValues.push(localStorage.getItem(keys1[j]));
+
        // this.storageValues = (localStorage.getItem(keys1[j]));
        // this.deferredData.push(this.storageValues)
 
-        this.deferredData.push(JSON.parse(localStorage.getItem("1976882361")));
+      //  this.deferredData.push(JSON.parse(localStorage.getItem("1463444633")));
+       // this.deferredData.push(JSON.parse(localStorage.getItem(keys1[j])));
 
-        var data = this.getData(this.storageValues);
-        alert ("after data " + data);
-        alert ("key conversion " + data.value.key)
-        this.deferredData.push(JSON.parse(localStorage.getItem(data.value.key)))
-        alert("after key fetch");
+
+       //
+   //      alert("after keys");
+    //    var data = this.getData(this.storageValues);
+       // alert(Object.values(JSON.parse(localStorage.getItem("1976882361"))));  // GOod
+       // this.deferredData.push(Object.values(JSON.parse(localStorage.getItem("1976882361"))));  // GOod
+
+      //  this.storageValues.push(localStorage.getItem("1862129698"));
+
+        this.storageValues.push(localStorage.getItem(keys1[j]));
+
+      //  localStorage.removeItem(keys1[j])
+
+
+
+
+        alert("AFter Data " + Object.values(this.storageValues));
+      //  alert("after parse");
+     //   alert("before data " + this.storageValues);
+        if (this.storageValues != null) {
+         // alert("after data " + this.storageValues);
+
+
+
+          //  this.deferredData.push(JSON.parse(localStorage.getItem("1463444633")));
+        //  this.deferredData.push(JSON.parse(localStorage.getItem(keys1[j])));
+         // this.deferredData.push(JSON.parse(localStorage.getItem(data.value.key)))
+
+       //  this.deferredData.push(Object.values(JSON.parse(localStorage.getItem("1976882361"))));  // GOod
+
+        //  this.deferredData.push(JSON.parse(localStorage.getItem("1862129698")));
+         this.deferredData.push(JSON.parse(localStorage.getItem(keys1[j])));
+
+        //  alert("after key fetch");
+        }
 
 
 
       }
+     // this.deferredData.push(JSON.parse(localStorage.getItem("1862129698")));
      // values = JSON.parse(values);
       //this.deferredData.push(values);
       alert("all storage Keys " + JSON.parse(this.storageValues));
@@ -212,7 +254,9 @@ export default {
 
       alert(this.deferredDataFormatted);
       //this.deferredData.push(this.deferredDataFormatted);
-      this.deferredData.push(JSON.parse(localStorage.getItem("1976882361")));  //WORKING!!
+
+
+     // this.deferredData.push(JSON.parse(localStorage.getItem("1976882361")));  //WORKING!!
 
 
 
