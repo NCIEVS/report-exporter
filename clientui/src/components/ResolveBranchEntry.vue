@@ -1628,18 +1628,10 @@ export default {
           this.rightUsers, this.selectedLevel,
           this.fileFormat)
           .then((data)=>{
-            alert("deferral data " + data);
             if (data != null) {
-             // alert("test1");
               this.deferredStatusUrl = data
-             // alert("test2");
               this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
-            //  alert("test3");
-              //console.log("Deferred Call made.  return: " + data);
-              //console.log("Deferred Call - Hash " + this.deferredStatusHash);
-
               this.addHashToLocalStorage(this.deferredStatusHash)
-           //   alert("test4 last step");
             }
             else {
               alert("test5");
@@ -1647,11 +1639,9 @@ export default {
               alert("Error making Deferred call");
             }
           })
-          //.finally(function() { loader.hide()});
     },
 
     ExportNowOrLater(){
-    //  alert("Export selection: " + this.exportType);
       if (this.exportType == 'exportNow') {
         // export and wait for it to complete
         this.downloadFile();
@@ -1732,176 +1722,20 @@ export default {
 
     // Add to local storage
     addHashToLocalStorage() {
-      // ensure there is a hashID
-     // alert("deferredStatusHash "+ this.deferredStatusHash);
 
       if (!this.deferredStatusHash) {
         return;
       }
 
-     // alert("test7");
       this.saveDeferredDownloads();
-     // alert("test8");
     },
 
     // save to local storage
     saveDeferredDownloads() {
+      const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};  // Vue 3 Data saved on local storage
+      localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));
 
-   //   alert("deferredStatusHash " + this.deferredStatusHash );
-   //   alert("this.userSelectedFormat " + this.userSelectedFormat.name);
-    //  alert(new Date().toLocaleString())
-
-      //const storageData = { a: 11, b: 221 };
-
-
-alert("set Storage");
-
-      //const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "Unknown"};
-      const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};
-      alert("step 1");
-       localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));
-      alert("step 2");
-
-     // this.deferredData = localStorage.getItem(this.deferredStatusHash);
-      this.deferredData = localStorage.getItem("1976882361");
-
-      alert("Before parsed Data " + this.deferredData);
-
-      alert("step 3");
-
-     this.deferredDataFormatted = (JSON.parse(this.deferredData));
-
-     // this.deferredData = localStorage.getItem(this.deferredStatusHash);
-
-     // this.deferredData = JSON.parse(this.deferredData);
-
-      //alert("data pushed " + Object.values(this.deferredData[0]));
-      alert("step 4");
-
-      alert("Parsed Data " + Object.values(this.deferredDataFormatted));
-
-
-      //alert("after push of row ");
       localStorage.name = "Cory"
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-            //  this.deferredData.push(this.deferredDownloadData)
-            //  alert("after push " + this.deferredData);
-              //  }
-             // }
-
-
-
-
-
-          //    alert("before push");
-          //    this.deferredData.push(Object.values(result.data));
-          //    alert("after push");
-          //    alert("pushed deferred Data " + this.deferredData )
-            },
-            fail: res => {
-              alert("Failed------ " + Object.values(res));
-
-            }
-
-          }
-
-          )
-          .catch(reason => {
-           alert("reason why it failed------ " + Object.values(reason));
-          });
-
-
-      const deleteData = () => {
-        storage.removeStorageSync("szs");
-      };
-
-      return { deleteData };
-
-       */
-     // storage.setStorageSync("test-key", "testdata22");
-
-
-      /*
-      storage.setStorageSync(
-          { key: this.deferredStatusHash,},
-          { format: this.fileFormat,},
-          { date: new Date().toLocaleString()}
-      )
-*/
-
-
-/*
-      const storage = useStorage();
-
-      storage.setStorage({
-        key: "test-key",
-        data: "testdata22"
-      });
-*/
-
-
-/*
-      this.$storage.set(this.deferredStatusHash,
-          {
-            key: this.deferredStatusHash,
-            format: this.fileFormat,
-            date: new Date().toLocaleString(),
-            status: "Unknown"
-          }
-        //  { ttl: 60 * 60 * 1000 }
-      )
-*/
-
-    //  const storage = useStorage();
-
-      /*
-      this.$storage.setStorage(
-          {
-            key: this.deferredStatusHash,
-            data: this.fileFormat,
-            expire: new Date().toLocaleString(),
-           // status: "Unknown"
-          }
-         //   { ttl: 60 * 60 * 1000 }
-      )
-*/
-
-
-     // storage.setStorageSync("test-key", "testdata22");
-   //   storage.setStorageSync("test-key2", "testdata23");
-     // storage.setStorageSync(this.deferredStatusHash, this.fileFormat);
-     // return {};
-
-/*
-      this.storage.setStorage({
-            key: this.deferredStatusHash,
-            format: this.fileFormat,
-            date: new Date().toLocaleString(),
-            status: "Unknown"
-          })
-*/
-    //  alert("before key check ");
-    //  alert(Object.values(storage.key));
-     // alert(Object.values(storage.data));
- //     alert("key check :" + storage.getStorage.length);
-      //alert("key check: " + storage.key);
-     // alert("data check: " + storage.data);
-
-
-   //   localStorage.name = "Cory"
-   //   alert(localStorage.name);
     },
 
 
