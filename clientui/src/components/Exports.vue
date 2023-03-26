@@ -124,6 +124,7 @@ export default {
   },
   data(){
     return {
+      storageValues: [],
       deferredKeys: [],
       deferredData: [],
       keyPrefix: "app_",
@@ -180,16 +181,30 @@ export default {
 
       alert("get Keys")
 
-      var values = [],
-          keys1 = Object.keys(localStorage),
+
+          var keys1 = Object.keys(localStorage),
           j = keys1.length;
 
       while ( j-- ) {
-        values.push(localStorage.getItem(keys1[j]));
+        this.storageValues.push(localStorage.getItem(keys1[j]));
+       // this.storageValues = (localStorage.getItem(keys1[j]));
+       // this.deferredData.push(this.storageValues)
+
+        this.deferredData.push(JSON.parse(localStorage.getItem("1976882361")));
+
+        var data = this.getData(this.storageValues);
+        alert ("after data " + data);
+        alert ("key conversion " + data.value.key)
+        this.deferredData.push(JSON.parse(localStorage.getItem(data.value.key)))
+        alert("after key fetch");
+
+
+
       }
      // values = JSON.parse(values);
-      this.deferredData.push(values);
-      alert("all storage Keys " + values);
+      //this.deferredData.push(values);
+      alert("all storage Keys " + JSON.parse(this.storageValues));
+      alert("all storage Keys2 " + this.storageValues);
 
 
 
