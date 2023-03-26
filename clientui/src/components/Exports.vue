@@ -148,158 +148,38 @@ export default {
       })
     },
     setLocalValues() {
-      alert("setLocalValues Call")
-      this.deferredData.push(this.deferredDataFormatted);
 
-      alert("after push")
-      this.deferredData.push(this.deferredData)
-
-      var keys = this.$storage.keys()
-      // clear out the clearDeferredData
-
+      var keys = Object.keys(localStorage)   // Vue 3 get all keys from local storage
 
       this.deferredData = []
 
-      alert("keys length " + keys.length);
       // make local copy of deferred status Information
       // it is originally stored in localStorage, but that
       // is not reactive in vue, so need a local object
       for (var i=0; i< keys.length; i++) {
-        if (keys[i].startsWith(this.keyPrefix)) {
-          var row = {
-            "key":keys[i].substring(this.keyPrefix.length),
-            "format": this.getFormat(keys[i]),
-            "date": this.getTimestamp(keys[i]),
-            "status": this.getLocalStatus(keys[i])
-          }
-          this.deferredData.push(row)
+        this.storageValues.push(localStorage.getItem(keys[i]));   // Vue 3 retrieval of data from local storage
+        if (this.storageValues != null) {
+          this.deferredData.push(JSON.parse(localStorage.getItem(keys[i])));  // Vue 3 add data from local storage to download list table
         }
       }
     },
+
 
     getKeys() {
-      //this.deferredData.push(Object.values(JSON.parse(localStorage.getItem("1976882361"))));
+      var keys = Object.keys(localStorage)  // Vue 3 get all keys from local storage
 
-      alert("get Keys")
-
-
-          var keys1 = Object.keys(localStorage),
-          j = keys1.length;
-
-          alert("key length " + j);
-
-      while ( j-- ) {
-       // localStorage.removeItem(keys1[j])
-      //  alert ("this is the list of keys " + keys1[j]);
-
-
-
-
-       // this.storageValues.push(localStorage.getItem(keys1[j]));
-
-       // this.storageValues = (localStorage.getItem(keys1[j]));
-       // this.deferredData.push(this.storageValues)
-
-      //  this.deferredData.push(JSON.parse(localStorage.getItem("1463444633")));
-       // this.deferredData.push(JSON.parse(localStorage.getItem(keys1[j])));
-
-
-       //
-   //      alert("after keys");
-    //    var data = this.getData(this.storageValues);
-       // alert(Object.values(JSON.parse(localStorage.getItem("1976882361"))));  // GOod
-       // this.deferredData.push(Object.values(JSON.parse(localStorage.getItem("1976882361"))));  // GOod
-
-      //  this.storageValues.push(localStorage.getItem("1862129698"));
-
-        this.storageValues.push(localStorage.getItem(keys1[j]));
-
-      //  localStorage.removeItem(keys1[j])
-
-
-
-
-        alert("AFter Data " + Object.values(this.storageValues));
-      //  alert("after parse");
-     //   alert("before data " + this.storageValues);
-        if (this.storageValues != null) {
-         // alert("after data " + this.storageValues);
-
-
-
-          //  this.deferredData.push(JSON.parse(localStorage.getItem("1463444633")));
-        //  this.deferredData.push(JSON.parse(localStorage.getItem(keys1[j])));
-         // this.deferredData.push(JSON.parse(localStorage.getItem(data.value.key)))
-
-       //  this.deferredData.push(Object.values(JSON.parse(localStorage.getItem("1976882361"))));  // GOod
-
-        //  this.deferredData.push(JSON.parse(localStorage.getItem("1862129698")));
-         this.deferredData.push(JSON.parse(localStorage.getItem(keys1[j])));
-
-        //  alert("after key fetch");
-        }
-
-
-
-      }
-     // this.deferredData.push(JSON.parse(localStorage.getItem("1862129698")));
-     // values = JSON.parse(values);
-      //this.deferredData.push(values);
-      alert("all storage Keys " + JSON.parse(this.storageValues));
-      alert("all storage Keys2 " + this.storageValues);
-
-
-
-
-
-      alert(this.deferredDataFormatted);
-      //this.deferredData.push(this.deferredDataFormatted);
-
-
-     // this.deferredData.push(JSON.parse(localStorage.getItem("1976882361")));  //WORKING!!
-
-
-
-      alert("getKeys" + JSON.parse(localStorage.getItem("1976882361")));
-
-
-
-
-     // alert("getKey call");
-
-     // alert("getKeys function call"  + Object.values(this.deferredDownloadData) );
-     // this.deferredKeys.push(this.deferredDownloadData);
-      //alert("result data Exports" +   this.result.data );
-     // alert("result data Exports" +   Object.values(this.result) );
-     // alert("result data Exports" +   Object.values(this.result.data) );
-      var keys = this.$storage.keys()
-
-      alert("key storage");
       for (var i=0; i< keys.length; i++) {
-        if (keys[i].startsWith("app_")) {
           this.deferredKeys.push(keys[i])
-        }
       }
     },
 
+
     getData(key) {
-      if(key.startsWith(this.keyPrefix)){
         var data = localStorage.getItem(key)
         var dataParsed = JSON.parse(data)
         return dataParsed
-      }
-      return null
     },
 
-    getID(key) {
-      var data = this.getData(key)
-      if (data) {
-        return data.value.key
-      }
-      else {
-        return "Unknown"
-      }
-    },
     getFormat(key) {
       var data = this.getData(key)
       if (data) {
@@ -329,12 +209,9 @@ export default {
     },
 
     removeExpiredDownloads() {
-      alert("before keys " );
-      alert("storage value "+ this.storage);
-      var keys = this.$storage.key;
-     // var keys = this.storage.key;
 
-      alert("expired Keys " + keys.length);
+      var keys = Object.keys(localStorage);
+
       for (var i=0; i< keys.length; i++) {
         if (keys[i].startsWith("app_")) {
           var status = this.getLocalStatus(keys[i])
@@ -382,7 +259,6 @@ export default {
 
     refreshDataRequestedFromUser(){
 
-      alert("refresh requested 1");
       this.$notify({
         group: 'download',
         title: 'Export Status',
@@ -391,73 +267,39 @@ export default {
         duration: 2000,
         position: "bottom left"
       });
-      /*
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formContainer,
-        loader: 'dots',
-        isFullPage: false,
-      });
-*/
-      alert("refresh requested 2");
+
       this.refreshData()
-      alert("refresh requested 3");
-      // hide the busy indicator
-     // loader.hide()
+
     },
 
     async refreshData() {
-      /*
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formContainer,
-        loader: 'dots',
-        isFullPage: false,
-      });
 
-       */
+      this.removeExpiredDownloads()
 
-      alert("refresh data 1 add this back later ");
-     // this.removeExpiredDownloads()
-
-      alert("refresh data 2");
       // clear the deferred keys
 
-      alert("refresh data 3 ");
       this.deferredKeys = []
 
-      alert("refresh data 4 ");
       this.getKeys()
 
-      alert("refresh data 5 ");
-      let promise1 = new Promise((resolve) => {
-        this.getAllStatusUpdates()
-            .then(()=>{
-              resolve();
-            });
-      });
+
+
+
+
+
+
 
       // need to wait to get status from server, before we set the local
       // values
 
-      alert("refresh data 6 ");
-      await promise1;
 
-      alert("refresh data 7 ");
+    //  await promise1;
+
       this.setLocalValues()
-      //loader.hide()
     },
 
     downloadDeferredResult(id, format) {
-      // show the busy indicator
-      /*
-      let loader = this.$loading.show({
-        container: this.$refs.formContainer,
-        loader: 'dots',
-        isFullPage: false,
-      });
 
-       */
 
 
       this.gaTrackDeferredDownload(format);
@@ -513,7 +355,8 @@ export default {
     },
 
     removeDeferredDownload(id) {
-      localStorage.removeItem(this.keyPrefix + id)
+     // localStorage.removeItem(this.keyPrefix + id)
+      localStorage.removeItem(id)
       this.refreshData()
     },
 
