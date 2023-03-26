@@ -1489,16 +1489,7 @@ export default {
         position: "bottom left"
       });
 
-      /*
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formContainer,
-        loader: 'dots',
-        isFullPage: false,
-      });
 
-
-       */
       // set the user selected tags and properties
       this.setSelectedTags();
       this.setSelectedPropertyNames();
@@ -1509,17 +1500,6 @@ export default {
         this.fileFormat = 'JSON';
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
-
-      alert("check 1");
-      alert("base URL: " + this.$baseURL);
-      alert("tags: " + this.userEnteredCodes);
-      alert("userSelectedProperyNames" + this.userSelectedProperyNames);
-      alert("selectedLevel " + this.selectedLevel);
-      alert("selectedPropertyName: " + this.rightUsers);
-      alert("SelectedFormat: " + this.fileFormat);
-      alert("filename: " + this.filename);
-      alert("selectedFormat Extension: " + this.userSelectedFormat);
-
 
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
@@ -1733,7 +1713,7 @@ export default {
     // save to local storage
     saveDeferredDownloads() {
       const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};  // Vue 3 Data saved on local storage
-      localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));
+      localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));  //Vue 3 Save data on local storage
 
       localStorage.name = "Cory"
     },
