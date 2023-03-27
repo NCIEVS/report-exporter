@@ -604,8 +604,8 @@ export default {
       treeLevel: '',
 
       treeData: [      {
-        ida: 1,
-        labelb: "Level 1c",
+        id: 1,
+        label: "Level 1c",
         nodes: [
           {
             id: 23,
@@ -767,7 +767,7 @@ export default {
 
     onNodeClick(node) {
 
-
+//this.treeData[0].label = "test"
 
      // var data = []
 
@@ -778,12 +778,14 @@ export default {
             for (let x = 0; x < children.length; x++) {
             //  data.push(
                //   {
-             //       "ida": children[x].code,
-              //      "labelb": children[x].code + ' : ' + children[x].name,
+              //     "id": children[x].code,
+                //  children[x].code
+           //  this.treeData[x].label.push(children[x].code + ' : ' + children[x].name);
+              this.treeData[x].label = children[x].code + ' : ' + children[x].name;
               //    }
 
-          //  )
-              alert("test");
+          //  );
+           //   alert("test");
          //     alert("thiis is the code " + children[x].code);
           //    alert("this is the children and children name " + children[x].code + ' : ' + children[x].name);
               //    "isLeaf": false,
