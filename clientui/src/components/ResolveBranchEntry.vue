@@ -96,7 +96,7 @@
       <ul class="tags" id = "listOfTags">
         <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
           {{ tag }}
-          <button class="delete" @click="removeTag(index)">x</button>
+          <button class="delete" @click="removeTag(tag)">x</button>
         </a></li>
       </ul>
 
@@ -118,7 +118,7 @@
 
 
       <Tree
-          :nodes="data"
+          :nodes="treeData"
           :search-text="searchText"
           :use-checkbox="true"
           :use-icon="false"
@@ -604,6 +604,31 @@ export default {
       exportType: 'exportNow',
       treeLevel: '',
 
+      treeData: [      {
+        ida: 1,
+        labelb: "Level 1c",
+        nodes: [
+          {
+            id: 23,
+            label: "Level 2v",
+          },
+          {
+            id: 34,
+            label: "Level 3",
+            nodes: [
+              {
+                id: 4,
+                label: "Level 3 Child 1",
+              },
+              {
+                id: 5,
+                label: "Level 3 Child 2",
+              },
+            ],
+          },
+        ],
+      },],
+
       treeDisplayData: [
         {
           text: this.treeLevel = "level 1",
@@ -679,10 +704,10 @@ export default {
                           //    "isLeaf": false,
                           //    "disabled": children[x].leaf,
 
-                          "id": children[x].code,
-                          "text": children[x].code + ' : ' + children[x].name,
-                          "checkable": false,
-                          "state": children[x].leaf,
+                          "ida": children[x].code,
+                          "labelb": children[x].code + ' : ' + children[x].name,
+                         // "checkable": false,
+                         // "state": children[x].leaf,
                         },
                     )
                   }alert("test6");
@@ -745,17 +770,25 @@ export default {
 
 
 
-
+     // var data = []
 
       api.getRoots(this.$baseURL)  // Top node
           .then((children)=> {
             // if (children != null) {
 
             for (let x = 0; x < children.length; x++) {
-              alert("thiis is the code " + children[x].code);
-              alert("this is the children and children name " + children[x].code + ' : ' + children[x].name);
+            //  data.push(
+               //   {
+             //       "ida": children[x].code,
+              //      "labelb": children[x].code + ' : ' + children[x].name,
+              //    }
+
+          //  )
+              alert("test");
+         //     alert("thiis is the code " + children[x].code);
+          //    alert("this is the children and children name " + children[x].code + ' : ' + children[x].name);
               //    "isLeaf": false,
-              alert("this is disabled or leaf " + children[x].leaf);
+          //    alert("this is disabled or leaf " + children[x].leaf);
             }
           })
 

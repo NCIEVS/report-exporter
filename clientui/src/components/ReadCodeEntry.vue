@@ -52,7 +52,7 @@
       <ul class="tags" id = "listOfTags">
         <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
           {{ tag }}
-          <button class="delete" @click="removeTag(index)">x</button>
+          <button class="delete" @click="removeTag(tag)">x</button>
         </a></li>
       </ul>
 
