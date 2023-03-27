@@ -374,17 +374,19 @@ export default {
       tagCounter1 = tagCounter1  - 1;
     };
 
+
+    /*
     const data = ref([
       {
         id: 1,
         label: "Level 1",
         nodes: [
           {
-            id: 2,
+            id: 23,
             label: "Level 2",
           },
           {
-            id: 3,
+            id: 34,
             label: "Level 3",
             nodes: [
               {
@@ -408,20 +410,33 @@ export default {
     const onNodeExpanded = (node, state) => {
       console.log("state: ", state);
       console.log("node: ", node);
-    };
 
+
+    };
+*/
     const onUpdate = (nodes) => {
       console.log("nodes:", nodes);
     };
 
-
+/*
     const onNodeClick = (node) => {
     // node.label = Object.values(node.label).replace(',', '');
       alert("This node was selected: " + Object.values(node.label));
-
+      alert("before api call ");
+      api.getCuratedTopNodes(this.$baseURL)
+          .then((data)=>{
+            // this.curratedTopNodes = data;
+            // this.setCurratedTags();
+            alert("this is the data "+ data);
+          })
+      alert("after api call  ");
     };
 
-    return { tags, newTag, removeTag,onNodeClick,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
+
+ */
+    //return { tags, newTag, removeTag,onNodeClick,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
+    //return { tags, newTag, removeTag,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
+    return { tags, newTag, removeTag,  tagCounter1,  onUpdate, }
   },
 
 
@@ -722,6 +737,72 @@ export default {
   },
 
   methods: {
+
+
+
+
+    onNodeClick(node) {
+
+
+
+
+
+      api.getRoots(this.$baseURL)  // Top node
+          .then((children)=> {
+            // if (children != null) {
+
+            for (let x = 0; x < children.length; x++) {
+              alert("thiis is the code " + children[x].code);
+              alert("this is the children and children name " + children[x].code + ' : ' + children[x].name);
+              //    "isLeaf": false,
+              alert("this is disabled or leaf " + children[x].leaf);
+            }
+          })
+
+
+
+
+
+
+
+
+
+
+
+
+      alert("This node was selected: " + Object.values(node.label));
+
+    },
+
+
+
+
+
+
+
+
+
+
+
+/*
+    onNodeClick(node) {
+      // node.label = Object.values(node.label).replace(',', '');
+      alert("This node was selected: " + Object.values(node.label));
+      alert("before api call ");
+      api.getCuratedTopNodes(this.$baseURL)
+          .then((data)=>{
+            // this.curratedTopNodes = data;
+            // this.setCurratedTags();
+            alert("this is the data "+ Object.values(data));
+          })
+      alert("after api call  ");
+    },
+*/
+
+
+
+
+
     checkRoutes(){
       alert("routes Check" + this.routes[1].length);
     },
