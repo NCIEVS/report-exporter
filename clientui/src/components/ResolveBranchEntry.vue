@@ -113,7 +113,7 @@
       <br>
       <br>
       <br>
-      <strong><label for="ncitLabel" class = "levels-label">NCIt Tree:</label></strong>
+     <!-- <strong><label for="ncitLabel" class = "levels-label">NCIt Tree:</label></strong>-->
 
 
 
@@ -603,30 +603,9 @@ export default {
       exportType: 'exportNow',
       treeLevel: '',
 
-      treeData: [      {
-        id: 1,
-        label: "Level 1c",
-        nodes: [
-          {
-            id: 23,
-            label: "Level 2v",
-          },
-          {
-            id: 34,
-            label: "Level 3",
-            nodes: [
-              {
-                id: 4,
-                label: "Level 3 Child 1",
-              },
-              {
-                id: 5,
-                label: "Level 3 Child 2",
-              },
-            ],
-          },
-        ],
-      },],
+      treeData: [ {
+        id: 0,
+        label: '(NCIt Tree):'}],
 
       treeDisplayData: [
         {
@@ -764,48 +743,11 @@ export default {
 
 
 
-
+    // Vue 3 when tree is click the code is added to the blue tags below the entity code search
     onNodeClick(node) {
-
-//this.treeData[0].label = "test"
-
-     // var data = []
-
-      api.getRoots(this.$baseURL)  // Top node
-          .then((children)=> {
-            // if (children != null) {
-
-            for (let x = 0; x < children.length; x++) {
-            //  data.push(
-               //   {
-              //     "id": children[x].code,
-                //  children[x].code
-           //  this.treeData[x].label.push(children[x].code + ' : ' + children[x].name);
-              this.treeData[x].label = children[x].code + ' : ' + children[x].name;
-              //    }
-
-          //  );
-           //   alert("test");
-         //     alert("thiis is the code " + children[x].code);
-          //    alert("this is the children and children name " + children[x].code + ' : ' + children[x].name);
-              //    "isLeaf": false,
-          //    alert("this is disabled or leaf " + children[x].leaf);
-            }
-          })
-
-
-
-
-
-
-
-
-
-
-
-
-      alert("This node was selected: " + Object.values(node.label));
-
+      if ((node.label !== "(NCIt Tree):") && (this.tags.length < 1)){
+        this.tags.push(node.label)
+      }
     },
 
 
@@ -1903,6 +1845,87 @@ export default {
           this.curratedTopNodes = data;
           this.setCurratedTags();
         })
+
+//alert("before tree api")
+   // var data = []
+    api.getRoots(this.$baseURL)  // Top node
+        .then((children)=> {
+          // if (children != null) {
+          //alert(children)
+          for (let x = 0; x < children.length; x++) {
+            //  data.push(
+            //   {
+            //     "id": children[x].code,
+            //  children[x].code
+            //  this.treeData[x].label.push(children[x].code + ' : ' + children[x].name);
+           // this.treeData[x] = "{ id: " + children[x].code + "," + "label: " +'"'+ children[x].code + ' : ' + children[x].name + "'" + "}";
+          //  this.treeData[x] = "{ id: " + children[x].code + "," + "label: " +'"'+ children[x].code + ' : ' + children[x].name + '"' + "}";
+
+
+           // this.treeData[x] = " id: " + children[x].code + "," + "label: " +'"'+ children[x].code + ' : ' + children[x].name + "'" ;
+          //   this.treeData[x] = " id: " + children[x].code + "," + "label: test " + children[x].code + ' : ' + children[x].name  ;
+         //   this.treeData[x] = " id: 1"  + "," + "label: test "  ;
+
+         /*
+            data.push(
+                {
+                  "id": children[x].code,
+                  "label": children[x].code + ' : ' + children[x].name
+                  //"isLeaf": false,
+                  //"disabled": children[x].leaf,
+                },
+            )
+            */
+
+           // children[x].code
+            //this.treeData[0];
+           // this.treeData[0]="id: 1, label: 111"
+           // alert("after assignment")
+          // data.push("{id: 1, label: 111}")
+           // alert("after push " + data)
+
+          //  this.treeData[x].id = children[x].code;
+          //  this.treeData[x].label = children[x].code + ' : ' + children[x].name
+
+
+            //this.treeData[0] = "{id: 1, label: 25, nodes: [{ id: 3 , label: 33 },]}"
+            //this.treeData[0].push({id: 1, label: 25, nodes: [{ id: 3 , label: 33 },]})
+            //this.treeData[0].value.push({id: 1, label: 25, nodes: [{ id: 3 , label: 33 },]})
+            //this.treeData[0].value = {id: 1, label: 25, nodes: [{ id: 3 , label: 33 },]}
+           // this.treeData[0] = "{id: 1, label: 25, nodes: [{ id: 3 , label: 33 },]}"
+
+           // this.treeData[0].push({id: 1, label: 25, nodes: [{ id: 3 , label: 33 },]})
+
+           // this.fruits.push({ name: 'Banana', amount: 4 });
+           // alert("this is the tree1 " +  Object.values(this.fruits));
+
+            this.treeData.push({ id: children[x].code, label: children[x].code + ' : ' + children[x].name });
+           // alert("this is the tree2 " + this.treeData);
+
+           // this.treeData[0].push({id: 2, label: 111 });
+          //  alert("this is the tree3 " + this.treeData[0]);
+           // this.treeData[0]={"id: 1, label: 111 "};
+            //alert(Object.values(data))
+
+            //alert(this.treeData[x].label);
+            //    }
+
+            //  );
+            //   alert("test");
+            //     alert("thiis is the code " + children[x].code);
+            //    alert("this is the children and children name " + children[x].code + ' : ' + children[x].name);
+            //    "isLeaf": false,
+            //    alert("this is disabled or leaf " + children[x].leaf);
+          }
+        //  resolve(this.treeData)
+
+        })
+
+
+
+
+
+
   }
 }
 
