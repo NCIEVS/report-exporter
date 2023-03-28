@@ -113,7 +113,7 @@
       <br>
       <br>
       <br>
-     <!-- <strong><label for="ncitLabel" class = "levels-label">NCIt Tree:</label></strong>-->
+      <strong><label for="ncitLabel" class = "levels-label">NCIt Tree:</label></strong>
 
 
 
@@ -603,9 +603,11 @@ export default {
       exportType: 'exportNow',
       treeLevel: '',
 
-      treeData: [ {
-        id: 0,
-        label: '(NCIt Tree):'}],
+     // treeData: [ {
+     //   id: 0,
+     //   label: '(NCIt Tree):'}],
+
+      treeData: [ ],
 
       treeDisplayData: [
         {
@@ -654,7 +656,7 @@ export default {
       ] ,
 
 
-
+/*
       // function to get tree data
       loadData: function (oriNode, resolve) {
         // set id to the node to retrieve children for.
@@ -735,11 +737,126 @@ export default {
               })
         }
       },
-
+*/
     }
   },
 
   methods: {
+
+
+
+    loadData: function (oriNode, resolve) {
+      // set id to the node to retrieve children for.
+      // set to null to indicate this is the root.
+      alert(oriNode);
+      alert(resolve);
+      var id = oriNode.data.id ? oriNode.data.id : null
+      var data = []
+      //console.log('id: ' + id)
+
+      // if id is null, this is the root.  get all root children
+      if (id == null) {
+        api.getRoots(this.$baseURL)
+            .then((children)=>{
+              if (children != null) {
+
+                for (let x=0; x < children.length; x++){
+                  //console.log(children[x].code + '  :  ' + children[x].name)
+                  data.push(
+                      {
+                        "id": children[x].code,
+                        "text": children[x].code + ' : ' + children[x].name,
+                        "isLeaf": false,
+                        "disabled": children[x].leaf,
+                      },
+                  )
+                }
+                resolve(data)
+              }
+              else {
+                console.log("Error retrieving roots");
+                data.push(
+                    {
+                      "id": '0',
+                      "text": 'Error retrieving tree',
+                      "isLeaf": true,
+                    },
+                )
+                resolve(data)
+              }
+            })
+      }
+
+      // Id was not null, get the children
+      else {
+        api.getChildren(this.$baseURL, id, 1)
+            .then((children)=>{
+              if (children != null) {
+                for (let x=0; x < children.length; x++){
+                  //console.log(children[x].code + '  :  ' + children[x].name)
+                  data.push(
+                      {
+                        "id": children[x].code,
+                        "text": children[x].code + ' : ' + children[x].name,
+                        "isLeaf": children[x].leaf,
+                        "disabled": children[x].leaf,
+                      },
+                  )
+                }
+                resolve(data)
+              }
+              else {
+                console.log("Error retrieving children");
+                data.push(
+                    {
+                      "id": '0',
+                      "text": 'Error retrieving tree',
+                      "isLeaf": true,
+                    },
+                )
+                resolve(data)
+              }
+            })
+      }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
