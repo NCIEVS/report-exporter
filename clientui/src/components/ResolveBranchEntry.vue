@@ -366,9 +366,10 @@ export default {
   },
 
   mounted() {
-    this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
+    this.hideObjectsOnScreen();  //Vue 3 function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
     this.$refs["my-tree"].expandNode(1);
+
   },
   setup(){
     const tags = ref([]);
@@ -624,7 +625,7 @@ export default {
 
       treeData: [],
       treeDisplayData: [],
-
+      treeCode: [],
    /*
       treeDisplayData: [
         {
@@ -1973,7 +1974,7 @@ export default {
 
     async sleepTimer() {
      // await this.sleep(500);
-      await this.sleep(50000000000);
+      await this.sleep(500);
     },
 
     // save to local storage
@@ -2067,6 +2068,77 @@ export default {
       console.log("4")
     },
 
+    getParentNode(){
+      //Vue 3 Displays code and descriptions for top node
+      api.getRoots(this.$baseURL)  // Top node
+          .then((root)=> {
+            alert("root results " + root)
+            if (root != null) {
+              for (let x = 0; x < root.length; x++) {
+
+                this.treeData.push({label: root[x].code + ' : ' + root[x].name,
+                  state: { checked: false, selected: false, expanded: false },
+                  id: root[x].code,
+                  checkable: true,
+                  nodes:[]});
+
+                 this.treeCode.push(root[x].code);
+               // this.treeCode[x] = root[x].code;
+
+              //  alert("root results 2 " + this.treeCode[x])
+                //  alert(root[x].code)
+                //   alert(x)
+                //  alert(this.treeCode[x])
+                //   this.treeCode.value.push(root[x].code);
+                // nodes: [{id: children[x].code, label: children[x].code + ' : ' + children[x].name + Object.values(treeTemp)}]};
+
+              }
+              alert("tree length " + this.treeCode.length)
+              if (this.treeCode.length > 0) {
+                this.getChildNode();
+              }
+            }
+
+          })
+
+    },
+
+
+    getChildNode(){
+     // alert("second tree length a" + this.treeCode.length)
+      if (this.treeCode.length > 0) {
+      // alert("second tree length  b" + this.treeCode.length)
+        for (let x = 0; x < this.treeCode.length; x++) {
+          alert("tree length " + this.treeCode.length)
+          alert("tree code " + this.treeCode[x])
+          api.getChildren(this.$baseURL, this.treeCode[x], 1)
+              .then((children) => {
+                //  childCount = children.length;
+                alert("child output ")
+                this.sleepTimer();
+                if (children != null) {
+                  for (let x = 0; x < children.length; x++) {
+                    //  alert(children[x].code + '  :  ' + children[x].name)
+                    //   console.log("test33432  " + children[x].code)
+
+                    alert("Parent node " + this.treeCode[x]);
+                    //        alert("child code " + children[x].code);
+                    //  alert("description "+ children[x].name);
+                    //         alert("leaf " + children[x].leaf);
+                    console.log("Parent code " + this.treeCode[x]);
+                    console.log("child code " + children[x].code);
+                    console.log("leaf " + children[x].leaf);
+                    console.log("description " + children[x].name);
+
+
+               this.addNodeFunction(this.treeCode[x], children[x].code, children[x].code + ' : ' + children[x].name,children[x].leaf )
+
+                  }
+                }
+              })
+        }
+      }
+    },
 
     sleep: function(ms) {
       return new Promise((resolve) => {
@@ -2100,125 +2172,13 @@ export default {
           this.setCurratedTags();
         })
 
-
-  //  var childCount = 0;
-   // var treeTemp = '';
-
-    //Vue 3 Displays code and descriptions for top node
-    api.getRoots(this.$baseURL)  // Top node
-        .then((root)=> {
-          if (root != null) {
-            for (let x = 0; x < root.length; x++) {
-
-              // api.getChildren(this.$baseURL, root[x].code, 1)
-              //  alert(root[x].code);
-
-              //  while(childCount  > 0)
-
-              //this.treeDisplayData.push({text: root[x].code + ' : ' + root[x].name,
-              //                            state: { checked: false, selected: false, expanded: false },
-              //                            id: root[x].code,
-              //                            checkable: false,
-              //                            nodes:[]});
-
-
-               // nodes: [{id: children[x].code, label: children[x].code + ' : ' + children[x].name + Object.values(treeTemp)}]};
-
-              this.sleepTimer();
-              api.getChildren(this.$baseURL, root[x].code, 1)
-                  .then((children) => {
-                    //  childCount = children.length;
-
-                    this.sleepTimer();
-                    if (children != null) {
-                      for (let x = 0; x < children.length; x++) {
-                        //  alert(children[x].code + '  :  ' + children[x].name)
-                     //   console.log("test33432  " + children[x].code)
-
-
-
-                        this.tmpData = {
-                          id: root[x].code,
-                          label: root[x].code + ' : ' + root[x].name,
-                          nodes:[]};
-                        this.treeData.push(this.tmpData);
-
-
-                       // C12913 : Abnormal Cell
-                       // this.addNodeFunction("C12913", "C36843", "soft tissue")
-                        this.addNodeFunction(root[x].code, children[x].code, children[x].code + ' : ' + children[x].name)
-
-                        // this.treeData.push( {id: node.id , nodes: [{ id: children[x].code, label: children[x].code + ' : ' + children[x].name }]});
-                        //1 node available
-                        //   this.tmpData = { id: root[x].code, label: root[x].code + ' : ' + root[x].name };
-
-
-                        //Add more children
-                        //  treeTemp =  ',' + 'nodes:' + [{ id: children[x].code, label: children[x].code + ' : ' + children[x].name }];
-
-
-                        // 1 node no children
-                       // treeTemp = ""
-
-                        //1 node 1 child
-                        // this.tmpData = {id: root[x].code, label: root[x].code + ' : ' + root[x].name + treeTemp};
-
-                        //1 node multiple children
-                        /*
-                        this.tmpData = {
-                          id: root[x].code,
-                          label: root[x].code + ' : ' + root[x].name,
-                          nodes: [{id: children[x].code, label: children[x].code + ' : ' + children[x].name + Object.values(treeTemp)}]
-
-                        };
-                        */
-                        this.tmpData = {
-                          text: "test",
-                          State: {checked: false, selected: false, expanded: true},
-                          id: 1,
-                          checkable: true
-                         // nodes: [{id: children[x].code, label: children[x].code + ' : ' + children[x].name + Object.values(treeTemp)}]
-
-                        }
-
-                    //    alert(Object.values(this.tmpData));
-
-                        // this.tmpData = this.tmpData + }]};
-
-                        this.sleepTimer();
-                      //  this.treeData.push(this.tmpData);
-                      //  this.treeDisplayData.push(this.tmpData);
-
-                      //  this.treeDisplayData.push({text: root[x].code + ' : ' + root[x].name,
-                      //    state: { checked: false, selected: false, expanded: false },
-                      //    id: root[x].code,
-                      //    checkable: false});
-
-                      }
-                    }
-                  })
-
-
-              //   this.treeData.push({ id: children[x].code, label: children[x].code + ' : ' + children[x].name });
-            }
-          }
-        })
-
-
-
-
-
-
+    this.getParentNode();  //Vue 3 builds tree on Resolved Branch Export screen
 
 
 
 
 
   }
-
-
-
-
 }
 
 </script>
