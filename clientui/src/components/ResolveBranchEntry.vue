@@ -626,6 +626,7 @@ export default {
       treeData: [],
       treeDisplayData: [],
       treeCode: [],
+      treeChildNode: [],
    /*
       treeDisplayData: [
         {
@@ -1050,12 +1051,13 @@ export default {
 
 
 
-    addNodeFunction: function (node, childCode, text) {
+    addNodeFunction: function (node, childCode, text, leafCheck, newNodeInd) {
       console.log(childCode);
       console.log(text);
+      console.log(leafCheck);
+      console.log(newNodeInd);
 
-
-
+   //   var treeArrayValue
   //    const newNode = {
 
         //   text: text,
@@ -1077,8 +1079,13 @@ export default {
       //this.treeData.node.push(Object.values(newNode))
     //  this.treeData[0].nodes={label: text, id: childCode};
 
-      this.treeData[0].nodes.push({label: text, id: childCode});
 
+      for (let x=0; x < this.treeData.length; x++) {
+        if (node  === this.treeData[x].id) {
+          //  this.treeData[2].nodes.push({label: text, id: childCode});  // working
+          this.treeData[x].nodes.push({label: text, id: childCode});
+        }
+      }
   //    this.treeData[0].nodes.push({label: text, id: childCode});
      // this.treeData.push({label: text, id: childCode});
     //  this.$refs["my-tree"].nodes =
@@ -2072,7 +2079,7 @@ export default {
       //Vue 3 Displays code and descriptions for top node
       api.getRoots(this.$baseURL)  // Top node
           .then((root)=> {
-            alert("root results " + root)
+           // alert("root results " + root)
             if (root != null) {
               for (let x = 0; x < root.length; x++) {
 
@@ -2093,7 +2100,7 @@ export default {
                 // nodes: [{id: children[x].code, label: children[x].code + ' : ' + children[x].name + Object.values(treeTemp)}]};
 
               }
-              alert("tree length " + this.treeCode.length)
+            //  alert("tree length " + this.treeCode.length)
               if (this.treeCode.length > 0) {
                 this.getChildNode();
               }
@@ -2105,40 +2112,135 @@ export default {
 
 
     getChildNode(){
+
+
+
      // alert("second tree length a" + this.treeCode.length)
       if (this.treeCode.length > 0) {
       // alert("second tree length  b" + this.treeCode.length)
-        for (let x = 0; x < this.treeCode.length; x++) {
-          alert("tree length " + this.treeCode.length)
-          alert("tree code " + this.treeCode[x])
-          api.getChildren(this.$baseURL, this.treeCode[x], 1)
+        for (let y = 0; y < this.treeCode.length; y++) {
+         // alert("tree length " + this.treeCode.length)
+         // alert("tree code " + this.treeCode[x])
+          api.getChildren(this.$baseURL, this.treeCode[y], 1)
               .then((children) => {
                 //  childCount = children.length;
-                alert("child output ")
-                this.sleepTimer();
+                //alert("child output ")
+                //this.sleepTimer();
+
+
+
+
                 if (children != null) {
                   for (let x = 0; x < children.length; x++) {
+                    alert("Parent node " + this.treeCode[y]);
+                    alert("child code " + children[x].code);
+
+                    alert("child code1 " + children[0].code);
+
+                    alert("child code2 " + children[1].code);
+
+                    alert("child code3 " + children[2].code);
+                //    alert("child Length " + children.length)
+
+
                     //  alert(children[x].code + '  :  ' + children[x].name)
                     //   console.log("test33432  " + children[x].code)
 
-                    alert("Parent node " + this.treeCode[x]);
-                    //        alert("child code " + children[x].code);
+                 //   alert("Parent node " + this.treeCode[x]);
+                //    alert("child code " + children[x].code);
                     //  alert("description "+ children[x].name);
                     //         alert("leaf " + children[x].leaf);
-                    console.log("Parent code " + this.treeCode[x]);
+                    console.log("Parent code " + this.treeCode[y]);
                     console.log("child code " + children[x].code);
                     console.log("leaf " + children[x].leaf);
                     console.log("description " + children[x].name);
-
-
-               this.addNodeFunction(this.treeCode[x], children[x].code, children[x].code + ' : ' + children[x].name,children[x].leaf )
+                    this.treeChildNode.push(children[x].code);
+                      this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name, children[x].leaf)
 
                   }
                 }
               })
+
+              this.getMoreChildren(this.treeChildNode);
         }
       }
     },
+
+
+
+
+
+
+    getMoreChildren(treeChildNodeParam){
+      var levelCounter = 2
+
+      if (treeChildNodeParam.length > 0){
+
+
+
+        for (let y = 0; y < treeChildNodeParam.length; y++) {
+          // alert("tree length " + this.treeCode.length)
+          // alert("tree code " + this.treeCode[x])
+          api.getChildren(this.$baseURL, treeChildNodeParam[y], levelCounter)
+              .then((children) => {
+                //  childCount = children.length;
+                //alert("child output ")
+                //this.sleepTimer();
+
+
+
+
+                if (children != null) {
+                  for (let x = 0; x < children.length; x++) {
+                    alert("Parent node " + this.treeCode[y]);
+                    alert("child code " + children[x].code);
+
+                    alert("child code1 " + children[0].code);
+
+                    alert("child code2 " + children[1].code);
+
+                    alert("child code3 " + children[2].code);
+                    //    alert("child Length " + children.length)
+
+
+                    //  alert(children[x].code + '  :  ' + children[x].name)
+                    //   console.log("test33432  " + children[x].code)
+
+                    //   alert("Parent node " + this.treeCode[x]);
+                    //    alert("child code " + children[x].code);
+                    //  alert("description "+ children[x].name);
+                    //         alert("leaf " + children[x].leaf);
+                    console.log("Parent code " + this.treeCode[y]);
+                    console.log("child code " + children[x].code);
+                    console.log("leaf " + children[x].leaf);
+                    console.log("description " + children[x].name);
+                    this.treeChildNode.push(children[x].code);
+                    this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name, children[x].leaf)
+
+                  }
+                }
+              })
+
+
+        }
+
+
+
+
+
+
+      }
+
+    },
+
+
+
+
+
+
+
+
+
 
     sleep: function(ms) {
       return new Promise((resolve) => {
