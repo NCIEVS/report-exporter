@@ -119,12 +119,12 @@
 
       <Tree
           :nodes="treeData"
-          :use-checkbox="true"
-          :use-icon="false"
+          :use-checkbox="false"
+          :use-icon="yes"
           show-child-count
           @nodeExpanded="onNodeExpanded"
           @update:nodes="onUpdate"
-          @nodeClick="onNodeClick"
+          @nodeClick="addNodeFunction"
       />
 
 
@@ -627,6 +627,7 @@ export default {
       treeDisplayData: [],
       treeCode: [],
       treeChildNode: [],
+      levelCounter: 1,
    /*
       treeDisplayData: [
         {
@@ -882,14 +883,15 @@ export default {
 
 
     // Vue 3 when tree is click the code is added to the blue tags below the entity code search
-   // onNodeClick(node) {
+    /*
+    onNodeClick(node) {
 
-//      var tmpData;
-    //  if ((node.label !== "(NCIt Tree):") && (this.tags.length < 1)) {
-     //   this.tags.push(node.label)
-    //  }
+     // var tmpData;
+      if ((node.label !== "(NCIt Tree):") && (this.tags.length < 1)) {
+        this.tags.push(node.label)
+      }
 
-  //  },
+    },
 
 
 
@@ -1051,75 +1053,53 @@ export default {
 
 
 
-    addNodeFunction: function (node, childCode, text, leafCheck, newNodeInd) {
-      console.log(childCode);
-      console.log(text);
-      console.log(leafCheck);
-      console.log(newNodeInd);
+   // addNodeFunction: function (node, childCode, text) {
 
-   //   var treeArrayValue
-  //    const newNode = {
-
-        //   text: text,
-        //   id: childCode,
-        //  state: { checked: false, selected: false, expanded: true }
-   //     label: text,
-   //     id: childCode,
-  //      node:[]
-        //  text: text,
-        //   id: childCode,
-        //    state: { checked: false, selected: false, expanded: true }
-  //    }
-
-      //this.$refs["my-tree"].node = {label: text, id: childCode};
-    //  this.treeData[node] = {label: text, id: childCode};
-     // this.treeData.nodes=[newNode];
-     // node.treeData.nodes.push(newNode);
-   //   this.treeData.nodes = [newNode];
-      //this.treeData.node.push(Object.values(newNode))
-    //  this.treeData[0].nodes={label: text, id: childCode};
-
-
-      for (let x=0; x < this.treeData.length; x++) {
-        if (node  === this.treeData[x].id) {
-          //  this.treeData[2].nodes.push({label: text, id: childCode});  // working
-          this.treeData[x].nodes.push({label: text, id: childCode});
-        }
-      }
-  //    this.treeData[0].nodes.push({label: text, id: childCode});
-     // this.treeData.push({label: text, id: childCode});
-    //  this.$refs["my-tree"].nodes =
-
-
-     /*
+    addNodeFunction: function (node) {
+    //  console.log(childCode);
+    //  console.log(text);
+    //  console.log(leafCheck);
+      //console.log(newNodeInd);
 
 
 
 
 
-      const newNode = {
 
-     //   text: text,
-     //   id: childCode,
-      //  state: { checked: false, selected: false, expanded: true }
-        label: text,
-        id: childCode,
+      if (this.treeCode.length > 0) {
+      //  for (let y = 0; y < this.treeCode.length; y++) {
+          api.getChildren(this.$baseURL, node, 1)
+              .then((children) => {
 
-      //  text: text,
-     //   id: childCode,
-    //    state: { checked: false, selected: false, expanded: true }
-      };
-      console.log("example: add node", newNode);
-      if (node.nodes === undefined) {
-        //node.nodes = [newNode];
-        //this.treeDisplayData.nodes = newNode;
-        this.treeData.nodes = [newNode];
-      } else {
-        node.nodes.push(newNode);
+               // alert("Children " + children.length);
+
+                if (children != null) {
+                  for (let x = 0; x < children.length; x++) {
+                   // this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name)
+                    for (let x=0; x < this.treeData.length; x++) {
+                      if (node  === this.treeData[x].id) {
+                        this.treeData[x].nodes.push({label: children[x].code + ' : ' + children[x].name,
+                          id: children[x].code,
+                          //       state: { checked: false, selected: true, expanded: false },
+                          //   checkable: false,
+                          nodes:[]});
+                      }
+                    }
+                  }
+                }
+              })
+      //  }
       }
 
 
-      */
+
+
+
+
+
+
+
+
 
     },
 
@@ -2084,12 +2064,12 @@ export default {
               for (let x = 0; x < root.length; x++) {
 
                 this.treeData.push({label: root[x].code + ' : ' + root[x].name,
-                  state: { checked: false, selected: false, expanded: false },
+                  state: { checked: false, selected: true, expanded: false },
                   id: root[x].code,
-                  checkable: true,
+                  checkable: false,
                   nodes:[]});
 
-                 this.treeCode.push(root[x].code);
+                this.treeCode.push(root[x].code);
                // this.treeCode[x] = root[x].code;
 
               //  alert("root results 2 " + this.treeCode[x])
@@ -2101,19 +2081,16 @@ export default {
 
               }
             //  alert("tree length " + this.treeCode.length)
-              if (this.treeCode.length > 0) {
-                this.getChildNode();
-              }
+              //if (this.treeCode.length > 0) {
+      //          if (this.treeCode.length === root.length) {
+      //          this.getChildNode();
+      //        }
             }
-
           })
-
     },
 
 
     getChildNode(){
-
-
 
      // alert("second tree length a" + this.treeCode.length)
       if (this.treeCode.length > 0) {
@@ -2121,25 +2098,17 @@ export default {
         for (let y = 0; y < this.treeCode.length; y++) {
          // alert("tree length " + this.treeCode.length)
          // alert("tree code " + this.treeCode[x])
-          api.getChildren(this.$baseURL, this.treeCode[y], 1)
+          api.getChildren(this.$baseURL, this.treeCode[y], this.levelCounter)
               .then((children) => {
                 //  childCount = children.length;
-                //alert("child output ")
-                //this.sleepTimer();
-
-
-
 
                 if (children != null) {
                   for (let x = 0; x < children.length; x++) {
-                    alert("Parent node " + this.treeCode[y]);
-                    alert("child code " + children[x].code);
-
-                    alert("child code1 " + children[0].code);
-
-                    alert("child code2 " + children[1].code);
-
-                    alert("child code3 " + children[2].code);
+                 //   alert("Parent node " + this.treeCode[y]);
+                 //   alert("child code " + children[x].code);
+                 //   alert("child code1 " + children[0].code);
+                 //   alert("child code2 " + children[1].code);
+                 //   alert("child code3 " + children[2].code);
                 //    alert("child Length " + children.length)
 
 
@@ -2150,20 +2119,46 @@ export default {
                 //    alert("child code " + children[x].code);
                     //  alert("description "+ children[x].name);
                     //         alert("leaf " + children[x].leaf);
-                    console.log("Parent code " + this.treeCode[y]);
-                    console.log("child code " + children[x].code);
-                    console.log("leaf " + children[x].leaf);
-                    console.log("description " + children[x].name);
-                    this.treeChildNode.push(children[x].code);
-                      this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name, children[x].leaf)
+                   // console.log("Parent code " + this.treeCode[y]);
+                   // console.log("child code " + children[x].code);
+                   // console.log("leaf " + children[x].leaf);
+                   // console.log("description " + children[x].name);
+
+                //    this.treeChildNode.push(children[x].code);
+                    this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name)
+                   // alert(this.treeChildNode);
+                   // alert(this.treeChildNode.length
+
+                    //tree counter
+
+                 //   if (this.treeCode.length > 0  && y === this.treeCode.length-1) {
+                //      this.levelCounter = this.levelCounter + 1;
+                    //  this.treeCode = [];
+                   //   this.treeCode = this.treeChildNode;
+                    //  alert(this.treeCode.length);
+                    //  alert(this.treeChildNode);
+                    //  this.getChildNode();
+                  //  }
+
+
 
                   }
-                }
-              })
+                 // this.getMoreChildren(this.treeChildNode);
 
-              this.getMoreChildren(this.treeChildNode);
+
+                }
+                //this.treeCode = [];
+                //this.treeCode = this.treeChildNode;
+              //  alert(this.treeCode.length);
+              })
+//alert(y)
+     //     alert(this.treeCode.length)
+
+          }
         }
-      }
+
+
+
     },
 
 
@@ -2172,36 +2167,33 @@ export default {
 
 
     getMoreChildren(treeChildNodeParam){
-      var levelCounter = 2
 
+      //  alert(this.levelCounter)
       if (treeChildNodeParam.length > 0){
-
-
-
+        this.treeChildNod =[];
         for (let y = 0; y < treeChildNodeParam.length; y++) {
           // alert("tree length " + this.treeCode.length)
           // alert("tree code " + this.treeCode[x])
-          api.getChildren(this.$baseURL, treeChildNodeParam[y], levelCounter)
+
+          api.getChildren(this.$baseURL, treeChildNodeParam[y], this.levelCounter)
               .then((children) => {
                 //  childCount = children.length;
                 //alert("child output ")
                 //this.sleepTimer();
 
 
-
-
                 if (children != null) {
                   for (let x = 0; x < children.length; x++) {
-                    alert("Parent node " + this.treeCode[y]);
-                    alert("child code " + children[x].code);
+                 //   alert("Parent node " + treeChildNodeParam[y]);
+                //    alert("child code " + children[x].code);
 
-                    alert("child code1 " + children[0].code);
+             //       alert("child code1 " + children[0].code);
 
-                    alert("child code2 " + children[1].code);
+              //      alert("child code2 " + children[1].code);
 
-                    alert("child code3 " + children[2].code);
+              //      alert("child code3 " + children[2].code);
                     //    alert("child Length " + children.length)
-
+                  //DO call by node
 
                     //  alert(children[x].code + '  :  ' + children[x].name)
                     //   console.log("test33432  " + children[x].code)
@@ -2210,26 +2202,24 @@ export default {
                     //    alert("child code " + children[x].code);
                     //  alert("description "+ children[x].name);
                     //         alert("leaf " + children[x].leaf);
-                    console.log("Parent code " + this.treeCode[y]);
-                    console.log("child code " + children[x].code);
-                    console.log("leaf " + children[x].leaf);
-                    console.log("description " + children[x].name);
+                  //  console.log("Parent code " + treeChildNodeParam[y]);
+                  //  console.log("child code " + children[x].code);
+                  //  console.log("leaf " + children[x].leaf);
+                  //  console.log("description " + children[x].name);
                     this.treeChildNode.push(children[x].code);
-                    this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name, children[x].leaf)
+                    this.addNodeFunction(treeChildNodeParam[y], children[x].code, children[x].code + ' : ' + children[x].name)
 
                   }
                 }
               })
 
+          //alert(this.treeChildNode.length)
 
         }
-
-
-
-
-
-
       }
+      this.levelCounter = this.levelCounter + 1;
+     //alert(this.treeChildNode.length)
+     // this.getMoreChildren(this.treeChildNode)
 
     },
 

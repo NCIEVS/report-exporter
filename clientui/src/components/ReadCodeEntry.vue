@@ -614,6 +614,7 @@ export default {
           .then((data)=> {
             for (let x = 0 ; x < data.length; x++) {
               this.availableProperties.push(data[x].name);
+              console.log(data[x].name);
             }
           })
     },
