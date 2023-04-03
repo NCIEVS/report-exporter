@@ -439,9 +439,7 @@ export default {
         }
       }
     },
-    testCall2(){
-      alert("testCall2");
-    },
+
 
     // clear all of the entitiy codes in the input selection
     clearSelection() {

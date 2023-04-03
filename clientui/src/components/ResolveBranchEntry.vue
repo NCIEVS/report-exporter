@@ -1,3 +1,6 @@
+ResolveBranchEntry 4/2/23
+
+
 
 
 <template>
@@ -133,7 +136,7 @@
 
 
 
-<br>
+      <br>
       <Tree
           id="my-tree-id"
           ref="my-tree"
@@ -142,95 +145,95 @@
           :nodes="treeDisplayData"
       ></Tree>
 
-</div>
-      <br>
+    </div>
+    <br>
 
 
 
 
 
 
-      <!--Vue 3 step 2 list boxes Start -->
-      <div id="app" class="container">
-        <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
-          <div class="container">
-            <form>
-              <div class="form-group">
-                <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
-              </div>
-              <div class="form-group">
-                <div class="msl-multi-select">
-                  <div class="msl-searchable-list msl-multi-select__list">
-                    <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
-                    <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
-                      <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                        {{ userLeft }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="listBoxButton">
-                    <table>
-                      <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td><input type = "button" value = "=>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                    </table>
+    <!--Vue 3 step 2 list boxes Start -->
+    <div id="app" class="container">
+      <div role="tabpanel" id="SelectProperties1" aria-labelledby="step-SelectProperties1" class="wizard-tab-container" style>
+        <div class="container">
+          <form>
+            <div class="form-group">
+              <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
+            </div>
+            <div class="form-group">
+              <div class="msl-multi-select">
+                <div class="msl-searchable-list msl-multi-select__list">
+                  <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
+                  <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
+                    <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                      {{ userLeft }}
+                    </option>
+                  </select>
+                </div>
+                <div class="listBoxButton">
+                  <table>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type = "button" value = "=>" id = "toListBox" class = "toListBox" @click="moveRight"></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
 
-                    <table>
-                      <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td><input type = "button" value = "<=" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                    </table>
-                  </div>
-                  <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
-                    <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
-                    <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
-                      <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
-                        {{ userRight }}
-                      </option>
-                    </select>
-                  </div>
+                  <table>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type = "button" value = "<=" id = "fromListBox" class = "fromListBox" @click="moveLeft"></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                  <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
+                  <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
+                    <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
+                      {{ userRight }}
+                    </option>
+                  </select>
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
-      <!--Vue 3 step 2 list boxes End -->
+    </div>
+    <!--Vue 3 step 2 list boxes End -->
 
 
-      <span role="button" tabindex="0">
+    <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
 
-      <span role="button" tabindex="0">
+    <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "backButton" class="btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
       </span>
 
-      <span role="button" tabindex="0">
+    <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "nextOption" class="btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
       </span>
 
-      <span role="button" tabindex="0">
+    <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="ExportNowOrLater()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
 
@@ -238,84 +241,83 @@
 
 
 
-      <!--Vue 3 Entity Text field  End-->
+    <!--Vue 3 Entity Text field  End-->
 
 
 
-      <!-- Summary Information -->
-      <div id="accordion" class="pb-3 pt-3">
-        <div class="card">
-          <div class="card-header" id="headingOne"  style="
+    <!-- Summary Information -->
+    <div id="accordion" class="pb-3 pt-3">
+      <div class="card">
+        <div class="card-header" id="headingOne"  style="
               padding-left: 1px;
               padding-right: 1px;
               padding-bottom: 1px;
               padding-top: 1px;
           ">
+          <center>
+            <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
+              {{this.showSummaryText}}
+            </button>
+          </center>
+
+        </div>
+
+
+        <div id="accordion" class="pb-3 pt-3">
+          <div class="card">
+            <div id="headingOne" class="card-header" style="padding: 1px;">
+
+
+
+              <!--
             <center>
-              <button class="btn btn-link"  v-on:click="this.updateShowSummary" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
-                {{this.showSummaryText}}
-              </button>
+              <button data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary" class="btn btn-link"> Hide Selection Summary </button>
             </center>
-
-          </div>
-
-
-          <div id="accordion" class="pb-3 pt-3">
-            <div class="card">
-              <div id="headingOne" class="card-header" style="padding: 1px;">
-
-
-
-                <!--
-              <center>
-                <button data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary" class="btn btn-link"> Hide Selection Summary </button>
-              </center>
-              -->
-                <!-- Vue3 Selection Summary List boxes Start  -->
-              </div>
-              <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
-                <div class="card-body pb-1">
-                  <div class="row p-1">
-                    <div class="col-sm-4">
-                      <div class="card bg-light border-dark mb-3">
-                        <div class="card-header">Selected Top Node and Levels
-                          <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span></div>
-                        <div class="card-body">
-                          <ul class="list-group" id="selectedTagList">
-                            <li>
-                              {{ this.tags }}
-                            </li>
-                            <li>
-                              Levels to Export: {{ selectedLevel }}
-                            </li>
-                            <li>
-                              Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
-                            </li>
-                          </ul>
-                        </div>
+            -->
+              <!-- Vue3 Selection Summary List boxes Start  -->
+            </div>
+            <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
+              <div class="card-body pb-1">
+                <div class="row p-1">
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">Selected Top Node and Levels
+                        <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span></div>
+                      <div class="card-body">
+                        <ul class="list-group" id="selectedTagList">
+                          <li>
+                            {{ this.tags }}
+                          </li>
+                          <li>
+                            Levels to Export: {{ selectedLevel }}
+                          </li>
+                          <li>
+                            Children to Resolve: {{ this.childrenToResolveObj.childrenCount }}
+                          </li>
+                        </ul>
                       </div>
                     </div>
-                    <div class="col-sm-4">
-                      <div class="card bg-light border-dark mb-3">
-                        <div class="card-header">
-                          Selected Properties
-                          <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
-                        </div>
-                        <div class="card-body">
-                          <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
-                        </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">
+                        Selected Properties
+                        <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
+                      </div>
+                      <div class="card-body">
+                        <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
                       </div>
                     </div>
-                    <div class="col-sm-4">
-                      <div class="card bg-light border-dark mb-3">
-                        <div class="card-header">Selected Export Format</div>
-                        <div class="card-body">
-                          <ul class="list-group" id="selectedPropertyList">
-                            <li>
-                              {{ selectedExportListName }}
-                            </li>
-                          </ul>
-                        </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="card bg-light border-dark mb-3">
+                      <div class="card-header">Selected Export Format</div>
+                      <div class="card-body">
+                        <ul class="list-group" id="selectedPropertyList">
+                          <li>
+                            {{ selectedExportListName }}
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -323,12 +325,13 @@
               </div>
             </div>
           </div>
-
-          <!-- Vue3 Selection Summary List boxes End  -->
-
         </div>
+
+        <!-- Vue3 Selection Summary List boxes End  -->
+
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -359,7 +362,7 @@ export default {
   },
   components: {
     Tree
-   // ExportFormat
+    // ExportFormat
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -431,22 +434,22 @@ export default {
       console.log("nodes:", nodes);
     };
 
-/*
-    const onNodeClick = (node) => {
-    // node.label = Object.values(node.label).replace(',', '');
-      alert("This node was selected: " + Object.values(node.label));
-      alert("before api call ");
-      api.getCuratedTopNodes(this.$baseURL)
-          .then((data)=>{
-            // this.curratedTopNodes = data;
-            // this.setCurratedTags();
-            alert("this is the data "+ data);
-          })
-      alert("after api call  ");
-    };
+    /*
+        const onNodeClick = (node) => {
+        // node.label = Object.values(node.label).replace(',', '');
+          alert("This node was selected: " + Object.values(node.label));
+          alert("before api call ");
+          api.getCuratedTopNodes(this.$baseURL)
+              .then((data)=>{
+                // this.curratedTopNodes = data;
+                // this.setCurratedTags();
+                alert("this is the data "+ data);
+              })
+          alert("after api call  ");
+        };
 
 
- */
+     */
     //return { tags, newTag, removeTag,onNodeClick,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
     //return { tags, newTag, removeTag,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
     return { tags, newTag, removeTag,  tagCounter1,  onUpdate, }
@@ -525,6 +528,7 @@ export default {
       rightSelectedUsers:[],
       rightUsers:[],
       tmpData: '',
+      treeArrayExclude: [],
 
       routes: [
         {
@@ -619,147 +623,147 @@ export default {
       exportType: 'exportNow',
       treeLevel: '',
 
-     // treeData: [ {
-     //   id: 0,
-     //   label: '(NCIt Tree):'}],
+      // treeData: [ {
+      //   id: 0,
+      //   label: '(NCIt Tree):'}],
 
       treeData: [],
       treeDisplayData: [],
       treeCode: [],
       treeChildNode: [],
       levelCounter: 1,
-   /*
-      treeDisplayData: [
-        {
-          text: this.treeLevel = "level 1",
-          state: {checked: false, selected: false, expanded: true},
-          id: 1,
-          checkable: true,
-          nodes: [
-            {
-              text: "Level 2a",
-              state: {checked: false, selected: true, expanded: false},
-              id: 2,
-              checkable: true,
-              nodes: [           {
-                text: "level 2b",
-                state: {checked: false, selected: true, expanded: false},
-                checkable: true,
-                id: 5,
-                nodes: [],
+      /*
+         treeDisplayData: [
+           {
+             text: this.treeLevel = "level 1",
+             state: {checked: false, selected: false, expanded: true},
+             id: 1,
+             checkable: true,
+             nodes: [
+               {
+                 text: "Level 2a",
+                 state: {checked: false, selected: true, expanded: false},
+                 id: 2,
+                 checkable: true,
+                 nodes: [           {
+                   text: "level 2b",
+                   state: {checked: false, selected: true, expanded: false},
+                   checkable: true,
+                   id: 5,
+                   nodes: [],
 
-              },],
+                 },],
+               },
+             ],
+           },
+           {
+             text: "Level 2",
+             state: {checked: false, selected: true, expanded: false},
+             id: 2,
+             checkable: false,
+             nodes: [],
+           },
+           {
+             text: "level 3",
+             state: {checked: false, selected: true, expanded: false},
+             checkable: false,
+             id: 5,
+             nodes: [],
+
+           },
+           {
+             text: "Child 2",
+             state: { checked: false, selected: true, expanded: false },
+             checkable: false,
+             id: 4,
+           },
+         ] ,
+
+
+         */
+
+      /*
+            // function to get tree data
+            loadData: function (oriNode, resolve) {
+              // set id to the node to retrieve children for.
+              // set to null to indicate this is the root.
+              var id = oriNode.data.id ? oriNode.data.id : null
+              var data = []
+              //console.log('id: ' + id)
+
+              alert("test1");
+              // if id is null, this is the root.  get all root children
+              if (id == null) {
+                alert("test2");
+                api.getRoots(this.$baseURL)
+                    .then((children) => {
+                      if (children != null) {
+                        alert("test3");
+                        for (let x = 0; x < children.length; x++) {
+                          alert("test5");
+                          //console.log(children[x].code + '  :  ' + children[x].name)
+                          data.push(
+                              {
+
+                                //   "id": children[x].code,
+                                //   "text": children[x].code + ' : ' + children[x].name,
+                                //    "isLeaf": false,
+                                //    "disabled": children[x].leaf,
+
+                                "ida": children[x].code,
+                                "labelb": children[x].code + ' : ' + children[x].name,
+                               // "checkable": false,
+                               // "state": children[x].leaf,
+                              },
+                          )
+                        }alert("test6");
+                        resolve(data)
+                      } else {
+                        console.log("Error retrieving roots");
+                        data.push(
+                            {
+                              "id": '0',
+                              "text": 'Error retrieving tree',
+                              "isLeaf": true,
+                            },
+                        )
+                        resolve(data)
+                      }
+                    })
+              }
+
+              // Id was not null, get the children
+              else {
+                api.getChildren(this.$baseURL, id, 1)
+                    .then((children) => {
+                      if (children != null) {
+                        for (let x = 0; x < children.length; x++) {
+                          //console.log(children[x].code + '  :  ' + children[x].name)
+                          data.push(
+                              {
+                                "id": children[x].code,
+                                "text": children[x].code + ' : ' + children[x].name,
+                                "isLeaf": children[x].leaf,
+                                "disabled": children[x].leaf,
+                              },
+                          )
+                        }
+                        resolve(data)
+                      } else {
+                        console.log("Error retrieving children");
+                        data.push(
+                            {
+                              "id": '0',
+                              "text": 'Error retrieving tree',
+                              "isLeaf": true,
+                            },
+                        )
+                        resolve(data)
+                      }
+                    })
+              }
             },
-          ],
-        },
-        {
-          text: "Level 2",
-          state: {checked: false, selected: true, expanded: false},
-          id: 2,
-          checkable: false,
-          nodes: [],
-        },
-        {
-          text: "level 3",
-          state: {checked: false, selected: true, expanded: false},
-          checkable: false,
-          id: 5,
-          nodes: [],
-
-        },
-        {
-          text: "Child 2",
-          state: { checked: false, selected: true, expanded: false },
-          checkable: false,
-          id: 4,
-        },
-      ] ,
-
-
       */
-
-/*
-      // function to get tree data
-      loadData: function (oriNode, resolve) {
-        // set id to the node to retrieve children for.
-        // set to null to indicate this is the root.
-        var id = oriNode.data.id ? oriNode.data.id : null
-        var data = []
-        //console.log('id: ' + id)
-
-        alert("test1");
-        // if id is null, this is the root.  get all root children
-        if (id == null) {
-          alert("test2");
-          api.getRoots(this.$baseURL)
-              .then((children) => {
-                if (children != null) {
-                  alert("test3");
-                  for (let x = 0; x < children.length; x++) {
-                    alert("test5");
-                    //console.log(children[x].code + '  :  ' + children[x].name)
-                    data.push(
-                        {
-
-                          //   "id": children[x].code,
-                          //   "text": children[x].code + ' : ' + children[x].name,
-                          //    "isLeaf": false,
-                          //    "disabled": children[x].leaf,
-
-                          "ida": children[x].code,
-                          "labelb": children[x].code + ' : ' + children[x].name,
-                         // "checkable": false,
-                         // "state": children[x].leaf,
-                        },
-                    )
-                  }alert("test6");
-                  resolve(data)
-                } else {
-                  console.log("Error retrieving roots");
-                  data.push(
-                      {
-                        "id": '0',
-                        "text": 'Error retrieving tree',
-                        "isLeaf": true,
-                      },
-                  )
-                  resolve(data)
-                }
-              })
-        }
-
-        // Id was not null, get the children
-        else {
-          api.getChildren(this.$baseURL, id, 1)
-              .then((children) => {
-                if (children != null) {
-                  for (let x = 0; x < children.length; x++) {
-                    //console.log(children[x].code + '  :  ' + children[x].name)
-                    data.push(
-                        {
-                          "id": children[x].code,
-                          "text": children[x].code + ' : ' + children[x].name,
-                          "isLeaf": children[x].leaf,
-                          "disabled": children[x].leaf,
-                        },
-                    )
-                  }
-                  resolve(data)
-                } else {
-                  console.log("Error retrieving children");
-                  data.push(
-                      {
-                        "id": '0',
-                        "text": 'Error retrieving tree',
-                        "isLeaf": true,
-                      },
-                  )
-                  resolve(data)
-                }
-              })
-        }
-      },
-*/
     }
   },
 
@@ -1053,42 +1057,83 @@ export default {
 
 
 
-   // addNodeFunction: function (node, childCode, text) {
+    // addNodeFunction: function (node, childCode, text) {
 
     addNodeFunction: function (node) {
-    //  console.log(childCode);
-    //  console.log(text);
-    //  console.log(leafCheck);
+      //  console.log(childCode);
+      //  console.log(text);
+      //  console.log(leafCheck);
       //console.log(newNodeInd);
+      var tmpnodeArray;
+      var childDupCheck = false;
+/*
+      var bottomTab = "";
+      var indexBottomTab = 0;
+      // clear the internal user codes that are entered
+      this.userEnteredCodes = []
+      for (let i = 0; i < Object.keys(node).length; i++) {
+        //  for (let i = 0; i < 1; i++) {
+        // currated top nodes (from the server hava a value of "C12434:Blood")
+        // so we need to strip off everything from the : to the right.
+        if (node !== "undefined") {
+          bottomTab = node;
+          indexBottomTab = bottomTab.indexOf(":");
+          this.userEnteredCodes.push(bottomTab.slice(0, indexBottomTab));
+        }
+      }
+*/
+ //     node = "C12913"
 
+      for (let x=0; x < this.treeData.length; x++) {
+        if (node.id  === this.treeData[x].id)
+        {
+          tmpnodeArray = x
+        }
+      }
 
-
-
-
-
+alert("treeCode Length " + this.treeCode.length)
       if (this.treeCode.length > 0) {
-      //  for (let y = 0; y < this.treeCode.length; y++) {
-          api.getChildren(this.$baseURL, node, 1)
-              .then((children) => {
+        //  for (let y = 0; y < this.treeCode.length; y++) {
+        api.getChildren(this.$baseURL, node.id, 1)
+            .then((children) => {
 
-               // alert("Children " + children.length);
+             //  alert("Children " + children.length);
 
-                if (children != null) {
-                  for (let x = 0; x < children.length; x++) {
-                   // this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name)
-                    for (let x=0; x < this.treeData.length; x++) {
-                      if (node  === this.treeData[x].id) {
-                        this.treeData[x].nodes.push({label: children[x].code + ' : ' + children[x].name,
-                          id: children[x].code,
-                          //       state: { checked: false, selected: true, expanded: false },
-                          //   checkable: false,
-                          nodes:[]});
-                      }
+
+
+
+
+
+            //  if ((children !== null) && (childDupCheck === false)) {
+                if ((children !== null) ) {
+                for (let x = 0; x < children.length; x++) {
+
+
+                  for (let y=0; y < this.treeArrayExclude.length; y++) {
+                    if (children[x].code  === this.treeArrayExclude[y])
+                    {
+                       childDupCheck = true;
+                    //  alert("true")
                     }
                   }
+
+
+
+                  if (childDupCheck === false) {
+                  //  alert("code " + children[x].code)
+                    this.treeData[tmpnodeArray].nodes.push({
+                      label: children[x].code + ' : ' + children[x].name,
+                      id: children[x].code,
+                      //       state: { checked: false, selected: true, expanded: false },
+                      //   checkable: false,
+                      nodes: []
+                    });
+                    this.treeArrayExclude.push(children[x].code);
+                  }
                 }
-              })
-      //  }
+              }
+            })
+        //  }
       }
 
 
@@ -1309,9 +1354,9 @@ export default {
       }
 
 
-    //  alert(selectNextOptionBTN_counter);
-    //  alert("test c");
-    //  alert(Object.keys(this.selectedTags).length);
+      //  alert(selectNextOptionBTN_counter);
+      //  alert("test c");
+      //  alert(Object.keys(this.selectedTags).length);
 
       if (selectNextOptionBTN_counter === 1) {
         if ((this.tags.length > 0) && (this.selectedLevel > 0)) {  // checks to make sure that a code was entered before proceeding to next screen
@@ -1842,14 +1887,14 @@ export default {
         this.fileFormat = 'JSON';
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
-     // alert("check 2")
-     // alert("base URL: " + this.$baseURL);
-     // alert("tags: " + this.userEnteredCodes);
-     // alert("selectedPropertyName: " + this.rightUsers);
-     // alert("selectedLevel " + this.selectedLevel)
+      // alert("check 2")
+      // alert("base URL: " + this.$baseURL);
+      // alert("tags: " + this.userEnteredCodes);
+      // alert("selectedPropertyName: " + this.rightUsers);
+      // alert("selectedLevel " + this.selectedLevel)
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
-    //  alert("selectedFormat Extension: " + this.userSelectedFormat.name);
+      //  alert("selectedFormat Extension: " + this.userSelectedFormat.name);
 
 
 
@@ -1960,7 +2005,7 @@ export default {
     },
 
     async sleepTimer() {
-     // await this.sleep(500);
+      // await this.sleep(500);
       await this.sleep(500);
     },
 
@@ -2015,7 +2060,7 @@ export default {
     },
 
     addNodeFunction1 (node, childCode, text) {
-     // alert("1")
+      // alert("1")
 
 
       console.log("this is the node " + node)
@@ -2035,7 +2080,7 @@ export default {
 
       //node.nodes.push(newNode);
 
-     // node.nodes.push({text: 12345, state: { checked: false, selected: false, expanded: false }, id: 33, checkable: false},);
+      // node.nodes.push({text: 12345, state: { checked: false, selected: false, expanded: false }, id: 33, checkable: false},);
 
 
 
@@ -2059,7 +2104,7 @@ export default {
       //Vue 3 Displays code and descriptions for top node
       api.getRoots(this.$baseURL)  // Top node
           .then((root)=> {
-           // alert("root results " + root)
+            // alert("root results " + root)
             if (root != null) {
               for (let x = 0; x < root.length; x++) {
 
@@ -2070,9 +2115,9 @@ export default {
                   nodes:[]});
 
                 this.treeCode.push(root[x].code);
-               // this.treeCode[x] = root[x].code;
+                // this.treeCode[x] = root[x].code;
 
-              //  alert("root results 2 " + this.treeCode[x])
+                //  alert("root results 2 " + this.treeCode[x])
                 //  alert(root[x].code)
                 //   alert(x)
                 //  alert(this.treeCode[x])
@@ -2080,11 +2125,11 @@ export default {
                 // nodes: [{id: children[x].code, label: children[x].code + ' : ' + children[x].name + Object.values(treeTemp)}]};
 
               }
-            //  alert("tree length " + this.treeCode.length)
+              //  alert("tree length " + this.treeCode.length)
               //if (this.treeCode.length > 0) {
-      //          if (this.treeCode.length === root.length) {
-      //          this.getChildNode();
-      //        }
+              //          if (this.treeCode.length === root.length) {
+              //          this.getChildNode();
+              //        }
             }
           })
     },
@@ -2092,70 +2137,70 @@ export default {
 
     getChildNode(){
 
-     // alert("second tree length a" + this.treeCode.length)
+      // alert("second tree length a" + this.treeCode.length)
       if (this.treeCode.length > 0) {
-      // alert("second tree length  b" + this.treeCode.length)
+        // alert("second tree length  b" + this.treeCode.length)
         for (let y = 0; y < this.treeCode.length; y++) {
-         // alert("tree length " + this.treeCode.length)
-         // alert("tree code " + this.treeCode[x])
+          // alert("tree length " + this.treeCode.length)
+          // alert("tree code " + this.treeCode[x])
           api.getChildren(this.$baseURL, this.treeCode[y], this.levelCounter)
               .then((children) => {
                 //  childCount = children.length;
 
                 if (children != null) {
                   for (let x = 0; x < children.length; x++) {
-                 //   alert("Parent node " + this.treeCode[y]);
-                 //   alert("child code " + children[x].code);
-                 //   alert("child code1 " + children[0].code);
-                 //   alert("child code2 " + children[1].code);
-                 //   alert("child code3 " + children[2].code);
-                //    alert("child Length " + children.length)
+                    //   alert("Parent node " + this.treeCode[y]);
+                    //   alert("child code " + children[x].code);
+                    //   alert("child code1 " + children[0].code);
+                    //   alert("child code2 " + children[1].code);
+                    //   alert("child code3 " + children[2].code);
+                    //    alert("child Length " + children.length)
 
 
                     //  alert(children[x].code + '  :  ' + children[x].name)
                     //   console.log("test33432  " + children[x].code)
 
-                 //   alert("Parent node " + this.treeCode[x]);
-                //    alert("child code " + children[x].code);
+                    //   alert("Parent node " + this.treeCode[x]);
+                    //    alert("child code " + children[x].code);
                     //  alert("description "+ children[x].name);
                     //         alert("leaf " + children[x].leaf);
-                   // console.log("Parent code " + this.treeCode[y]);
-                   // console.log("child code " + children[x].code);
-                   // console.log("leaf " + children[x].leaf);
-                   // console.log("description " + children[x].name);
+                    // console.log("Parent code " + this.treeCode[y]);
+                    // console.log("child code " + children[x].code);
+                    // console.log("leaf " + children[x].leaf);
+                    // console.log("description " + children[x].name);
 
-                //    this.treeChildNode.push(children[x].code);
+                    //    this.treeChildNode.push(children[x].code);
                     this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name)
-                   // alert(this.treeChildNode);
-                   // alert(this.treeChildNode.length
+                    // alert(this.treeChildNode);
+                    // alert(this.treeChildNode.length
 
                     //tree counter
 
-                 //   if (this.treeCode.length > 0  && y === this.treeCode.length-1) {
-                //      this.levelCounter = this.levelCounter + 1;
+                    //   if (this.treeCode.length > 0  && y === this.treeCode.length-1) {
+                    //      this.levelCounter = this.levelCounter + 1;
                     //  this.treeCode = [];
-                   //   this.treeCode = this.treeChildNode;
+                    //   this.treeCode = this.treeChildNode;
                     //  alert(this.treeCode.length);
                     //  alert(this.treeChildNode);
                     //  this.getChildNode();
-                  //  }
+                    //  }
 
 
 
                   }
-                 // this.getMoreChildren(this.treeChildNode);
+                  // this.getMoreChildren(this.treeChildNode);
 
 
                 }
                 //this.treeCode = [];
                 //this.treeCode = this.treeChildNode;
-              //  alert(this.treeCode.length);
+                //  alert(this.treeCode.length);
               })
 //alert(y)
-     //     alert(this.treeCode.length)
+          //     alert(this.treeCode.length)
 
-          }
         }
+      }
 
 
 
@@ -2184,16 +2229,16 @@ export default {
 
                 if (children != null) {
                   for (let x = 0; x < children.length; x++) {
-                 //   alert("Parent node " + treeChildNodeParam[y]);
-                //    alert("child code " + children[x].code);
+                    //   alert("Parent node " + treeChildNodeParam[y]);
+                    //    alert("child code " + children[x].code);
 
-             //       alert("child code1 " + children[0].code);
+                    //       alert("child code1 " + children[0].code);
 
-              //      alert("child code2 " + children[1].code);
+                    //      alert("child code2 " + children[1].code);
 
-              //      alert("child code3 " + children[2].code);
+                    //      alert("child code3 " + children[2].code);
                     //    alert("child Length " + children.length)
-                  //DO call by node
+                    //DO call by node
 
                     //  alert(children[x].code + '  :  ' + children[x].name)
                     //   console.log("test33432  " + children[x].code)
@@ -2202,10 +2247,10 @@ export default {
                     //    alert("child code " + children[x].code);
                     //  alert("description "+ children[x].name);
                     //         alert("leaf " + children[x].leaf);
-                  //  console.log("Parent code " + treeChildNodeParam[y]);
-                  //  console.log("child code " + children[x].code);
-                  //  console.log("leaf " + children[x].leaf);
-                  //  console.log("description " + children[x].name);
+                    //  console.log("Parent code " + treeChildNodeParam[y]);
+                    //  console.log("child code " + children[x].code);
+                    //  console.log("leaf " + children[x].leaf);
+                    //  console.log("description " + children[x].name);
                     this.treeChildNode.push(children[x].code);
                     this.addNodeFunction(treeChildNodeParam[y], children[x].code, children[x].code + ' : ' + children[x].name)
 
@@ -2218,8 +2263,8 @@ export default {
         }
       }
       this.levelCounter = this.levelCounter + 1;
-     //alert(this.treeChildNode.length)
-     // this.getMoreChildren(this.treeChildNode)
+      //alert(this.treeChildNode.length)
+      // this.getMoreChildren(this.treeChildNode)
 
     },
 
@@ -2445,6 +2490,7 @@ ul {
 
 
 </style>
+
 
 
 
