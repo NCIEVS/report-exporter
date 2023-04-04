@@ -1066,42 +1066,28 @@ export default {
       //console.log(newNodeInd);
       var tmpnodeArray;
       var childDupCheck = false;
-/*
-      var bottomTab = "";
-      var indexBottomTab = 0;
-      // clear the internal user codes that are entered
-      this.userEnteredCodes = []
-      for (let i = 0; i < Object.keys(node).length; i++) {
-        //  for (let i = 0; i < 1; i++) {
-        // currated top nodes (from the server hava a value of "C12434:Blood")
-        // so we need to strip off everything from the : to the right.
-        if (node !== "undefined") {
-          bottomTab = node;
-          indexBottomTab = bottomTab.indexOf(":");
-          this.userEnteredCodes.push(bottomTab.slice(0, indexBottomTab));
-        }
-      }
-*/
- //     node = "C12913"
-
-      for (let x=0; x < this.treeData.length; x++) {
-        if (node.id  === this.treeData[x].id)
+   //   this.treeCode.push({treeid: root[x].code, treeIndex: x});
+   //   this.treeCode.push({id: root[x].code, treeIndex: x});
+alert("test 88")
+      for (let x=0; x < this.treeCode.length; x++) {
+        alert("test 98")
+        alert ("tree index " + this.treeCode.treeIndex[x])
+        alert("tree code " + this.treeCode.treeid[x])
+        alert("test 100")
+        if (node.id  === this.treeCode.treeid[x])
         {
-          tmpnodeArray = x
+
+          tmpnodeArray = this.treeCode.treeIndex[x]
         }
       }
 
-alert("treeCode Length " + this.treeCode.length)
+//alert("treeCode Length " + this.treeCode.length)
       if (this.treeCode.length > 0) {
         //  for (let y = 0; y < this.treeCode.length; y++) {
         api.getChildren(this.$baseURL, node.id, 1)
             .then((children) => {
 
              //  alert("Children " + children.length);
-
-
-
-
 
 
             //  if ((children !== null) && (childDupCheck === false)) {
@@ -1117,17 +1103,42 @@ alert("treeCode Length " + this.treeCode.length)
                     }
                   }
 
+/*
+                  this.treeData.push({label: root[x].code + ' : ' + root[x].name,
+                    state: { checked: false, selected: true, expanded: false },
+                    id: root[x].code,
+                    checkable: false,
+                    nodes:[]});
+
+                  this.treeCode.push(root[x].code);
+*/
 
 
+                  alert("tmpnodeArray " + tmpnodeArray)
+                  console.log("selected node " + this.treeData[tmpnodeArray].value)
+                  console.log("code label " + children[x].code + ' : ' + children[x].name)
+                  console.log("childDupCheck " + childDupCheck)
                   if (childDupCheck === false) {
                   //  alert("code " + children[x].code)
+
+
+                    alert("node Location " + this.treeData[tmpnodeArray].nodes)
+
                     this.treeData[tmpnodeArray].nodes.push({
                       label: children[x].code + ' : ' + children[x].name,
                       id: children[x].code,
-                      //       state: { checked: false, selected: true, expanded: false },
-                      //   checkable: false,
+                      state: { checked: false, selected: true, expanded: false },
+                      checkable: false,
                       nodes: []
-                    });
+                    })
+/*
+                    this.treeData.push({label: children[x].code + ' : ' + children[x].name,
+                      state: { checked: false, selected: true, expanded: false },
+                      id: children[x].code,
+                      checkable: false,
+                      nodes:[]});
+*/
+                    this.treeCode.push(children[x].code);
                     this.treeArrayExclude.push(children[x].code);
                   }
                 }
@@ -1135,17 +1146,6 @@ alert("treeCode Length " + this.treeCode.length)
             })
         //  }
       }
-
-
-
-
-
-
-
-
-
-
-
     },
 
 
@@ -2101,6 +2101,7 @@ alert("treeCode Length " + this.treeCode.length)
     },
 
     getParentNode(){
+    //  var treeIndexCounter = 0
       //Vue 3 Displays code and descriptions for top node
       api.getRoots(this.$baseURL)  // Top node
           .then((root)=> {
@@ -2114,7 +2115,8 @@ alert("treeCode Length " + this.treeCode.length)
                   checkable: false,
                   nodes:[]});
 
-                this.treeCode.push(root[x].code);
+                this.treeCode.push({treeid: root[x].code, treeIndex: x});
+               // treeIndexCounter = treeIndexCounter  1
                 // this.treeCode[x] = root[x].code;
 
                 //  alert("root results 2 " + this.treeCode[x])
