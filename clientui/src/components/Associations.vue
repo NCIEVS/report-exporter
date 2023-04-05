@@ -922,7 +922,18 @@ export default {
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
 
-
+      this.setSelectedTags();
+      if (this.availableProperties.length <= 0) {
+        //    alert("base URL " + this.$baseURL);
+        //    alert("UserEntered Code " + this.userEnteredCodes);
+        api.getAssociations(this.$baseURL, this.userEnteredCodes)
+            .then((data) => {
+              for (let x = data.length - 1; x >= 0; x--) {
+                //             alert("data " + data[x].type);
+                this.availableProperties.push(data[x].type);
+              }
+            })
+      }
 
 
 
@@ -978,18 +989,9 @@ export default {
 
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
-          this.setSelectedTags();
-          if (this.availableProperties.length <= 0) {
-        //    alert("base URL " + this.$baseURL);
-        //    alert("UserEntered Code " + this.userEnteredCodes);
-            api.getAssociations(this.$baseURL, this.userEnteredCodes)
-                .then((data) => {
-                  for (let x = data.length - 1; x >= 0; x--) {
-       //             alert("data " + data[x].type);
-                    this.availableProperties.push(data[x].type);
-                  }
-                })
-          }
+
+
+
 
 
           // reset what concept codes are used
