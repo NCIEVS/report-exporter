@@ -1088,6 +1088,7 @@ export default {
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
 
+        /*
         if(!this.rightUsers.length) return;
         for(let i=this.rightUsers.length;i>0;i--) {
           let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
@@ -1097,6 +1098,7 @@ export default {
           this.tempListClear.pop();
         }
         this.availableProperties.sort();
+         */
       }
 
       //Shows screen =for step 2
