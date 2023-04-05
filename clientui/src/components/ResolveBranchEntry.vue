@@ -124,7 +124,7 @@ ResolveBranchEntry 4/2/23
           :nodes="treeData"
           :use-checkbox="false"
           :use-icon="yes"
-          show-child-count
+
           @nodeExpanded="onNodeExpanded"
           @update:nodes="onUpdate"
           @nodeClick="addNodeFunction"
@@ -887,7 +887,7 @@ export default {
 
 
     // Vue 3 when tree is click the code is added to the blue tags below the entity code search
-    /*
+/*
     onNodeClick(node) {
 
      // var tmpData;
@@ -896,7 +896,7 @@ export default {
       }
 
     },
-
+*/
 
 
 
@@ -1064,20 +1064,22 @@ export default {
       //  console.log(text);
       //  console.log(leafCheck);
       //console.log(newNodeInd);
+
+      this.removeAllTags2(0)
+      this.tags.push(node.label)
       var tmpnodeArray;
       var childDupCheck = false;
    //   this.treeCode.push({treeid: root[x].code, treeIndex: x});
    //   this.treeCode.push({id: root[x].code, treeIndex: x});
-alert("test 88")
-      for (let x=0; x < this.treeCode.length; x++) {
-        alert("test 98")
-        alert ("tree index " + this.treeCode.treeIndex[x])
-        alert("tree code " + this.treeCode.treeid[x])
-        alert("test 100")
-        if (node.id  === this.treeCode.treeid[x])
-        {
+//this.treeCode.push(root[x].code);
 
-          tmpnodeArray = this.treeCode.treeIndex[x]
+
+      for (let z=0; z < this.treeCode.length; z++) {
+
+        if (node.id  === this.treeCode[z])
+        {
+        //  alert("node Position " + z)
+          tmpnodeArray = z
         }
       }
 
@@ -1114,16 +1116,18 @@ alert("test 88")
 */
 
 
-                  alert("tmpnodeArray " + tmpnodeArray)
-                  console.log("selected node " + this.treeData[tmpnodeArray].value)
-                  console.log("code label " + children[x].code + ' : ' + children[x].name)
-                  console.log("childDupCheck " + childDupCheck)
+                //
+               //   console.log("selected node " + this.treeData[tmpnodeArray].value)
+               //   console.log("code label " + children[x].code + ' : ' + children[x].name)
+               //   console.log("childDupCheck " + childDupCheck)
                   if (childDupCheck === false) {
                   //  alert("code " + children[x].code)
 
+                  //  alert("tree code length " + this.treeCode)
+                  //  alert("tree data length " + Object.values(this.treeData))
 
-                    alert("node Location " + this.treeData[tmpnodeArray].nodes)
-
+                  //  alert("node Location " + this.treeData[tmpnodeArray].nodes)
+/*
                     this.treeData[tmpnodeArray].nodes.push({
                       label: children[x].code + ' : ' + children[x].name,
                       id: children[x].code,
@@ -1131,6 +1135,52 @@ alert("test 88")
                       checkable: false,
                       nodes: []
                     })
+*/
+                 console.log("tmpnodeArray " + tmpnodeArray)
+                 //  alert("tree length " + this.treeData.node.nodes)
+                 //   alert("node Location " + Object.values(this.treeData[tmpnodeArray].nodes))
+
+                    const newNode = {
+                      label: children[x].code + ' : ' + children[x].name,
+                      id: children[x].code,
+                      state: { checked: false, selected: true, expanded: false },
+                      checkable: false,
+                      nodes: []
+                    };
+
+                    if (node.nodes === undefined) {
+                      node.nodes = [newNode];
+                    } else {
+                      node.nodes.push(newNode);
+                    }
+
+
+
+
+                    /*
+
+                    this.treeData[tmpnodeArray].nodes.push({
+                      label: children[x].code + ' : ' + children[x].name,
+                      id: children[x].code,
+                      state: { checked: false, selected: true, expanded: false },
+                      isLeaf: children[x].leaf,
+                      checkable: false,
+                      nodes: []
+                    })
+*/
+
+/*
+                    this.treeData[tmpnodeArray].nodes.push({
+                      label: children[x].code + ' : ' + children[x].name,
+                      id: children[x].code,
+                      state: { checked: false, selected: true, expanded: false },
+                      isLeaf: children[x].leaf,
+                      checkable: false,
+                      nodes: []
+                    })
+
+ */
+
 /*
                     this.treeData.push({label: children[x].code + ' : ' + children[x].name,
                       state: { checked: false, selected: true, expanded: false },
@@ -2011,7 +2061,7 @@ alert("test 88")
 
     // save to local storage
     saveDeferredDownloads() {
-      this.sleepTimer();
+
       const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};  // Vue 3 Data saved on local storage
       localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));  //Vue 3 Save data on local storage
 
@@ -2115,7 +2165,7 @@ alert("test 88")
                   checkable: false,
                   nodes:[]});
 
-                this.treeCode.push({treeid: root[x].code, treeIndex: x});
+                this.treeCode.push(root[x].code);
                // treeIndexCounter = treeIndexCounter  1
                 // this.treeCode[x] = root[x].code;
 
