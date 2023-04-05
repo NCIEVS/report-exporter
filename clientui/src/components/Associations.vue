@@ -978,9 +978,18 @@ export default {
 
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
-
-
-
+          this.setSelectedTags();
+          if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
+        //    alert("base URL " + this.$baseURL);
+        //    alert("UserEntered Code " + this.userEnteredCodes);
+            api.getAssociations(this.$baseURL, this.userEnteredCodes)
+                .then((data) => {
+                  for (let x = data.length - 1; x >= 0; x--) {
+       //             alert("data " + data[x].type);
+                    this.availableProperties.push(data[x].type);
+                  }
+                })
+          }
 
 
           // reset what concept codes are used
@@ -1237,18 +1246,7 @@ export default {
     this.updateShowSummary();
 
     // load properties after the page is loaded.
-    this.setSelectedTags();
-    if (this.availableProperties.length <= 0) {
-      //    alert("base URL " + this.$baseURL);
-      //    alert("UserEntered Code " + this.userEnteredCodes);
-      api.getAssociations(this.$baseURL, this.userEnteredCodes)
-          .then((data) => {
-            for (let x = data.length - 1; x >= 0; x--) {
-              //             alert("data " + data[x].type);
-              this.availableProperties.push(data[x].type);
-            }
-          })
-    }
+
   },
 
   // Vue 3 Start

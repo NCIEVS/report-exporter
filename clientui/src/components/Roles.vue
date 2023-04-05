@@ -927,7 +927,18 @@ export default {
           document.getElementById("enteredCodeLabelLeft").style.display = "";
           document.getElementById("enteredCodeLabelRight").style.display = "none";
 
-
+          this.setSelectedTags();
+          if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
+            //    alert("base URL " + this.$baseURL);
+            //    alert("UserEntered Code " + this.userEnteredCodes);
+            api.getRoles(this.$baseURL, this.userEnteredCodes)
+                .then((data) => {
+                  for (let x = data.length - 1; x >= 0; x--) {
+                    //             alert("data " + data[x].type);
+                    this.availableProperties.push(data[x].type);
+                  }
+                })
+          }
 
 
         }
@@ -991,7 +1002,7 @@ export default {
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
 
-        /*
+     /*
         if(!this.rightUsers.length) return;
         for(let i=this.rightUsers.length;i>0;i--) {
           let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
@@ -1197,24 +1208,7 @@ export default {
         .then((data)=>{this.availableFormats = data;
         })
 
-    this.setSelectedTags();
-    if (this.availableProperties.length <= 0) {
-      //    alert("base URL " + this.$baseURL);
-      //    alert("UserEntered Code " + this.userEnteredCodes);
-      api.getRoles(this.$baseURL, this.userEnteredCodes)
-          .then((data) => {
-            for (let x = data.length - 1; x >= 0; x--) {
-              //             alert("data " + data[x].type);
-              this.availableProperties.push(data[x].type);
-            }
-          })
-    }
-
-
-
   },
-
-
 
   // Vue 3 Start
 /*
