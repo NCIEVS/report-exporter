@@ -35,7 +35,7 @@ ResolveBranchEntry 4/2/23
       </div>
       <div class="row justify-content-center">
         <div class="col-12 col-md-6">
-          <div role="alert" class="alert alert-secondary"> This report will resolve 2 level(s) with a total of 123 children. </div>
+          <div role="alert" class="alert alert-secondary"> This report will resolve {{ selectedLevel }} level(s) with a total of {{ this.childrenToResolveObj.childrenCount }} children. </div>
           <label for="exportRadio">Select how to export</label>
           <div class="custom-control custom-radio">
             <input type="radio" v-model="exportType" value="exportNow" id="exportNow" checked="checked" name="exportRadio" class="custom-control-input">
@@ -285,7 +285,7 @@ ResolveBranchEntry 4/2/23
                         <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span></div>
                       <div class="card-body">
                         <ul class="list-group" id="selectedTagList">
-                          <li>
+                          <li v-for="tags in tags" :key="tags.key">
                             {{ this.tags }}
                           </li>
                           <li>
@@ -534,6 +534,7 @@ export default {
       rightUsers:[],
       tmpData: '',
       treeArrayExclude: [],
+      treeCodeExclude: [],
 
       routes: [
         {
@@ -1070,14 +1071,19 @@ export default {
       //  console.log(leafCheck);
       //console.log(newNodeInd);
 
-      this.removeAllTags2(0)
-      this.tags.push(node.label)
-      var tmpnodeArray;
+
+    //  var tmpnodeArray;
       var childDupCheck = false;
+      var tagAddFlag = true;
+
    //   this.treeCode.push({treeid: root[x].code, treeIndex: x});
    //   this.treeCode.push({id: root[x].code, treeIndex: x});
 //this.treeCode.push(root[x].code);
 
+
+
+
+/*
 
       for (let z=0; z < this.treeCode.length; z++) {
 
@@ -1087,7 +1093,7 @@ export default {
           tmpnodeArray = z
         }
       }
-
+*/
 //alert("treeCode Length " + this.treeCode.length)
       if (this.treeCode.length > 0) {
         //  for (let y = 0; y < this.treeCode.length; y++) {
@@ -1112,8 +1118,8 @@ export default {
                     //  alert("true")
                     }
                   }
-
-                  alert("leaf Value: " + children[x].leaf);
+               //   alert("Node: " + children[x].code)
+               //   alert("leaf Value: " + children[x].leaf);
 
 
                 //
@@ -1136,28 +1142,72 @@ export default {
                       nodes: []
                     })
 */
-                 console.log("tmpnodeArray " + tmpnodeArray)
+                // console.log("tmpnodeArray " + tmpnodeArray)
                  //  alert("tree length " + this.treeData.node.nodes)
                  //   alert("node Location " + Object.values(this.treeData[tmpnodeArray].nodes))
 
-                    const newNode = {
-                      label: children[x].code + ' : ' + children[x].name,
-                      id: children[x].code,
-                      state: { checked: false, selected: true, expanded: false },
-                      checkable: false,
-                      nodes: []
-                    };
 
-                    if (node.nodes === undefined) {
-                      node.nodes = [newNode];
-                    } else {
-                      node.nodes.push(newNode);
+
+
+
+       /*
+                    for (let y=0; y < this.treeCodeExclude.length; y++) {
+
+                      if (node.id  !== this.treeCodeExclude[y])
+                      {
+                        tagAddFlag = false;
+
+                      }
+                    }
+*/
+
+                    //   if (tagAddFlag === true) {
+                   // this.tags.push(node.label);
+
+                    //   }
+
+                    if (children[x].leaf === true){
+
+                      const newNode = {
+                        label: children[x].code + ' : ' + children[x].name + ' *',
+                        id: children[x].code,
+                        state: {checked: false, selected: true, expanded: false},
+                        checkable: false,
+                        nodes: []
+                      };
+
+                      if (node.nodes === undefined) {
+                        node.nodes = [newNode];
+                      } else {
+                        node.nodes.push(newNode);
+                      }
+
+                      this.treeCodeExclude.push(children[x].code)
+                    }else {
+
+
+                      const newNode = {
+                        label: children[x].code + ' : ' + children[x].name,
+                        id: children[x].code,
+                        state: {checked: false, selected: false, expanded: false},
+                        checkable: false,
+                        nodes: []
+                      };
+
+                      if (node.nodes === undefined) {
+                        node.nodes = [newNode];
+                      } else {
+                        node.nodes.push(newNode);
+                      }
+
+
+
+
                     }
 
 
 
-
-                    /*
+                      /*
 
                     this.treeData[tmpnodeArray].nodes.push({
                       label: children[x].code + ' : ' + children[x].name,
@@ -1169,7 +1219,7 @@ export default {
                     })
 */
 
-/*
+                      /*
                     this.treeData[tmpnodeArray].nodes.push({
                       label: children[x].code + ' : ' + children[x].name,
                       id: children[x].code,
@@ -1181,20 +1231,34 @@ export default {
 
  */
 
-/*
+                      /*
                     this.treeData.push({label: children[x].code + ' : ' + children[x].name,
                       state: { checked: false, selected: true, expanded: false },
                       id: children[x].code,
                       checkable: false,
                       nodes:[]});
 */
-                    this.treeCode.push(children[x].code);
-                    this.treeArrayExclude.push(children[x].code);
+                      this.treeCode.push(children[x].code);
+                      this.treeArrayExclude.push(children[x].code);
+
+
+
+
+
+
+                  }
+                  if (tagAddFlag === true) {
+                    this.removeAllTags2(0)
+                    this.tags.push(node.label);
+                    this.updateChildrenToResolve();
+                    tagAddFlag = false
                   }
                 }
               }
             })
         //  }
+
+
       }
     },
 
@@ -1231,7 +1295,8 @@ export default {
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
 
-      this.setSelectedTags()
+
+
 
       for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
         if (this.userEnteredCodes[i] === tag) {
@@ -1239,7 +1304,7 @@ export default {
         }
       }
       //Vue 3 checks entity code entered and returns a description if on is available
-      if (tag != "") {
+      if ((tag != "") && (this.tags.length <= 0)) {
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
               if ((data !== null) && (data!== undefined) && (data!== "")) {
@@ -1259,6 +1324,8 @@ export default {
                       this.newTag = ""; // reset newTag
                       this.tagCounter = this.tagCounter + 1;
                       this.newTagCounter = this.newTagCounter + 1;
+                      this.setSelectedTags()
+                      this.updateChildrenToResolve()
                     }
                   }else{
                     this.tags.push(tag + ":" + "");   //take out after testing
@@ -1282,6 +1349,8 @@ export default {
                   this.tags.push(tag + ":" + "");   //take out after testing
                   this.newTag = ""                  //take out after testing
                   this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  this.setSelectedTags()
+                  this.updateChildrenToResolve()
                   this.$notify({
                     group: 'app',
                     title: 'Validation Failure',
@@ -1293,7 +1362,10 @@ export default {
                 }
               }
             })
+
+
       }
+
     },
 
     moveLeft() {
@@ -1680,12 +1752,13 @@ export default {
     updateChildrenToResolve() {
       // if the selectedTag and selectLevel have changed, set them in the
       // object and get the NEW childrenCount
-      if ((this.childrenToResolveObj.selectedTag != this.selectedTags[0].key) ||
+      this.setSelectedTags ()
+      if ((this.childrenToResolveObj.tag != this.userEnteredCodes) ||
           (this.childrenToResolveObj.selectedLevel != this.selectedLevel))
       {
-        this.childrenToResolveObj.selectedTag = this.selectedTags[0].key
+        this.childrenToResolveObj.tag = this.userEnteredCodes
         this.childrenToResolveObj.selectedLevel = this.selectedLevel
-
+        /*
         // show the busy indicator
         let loader = this.$loading.show({
           container: this.$refs.formSelectCodes,
@@ -1693,7 +1766,9 @@ export default {
           isFullPage: false,
         });
 
-        api.getChildren(this.$baseURL, this.selectedTags[0].key, this.selectedLevel)
+         */
+
+        api.getChildren(this.$baseURL, this.userEnteredCodes, this.selectedLevel)
             .then((children)=>{
               if (children != null) {
                 this.childrenToResolveObj.childrenCount = children.length
@@ -1703,7 +1778,8 @@ export default {
               }
             }).catch(function(error) {
           console.error("Error retrieving children to resolve: " + error);
-        }).finally(function() { loader.hide()});
+        })
+            //.finally(function() { loader.hide()});
       }
     },
 
@@ -2162,7 +2238,7 @@ export default {
               for (let x = 0; x < root.length; x++) {
 
                 this.treeData.push({label: root[x].code + ' : ' + root[x].name,
-                  state: { checked: false, selected: true, expanded: false },
+                  state: { checked: false, selected: false, expanded: false },
                   id: root[x].code,
                   checkable: false,
                   nodes:[]});
