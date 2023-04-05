@@ -52,7 +52,7 @@
       <ul class="tags" id = "listOfTags">
         <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
           {{ tag }}
-          <button class="delete" @click="removeTag(tag, tags.length)">x</button>
+          <button class="delete" @click="removeTag(tags, tag, tags.length)">x</button>
         </a></li>
       </ul>
 
@@ -271,33 +271,18 @@ export default {
 
   setup(){
     const tags = ref([]);
-    //const loadBaseURL = ref([]);
-    //var  url= ref();
     const newTag = ref('') //keep up with new tag
     var removeTagIndex = 0;
-    //var newTagCounter = 0;
-    //this.entityList = []'
 
 
     //Vue 3 Remotes a tag below text box
-    const removeTag = (index, tagLength) => {
-
-
+    const removeTag = (allTags, selectedTag,  tagLength) => {
       for (let x=0; x < tagLength; x++) {
-
-       // alert(tags[x].value)
-        if (index  === tags[x])
+        if (selectedTag  === allTags[x])
         {
-          //  alert("node Position " + z)
           removeTagIndex = x
-          alert(removeTagIndex)
-          alert(tags[x])
         }
       }
-
-
-
-
       tags.value.splice(removeTagIndex, 1);
     };
 

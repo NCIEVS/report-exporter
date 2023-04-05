@@ -99,7 +99,7 @@ ResolveBranchEntry 4/2/23
       <ul class="tags" id = "listOfTags">
         <li><a v-for="tag in tags" :key="tag" class="tag" id="tags2">
           {{ tag }}
-          <button class="delete" @click="removeTag(tag)">x</button>
+          <button class="delete" @click="removeTag(tags, tag, tags.length)">x</button>
         </a></li>
       </ul>
 
@@ -376,19 +376,23 @@ export default {
   },
   setup(){
     const tags = ref([]);
-    //const loadBaseURL = ref([]);
-    //var  url= ref();
     const newTag = ref('') //keep up with new tag
-    var tagCounter1 = 0;
-    //var newTagCounter = 0;
-    //this.entityList = []'
+    var removeTagIndex = 0;
 
 
     //Vue 3 Remotes a tag below text box
-    const removeTag = (index) => {
-      tags.value.splice(index, 1);
-      tagCounter1 = tagCounter1  - 1;
+    const removeTag = (allTags, selectedTag,  tagLength) => {
+      for (let x=0; x < tagLength; x++) {
+        if (selectedTag  === allTags[x])
+        {
+          removeTagIndex = x
+        }
+      }
+      tags.value.splice(removeTagIndex, 1);
     };
+
+
+
 
 
     /*
@@ -452,7 +456,8 @@ export default {
      */
     //return { tags, newTag, removeTag,onNodeClick,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
     //return { tags, newTag, removeTag,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
-    return { tags, newTag, removeTag,  tagCounter1,  onUpdate, }
+    return { tags, newTag, removeTag,   onUpdate, }
+
   },
 
 
