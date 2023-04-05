@@ -1299,7 +1299,7 @@ export default {
 
 
       for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
-        if (this.userEnteredCodes[i] === tag) {
+        if (this.tags[i] === tag) {
           dupTagCheck = true;
         }
       }
