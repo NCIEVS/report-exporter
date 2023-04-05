@@ -1098,6 +1098,9 @@ export default {
 
 
             //  if ((children !== null) && (childDupCheck === false)) {
+
+
+
                 if ((children !== null) ) {
                 for (let x = 0; x < children.length; x++) {
 
@@ -1110,15 +1113,7 @@ export default {
                     }
                   }
 
-/*
-                  this.treeData.push({label: root[x].code + ' : ' + root[x].name,
-                    state: { checked: false, selected: true, expanded: false },
-                    id: root[x].code,
-                    checkable: false,
-                    nodes:[]});
-
-                  this.treeCode.push(root[x].code);
-*/
+                  alert("leaf Value: " + children[x].leaf);
 
 
                 //
