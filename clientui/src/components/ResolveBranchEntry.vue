@@ -1292,10 +1292,26 @@ export default {
       var dupTagCheck = false;
       //const tags = ref([]);
       //const newTag = ref('') //keep up with new tag
+
+      var indexBottomTab = 0;
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
 
 
+      indexBottomTab = tag.indexOf(":");
+      if ((indexBottomTab > 0) && (this.tags.length <= 0)){
+        this.tags.push(tag);
+        this.newTag = ""; // reset newTag
+        this.tagCounter = this.tagCounter + 1;
+        this.newTagCounter = this.newTagCounter + 1;
+        this.updateChildrenToResolve()
+      }
+
+
+  //    this.setSelectedTags()
+  //    alert("index check " + indexBottomTab )
+//alert("Entity list dropdown " + tag)
+ //     alert("Entity list dropdown formatted " + this.userEnteredCodes)
 
 
       for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
@@ -1304,7 +1320,8 @@ export default {
         }
       }
       //Vue 3 checks entity code entered and returns a description if on is available
-      if ((tag != "") && (this.tags.length <= 0)) {
+      if ((tag != "") && (this.tags.length <= 0) && (indexBottomTab <= 0)) {
+   //     alert("test")
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
               if ((data !== null) && (data!== undefined) && (data!== "")) {
@@ -1349,8 +1366,8 @@ export default {
                   this.tags.push(tag + ":" + "");   //take out after testing
                   this.newTag = ""                  //take out after testing
                   this.tagCounter = this.tagCounter + 1;  //take out after testing
-                  this.setSelectedTags()
-                  this.updateChildrenToResolve()
+                  this.setSelectedTags()              //take out after testing
+                  this.updateChildrenToResolve()      //take out after testing
                   this.$notify({
                     group: 'app',
                     title: 'Validation Failure',
@@ -1581,7 +1598,7 @@ export default {
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
     changeSelectedExportList(event){
-      alert("ChangeDropDrownTest " + event.target.value)
+     // alert("ChangeDropDrownTest " + event.target.value)
       this.userSelectedFormat = event.target.value;
       if (event.target.value === "json") {
         this.fileFormat = "JSON";
