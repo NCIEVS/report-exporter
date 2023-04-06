@@ -22,31 +22,6 @@ alert("this is the value entered: " + baseURL);
 
 <template>
   <div>
-    <!--
-    <label for="tags">Enter NCI Thesaurus concept codes</label>
-
-    <div class="form-group">
-      <vue3-tags-input element-id="tags"
-                  v-model="selectedTags" placeholder="Type entity code, then click enter"
-                  :add-tags-on-comma="true"
-                  :add-tags-on-space="true"
-                  :add-tags-on-blur="true"
-                  :case-sensitive-tags="true"
-                  :typeahead="false"
-                  @tag-added="value =>onTagAdded(value)"
-                  @tag-removed="value =>onTagRemoved(value)"
-                  title="remove selected tag">
-      </vue3-tags-input>
-
-
-    </div>
-  -->
-
-
-
-
-
-
 
     <div class="form-group">
       <tags-input element-id="tags"
@@ -64,31 +39,11 @@ alert("this is the value entered: " + baseURL);
     </div>
 
 
-
-
-    <!--<button type="button"
-            v-on:click="clearSelection"
-            class="btn btn-primary mb-5 exportButtons">
-            Clear
-    </button>-->
-
-
-
-    <!--
-    <span role="button" tabindex="0">
-        <button tabindex="-1" type="button" class="wizard-btn"  id = 'back button' style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Real Back </button>
-    </span>
--->
   </div>
 </template>
 
 <script>
 import api from '../api.js';
-// Custom input tags
-//import VoerroTagsInput from '@voerro/vue-tagsinput'
-//import VoerroTagsInput from 'vue3-tags-input'
-
-
 
 
 export default {
