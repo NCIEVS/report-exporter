@@ -1,12 +1,6 @@
-ResolveBranchEntry 4/2/23
-
-
-
 
 <template>
   <div id="read-codes-entry" class="container">
-
-
     <div class="vue-form-wizard">
       <div class="wizard-header">
         <h4 class="wizard-title">Resolved Branch Export</h4>
@@ -65,18 +59,13 @@ ResolveBranchEntry 4/2/23
     <!--Vue 3 End-->
 
 
-
-
-
-
-
     <!--Vue 3 Entity Label field  Start-->
     <div class="entityLabel" id = "entityLabelId">
       <label for="tags" >Enter NCI Thesaurus concept codes</label>
     </div>
     <!--Vue 3 Entity Label field  End-->
 
-    <!--Vue 3 Entity Text field  Start-->
+    <!--Vue 3 Entity Text field -->
     <div class="entityText" id = "entityTextID" element-id="tag-input">
       <input placeholder="Type entity code, then click enter"
              class="entityCodeInput" v-model="newTag"
@@ -118,22 +107,14 @@ ResolveBranchEntry 4/2/23
       <br>
       <strong><label for="ncitLabel" class = "levels-label">NCIt Tree:</label></strong>
 
-
-
       <Tree
           :nodes="treeData"
           :use-checkbox="false"
           :use-icon="yes"
-
           @nodeExpanded="onNodeExpanded"
           @update:nodes="onUpdate"
           @nodeClick="addNodeFunction"
       />
-
-
-
-
-
 
 
       <br>
@@ -147,9 +128,6 @@ ResolveBranchEntry 4/2/23
 
     </div>
     <br>
-
-
-
 
 
 
@@ -238,13 +216,6 @@ ResolveBranchEntry 4/2/23
       </span>
 
 
-
-
-
-    <!--Vue 3 Entity Text field  End-->
-
-
-
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
       <div class="card">
@@ -262,18 +233,10 @@ ResolveBranchEntry 4/2/23
 
         </div>
 
-
         <div id="accordion" class="pb-3 pt-3">
           <div class="card">
             <div id="headingOne" class="card-header" style="padding: 1px;">
 
-
-
-              <!--
-            <center>
-              <button data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary" class="btn btn-link"> Hide Selection Summary </button>
-            </center>
-            -->
               <!-- Vue3 Selection Summary List boxes Start  -->
             </div>
             <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
@@ -326,9 +289,7 @@ ResolveBranchEntry 4/2/23
             </div>
           </div>
         </div>
-
         <!-- Vue3 Selection Summary List boxes End  -->
-
       </div>
     </div>
   </div>
@@ -345,9 +306,7 @@ import Tree from "vue3-tree";
 import "vue3-tree/dist/style.css";
 import { defineComponent } from "vue";
 //import Tree from "vuejs-tree"
-//import { useStorage } from "vue3-storage";
-//import ExportFormat from './ExportFormat.vue'
-//import { CallbackResult } from "vue3-storage";
+
 
 
 
@@ -370,7 +329,7 @@ export default {
 
   mounted() {
     this.hideObjectsOnScreen();  //Vue 3 function for when page loads certain objects like buttons or text boxes will be hidden
-    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
+    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"  //Vue 3 Loads default file format
     this.$refs["my-tree"].expandNode(1);
 
   },
@@ -379,8 +338,7 @@ export default {
     const newTag = ref('') //keep up with new tag
     var removeTagIndex = 0;
 
-
-    //Vue 3 Remotes a tag below text box
+    //Vue 3 Removes a tag below text box
     const removeTag = (allTags, selectedTag,  tagLength) => {
       for (let x=0; x < tagLength; x++) {
         if (selectedTag  === allTags[x])
@@ -391,73 +349,11 @@ export default {
       tags.value.splice(removeTagIndex, 1);
     };
 
-
-
-
-
-    /*
-    const data = ref([
-      {
-        id: 1,
-        label: "Level 1",
-        nodes: [
-          {
-            id: 23,
-            label: "Level 2",
-          },
-          {
-            id: 34,
-            label: "Level 3",
-            nodes: [
-              {
-                id: 4,
-                label: "Level 3 Child 1",
-              },
-              {
-                id: 5,
-                label: "Level 3 Child 2",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 6,
-        label: "Level 4",
-      },
-    ]);
-    const searchText = ref("");
-    const onNodeExpanded = (node, state) => {
-      console.log("state: ", state);
-      console.log("node: ", node);
-
-
-    };
-*/
     const onUpdate = (nodes) => {
       console.log("nodes:", nodes);
     };
 
-    /*
-        const onNodeClick = (node) => {
-        // node.label = Object.values(node.label).replace(',', '');
-          alert("This node was selected: " + Object.values(node.label));
-          alert("before api call ");
-          api.getCuratedTopNodes(this.$baseURL)
-              .then((data)=>{
-                // this.curratedTopNodes = data;
-                // this.setCurratedTags();
-                alert("this is the data "+ data);
-              })
-          alert("after api call  ");
-        };
-
-
-     */
-    //return { tags, newTag, removeTag,onNodeClick,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
-    //return { tags, newTag, removeTag,  tagCounter1, data, searchText, onNodeExpanded, onUpdate, }
     return { tags, newTag, removeTag,   onUpdate, }
-
   },
 
 
@@ -511,7 +407,6 @@ export default {
   data() {
     return {
       selectedTags: [],
-      message: 'Hello World!',
       userEnteredCodes: [],
       entityList: [],
       availableProperties: [],
