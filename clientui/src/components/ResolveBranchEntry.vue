@@ -1513,6 +1513,9 @@ export default {
                       })
         */
           //
+
+         /*
+
           api.getProperties(this.$baseURL)
               .then((data) => {
                 for (let x = 0; x < data.length; x++) {
@@ -1524,7 +1527,7 @@ export default {
           for (let i = 0; i <= this.rightUsers.length + 2; i++) {
             this.rightUsers.pop();
           }
-
+*/
 
           //}
         }
@@ -1544,6 +1547,7 @@ export default {
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
+
 
         if (Object.keys(this.rightUsers).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
@@ -1587,13 +1591,14 @@ export default {
       }
     },
 
+    /*
     setSelectedPropertyNames() {
       this.userSelectedProperyNames = []
       for (let i = 0; i < this.rightUsers.length; i++) {
         this.userSelectedProperyNames.push(this.rightUsers[i].name)
       }
     },
-
+*/
 
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
@@ -1675,7 +1680,7 @@ export default {
 
       // set the user selected tags and properties
       this.setSelectedTags()
-      this.setSelectedPropertyNames()
+     // this.setSelectedPropertyNames()
 
       /*
       if (this.exportType == 'exportNow') {
@@ -1931,7 +1936,7 @@ export default {
 
       // set the user selected tags and properties
       this.setSelectedTags();
-      this.setSelectedPropertyNames();
+     // this.setSelectedPropertyNames();
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
       if (this.fileFormat === ""){
@@ -2024,7 +2029,7 @@ export default {
 
       this.gaTrackDeferredDownload();
       this.setSelectedTags();
-      this.setSelectedPropertyNames();
+     // this.setSelectedPropertyNames();
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
       if (this.fileFormat === ""){

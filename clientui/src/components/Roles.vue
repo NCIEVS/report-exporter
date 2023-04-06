@@ -66,11 +66,13 @@
         <div class="container">
           <form>
             <div class="form-group">
-              <label for="selectedProperties" id = "SelectProperties2">No roles selected for these concept codes</label>
-              <br>
-              <label for="selectedProperties" id = "enteredCodeLabelLeft">{{ this.tags }}</label>
-              <br>
-              <label for="selectedProperties" id = "SelectProperties2">Select roles to include in the export</label>
+              <div class="col">
+                <label for="selectedProperties" id = "SelectProperties2">No roles selected for these concept codes</label>
+                <br>
+                <label for="selectedProperties" id = "enteredCodeLabelLeft">{{ this.userEnteredCodes }}</label>
+                <br>
+                <label for="selectedProperties" id = "SelectProperties2">Select roles to include in the export</label>
+              </div>
             </div>
             <div class="form-group">
               <div class="msl-multi-select">
@@ -123,7 +125,7 @@
                   <div class="col">
                     <label for="selectedProperties" id = "SelectProperties3" class = "UsedLabelRight">Used concept codes</label>
                     <br>
-                    <label for="selectedProperties" id = "enteredCodeLabelRight" class = "UsedCodeRight">{{ this.tags }}</label>
+                    <label for="selectedProperties" id = "enteredCodeLabelRight" class = "UsedCodeRight">{{ this.userEnteredCodes }}</label>
                     <br>
                     <br>
                   </div>
@@ -398,10 +400,10 @@ export default {
                       this.newTagCounter = this.newTagCounter + 1;
                     }
                   }else{
+                    this.tags.push(tag + ":" + "");   //take out after testing
+                    this.newTag = "";                  //take out after testing
+                    this.tagCounter = this.tagCounter + 1;  //take out after testing
                     this.$notify({
-                      //    this.tags.push(tag + ":" + "");   //take out after testing
-                      //    this.newTag = ""                  //take out after testing
-                      //     this.tagCounter = this.tagCounter + 1;  //take out after testing
                       group: 'app',
                       title: 'Validation Failure',
                       text: 'Could not verify concept code(s).  Possible network issue.',
