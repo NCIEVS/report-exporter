@@ -270,7 +270,6 @@ export default {
   },
 
 
-
   data(){
     return {
       selectedTags: [],
@@ -512,7 +511,6 @@ export default {
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
-        alert("counter 3 if statement")
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
@@ -532,7 +530,6 @@ export default {
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
-
         }
       }
     },
@@ -588,7 +585,6 @@ export default {
     updateShowSummary() {
       this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
       this.showSummary = !this.showSummary;
-
     },
 
 
@@ -679,7 +675,6 @@ export default {
     window.scrollTo(0,0);
 
     this.updateShowSummary();
-
   },
 }
 

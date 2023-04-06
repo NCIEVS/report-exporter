@@ -115,20 +115,8 @@
           @update:nodes="onUpdate"
           @nodeClick="addNodeFunction"
       />
-
-
-      <br>
-      <Tree
-          id="my-tree-id"
-          ref="my-tree"
-          :custom-options="myCustomOptions"
-          :custom-styles="myCustomStyles"
-          :nodes="treeDisplayData"
-      ></Tree>
-
     </div>
     <br>
-
 
 
     <!--Vue 3 step 2 list boxes Start -->
@@ -198,7 +186,7 @@
     </div>
     <!--Vue 3 step 2 list boxes End -->
 
-
+    <!--Vue 3 buttons start-->
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
       </span>
@@ -214,7 +202,7 @@
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="ExportNowOrLater()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
-
+    <!--Vue 3 buttons  End-->
 
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
@@ -230,7 +218,6 @@
               {{this.showSummaryText}}
             </button>
           </center>
-
         </div>
 
         <div id="accordion" class="pb-3 pt-3">
@@ -297,7 +284,7 @@
 
 <script>
 
-// Custom input tags
+
 import api from '../api.js'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
@@ -305,10 +292,6 @@ import {ref} from "vue";
 import Tree from "vue3-tree";
 import "vue3-tree/dist/style.css";
 import { defineComponent } from "vue";
-//import Tree from "vuejs-tree"
-
-
-
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
@@ -321,7 +304,6 @@ export default {
   },
   components: {
     Tree
-    // ExportFormat
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -413,11 +395,9 @@ export default {
       selectedProperties: [],
       userSelectedProperyNames: [],
       userSelectedFormat: '',
-      curratedTopNodes: [],
       userSelectedTopNode: '',
       filename: 'branch',
       fileFormat: '',
-      curratedTopNodesUI: [],
       selectedLevel: 0,
       childrenToResolve: 0,
       tempListClear:[],
@@ -474,11 +454,6 @@ export default {
         },
       ],
 
-
-
-
-
-
       levels: [
         {id: 1, name: '1 Level'},
         {id: 2, name: '2 Levels'},
@@ -510,21 +485,12 @@ export default {
       deferredStatusHash: '',
       deferredStatus: false,
       deferredData: '',
-      deferredDataFormatted: '',
-      showTree: true,
-      asyncData: [],
       selectedExportListName: '',
-      treeSelectedCode: null,
       showSummary: true,
       showSummaryText: '',
-      deferredDownloadData: '',
       exportType: 'exportNow',
-      treeLevel: '',
       treeData: [],
-      treeDisplayData: [],
       treeCode: [],
-      treeChildNode: [],
-      levelCounter: 1,
     }
   },
 
@@ -707,13 +673,14 @@ export default {
       this.tags2 = []
     },
 
-
+    //Vue 3 Code registers what entity code was entered in the text box then calls a api to return the code and description combo
+    //in a blue tag below the text box
     addTag1(tag) {
       var codeDescription = [];
       var dupTagCheck = false;
       var indexBottomTab = 0;
       tag = tag.replace(/[\s/]/g, '')
-      tag = tag.replace(',', '')
+      tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
 
 
       indexBottomTab = tag.indexOf(":");
@@ -878,9 +845,8 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
-
-
     },
+
     validateFirstStep() {
 
       //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
@@ -910,7 +876,6 @@ export default {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
         }
       }
-
     },
 
     //Vue 3 STEP 2
@@ -959,7 +924,6 @@ export default {
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
     changeSelectedExportList(event){
-     // alert("ChangeDropDrownTest " + event.target.value)
       this.userSelectedFormat = event.target.value;
       if (event.target.value === "json") {
         this.fileFormat = "JSON";
@@ -1004,10 +968,19 @@ export default {
       })
     },
 
+    //Vue 3 this method is used for the download now or later functionality
+    ExportNowOrLater(){
+      if (this.exportType == 'exportNow') {
+        // export and wait for it to complete
+        this.downloadFile();
+      }
+      else {
+        // export and get a URL to go to later
+        this.initiateDeferredDownloadAndReturn();
+      }
+    },
 
     async pollForStatus(hashId) {
-
-
       // check if a polling url was returned.
       if (this.deferredStatusUrl != null && this.deferredStatusUrl.length >0) {
 
@@ -1024,7 +997,6 @@ export default {
           alert("Error downloading deferred file");
         }
         else {
-          //this.clearDeferredData()
           // verify status is good and we can download
           this.downloadDeferredResult(hashId)
         }
@@ -1041,24 +1013,13 @@ export default {
       this.showSummary = !this.showSummary;
     },
 
-    setCurratedTags() {
-      this.curratedTopNodesUI = []
-      //console.log ("length: " + Object.keys(this.curratedTopNodes).length);
-
-      // loop through the curratedTopNodes and create another object array
-      // in the form the the tags input widget requires:
-      // [{ key: 'someKey', value: 'someValue' }];
-      for (let i = 0; i < Object.keys(this.curratedTopNodes).length; i++) {
-        //console.log ("key " + this.curratedTopNodes[i].code + "  value " + this.curratedTopNodes[i].name)
-        this.curratedTopNodesUI.push({"key":this.curratedTopNodes[i].code, "value":this.curratedTopNodes[i].code + ":" +this.curratedTopNodes[i].name})
-      }
-    },
-
-    //Method updates the Children to resolve number listed at the bottom of the screen
+    //This method is updates the Children to relsove number when a new level is selected from the dropdown
     onLevelChange() {
       this.updateChildrenToResolve()
     },
 
+
+    //Method updates the Children to resolve number listed at the bottom of the screen
     updateChildrenToResolve() {
       // if the selectedTag and selectLevel have changed, set them in the
       // object and get the NEW childrenCount
@@ -1152,7 +1113,6 @@ export default {
         fileLink.click();
       }).catch(function(error) {
         console.error("Download Error: " + error);
-        alert("Error Downloading file");
       })
       //.finally(function() { loader.hide()});
     },
@@ -1191,7 +1151,6 @@ export default {
             else {
               this.deferredStatusUrl = null
               console.log("Error making Deferred call");
-              alert("Error downloading deferred file");
             }
           })
       //.finally(function() { loader.hide()});
@@ -1235,7 +1194,6 @@ export default {
       //  alert("selectedFormat Extension: " + this.userSelectedFormat.name);
 
 
-
       api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
           this.rightUsers, this.selectedLevel,
           this.fileFormat)
@@ -1246,13 +1204,10 @@ export default {
               this.addHashToLocalStorage(this.deferredStatusHash)
             }
             else {
-              alert("test5");
               this.deferredStatusUrl = null
-              alert("Error making Deferred call");
             }
           })
     },
-
 
 
     pollDeferredStatus: function() {
@@ -1290,21 +1245,17 @@ export default {
         fileLink.click();
       }).catch(function(error) {
         console.error("Deferred Download Error: " + error);
-        alert("Error Downloading file");
       }).finally(function() {
         //this.clearDeferredData()
       });
-
     },
 
 
     // Add to local storage
     addHashToLocalStorage() {
-
       if (!this.deferredStatusHash) {
         return;
       }
-
       this.saveDeferredDownloads();
     },
 
@@ -1331,7 +1282,6 @@ export default {
     //Vue 3 Displays code and descriptions for the top node.  After that another method (addNodeFunction) is called to
     //display the children nodes
     getParentNode(){
-
       api.getRoots(this.$baseURL)  // Top node
           .then((root)=> {
 
@@ -1371,16 +1321,8 @@ export default {
             this.availableProperties.push(data[x].name);
           }
         })
-    // get the currated tags from the server,
-    // then set the input field with these
-    api.getCuratedTopNodes(this.$baseURL)
-        .then((data)=>{
-          this.curratedTopNodes = data;
-          this.setCurratedTags();
-        })
 
     this.getParentNode();  //Vue 3 builds tree on Resolved Branch Export screen
-
   }
 }
 
