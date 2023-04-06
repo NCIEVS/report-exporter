@@ -417,9 +417,7 @@ export default {
       userSelectedTopNode: '',
       filename: 'branch',
       fileFormat: '',
-      downloadReturnCode: null,
       curratedTopNodesUI: [],
-      getPropertyError: false,
       selectedLevel: 0,
       childrenToResolve: 0,
       tempListClear:[],
@@ -427,7 +425,6 @@ export default {
       leftUsers: [],
       rightSelectedUsers:[],
       rightUsers:[],
-      tmpData: '',
       treeArrayExclude: [],
       treeCodeExclude: [],
 
@@ -523,329 +520,17 @@ export default {
       deferredDownloadData: '',
       exportType: 'exportNow',
       treeLevel: '',
-
-      // treeData: [ {
-      //   id: 0,
-      //   label: '(NCIt Tree):'}],
-
       treeData: [],
       treeDisplayData: [],
       treeCode: [],
       treeChildNode: [],
       levelCounter: 1,
-      /*
-         treeDisplayData: [
-           {
-             text: this.treeLevel = "level 1",
-             state: {checked: false, selected: false, expanded: true},
-             id: 1,
-             checkable: true,
-             nodes: [
-               {
-                 text: "Level 2a",
-                 state: {checked: false, selected: true, expanded: false},
-                 id: 2,
-                 checkable: true,
-                 nodes: [           {
-                   text: "level 2b",
-                   state: {checked: false, selected: true, expanded: false},
-                   checkable: true,
-                   id: 5,
-                   nodes: [],
-
-                 },],
-               },
-             ],
-           },
-           {
-             text: "Level 2",
-             state: {checked: false, selected: true, expanded: false},
-             id: 2,
-             checkable: false,
-             nodes: [],
-           },
-           {
-             text: "level 3",
-             state: {checked: false, selected: true, expanded: false},
-             checkable: false,
-             id: 5,
-             nodes: [],
-
-           },
-           {
-             text: "Child 2",
-             state: { checked: false, selected: true, expanded: false },
-             checkable: false,
-             id: 4,
-           },
-         ] ,
-
-
-         */
-
-      /*
-            // function to get tree data
-            loadData: function (oriNode, resolve) {
-              // set id to the node to retrieve children for.
-              // set to null to indicate this is the root.
-              var id = oriNode.data.id ? oriNode.data.id : null
-              var data = []
-              //console.log('id: ' + id)
-
-              alert("test1");
-              // if id is null, this is the root.  get all root children
-              if (id == null) {
-                alert("test2");
-                api.getRoots(this.$baseURL)
-                    .then((children) => {
-                      if (children != null) {
-                        alert("test3");
-                        for (let x = 0; x < children.length; x++) {
-                          alert("test5");
-                          //console.log(children[x].code + '  :  ' + children[x].name)
-                          data.push(
-                              {
-
-                                //   "id": children[x].code,
-                                //   "text": children[x].code + ' : ' + children[x].name,
-                                //    "isLeaf": false,
-                                //    "disabled": children[x].leaf,
-
-                                "ida": children[x].code,
-                                "labelb": children[x].code + ' : ' + children[x].name,
-                               // "checkable": false,
-                               // "state": children[x].leaf,
-                              },
-                          )
-                        }alert("test6");
-                        resolve(data)
-                      } else {
-                        console.log("Error retrieving roots");
-                        data.push(
-                            {
-                              "id": '0',
-                              "text": 'Error retrieving tree',
-                              "isLeaf": true,
-                            },
-                        )
-                        resolve(data)
-                      }
-                    })
-              }
-
-              // Id was not null, get the children
-              else {
-                api.getChildren(this.$baseURL, id, 1)
-                    .then((children) => {
-                      if (children != null) {
-                        for (let x = 0; x < children.length; x++) {
-                          //console.log(children[x].code + '  :  ' + children[x].name)
-                          data.push(
-                              {
-                                "id": children[x].code,
-                                "text": children[x].code + ' : ' + children[x].name,
-                                "isLeaf": children[x].leaf,
-                                "disabled": children[x].leaf,
-                              },
-                          )
-                        }
-                        resolve(data)
-                      } else {
-                        console.log("Error retrieving children");
-                        data.push(
-                            {
-                              "id": '0',
-                              "text": 'Error retrieving tree',
-                              "isLeaf": true,
-                            },
-                        )
-                        resolve(data)
-                      }
-                    })
-              }
-            },
-      */
     }
   },
 
   methods: {
 
-
-
-    loadData: function (oriNode, resolve) {
-      // set id to the node to retrieve children for.
-      // set to null to indicate this is the root.
-      alert(oriNode);
-      alert(resolve);
-      var id = oriNode.data.id ? oriNode.data.id : null
-      var data = []
-      //console.log('id: ' + id)
-
-      // if id is null, this is the root.  get all root children
-      if (id == null) {
-        api.getRoots(this.$baseURL)
-            .then((children)=>{
-              if (children != null) {
-
-                for (let x=0; x < children.length; x++){
-                  //console.log(children[x].code + '  :  ' + children[x].name)
-                  data.push(
-                      {
-                        "id": children[x].code,
-                        "text": children[x].code + ' : ' + children[x].name,
-                        "isLeaf": false,
-                        "disabled": children[x].leaf,
-                      },
-                  )
-                }
-                resolve(data)
-              }
-              else {
-                console.log("Error retrieving roots");
-                data.push(
-                    {
-                      "id": '0',
-                      "text": 'Error retrieving tree',
-                      "isLeaf": true,
-                    },
-                )
-                resolve(data)
-              }
-            })
-      }
-
-      // Id was not null, get the children
-      else {
-        api.getChildren(this.$baseURL, id, 1)
-            .then((children)=>{
-              if (children != null) {
-                for (let x=0; x < children.length; x++){
-                  //console.log(children[x].code + '  :  ' + children[x].name)
-                  data.push(
-                      {
-                        "id": children[x].code,
-                        "text": children[x].code + ' : ' + children[x].name,
-                        "isLeaf": children[x].leaf,
-                        "disabled": children[x].leaf,
-                      },
-                  )
-                }
-                resolve(data)
-              }
-              else {
-                console.log("Error retrieving children");
-                data.push(
-                    {
-                      "id": '0',
-                      "text": 'Error retrieving tree',
-                      "isLeaf": true,
-                    },
-                )
-                resolve(data)
-              }
-            })
-      }
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Vue 3 when tree is click the code is added to the blue tags below the entity code search
-/*
-    onNodeClick(node) {
-
-     // var tmpData;
-      if ((node.label !== "(NCIt Tree):") && (this.tags.length < 1)) {
-        this.tags.push(node.label)
-      }
-
-    },
-*/
-
-
-
-
-
-
-
-
-
-
-/*
-    onNodeClick(node) {
-      // node.label = Object.values(node.label).replace(',', '');
-      alert("This node was selected: " + Object.values(node.label));
-      alert("before api call ");
-      api.getCuratedTopNodes(this.$baseURL)
-          .then((data)=>{
-            // this.curratedTopNodes = data;
-            // this.setCurratedTags();
-            alert("this is the data "+ Object.values(data));
-          })
-      alert("after api call  ");
-    },
-*/
-
-
-
-
-
-    checkRoutes(){
-      alert("routes Check" + this.routes[1].length);
-    },
-
-    getNodeValue(value){
-      //this.treeLevel = "TEST"
-      alert("this is the function value " + value);
-      var test1;
-      test1 = document.getElementById('this.my_tree_id').value
-      alert("this is the tree level: " + this.treeDisplayData[0].selected);
-      alert("This is the selected node " );
-      alert("This is the element " + test1);
-      alert(this.$refs["my-tree"].getSelectedNode());
-      this.myCustomOptions();
-      this.myCheckedFunction();
-
-
-    },
-
+    //Vue 3 tree functionality
     myCustomOptions() {
 
       return {
@@ -895,6 +580,7 @@ export default {
       };
     },
 
+
     myCheckedFunction: function (nodeId, state) {
       console.log(`is ${nodeId} checked ? ${state}`);
       console.log(this.$refs["my-tree"].getCheckedNodes("id"));
@@ -904,37 +590,6 @@ export default {
       console.log(`is ${nodeId} selected ? ${state}`);
       console.log(this.$refs["my-tree"].getSelectedNode());
     },
-
-
-    /*
-    myCheckedFunction (nodeId, disabled) {
-      alert("myCHeckedFunction");
-      alert("this is the node id " + nodeId);
-      alert("this is disabled " + disabled);
-      this.loadData(nodeId, disabled);
-      alert(`is ${nodeId} checked ? ${disabled}`);
-      alert(this.$refs["my-tree"].getCheckedNodes("id"));
-      alert(this.$refs["my-tree"].getCheckedNodes("text"));
-    },
-
-
-    mySelectedFunction: function (nodeId, disabled) {
-      alert("mySelectedFunction invoked")
-      this.loadData(nodeId, disabled);
-      alert(`is ${nodeId} selected ? ${disabled}`);
-      alert(this.$refs["my-tree"].getSelectedNode());
-    },
-
-    functiontest2()
-    {
-      alert("second function");
-    },
-
-
-     */
-
-
-
 
 
     deleteNodeFunction: function (node) {
@@ -957,112 +612,32 @@ export default {
 
 
 
-
-    // addNodeFunction: function (node, childCode, text) {
-
+    //Vue 3 Add code adds node to tree.  When node it clicked it builds the children nodes in the
+    //background and places a arrow to the left of the parent node
     addNodeFunction: function (node) {
-      //  console.log(childCode);
-      //  console.log(text);
-      //  console.log(leafCheck);
-      //console.log(newNodeInd);
 
-
-    //  var tmpnodeArray;
       var childDupCheck = false;
       var tagAddFlag = true;
 
-   //   this.treeCode.push({treeid: root[x].code, treeIndex: x});
-   //   this.treeCode.push({id: root[x].code, treeIndex: x});
-//this.treeCode.push(root[x].code);
 
-
-
-
-/*
-
-      for (let z=0; z < this.treeCode.length; z++) {
-
-        if (node.id  === this.treeCode[z])
-        {
-        //  alert("node Position " + z)
-          tmpnodeArray = z
-        }
-      }
-*/
-//alert("treeCode Length " + this.treeCode.length)
-      if (this.treeCode.length > 0) {
-        //  for (let y = 0; y < this.treeCode.length; y++) {
+      //Vue 3  code below calls the Rest api for the children nodes and builds the tree
+      if (this.treeCode.length > 0) {  // Vue 3 checks if parent nodes (level 1 ) already exists
         api.getChildren(this.$baseURL, node.id, 1)
             .then((children) => {
 
-             //  alert("Children " + children.length);
-
-
-            //  if ((children !== null) && (childDupCheck === false)) {
-
-
-
-                if ((children !== null) ) {
-                for (let x = 0; x < children.length; x++) {
-
-
-                  for (let y=0; y < this.treeArrayExclude.length; y++) {
+                if ((children !== null) ) {   // Vue 3 Checks if rest api returns children data
+                for (let x = 0; x < children.length; x++) {  // Vue  3 loops through children data
+                  for (let y=0; y < this.treeArrayExclude.length; y++) {  // Vue 3 loop prevents duplicate children nodes from being created
                     if (children[x].code  === this.treeArrayExclude[y])
                     {
                        childDupCheck = true;
-                    //  alert("true")
                     }
                   }
-               //   alert("Node: " + children[x].code)
-               //   alert("leaf Value: " + children[x].leaf);
 
+                  if (childDupCheck === false) {  // Vue 3 Checks for duplicate children node
+                    if (children[x].leaf === true){  // Vue 3 checks if entity code is not active
 
-                //
-               //   console.log("selected node " + this.treeData[tmpnodeArray].value)
-               //   console.log("code label " + children[x].code + ' : ' + children[x].name)
-               //   console.log("childDupCheck " + childDupCheck)
-                  if (childDupCheck === false) {
-                  //  alert("code " + children[x].code)
-
-                  //  alert("tree code length " + this.treeCode)
-                  //  alert("tree data length " + Object.values(this.treeData))
-
-                  //  alert("node Location " + this.treeData[tmpnodeArray].nodes)
-/*
-                    this.treeData[tmpnodeArray].nodes.push({
-                      label: children[x].code + ' : ' + children[x].name,
-                      id: children[x].code,
-                      state: { checked: false, selected: true, expanded: false },
-                      checkable: false,
-                      nodes: []
-                    })
-*/
-                // console.log("tmpnodeArray " + tmpnodeArray)
-                 //  alert("tree length " + this.treeData.node.nodes)
-                 //   alert("node Location " + Object.values(this.treeData[tmpnodeArray].nodes))
-
-
-
-
-
-       /*
-                    for (let y=0; y < this.treeCodeExclude.length; y++) {
-
-                      if (node.id  !== this.treeCodeExclude[y])
-                      {
-                        tagAddFlag = false;
-
-                      }
-                    }
-*/
-
-                    //   if (tagAddFlag === true) {
-                   // this.tags.push(node.label);
-
-                    //   }
-
-                    if (children[x].leaf === true){
-
+                      //Vue 3 formats how children node will get stored in tree for inactive codes
                       const newNode = {
                         label: children[x].code + ' : ' + children[x].name + ' *',
                         id: children[x].code,
@@ -1071,16 +646,17 @@ export default {
                         nodes: []
                       };
 
+                      //Vue 3 adds children node to tree
                       if (node.nodes === undefined) {
                         node.nodes = [newNode];
                       } else {
                         node.nodes.push(newNode);
                       }
 
-                      this.treeCodeExclude.push(children[x].code)
+                      this.treeCodeExclude.push(children[x].code)  //Vue 3 keep track of all of the nodes to prevent duplicates
                     }else {
 
-
+                      //Vue 3 formats how children node will get stored in tree for active codes
                       const newNode = {
                         label: children[x].code + ' : ' + children[x].name,
                         id: children[x].code,
@@ -1089,59 +665,19 @@ export default {
                         nodes: []
                       };
 
+                      //Vue 3 adds children node to tree
                       if (node.nodes === undefined) {
                         node.nodes = [newNode];
                       } else {
                         node.nodes.push(newNode);
                       }
-
-
-
-
                     }
 
-
-
-                      /*
-
-                    this.treeData[tmpnodeArray].nodes.push({
-                      label: children[x].code + ' : ' + children[x].name,
-                      id: children[x].code,
-                      state: { checked: false, selected: true, expanded: false },
-                      isLeaf: children[x].leaf,
-                      checkable: false,
-                      nodes: []
-                    })
-*/
-
-                      /*
-                    this.treeData[tmpnodeArray].nodes.push({
-                      label: children[x].code + ' : ' + children[x].name,
-                      id: children[x].code,
-                      state: { checked: false, selected: true, expanded: false },
-                      isLeaf: children[x].leaf,
-                      checkable: false,
-                      nodes: []
-                    })
-
- */
-
-                      /*
-                    this.treeData.push({label: children[x].code + ' : ' + children[x].name,
-                      state: { checked: false, selected: true, expanded: false },
-                      id: children[x].code,
-                      checkable: false,
-                      nodes:[]});
-*/
                       this.treeCode.push(children[x].code);
-                      this.treeArrayExclude.push(children[x].code);
-
-
-
-
-
-
+                      this.treeArrayExclude.push(children[x].code);  //Vue 3 keep track of all of the nodes to prevent duplicates
                   }
+
+                  //Vue 3 adds code selected from tree to a blue tag below the text box
                   if (tagAddFlag === true) {
                     this.removeAllTags2(0)
                     this.tags.push(node.label);
@@ -1151,18 +687,10 @@ export default {
                 }
               }
             })
-        //  }
-
-
       }
     },
 
-
-
-
-
-
-
+    //Vue 3 Removes all blue tags under text box
     removeAllTags2 (tagDeleteCounter) {
       for (let i = 0; i <= this.tags.length; i++) {
         this.tags.splice(tagDeleteCounter, this.tags.length);
@@ -1179,15 +707,10 @@ export default {
       this.tags2 = []
     },
 
+
     addTag1(tag) {
       var codeDescription = [];
-      //var baseLink = document.getElementById('basURL').value;
-      //    var this.tagCounter = 0;
-      //    var this.newTagCounter = 0;
       var dupTagCheck = false;
-      //const tags = ref([]);
-      //const newTag = ref('') //keep up with new tag
-
       var indexBottomTab = 0;
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')
@@ -1203,46 +726,42 @@ export default {
       }
 
 
-  //    this.setSelectedTags()
-  //    alert("index check " + indexBottomTab )
-//alert("Entity list dropdown " + tag)
- //     alert("Entity list dropdown formatted " + this.userEnteredCodes)
-
-
       for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
         if (this.tags[i] === tag) {
           dupTagCheck = true;
         }
       }
-      //Vue 3 checks entity code entered and returns a description if on is available
+
+      //Vue 3 Code registers what entity code was entered in the text box then calls a api to return the code and description combo
+      //in a blue tag below the text box
+
+      //Vue 3 checks entity code entered and returns a description if one is available
       if ((tag != "") && (this.tags.length <= 0) && (indexBottomTab <= 0)) {
-   //     alert("test")
+
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
-              if ((data !== null) && (data!== undefined) && (data!== "")) {
-                for (let x = data.length - 1; x >= 0; x--) {
-                  //  alert(data[x].name);
-                  //  if ((data[x].name != null) && (data[x].name!== undefined)  && (data[x].length < 1)) {
-                  //  if ((data[x].name.length > 0) && (data[x].name!== undefined)) {
+              if ((data !== null) && (data!== undefined) && (data!== "")) {  //Vue 3 check if rest api does not return any results
+                for (let x = data.length - 1; x >= 0; x--) {      //Vue 3 loop through data returned from rest api
                   if ((data[x].name.length > 0)  &&  (data[x].name != null)){
 
-                    //  alert("Code: " + data[x].code + " is invalid: " + data[x].queryStatus + " roles: " + data[x].roles + " association: " + data[x].associations + " Description: " + data[x].name);
                     if (dupTagCheck === true) {
                       this.newTag = [];
                       dupTagCheck = false;
                     }else {
                       codeDescription = data[x].name;
-                      this.tags.push(tag + ":" + codeDescription);
-                      this.newTag = ""; // reset newTag
+                      this.tags.push(tag + ":" + codeDescription);  //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
+                      this.newTag = ""; // Vue 3 reset newTag
                       this.tagCounter = this.tagCounter + 1;
                       this.newTagCounter = this.newTagCounter + 1;
                       this.setSelectedTags()
                       this.updateChildrenToResolve()
                     }
                   }else{
-                    this.tags.push(tag + ":" + "");   //take out after testing
-                    this.newTag = ""                  //take out after testing
-                    this.tagCounter = this.tagCounter + 1;  //take out after testing
+                    //this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    //this.newTag = ""                  //Vue 3 used for testing take out after testing
+                    //this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+
+                    //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
                       title: 'Validation Failure',
@@ -1254,15 +773,16 @@ export default {
                   }
                 }
               }else {
+                //Vue 3 if a duplicate tag is entered in the textbox then the code will not add a new tag
                 if (dupTagCheck === true) {
                   this.newTag = [];
                   dupTagCheck = false;
                 }else{
-                  this.tags.push(tag + ":" + "");   //take out after testing
-                  this.newTag = ""                  //take out after testing
-                  this.tagCounter = this.tagCounter + 1;  //take out after testing
-                  this.setSelectedTags()              //take out after testing
-                  this.updateChildrenToResolve()      //take out after testing
+                  //this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                  //this.newTag = ""                  //Vue 3 used for testing take out after testing
+                  //this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                  //this.setSelectedTags()              //Vue 3 used for testing take out after testing
+                  //this.updateChildrenToResolve()      //Vue 3 used for testing take out after testing
                   this.$notify({
                     group: 'app',
                     title: 'Validation Failure',
@@ -1274,12 +794,10 @@ export default {
                 }
               }
             })
-
-
       }
-
     },
 
+    //Vue 3 move data from right list box on second screen to left list box on second screen
     moveLeft() {
       if(!this.rightSelectedUsers.length) return;
       for(let i=this.rightSelectedUsers.length;i>0;i--) {
@@ -1290,7 +808,7 @@ export default {
       }
     },
 
-
+    //Vue 3 move data from left list box on second screen to right list box on second screen
     moveRight() {
       if (!this.leftSelectedUsers.length) return;
       for (let i = this.leftSelectedUsers.length; i > 0; i--) {
@@ -1302,7 +820,7 @@ export default {
       }
     },
 
-    //Vue 3 Start Step 2 left Search Function
+    //Vue 3 Start second screen left list box Search Function
     searchPropertiesFilter() {
       var input;
       var formattedInput;
@@ -1329,7 +847,7 @@ export default {
 
 
 
-    //Vue 3 Start Step 2 Right Search Function
+    //Vue 3 Start second screen right list box Search Function
     searchSelectedPropertiesFilter() {
       var input;
       var formattedInput;
@@ -1364,16 +882,10 @@ export default {
 
     },
     validateFirstStep() {
-      // make sure the user has a code entered
 
       //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
       //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
-//alert (this.availableProperties.value);
-      //    var obj = JSON.parse(this.availableProperties.value);
-      //alert("JSON " + obj);
-      //  document.getElementById("selectSearchProperties").innerHTML = obj.name;
-      //alert("Test2");
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
@@ -1388,10 +900,6 @@ export default {
       }
 
 
-      //  alert(selectNextOptionBTN_counter);
-      //  alert("test c");
-      //  alert(Object.keys(this.selectedTags).length);
-
       if (selectNextOptionBTN_counter === 1) {
         if ((this.tags.length > 0) && (this.selectedLevel > 0)) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
@@ -1400,31 +908,6 @@ export default {
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
-
-          // load properties after the page is loaded.
-          /*
-                  api.getProperties(this.$baseURL)
-                      .then((data)=>{this.availableProperties = data[-1];
-                      })
-        */
-          //
-
-         /*
-
-          api.getProperties(this.$baseURL)
-              .then((data) => {
-                for (let x = 0; x < data.length; x++) {
-                  this.availableProperties.push(data[x].name);
-                }
-              })
-
-
-          for (let i = 0; i <= this.rightUsers.length + 2; i++) {
-            this.rightUsers.pop();
-          }
-*/
-
-          //}
         }
       }
 
@@ -1434,8 +917,6 @@ export default {
     validatePropertyStep() {
       // make sure the user has selected at least one property
       //Hides objects on screen that shouldn't appear in step 2
-      // document.getElementById("entityTextID").style.display = " ";
-      // document.getElementById("entityLabelId").style.display = " ";
 
       if (this.rightUsers.length > 0) {
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
@@ -1450,6 +931,8 @@ export default {
         }
       }
     },
+
+    //Vue 3 Back button
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
@@ -1460,19 +943,6 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
-
-        /*
-        if(!this.rightUsers.length) return;
-        for(let i=this.rightUsers.length;i>0;i--) {
-          let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
-          this.rightUsers.splice(idx, 1);
-          this.availableProperties.push(this.tempListClear[i - 1])
-          this.rightSelectedUsers.pop();
-          this.tempListClear.pop();
-        }
-        this.availableProperties.sort();
-        */
-
       }
 
       //Shows screen =for step 2
@@ -1485,15 +955,6 @@ export default {
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
     },
-
-    /*
-    setSelectedPropertyNames() {
-      this.userSelectedProperyNames = []
-      for (let i = 0; i < this.rightUsers.length; i++) {
-        this.userSelectedProperyNames.push(this.rightUsers[i].name)
-      }
-    },
-*/
 
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
@@ -1521,14 +982,10 @@ export default {
       }
     },
 
-
+    //Vue 3 method generates file
     exportStep() {
       this.downloadFile();
     },
-
-
-
-
 
 
     gaTrackDownload () {
@@ -1538,6 +995,7 @@ export default {
         'event_label': this.userSelectedFormat.name
       })
     },
+
     gaTrackDeferredDownload () {
       // Send Google analytics deferred download event
       this.$gtag.query('event', "Branch Resolve Deferred Download", {
@@ -1545,62 +1003,10 @@ export default {
         'event_label': this.userSelectedFormat.name
       })
     },
-    // Tree dialog user chose a tree node
-    userSelectTreeBranchNode() {
-      //console.log('userSelectTreeBranchNode - user selected:' + this.treeSelectedCode)
-      if (this.treeSelectedCode !== null) {
-        this.selectedTags = [
-          { key: this.treeSelectedCode, value: this.treeSelectedCode },
-        ]
-      }
-    },
 
-    // tree item clicked
-    itemClick (node) {
-      //console.log(node.model.id + ' clicked !')
-      this.treeSelectedCode = node.model.id;
-    },
-
-    validateExportStep() {
-      // make sure there is an export format selected.
-      return this.userSelectedFormat !== null
-    },
-
-    onFormatUpdated (updatedFormat) {
-      this.userSelectedFormat = updatedFormat
-    },
-
-    onComplete: function() {
-      //this.downloadFile();
-
-      // set the user selected tags and properties
-      this.setSelectedTags()
-     // this.setSelectedPropertyNames()
-
-      /*
-      if (this.exportType == 'exportNow') {
-        // export and wait for it to complete
-        this.initiateDeferredDownloadAndWait()
-      }
-      else {
-        // export and get a URL to go to later
-        this.initiateDeferredDownloadAndReturn()
-      }
-
-       */
-    },
 
     async pollForStatus(hashId) {
 
-      /*
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formContainer,
-        loader: 'dots',
-        isFullPage: false,
-      });
-
-       */
 
       // check if a polling url was returned.
       if (this.deferredStatusUrl != null && this.deferredStatusUrl.length >0) {
@@ -1635,13 +1041,6 @@ export default {
       this.showSummary = !this.showSummary;
     },
 
-    // clear the entitiy code in the input selection
-    clearSelection() {
-      this.userEnteredCodes = []
-      this.selectedTags = []
-      this.entityList = []
-    },
-
     setCurratedTags() {
       this.curratedTopNodesUI = []
       //console.log ("length: " + Object.keys(this.curratedTopNodes).length);
@@ -1655,13 +1054,7 @@ export default {
       }
     },
 
-    onTagAdded() {
-      //console.log("Added tag: " + newCode)
-      // When a top node is entered/selected, verify it.
-      this.getEntities();
-      this.updateChildrenToResolve()
-    },
-
+    //Method updates the Children to resolve number listed at the bottom of the screen
     onLevelChange() {
       this.updateChildrenToResolve()
     },
@@ -1682,7 +1075,6 @@ export default {
           loader: 'dots',
           isFullPage: false,
         });
-
          */
 
         api.getChildren(this.$baseURL, this.userEnteredCodes, this.selectedLevel)
@@ -1700,19 +1092,8 @@ export default {
       }
     },
 
-    /*
-    setSelectedTags() {
-      // clear the internal user codes that are entered
-      this.userEnteredCodes = []
 
-      for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-        // currated top nodes (from the server hava a value of "C12434:Blood")
-        // so we need to strip off everything from the : to the right.
-        this.userEnteredCodes.push(this.selectedTags[i].value.split(":",1))
-      }
-    },
-*/
-
+    // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
     setSelectedTags () {
       var bottomTab = "";
       var indexBottomTab = 0;
@@ -1731,93 +1112,7 @@ export default {
     },
 
 
-    // Update the top node that was entered with the description.
-    // User enters "C12434", the updated value displayed will be "C12434:Blood".
-    // If entered value is not valid, remove it and display an error message.
-    updateSelectedTopNodeDescription(topNode){
-      if (topNode.length >0) {
-        this.selectedTags[0].key = topNode[0].code;
-        this.selectedTags[0].value = topNode[0].code + ":" + topNode[0].name;
-      }
-
-      //console.log ("Updating top node: " + topNode[0].code + "  " + topNode[0].name)
-      //for (let i = 0; i < Object.keys(this.curratedTopNodesUI).length; i++) {
-      //console.log ("key " + this.curratedTopNodesUI[i].key + "  value " + this.curratedTopNodesUI[i].value)
-      //}
-    },
-
-    updateCurratedTopNodes (topNode) {
-      this.userSelectedTopNode = topNode;
-    },
-
-    getEntities(){
-      // clear the entry list
-      this.entityList = []
-      this.setSelectedTags()
-      var tempCode = ''
-      var tempStatus = ''
-
-      // show the busy indicator
-      let loader = this.$loading.show({
-        container: this.$refs.formSelectCodes,
-        loader: 'dots',
-        isFullPage: false,
-      });
-
-      //console.log(this.selectedTags[0].key +" --- " + this.selectedTags[0].value)
-      api.getCodes(this.$baseURL, this.userEnteredCodes, "ENTITY")
-          .then((data)=>{
-
-            if (data != null) {
-              // If a code is retired, the object may be empty.
-              for (let x = data.length -1; x >=0; x--) {
-                if (data[x].queryCode < 0) {
-                  //console.log("Code: " + data[x].code + " is invalid: " + data[x].queryStatus)
-                  tempCode =  data[x].code
-                  tempStatus = data[x].queryStatus
-                  data.splice(x,1)
-
-                  // need to remove from selectedTags
-                  for (let i = 0; i < Object.keys(this.selectedTags).length; i++) {
-                    if (tempCode == this.selectedTags[i].value) {
-                      this.selectedTags.splice(i,1)
-                    }
-                  }
-                  // Display error message for this code
-                  this.$notify({
-                    group: 'app',
-                    title: 'Invalid Concept Code',
-                    text: '<b>' +tempCode+'</b> is not valid. Reason: ' +tempStatus+ '.',
-                    type: 'error',
-                    duration: 6000,
-                    position: "left bottom"
-                  });
-                }
-              }
-
-              this.entityList = data;
-              this.updateSelectedTopNodeDescription(data);
-            }
-            else {
-              // There was a failure making the REST call.
-              this.clearSelection()
-              this.$notify({
-                group: 'app',
-                title: 'Validation Failure',
-                text: 'Could not verify top node.  Possible network issue.',
-                type: 'error',
-                duration: 4000,
-                position: "left bottom"
-              });
-
-              this.selectedTags = [];
-              //this.getPropertyError=true;
-            }
-          }).catch(function(error) {
-        console.error("Error retrieving branch: " + error);
-      }).finally(function() { loader.hide()});
-    },
-
+    //Method controls downloading a file
     downloadFile() {
       this.$notify({
         group: 'download',
@@ -1831,7 +1126,6 @@ export default {
 
       // set the user selected tags and properties
       this.setSelectedTags();
-     // this.setSelectedPropertyNames();
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
       if (this.fileFormat === ""){
@@ -1924,7 +1218,6 @@ export default {
 
       this.gaTrackDeferredDownload();
       this.setSelectedTags();
-     // this.setSelectedPropertyNames();
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
       if (this.fileFormat === ""){
@@ -1932,7 +1225,7 @@ export default {
         this.fileFormat = 'JSON';
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
-      // alert("check 2")
+
       // alert("base URL: " + this.$baseURL);
       // alert("tags: " + this.userEnteredCodes);
       // alert("selectedPropertyName: " + this.rightUsers);
@@ -1958,17 +1251,6 @@ export default {
               alert("Error making Deferred call");
             }
           })
-    },
-
-    ExportNowOrLater(){
-      if (this.exportType == 'exportNow') {
-        // export and wait for it to complete
-        this.downloadFile();
-      }
-      else {
-        // export and get a URL to go to later
-        this.initiateDeferredDownloadAndReturn();
-      }
     },
 
 
@@ -2015,29 +1297,6 @@ export default {
 
     },
 
-    getRoots(){
-      api.getRoots(this.$baseURL)
-          .then((data)=>{
-            if (data != null) {
-              //console.log("got roots : " + data);
-            }
-            else {
-              console.log("Error retrieving roots");
-            }
-          })
-    },
-
-    getChildren(){
-      api.getChildren(this.$baseURL, this.userEnteredCodes, 1)
-          .then((data)=>{
-            if (data != null) {
-              //console.log("got children : " + data);
-            }
-            else {
-              console.log("Error retrieving children");
-            }
-          })
-    },
 
     // Add to local storage
     addHashToLocalStorage() {
@@ -2049,49 +1308,13 @@ export default {
       this.saveDeferredDownloads();
     },
 
-    async sleepTimer() {
-      // await this.sleep(500);
-      await this.sleep(500);
-    },
-
-    // save to local storage
+    // Vue 3 save to local storage.
     saveDeferredDownloads() {
-
       const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};  // Vue 3 Data saved on local storage
       localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));  //Vue 3 Save data on local storage
 
       localStorage.name = "Cory"
     },
-
-
-    getFormat(key) {
-      var data = this.getData(key)
-      if (data) {
-        return data.value.format
-      }
-      else {
-        return "Unknown"
-      }
-    },
-    getTimestamp(key) {
-      var data = this.getData(key)
-      if (data) {
-        return data.value.date
-      }
-      else {
-        return "Unknown"
-      }
-    },
-    getLocalStatus(key) {
-      var data = this.getData(key)
-      if (data) {
-        return data.value.status
-      }
-      else {
-        return "Unknown"
-      }
-    },
-
 
     clearDeferredData() {
       this.deferredStatusUrl = ''
@@ -2104,224 +1327,28 @@ export default {
       return hash.substring(startIndex)
     },
 
-    addNodeFunction1 (node, childCode, text) {
-      // alert("1")
 
-
-      console.log("this is the node " + node)
-      console.log("this is the childCode " + childCode)
-      console.log("this is the text " + text)
-      const newNode = {
-        text: text,
-        state: { checked: false, selected: false, expanded: false },
-        id: childCode,
-      };
-      console.log("node check " + this.treeDisplayData.nodes)
-      console.log("2")
-
-
-      //this.treeDisplayData.nodes.push({text: 12345, state: { checked: false, selected: false, expanded: false }, id: 33, checkable: false},);
-
-
-      //node.nodes.push(newNode);
-
-      // node.nodes.push({text: 12345, state: { checked: false, selected: false, expanded: false }, id: 33, checkable: false},);
-
-
-
-
-
-      console.log("3")
-      console.log("example: add node", newNode);
-      console.log("node.nodes check " + this.nodes)
-      if (node.nodes === undefined) {
-        console.log("true")
-        this.treeDisplayData.nodes = [newNode];
-        console.log(this.treeDisplayData.nodes);
-      } else {
-        console.log("false")
-        node.nodes.push(newNode);
-      }
-      console.log("4")
-    },
-
+    //Vue 3 Displays code and descriptions for the top node.  After that another method (addNodeFunction) is called to
+    //display the children nodes
     getParentNode(){
-    //  var treeIndexCounter = 0
-      //Vue 3 Displays code and descriptions for top node
+
       api.getRoots(this.$baseURL)  // Top node
           .then((root)=> {
-            // alert("root results " + root)
+
             if (root != null) {
               for (let x = 0; x < root.length; x++) {
 
-                this.treeData.push({label: root[x].code + ' : ' + root[x].name,
+                this.treeData.push({label: root[x].code + ' : ' + root[x].name,   //Vue 3 adds code and description to tree node
                   state: { checked: false, selected: false, expanded: false },
                   id: root[x].code,
                   checkable: false,
                   nodes:[]});
 
-                this.treeCode.push(root[x].code);
-               // treeIndexCounter = treeIndexCounter  1
-                // this.treeCode[x] = root[x].code;
-
-                //  alert("root results 2 " + this.treeCode[x])
-                //  alert(root[x].code)
-                //   alert(x)
-                //  alert(this.treeCode[x])
-                //   this.treeCode.value.push(root[x].code);
-                // nodes: [{id: children[x].code, label: children[x].code + ' : ' + children[x].name + Object.values(treeTemp)}]};
-
+                this.treeCode.push(root[x].code);     //Vue 3 this variable keeps track of what codes were entered for the tree
               }
-              //  alert("tree length " + this.treeCode.length)
-              //if (this.treeCode.length > 0) {
-              //          if (this.treeCode.length === root.length) {
-              //          this.getChildNode();
-              //        }
             }
           })
     },
-
-
-    getChildNode(){
-
-      // alert("second tree length a" + this.treeCode.length)
-      if (this.treeCode.length > 0) {
-        // alert("second tree length  b" + this.treeCode.length)
-        for (let y = 0; y < this.treeCode.length; y++) {
-          // alert("tree length " + this.treeCode.length)
-          // alert("tree code " + this.treeCode[x])
-          api.getChildren(this.$baseURL, this.treeCode[y], this.levelCounter)
-              .then((children) => {
-                //  childCount = children.length;
-
-                if (children != null) {
-                  for (let x = 0; x < children.length; x++) {
-                    //   alert("Parent node " + this.treeCode[y]);
-                    //   alert("child code " + children[x].code);
-                    //   alert("child code1 " + children[0].code);
-                    //   alert("child code2 " + children[1].code);
-                    //   alert("child code3 " + children[2].code);
-                    //    alert("child Length " + children.length)
-
-
-                    //  alert(children[x].code + '  :  ' + children[x].name)
-                    //   console.log("test33432  " + children[x].code)
-
-                    //   alert("Parent node " + this.treeCode[x]);
-                    //    alert("child code " + children[x].code);
-                    //  alert("description "+ children[x].name);
-                    //         alert("leaf " + children[x].leaf);
-                    // console.log("Parent code " + this.treeCode[y]);
-                    // console.log("child code " + children[x].code);
-                    // console.log("leaf " + children[x].leaf);
-                    // console.log("description " + children[x].name);
-
-                    //    this.treeChildNode.push(children[x].code);
-                    this.addNodeFunction(this.treeCode[y], children[x].code, children[x].code + ' : ' + children[x].name)
-                    // alert(this.treeChildNode);
-                    // alert(this.treeChildNode.length
-
-                    //tree counter
-
-                    //   if (this.treeCode.length > 0  && y === this.treeCode.length-1) {
-                    //      this.levelCounter = this.levelCounter + 1;
-                    //  this.treeCode = [];
-                    //   this.treeCode = this.treeChildNode;
-                    //  alert(this.treeCode.length);
-                    //  alert(this.treeChildNode);
-                    //  this.getChildNode();
-                    //  }
-
-
-
-                  }
-                  // this.getMoreChildren(this.treeChildNode);
-
-
-                }
-                //this.treeCode = [];
-                //this.treeCode = this.treeChildNode;
-                //  alert(this.treeCode.length);
-              })
-//alert(y)
-          //     alert(this.treeCode.length)
-
-        }
-      }
-
-
-
-    },
-
-
-
-
-
-
-    getMoreChildren(treeChildNodeParam){
-
-      //  alert(this.levelCounter)
-      if (treeChildNodeParam.length > 0){
-        this.treeChildNod =[];
-        for (let y = 0; y < treeChildNodeParam.length; y++) {
-          // alert("tree length " + this.treeCode.length)
-          // alert("tree code " + this.treeCode[x])
-
-          api.getChildren(this.$baseURL, treeChildNodeParam[y], this.levelCounter)
-              .then((children) => {
-                //  childCount = children.length;
-                //alert("child output ")
-                //this.sleepTimer();
-
-
-                if (children != null) {
-                  for (let x = 0; x < children.length; x++) {
-                    //   alert("Parent node " + treeChildNodeParam[y]);
-                    //    alert("child code " + children[x].code);
-
-                    //       alert("child code1 " + children[0].code);
-
-                    //      alert("child code2 " + children[1].code);
-
-                    //      alert("child code3 " + children[2].code);
-                    //    alert("child Length " + children.length)
-                    //DO call by node
-
-                    //  alert(children[x].code + '  :  ' + children[x].name)
-                    //   console.log("test33432  " + children[x].code)
-
-                    //   alert("Parent node " + this.treeCode[x]);
-                    //    alert("child code " + children[x].code);
-                    //  alert("description "+ children[x].name);
-                    //         alert("leaf " + children[x].leaf);
-                    //  console.log("Parent code " + treeChildNodeParam[y]);
-                    //  console.log("child code " + children[x].code);
-                    //  console.log("leaf " + children[x].leaf);
-                    //  console.log("description " + children[x].name);
-                    this.treeChildNode.push(children[x].code);
-                    this.addNodeFunction(treeChildNodeParam[y], children[x].code, children[x].code + ' : ' + children[x].name)
-
-                  }
-                }
-              })
-
-          //alert(this.treeChildNode.length)
-
-        }
-      }
-      this.levelCounter = this.levelCounter + 1;
-      //alert(this.treeChildNode.length)
-      // this.getMoreChildren(this.treeChildNode)
-
-    },
-
-
-
-
-
-
-
-
 
 
     sleep: function(ms) {
@@ -2338,10 +1365,6 @@ export default {
 
     this.updateShowSummary();
 
-    // load properties after the page is loaded.
-    // api.getProperties(this.$baseURL)
-    //     .then((data)=>{this.availableProperties = data;
-    //     })
     api.getProperties(this.$baseURL)
         .then((data)=> {
           for (let x = 0 ; x < data.length; x++) {
@@ -2357,10 +1380,6 @@ export default {
         })
 
     this.getParentNode();  //Vue 3 builds tree on Resolved Branch Export screen
-
-
-
-
 
   }
 }
