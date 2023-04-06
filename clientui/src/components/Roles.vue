@@ -400,9 +400,9 @@ export default {
                       this.newTagCounter = this.newTagCounter + 1;
                     }
                   }else{
-                    this.tags.push(tag + ":" + "");   //take out after testing
-                    this.newTag = "";                  //take out after testing
-                    this.tagCounter = this.tagCounter + 1;  //take out after testing
+                   // this.tags.push(tag + ":" + "");   //take out after testing
+                   // this.newTag = "";                  //take out after testing
+                   // this.tagCounter = this.tagCounter + 1;  //take out after testing
                     this.$notify({
                       group: 'app',
                       title: 'Validation Failure',
@@ -925,9 +925,11 @@ export default {
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
-
-          document.getElementById("enteredCodeLabelLeft").style.display = "";
-          document.getElementById("enteredCodeLabelRight").style.display = "none";
+          if (this.rightUsers.length <=0)
+          {
+            document.getElementById("enteredCodeLabelLeft").style.display = "";
+            document.getElementById("enteredCodeLabelRight").style.display = "none";
+          }
 
           this.setSelectedTags();
           if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){

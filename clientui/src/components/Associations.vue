@@ -994,8 +994,10 @@ export default {
 
           // reset what concept codes are used
           this.updateUsedConceptCodes()
-          document.getElementById("enteredCodeLabelLeft").style.display = "";
-          document.getElementById("enteredCodeLabelRight").style.display = "none";
+          if (this.rightUsers.length <=0) {
+            document.getElementById("enteredCodeLabelLeft").style.display = "";
+            document.getElementById("enteredCodeLabelRight").style.display = "none";
+          }
 
           //Vue 3 removes enteries from right list box on next screen
 
