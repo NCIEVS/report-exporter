@@ -546,8 +546,6 @@ export default {
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
-          document.getElementById("enteredCodeLabelLeft").style.display = "";
-          document.getElementById("enteredCodeLabelRight").style.display = "none";
 
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 

@@ -560,7 +560,6 @@ export default {
 
           this.setSelectedTags();
           if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
-
             api.getRoles(this.$baseURL, this.userEnteredCodes)
                 .then((data) => {
                   for (let x = data.length - 1; x >= 0; x--) {
