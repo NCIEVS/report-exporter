@@ -978,6 +978,13 @@ export default {
 
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
+          // reset what concept codes are used
+          //this.updateUsedConceptCodes()
+          if (this.rightUsers.length <=0) {
+            document.getElementById("enteredCodeLabelLeft").style.display = "";
+            document.getElementById("enteredCodeLabelRight").style.display = "none";
+          }
+
           this.setSelectedTags();
           if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
         //    alert("base URL " + this.$baseURL);
@@ -992,12 +999,7 @@ export default {
           }
 
 
-          // reset what concept codes are used
-          this.updateUsedConceptCodes()
-          if (this.rightUsers.length <=0) {
-            document.getElementById("enteredCodeLabelLeft").style.display = "";
-            document.getElementById("enteredCodeLabelRight").style.display = "none";
-          }
+
 
           //Vue 3 removes enteries from right list box on next screen
 
