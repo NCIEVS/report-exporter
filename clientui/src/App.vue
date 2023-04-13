@@ -31,13 +31,11 @@ import FooterBar from './components/FooterBar.vue'
 export default {
   name: 'app',
   props: {
-    //   selectedTags:[]
   },
   components: {
     HeaderBar,
     SubHeaderBar,
     FooterBar,
-    // ReportSelection,
   },
 
   metaInfo: {
