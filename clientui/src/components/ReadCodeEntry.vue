@@ -489,14 +489,14 @@ export default {
       api.getProperties(this.$baseURL)
           .then((data)=> {
 
-            console.log("This is the length of the data "+ data.length)
+            //console.log("This is the length of the data "+ data.length)
 
             for (let x = 0 ; x < data.length; x++) {
-              console.log("This is the length of the data inside the loop "+ data.length)
+              //console.log("This is the length of the data inside the loop "+ data.length)
               this.availableProperties.push(data[x].name);
-              console.log("This is the properties value: "+ data[x].name)
+              //console.log("This is the properties value: "+ data[x].name)
             }
-            console.log("This is the properties count for the list box : "+this.availableProperties.length)
+           // console.log("This is the properties count for the list box : "+this.availableProperties.length)
           })
     },
 

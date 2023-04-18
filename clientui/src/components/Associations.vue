@@ -703,11 +703,6 @@ export default {
         console.error("Download Error: " + error);
       })
     },
-
-    // removes forward slashes and all kinds of Unicode whitespace characters
-    cleanString(string) {
-      return string.replace(/[\s/]/g, '')
-    }
   },
   created() {
 

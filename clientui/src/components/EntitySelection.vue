@@ -16,8 +16,6 @@ checks:
     queryEntitySelection: default to "ENTITY". Determine the attribute to populate When
       calling the api.getCodes() method.
 -->
-//alert("this is the value intered: " + onTagAdded(value))";
-alert("this is the value entered: " + baseURL);
 
 
 <template>
