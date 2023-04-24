@@ -280,7 +280,14 @@
       </div>
     </div>
   </div>
+
+  <h4>{{ title }}</h4>
+
 </template>
+
+
+
+
 
 <script>
 
@@ -292,12 +299,30 @@ import {ref} from "vue";
 import Tree from "vue3-tree";
 import "vue3-tree/dist/style.css";
 import { defineComponent } from "vue";
+//import 'src/router/index.js'
+//import router2 from './router'
 
+
+/*
+
+router2.beforeEach((to, from, next) => {
+  // Get the page title from the route meta data that we have defined
+  // See further down below for how we setup this data
+  const title = to.meta.title
+// If the route has a title, set it as the page title of the document/page
+  if (title) {
+    document.title = title
+  }
+  // Continue resolving the route
+  next()
+})
+*/
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
 
 
 export default {
+
   name: 'resolve-branch-entry',
   props: {
     msg: String, defineComponent,
