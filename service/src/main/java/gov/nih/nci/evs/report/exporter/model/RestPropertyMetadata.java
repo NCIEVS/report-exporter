@@ -3,7 +3,7 @@ package gov.nih.nci.evs.report.exporter.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties
-public class RestPropertyMetadata implements Comparable<RestPropertyMetadata>{ 
+public class RestPropertyMetadata implements Comparable<RestPropertyMetadata>{
 /**
  * This is a property id
  */

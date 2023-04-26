@@ -1,18 +1,23 @@
+
 <template>
   <div id="app">
+
     <notifications group="app"/>
     <notifications group="download"/>
 
-     <div class="header-div">
-        <HeaderBar msg="Top"/>
-        <SubHeaderBar msg="SubTop"/>
-      </div>
-       <div class="main-content">
-          <!-- the router outlet, where all matched components would be viewed -->
-          <router-view></router-view>
-      </div>
+    <div className="header-div">
+      <HeaderBar msg="Top"/>
+      <SubHeaderBar msg="SubTop"/>
+    </div>
+    <div className="main-content">
+      <!-- the router outlet, where all matched components would be viewed -->
+      <!--<router-view></router-view>-->
+      <router-view/>
+    </div>
+    <!--<ReportSelection  msg="Bottom"/>-->
     <FooterBar msg="Bottom"/>
   </div>
+
 </template>
 
 <script>
@@ -22,10 +27,10 @@ import FooterBar from './components/FooterBar.vue'
 // Custom input tags
 // import VoerroTagsInput from '@voerro/vue-tagsinput'
 
+
 export default {
   name: 'app',
   props: {
-  //   selectedTags:[]
   },
   components: {
     HeaderBar,
@@ -36,22 +41,19 @@ export default {
   metaInfo: {
     title: 'EVS Report Exporter',
     headAttrs: {
-        "X-XSS-Protection": 1,
-        "mode": "block"
-      },
+      "X-XSS-Protection": 1,
+      "mode": "block"
+    },
     meta: [
-      { name: 'Referrer-Policy', value: 'no-referrer | same-origin' },
+      {name: 'Referrer-Policy', value: 'no-referrer | same-origin'},
     ]
   },
-  data(){
+  data() {
     return {
-      selectedTags:[]
+      selectedTags: []
     }
   }
 }
+
 </script>
 
-<style>
-#app {
-  }
-</style>

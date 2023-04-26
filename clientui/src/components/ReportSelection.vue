@@ -2,10 +2,11 @@
   <div class="report-selection">
 
     <nciWarningModal v-show="isModalVisible" @close="closeModal">
-      <div slot="header">
+      <template v-slot:header>
         <h4 class="modal-title">Warning</h4>
-      </div>
-      <div slot="body">
+      </template>
+
+      <template v-slot:body>
         <p>You are accessing a US Government web site which may
           contain information that must be protected under the US Privacy Act
           or other sensitive information and is intended for Government
@@ -20,7 +21,7 @@
           on related to this website and is advised that if such monitoring
           reveals possible evidence of criminal activity, NIH may provide
           that evidence to law enforcement officials.</p>
-      </div>
+      </template>
     </nciWarningModal>
 
     <div class="title-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -53,7 +54,9 @@
           <ul class="list-unstyled mt-3 mb-4">
             <li>Export resolved branch of entities from a root concept code match</li>
           </ul>
-          <router-link v-bind:to="'/resolveBranchEntry'" class="mt-auto">
+          <div class="mt-auto"></div>
+          <div class="mt-auto"></div>
+          <router-link v-bind:to="'/resolveBranchEntry'" >
             <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
           </router-link>
         </div>
@@ -68,7 +71,10 @@
           <ul class="list-unstyled mt-3 mb-4">
             <li>Export entities with roles and targets</li>
           </ul>
-          <router-link v-bind:to="'/roles'" class="mt-auto">
+          <div class="mt-auto"></div>
+          <div class="mt-auto"></div>
+          <div class="mt-auto"></div>
+          <router-link v-bind:to="'/roles'" >
             <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
           </router-link>
         </div>
@@ -83,7 +89,9 @@
           <ul class="list-unstyled mt-3 mb-4">
             <li>Export entities with assocations and targets</li>
           </ul>
-          <router-link v-bind:to="'/associations'" class="mt-auto">
+          <div class="mt-auto"></div>
+          <div class="mt-auto"></div>
+          <router-link v-bind:to="'/associations'" >
             <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
           </router-link>
         </div>
@@ -94,18 +102,102 @@
   </div>
 </template>
 
+
 <script>
+
+import nciWarningModal from './NCIWarning.vue';
+
+
+export default {
+  name: 'ReportSelection',
+  props: {
+    msg: String
+  },
+
+  components: {
+    nciWarningModal
+  },
+
+  metaInfo: {
+    title: 'EVS Report Exporter - Report Selection',
+  },
+  mounted(){
+
+    this.$notify({
+      group: 'download',
+      title: 'Warning:',
+      text: 'You are accessing a US Government web site which may contain information that must be protected under the US Privacy Act or other sensitive information and is intended for Government authorized use only Unauthorized attempts to upload information, change information, or use of this web site may result in disciplinary action, civil, and/or criminal penalties. Unauthorized users of this website should have no expectation of privacy regarding any communications or data processed by this website. Anyone accessing this website expressly consents to monitoring of their actions and all communications or data transiting or stored on related to this website and is advised that if such monitoring reveals possible evidence of criminal activity, NIH may provide that evidence to law enforcement officials.',
+      type: 'success',
+      duration: 8000,
+      position: "Top Left"
+    });
+  },
+
+
+
+  data(){
+    return {
+      isModalVisible: false,
+      warningCookie: "NCIWarningAcknowledgement",
+    }
+  },
+
+
+  methods: {
+    showModal() {
+      var warningCookie = this.$cookies.get(this.warningCookie);
+     // alert(warningCookie);
+      if (!warningCookie) {
+        alert ("       You are accessing a US Government web site which may\n" +
+            "          contain information that must be protected under the US Privacy Act\n" +
+            "          or other sensitive information and is intended for Government\n" +
+            "          authorized use only\n" +
+            "           Unauthorized attempts to upload information, change information,\n" +
+            "          or use of this web site may result in disciplinary action, civil,\n" +
+            "          and/or criminal penalties. Unauthorized users of this website\n" +
+            "          should have no expectation of privacy regarding any communications\n" +
+            "          or data processed by this website.\n" +
+            "          Anyone accessing this website expressly consents to monitoring of\n" +
+            "          their actions and all communications or data transiting or stored\n" +
+            "          on related to this website and is advised that if such monitoring\n" +
+            "          reveals possible evidence of criminal activity, NIH may provide\n" +
+            "          that evidence to law enforcement officials.")
+      }
+    },
+
+    closeModal() {
+      this.isModalVisible = false;
+      this.setWarningCookie()
+    },
+
+
+
+  created() {
+    // scroll to the top of the page
+    window.scrollTo(0, 0);
+    this.showModal()
+  }
+}}
+</script>
+
+
+
+
+<!--
+<script>
+
  import nciWarningModal from './NCIWarning.vue';
 
- export default {
-    name: 'ReportSelection',
-    props: {
-      msg: String
-    },
+  export default {
+     name: 'ReportSelection',
+     props: {
+       msg: String
+     },
 
-    components: {
-      nciWarningModal
-    },
+     components: {
+       nciWarningModal
+     },
+
     metaInfo: {
       title: 'EVS Report Exporter - Report Selection',
     },
@@ -115,6 +207,8 @@
         warningCookie: "NCIWarningAcknowledgement",
       }
     },
+
+
     methods: {
       showModal() {
         var warningCookie = this.$cookies.get(this.warningCookie);
@@ -122,10 +216,14 @@
           this.isModalVisible = true;
         }
       },
+
+
       closeModal() {
         this.isModalVisible = false;
         this.setWarningCookie()
       },
+
+
       setWarningCookie() {
         this.$cookies.set(this.warningCookie,"true");
       }
@@ -137,8 +235,9 @@
       this.showModal()
     }
   }
-</script>
 
+</script>
+-->
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
