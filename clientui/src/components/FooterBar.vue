@@ -4,20 +4,22 @@
 			<div class="center-block">
 				<div class="small navbar-text text-center">
 					<p>
-						<a href="http://www.cancer.gov/global/web/policies" title="link to NCI Policies">Policies</a>
+						<a href="https://www.cancer.gov/global/web/policies" title="link to NCI Policies">Policies</a>
 						&nbsp; | &nbsp;
-						<a href="http://www.cancer.gov/global/web/policies/accessibility" title="link to NCI Accessibility Policies">Accessibility</a>
+						<a href="https://www.cancer.gov/global/web/policies/accessibility" title="link to NCI Accessibility Policies">Accessibility</a>
 						&nbsp; | &nbsp;
-						<a href="http://www.cancer.gov/global/web/policies/foia" title="link to FOIA">FOIA</a>
+						<a href="https://www.cancer.gov/global/web/policies/foia" title="link to FOIA">FOIA</a>
+            &nbsp; | &nbsp;
+            <a href="https://www.hhs.gov/vulnerability-disclosure-policy" title="Link to HHS Vulnerability Disclosure">HHS Vulnerability Disclosure</a>
 					</p>
 					<p>
-						<a href="http://www.hhs.gov/" target="_blank" title="link to HHS.gov">U.S. Department of Health and Human Services</a>
+						<a href="https://www.hhs.gov/" target="_blank" title="link to HHS.gov">U.S. Department of Health and Human Services</a>
 						&nbsp; | &nbsp;
-						<a href="http://www.nih.gov/" target="_blank" title="link to NIH.gov">National Institutes of Health</a>
+						<a href="https://www.nih.gov/" target="_blank" title="link to NIH.gov">National Institutes of Health</a>
 						&nbsp; | &nbsp;
-						<a href="http://www.cancer.gov/" title="link to Cancer.gov">National Cancer Institute</a>
+						<a href="https://www.cancer.gov/" title="link to Cancer.gov">National Cancer Institute</a>
 						&nbsp; | &nbsp;
-						<a href="http://www.usa.gov/" target="_blank" title="link to USA.gov">USA.gov</a>
+						<a href="https://www.usa.gov/" target="_blank" title="link to USA.gov">USA.gov</a>
 					</p>
 					<p>NIH &hellip;Turning Discovery into Health &copy;</p>
 				</div>

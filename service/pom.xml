@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>gov.nih.nci.evs</groupId>
 		<artifactId>report.exporter</artifactId>
-		<version>1.1.0</version>
+		<version>1.1.4</version>
 		<relativePath>
             ../pom.xml
         </relativePath> <!-- lookup parent from repository -->
@@ -25,6 +25,13 @@
 	</properties>
 
 	<dependencies>
+	
+		<dependency>
+    		<groupId>org.springframework</groupId>
+   		 	<artifactId>spring-core</artifactId>
+    		<version>5.3.23</version>
+		</dependency>
+	
 
 		<!-- web mvc -->
 		<dependency>
@@ -149,7 +156,7 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+
 		<dependency>
     		<groupId>javax.mail</groupId>
     		<artifactId>mail</artifactId>
