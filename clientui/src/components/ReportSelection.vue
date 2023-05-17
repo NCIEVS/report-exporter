@@ -40,7 +40,7 @@
             <ul class="list-unstyled mt-3 mb-4">
               <li>Export entities and selected properties from concept code matches</li>
             </ul>
-          <router-link v-bind:to="'/readCodeEntry'" class="mt-auto">
+          <router-link v-bind:to="'/report-exporter/readCodeEntry'" class="mt-auto">
             <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
           </router-link>
         </div>
@@ -56,7 +56,7 @@
           </ul>
           <div class="mt-auto"></div>
           <div class="mt-auto"></div>
-          <router-link v-bind:to="'/resolveBranchEntry'" >
+          <router-link v-bind:to="'/report-exporter/resolveBranchEntry'" >
             <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
           </router-link>
         </div>
@@ -74,7 +74,7 @@
           <div class="mt-auto"></div>
           <div class="mt-auto"></div>
           <div class="mt-auto"></div>
-          <router-link v-bind:to="'/roles'" >
+          <router-link v-bind:to="'/report-exporter/roles'" >
             <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
           </router-link>
         </div>
@@ -91,7 +91,7 @@
           </ul>
           <div class="mt-auto"></div>
           <div class="mt-auto"></div>
-          <router-link v-bind:to="'/associations'" >
+          <router-link v-bind:to="'/report-exporter/associations'" >
             <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
           </router-link>
         </div>

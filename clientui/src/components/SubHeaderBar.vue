@@ -65,10 +65,10 @@
               </div>
             </li>
             <li class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
-              <router-link class="nav-link" v-bind:to="'/exports'" title="Link to Downloads">Downloads</router-link>
+              <router-link class="nav-link" v-bind:to="'/report-exporter/exports'" title="Link to Downloads">Downloads</router-link>
             </li>
             <li class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-subheader">
-              <router-link class="nav-link" to="/documentation">Documentation</router-link>
+              <router-link class="nav-link" to="/report-exporter/documentation">Documentation</router-link>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="https://github.com/NCIEVS/report-exporter/issues" target="_blank" title="Link to Help">Help Forum</a>
