@@ -1,5 +1,6 @@
 package gov.nih.nci.evs.report.exporter.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -30,9 +31,20 @@ public class TerminologyPropertyService {
 				getFilteredList(service.getRestSynonyms(template));
 		RestPropertyMetadata[] defMeta = 
 				getFilteredList(service.getRestDefinitions(template));
-		
+
+		RestPropertyMetadata[] fullSet = propMeta;
+		for(RestPropertyMetadata metadata:synMeta){
+			if(Arrays.stream(fullSet).noneMatch(x -> x.getName().equals(metadata.getName())))
+				fullSet = Stream.concat(Arrays.stream(fullSet), Stream.of(metadata)).toArray(RestPropertyMetadata[]::new);
+		}
+
+		for(RestPropertyMetadata metadata:defMeta){
+			if(Arrays.stream(fullSet).noneMatch(x -> x.getName().equals(metadata.getName())))
+				fullSet = Stream.concat(Arrays.stream(fullSet), Stream.of(metadata)).toArray(RestPropertyMetadata[]::new);
+		}
+
 		return Stream
-				.of(propMeta,synMeta,defMeta)
+				.of(propMeta)
 				.flatMap(Stream::of)
 				.toArray(RestPropertyMetadata[]::new);
 	}
