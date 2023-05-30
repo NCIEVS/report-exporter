@@ -35,9 +35,9 @@ const routes = [
             title: "EVS Report Exporter - Read Code"
         },
         props: {
-                msg: "selected tag",
-                selectedTags:[]
-               }
+            msg: "selected tag",
+            selectedTags:[]
+        }
     },
     {
         path: '/searchTermEntry', component: SearchTermEntry },
@@ -84,7 +84,7 @@ const routes = [
         path: '/:pathMatch(.*)*',
         redirect: "/ReportSelection",
     },
-    ];
+];
 
 const router = createRouter({
     history: createWebHistory(),

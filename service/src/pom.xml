@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.10.3</version>
+			<version>2.13.3</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
@@ -116,17 +116,6 @@
         </plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-		</repository>
-    <repository>
-        <id>spring-releases</id>
-        <url>https://repo.spring.io/libs-release</url>
-    </repository>
-	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-milestones</id>
@@ -139,4 +128,37 @@
     </pluginRepository>
 	</pluginRepositories>
 
+
+    <repositories>
+        <repository>
+            <id>nci.maven.releases</id>
+            <name>NCI Maven Release Repository</name>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/repositories/LexEVSRelease</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>nci.maven.thirdparty</id>
+            <name>NCI Maven 3rd Party Repository</name>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/repositories/LexEVS3rdParty</url>
+        </repository>
+        <repository>
+            <id>nci.maven.public</id>
+            <name>NCI Maven public passthrough</name>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/repositories/public</url>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
 </project>

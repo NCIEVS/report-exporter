@@ -40,64 +40,64 @@
             <ul class="list-unstyled mt-3 mb-4">
               <li>Export entities and selected properties from concept code matches</li>
             </ul>
-          <router-link v-bind:to="'/report-exporter/readCodeEntry'" class="mt-auto">
-            <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
-          </router-link>
+            <router-link v-bind:to="'/report-exporter/readCodeEntry'" class="mt-auto">
+              <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
+            </router-link>
+          </div>
         </div>
-      </div>
-      <div class="card mb-4 box-shadow">
-        <div class="card-header">
-          <h5 class="my-0 font-weight-normal"><b>Export Resolved Branch</b></h5>
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal"><b>Export Resolved Branch</b></h5>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title pricing-card-title">Branch Resolve</h3>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Export resolved branch of entities from a root concept code match</li>
+            </ul>
+            <div class="mt-auto"></div>
+            <div class="mt-auto"></div>
+            <router-link v-bind:to="'/report-exporter/resolveBranchEntry'" >
+              <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
+            </router-link>
+          </div>
         </div>
-        <div class="card-body d-flex flex-column">
-          <h3 class="card-title pricing-card-title">Branch Resolve</h3>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>Export resolved branch of entities from a root concept code match</li>
-          </ul>
-          <div class="mt-auto"></div>
-          <div class="mt-auto"></div>
-          <router-link v-bind:to="'/report-exporter/resolveBranchEntry'" >
-            <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
-          </router-link>
-        </div>
-      </div>
 
-      <div class="card mb-4 box-shadow">
-        <div class="card-header">
-          <h5 class="my-0 font-weight-normal"><b>Export Roles</b></h5>
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal"><b>Export Roles</b></h5>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title pricing-card-title">Get Concept Roles</h3>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Export entities with roles and targets</li>
+            </ul>
+            <div class="mt-auto"></div>
+            <div class="mt-auto"></div>
+            <div class="mt-auto"></div>
+            <router-link v-bind:to="'/report-exporter/roles'" >
+              <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
+            </router-link>
+          </div>
         </div>
-        <div class="card-body d-flex flex-column">
-          <h3 class="card-title pricing-card-title">Get Concept Roles</h3>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>Export entities with roles and targets</li>
-          </ul>
-          <div class="mt-auto"></div>
-          <div class="mt-auto"></div>
-          <div class="mt-auto"></div>
-          <router-link v-bind:to="'/report-exporter/roles'" >
-            <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
-          </router-link>
-        </div>
-      </div>
 
-      <div class="card mb-4 box-shadow">
-        <div class="card-header">
-          <h5 class="my-0 font-weight-normal"><b>Export Associations</b></h5>
-        </div>
-        <div class="card-body d-flex flex-column">
-          <h3 class="card-title pricing-card-title">Get Concept Associations</h3>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>Export entities with assocations and targets</li>
-          </ul>
-          <div class="mt-auto"></div>
-          <div class="mt-auto"></div>
-          <router-link v-bind:to="'/report-exporter/associations'" >
-            <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
-          </router-link>
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal"><b>Export Associations</b></h5>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title pricing-card-title">Get Concept Associations</h3>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Export entities with assocations and targets</li>
+            </ul>
+            <div class="mt-auto"></div>
+            <div class="mt-auto"></div>
+            <router-link v-bind:to="'/report-exporter/associations'" >
+              <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
   </div>
 </template>
@@ -146,7 +146,7 @@ export default {
   methods: {
     showModal() {
       var warningCookie = this.$cookies.get(this.warningCookie);
-     // alert(warningCookie);
+      // alert(warningCookie);
       if (!warningCookie) {
         alert ("       You are accessing a US Government web site which may\n" +
             "          contain information that must be protected under the US Privacy Act\n" +
@@ -172,12 +172,12 @@ export default {
 
 
 
-  created() {
-    // scroll to the top of the page
-    window.scrollTo(0, 0);
-    this.showModal()
-  }
-}}
+    created() {
+      // scroll to the top of the page
+      window.scrollTo(0, 0);
+      this.showModal()
+    }
+  }}
 </script>
 
 
@@ -288,3 +288,6 @@ a:hover {
 }
 
 </style>
+
+
+
