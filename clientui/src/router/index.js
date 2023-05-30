@@ -30,34 +30,34 @@ const routes = [
         }
     },
     {
-        path: '/readCodeEntry', component: ReadCodeEntry,
+        path: '/report-exporter/readCodeEntry', component: ReadCodeEntry,
         meta: {
             title: "EVS Report Exporter - Read Code"
         },
         props: {
-                msg: "selected tag",
-                selectedTags:[]
-               }
+            msg: "selected tag",
+            selectedTags:[]
+        }
     },
     {
         path: '/searchTermEntry', component: SearchTermEntry },
 
     {
-        path: '/resolveBranchEntry',
+        path: '/report-exporter/resolveBranchEntry',
         component: ResolveBranchEntry,
         meta: {
             title: "EVS Report Exporter - Branch Resolve"
         }
     },
     {
-        path: '/roles',
+        path: '/report-exporter/roles',
         component: Roles,
         meta: {
             title: "EVS Report Exporter - Roles"
         }
     },
     {
-        path: '/associations',
+        path: '/report-exporter/associations',
         component: Associations,
         meta: {
             title: "EVS Report Exporter - Associations"
@@ -65,14 +65,14 @@ const routes = [
     },
     { path: '/about', component: About },
     {
-        path: '/documentation',
+        path: '/report-exporter/documentation',
         component: Documentation,
         meta: {
             title: "EVS Report Exporter - Documentation"
         }
     },
     {
-        path: "/exports",
+        path: "/report-exporter/exports",
         component: Exports,
         meta: {
             title: "EVS Report Exporter - Downloads"
@@ -84,7 +84,7 @@ const routes = [
         path: '/:pathMatch(.*)*',
         redirect: "/ReportSelection",
     },
-    ];
+];
 
 const router = createRouter({
     history: createWebHistory(),
