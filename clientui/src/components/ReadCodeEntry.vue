@@ -324,6 +324,7 @@ export default {
       var dupTagCheck = false;  // Vue 3 temporary variable used to make sure duplicate blue tags are not created
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
+      var tempStatus = ''
 
       this.setSelectedTags()  // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
 
@@ -351,16 +352,17 @@ export default {
                         this.newTagCounter = this.newTagCounter + 1;
                       }
                     }else{
+                      tempStatus = data[x].queryStatus
                     //  this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
                     //  this.newTag = ""                  //Vue 3 used for testing take out after testing
                     //  this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
                       //Vue 3 error message if invalid entity code is entered
                       this.$notify({
                         group: 'app',
-                        title: 'Validation Failure',
-                        text: 'Could not verify concept code(s).  Possible network issue.',
+                        title: 'Invalid Concept Code',
+                        text: '<b>' +tag+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
                         type: 'error',
-                        duration: 4000,
+                        duration: 6000,
                         position: "left bottom"
                       });
                     }
@@ -371,16 +373,16 @@ export default {
                     this.newTag = [];
                     dupTagCheck = false;
                   }else{
-                  //  this.tags.push(tag + ":" + "");   //take out after testing
-                  //  this.newTag = ""                  //take out after testing
-                  //  this.tagCounter = this.tagCounter + 1;  //take out after testing
+                    // this.tags.push(tag + ":" + "");   //take out after testing
+                    // this.newTag = ""                  //take out after testing
+                    // this.tagCounter = this.tagCounter + 1;  //take out after testing
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
-                      title: 'Validation Failure',
-                      text: 'Could not verify concept code(s).  Possible network issue.',
+                      title: 'Invalid Concept Code',
+                      text: '<b>' +tag+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
                       type: 'error',
-                      duration: 4000,
+                      duration: 6000,
                       position: "left bottom"
                     });
                   }
