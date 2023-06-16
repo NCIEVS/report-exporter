@@ -339,7 +339,7 @@ export default {
       var dupTagCheck = false;  // Vue 3 temporary variable used to make sure duplicate blue tags are not created
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
-      var tempStatus = ''
+      var tempStatus = '';
 
       this.setSelectedTags()  // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
 
@@ -350,7 +350,7 @@ export default {
       }
       //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
-        api.getCodes( this.$baseURL, tag, 'ENTITY')
+        api.getCodes( this.$baseURL, tag, 'ASSOC')
             .then((data)=> {
 
               if ((data !== null) && (data!== undefined) && (data!== "")) {  //Vue 3 check if rest api does not return any results
@@ -361,17 +361,31 @@ export default {
                       this.newTag = [];
                       dupTagCheck = false;
                     }else {
-                      codeDescription = data[x].name;
-                      this.tags.push(tag + ":" + codeDescription);  //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
-                      this.newTag = ""; // Vue 3 reset newTag
-                      this.tagCounter = this.tagCounter + 1;
-                      this.newTagCounter = this.newTagCounter + 1;
+                      if (data[x].associations.length < 1) {
+                        this.$notify({
+                          group: 'app',
+                          title: 'Warning',
+                          text: '<b>'+tag+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                          type: 'error',
+                          duration: 6000,
+                          position: "left bottom"
+                        });
+                      }else{
+                        codeDescription = data[x].name;
+                        this.tags.push(tag + ":" + codeDescription);  //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
+                        this.newTag = ""; // Vue 3 reset newTag
+                        this.tagCounter = this.tagCounter + 1;
+                        this.newTagCounter = this.newTagCounter + 1;
+                        this.setSelectedTags()
+                      }
                     }
                   }else{
                     tempStatus = data[x].queryStatus
-                    //    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    //    this.newTag = ""                  //Vue 3 used for testing take out after testing
-                    //     this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    // this.newTag = "";                  //Vue 3 used for testing take out after testing
+                    // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+
+                    //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
                       title: 'Invalid Concept Code',
@@ -675,12 +689,12 @@ export default {
       }
 
 
-    //  alert("base URL: " + this.$baseURL);
-    //  alert("tags: " + this.userEnteredCodes);
-    //  alert("selectedPropertyName: " + this.rightUsers);
-    //  alert("SelectedFormat: " + this.fileFormat);
-    //  alert("filename: " + this.filename);
-    //  alert("selectedFormat Extension: " + this.userSelectedFormat);
+      //  alert("base URL: " + this.$baseURL);
+      //  alert("tags: " + this.userEnteredCodes);
+      //  alert("selectedPropertyName: " + this.rightUsers);
+      //  alert("SelectedFormat: " + this.fileFormat);
+      //  alert("filename: " + this.filename);
+      //  alert("selectedFormat Extension: " + this.userSelectedFormat);
 
       //Check Extension
       axios({
