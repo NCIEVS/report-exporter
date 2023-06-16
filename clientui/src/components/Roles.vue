@@ -340,6 +340,7 @@ export default {
       var dupTagCheck = false;
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
+      var tempStatus = '';
 
       this.setSelectedTags()
 
@@ -350,7 +351,7 @@ export default {
       }
       //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
-        api.getCodes( this.$baseURL, tag, 'ENTITY')
+        api.getCodes( this.$baseURL, tag, 'ROLE')
             .then((data)=> {
 
               if ((data !== null) && (data!== undefined) && (data!== "")) {  //Vue 3 check if rest api does not return any results
@@ -360,24 +361,37 @@ export default {
                       this.newTag = [];
                       dupTagCheck = false;
                     }else {
-                      codeDescription = data[x].name;
-                      this.tags.push(tag + ":" + codeDescription);   //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
-                      this.newTag = ""; // reset newTag
-                      this.tagCounter = this.tagCounter + 1;
-                      this.newTagCounter = this.newTagCounter + 1;
+                      if (data[x].roles.length < 1) {
+                        this.$notify({
+                          group: 'app',
+                          title: 'Warning',
+                          text: '<b>'+tag+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                          type: 'error',
+                          duration: 6000,
+                          position: "left bottom"
+                        });
+                      }else{
+                        codeDescription = data[x].name;
+                        this.tags.push(tag + ":" + codeDescription);   //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
+                        this.newTag = ""; // reset newTag
+                        this.tagCounter = this.tagCounter + 1;
+                        this.newTagCounter = this.newTagCounter + 1;
+                        this.setSelectedTags()
+                      }
                     }
                   }else{
-                   // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                   // this.newTag = "";                  //Vue 3 used for testing take out after testing
-                   // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    tempStatus = data[x].queryStatus
+                    // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    // this.newTag = "";                  //Vue 3 used for testing take out after testing
+                    // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
 
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
-                      title: 'Validation Failure',
-                      text: 'Could not verify concept code(s).  Possible network issue.',
+                      title: 'Invalid Concept Code',
+                      text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
                       type: 'error',
-                      duration: 4000,
+                      duration: 6000,
                       position: "left bottom"
                     });
                   }
@@ -394,10 +408,10 @@ export default {
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
-                    title: 'Validation Failure',
-                    text: 'Could not verify concept code(s).  Possible network issue.',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
                     type: 'error',
-                    duration: 4000,
+                    duration: 6000,
                     position: "left bottom"
                   });
                 }
