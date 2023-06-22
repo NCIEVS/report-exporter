@@ -309,7 +309,10 @@ export default {
       selectedAssociations: [],
       tempListClear:[],
       tagCounter: 0,
-      newTagCounter: 0
+      newTagCounter: 0,
+      multipleEntitiesSplit: [],
+      detectComma: '',
+      tagsArray:[]
     };
   },
 
@@ -326,7 +329,6 @@ export default {
       this.userEnteredCodes = []
       this.selectedTags = []
       this.entityList = []
-      this.multipleEntitiesSplit = []
       this.invalidTag = ''
       this.userSelectedProperyNames = []
       this.tags2 = []
@@ -335,11 +337,29 @@ export default {
     //Vue 3 Code registers what entity code was entered in the text box then calls a api to return the code and description combo
     //in a blue tag below the text box
     addTag1(tag) {
+      //Detects if a comma was entered for the code search which would indicate multiple codes were entered.
+      //Different logic would need to get used if that occurs
+      this.detectComma = tag.search(',')
+
+
+      if (this.detectComma > 0) {
+        this.tagsArray = tag
+        this.multipleEntitiesSplit = this.tagsArray.split(',');
+
+
+        for (let i = 0; i < this.multipleEntitiesSplit.length; i++){
+          this.processTag(this.multipleEntitiesSplit[i])
+        }
+      }else{
+        this.processTag(tag)
+      }
+    },
+
+    processTag(tag){
       var codeDescription = []; // Vue 3 temporary variable used for the entity code description
       var dupTagCheck = false;  // Vue 3 temporary variable used to make sure duplicate blue tags are not created
+      var tempStatus = ''
       tag = tag.replace(/[\s/]/g, '')
-      tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
-      var tempStatus = '';
 
       this.setSelectedTags()  // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
 

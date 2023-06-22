@@ -616,12 +616,12 @@ export default {
         api.getChildren(this.$baseURL, node.id, 1)
             .then((children) => {
 
-                if ((children !== null) ) {   // Vue 3 Checks if rest api returns children data
+              if ((children !== null) ) {   // Vue 3 Checks if rest api returns children data
                 for (let x = 0; x < children.length; x++) {  // Vue  3 loops through children data
                   for (let y=0; y < this.treeArrayExclude.length; y++) {  // Vue 3 loop prevents duplicate children nodes from being created
                     if (children[x].code  === this.treeArrayExclude[y])
                     {
-                       childDupCheck = true;
+                      childDupCheck = true;
                     }
                   }
 
@@ -664,8 +664,8 @@ export default {
                       }
                     }
 
-                      this.treeCode.push(children[x].code);
-                      this.treeArrayExclude.push(children[x].code);  //Vue 3 keep track of all of the nodes to prevent duplicates
+                    this.treeCode.push(children[x].code);
+                    this.treeArrayExclude.push(children[x].code);  //Vue 3 keep track of all of the nodes to prevent duplicates
                   }
 
                   //Vue 3 adds code selected from tree to a blue tag below the text box
@@ -692,7 +692,6 @@ export default {
       this.userEnteredCodes = []
       this.selectedTags = []
       this.entityList = []
-      this.multipleEntitiesSplit = []
       this.invalidTag = ''
       this.userSelectedProperyNames = []
       this.tags2 = []
@@ -701,11 +700,29 @@ export default {
     //Vue 3 Code registers what entity code was entered in the text box then calls a api to return the code and description combo
     //in a blue tag below the text box
     addTag1(tag) {
+      //Detects if a comma was entered for the code search which would indicate multiple codes were entered.
+      //Different logic would need to get used if that occurs
+      this.detectComma = tag.search(',')
+
+
+      if (this.detectComma > 0) {
+        this.tagsArray = tag
+        this.multipleEntitiesSplit = this.tagsArray.split(',');
+
+
+        for (let i = 0; i < this.multipleEntitiesSplit.length; i++){
+          this.processTag(this.multipleEntitiesSplit[i])
+        }
+      }else{
+        this.processTag(tag)
+      }
+    },
+
+    processTag(tag){
       var codeDescription = [];
       var dupTagCheck = false;
       var indexBottomTab = 0;
       tag = tag.replace(/[\s/]/g, '')
-      tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
 
 
       indexBottomTab = tag.indexOf(":");
@@ -1074,7 +1091,7 @@ export default {
             }).catch(function(error) {
           console.error("Error retrieving children to resolve: " + error);
         })
-            //.finally(function() { loader.hide()});
+        //.finally(function() { loader.hide()});
       }
     },
 

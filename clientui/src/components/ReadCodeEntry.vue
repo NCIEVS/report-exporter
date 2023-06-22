@@ -5,8 +5,8 @@
 
     <div class="vue-form-wizard">
       <div class="wizard-header">
-        <h4 class="wizard-title">Entity Export</h4>
-        <p class="category">Steps to select concept codes, then their properties and export the results</p>
+        <h4 class="wizard-title">Roles Export</h4>
+        <p class="category">Steps to select concept codes, then their roles and export the results</p>
       </div>
     </div>
 
@@ -33,7 +33,6 @@
     <!--Vue 3 End-->
 
 
-
     <!--Vue 3 Entity Label field  Start-->
     <div class="entityLabel" id = "entityLabelId">
       <label for="tags" >Enter NCI Thesaurus concept codes</label>
@@ -56,7 +55,7 @@
         </a></li>
       </ul>
     </div>
-    <!--Vue 3 Entity Text field End -->
+    <!--Vue 3 Entity Text field  End-->
 
     <!--Vue 3 step 2 list boxes Start -->
     <div id="app" class="container">
@@ -64,7 +63,13 @@
         <div class="container">
           <form>
             <div class="form-group">
-              <label for="selectedProperties" id = "SelectProperties2">Select properties to include in the export</label>
+              <div class="col">
+                <label for="selectedProperties" id = "SelectProperties2">No roles selected for these concept codes</label>
+                <br>
+                <label for="selectedProperties" id = "enteredCodeLabelLeft">{{ this.userEnteredCodes }}</label>
+                <br>
+                <label for="selectedProperties" id = "SelectProperties2">Select roles to include in the export</label>
+              </div>
             </div>
             <div class="form-group">
               <div class="msl-multi-select">
@@ -109,7 +114,16 @@
                     </tr>
                   </table>
                 </div>
+
+
                 <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
+                  <div class="col">
+                    <label for="selectedProperties" id = "SelectProperties3" class = "UsedLabelRight">Used concept codes</label>
+                    <br>
+                    <label for="selectedProperties" id = "enteredCodeLabelRight" class = "UsedCodeRight">{{ this.userEnteredCodes }}</label>
+                    <br>
+                    <br>
+                  </div>
                   <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
                   <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
                     <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
@@ -167,7 +181,6 @@
           <div class="card">
             <div id="headingOne" class="card-header" style="padding: 1px;">
 
-
               <!-- Vue3 Selection Summary List boxes Start  -->
             </div>
             <div id="collapseSummary" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show">
@@ -179,15 +192,17 @@
                         Selected Concept Codes
                         <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span>
                       </div>
+
+
                       <div class="card-body">
-                       <span class="list-group" id="selectedConceptCodesTags">{{ this.tags }}</span>
+                        <span class="list-group" id="selectedConceptCodesTags">{{ this.tags }}</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-sm-4">
                     <div class="card bg-light border-dark mb-3">
                       <div class="card-header">
-                        Selected Properties
+                        Selected Roles
                         <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
                       </div>
                       <div class="card-body">
@@ -217,18 +232,20 @@
     </div>
   </div>
 </template>
+
 <script>
 
-// Custom input tags
 
 import api from '../api.js'
 import axios from 'axios'
+import {ref} from 'vue'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
-import {ref} from "vue";
 
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
+
+
 export default {
 
 
@@ -246,17 +263,17 @@ export default {
 
 
   mounted() {
-    this.hideObjectsOnScreen();  //Vue 3 function for when page loads certain objects like buttons or text boxes will be hidden
-    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"      //Vue 3 default download option
+    this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
+    this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
   },
+
 
   setup(){
     const tags = ref([]);
     const newTag = ref('') //keep up with new tag
     var removeTagIndex = 0;
 
-
-    //Vue 3 Removes a tag below the text box
+    //Vue 3 Remotes a tag below text box
     const removeTag = (allTags, selectedTag,  tagLength) => {
       for (let x=0; x < tagLength; x++) {
         if (selectedTag  === allTags[x])
@@ -266,6 +283,7 @@ export default {
       }
       tags.value.splice(removeTagIndex, 1);
     };
+
     return { tags, newTag, removeTag }
   },
 
@@ -283,8 +301,7 @@ export default {
       selectedExportListName: '',
       selectedConceptCodes: [],
       selectedConceptCode: [],
-      filename: 'entities',
-      downloadReturnCode: null,
+      filename: 'roles',
       invalidTag: '',
       showSummary: true,
       showSummaryText: '',
@@ -303,7 +320,8 @@ export default {
   },
 
   methods: {
-    //Vue 3 Removes a blue tags below text box
+
+    //Vue 3 Removes all blue tags under text box
     removeAllTags2 (tagDeleteCounter) {
       for (let i = 0; i <= this.tags.length; i++) {
         this.tags.splice(tagDeleteCounter, this.tags.length);
@@ -333,69 +351,62 @@ export default {
 
 
         for (let i = 0; i < this.multipleEntitiesSplit.length; i++){
-            this.processTag(this.multipleEntitiesSplit[i])
+          this.processTag(this.multipleEntitiesSplit[i])
         }
       }else{
         this.processTag(tag)
       }
     },
 
-      processTag(tag){
-        var codeDescription = []; // Vue 3 temporary variable used for the entity code description
-        var dupTagCheck = false;  // Vue 3 temporary variable used to make sure duplicate blue tags are not created
-        var tempStatus = ''
-        tag = tag.replace(/[\s/]/g, '')
+    processTag(tag){
+      var codeDescription = []; // Vue 3 temporary variable used for the entity code description
+      var dupTagCheck = false;  // Vue 3 temporary variable used to make sure duplicate blue tags are not created
+      var tempStatus = ''
+      tag = tag.replace(/[\s/]/g, '')
 
-        this.setSelectedTags()  // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
+      this.setSelectedTags()
 
-        for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes entered
-          if (this.userEnteredCodes[i] === tag) {
-            dupTagCheck = true;
-          }
+      for (let i = 0; i < this.userEnteredCodes.length; i++) {  //Vue 3 checks for duplicate codes
+        if (this.userEnteredCodes[i] === tag) {
+          dupTagCheck = true;
         }
-        //Vue 3 checks entity code entered and returns a description if one is available
-        if (tag != "") {
-          api.getCodes(this.$baseURL, tag, 'ENTITY')
-              .then((data) => {
+      }
+      //Vue 3 checks entity code entered and returns a description if on is available
+      if (tag != "") {
+        api.getCodes( this.$baseURL, tag, 'ROLE')
+            .then((data)=> {
 
-                if ((data !== null) && (data !== undefined) && (data !== "")) {   //Vue 3 check if rest api does not return any results
-                  for (let x = data.length - 1; x >= 0; x--) {      //Vue 3 loop through data returned from rest api
-                    if ((data[x].name.length > 0) && (data[x].name != null)) {
-                      if (dupTagCheck === true) {
-                        this.newTag = [];
-                        dupTagCheck = false;
-                      } else {
+              if ((data !== null) && (data!== undefined) && (data!== "")) {  //Vue 3 check if rest api does not return any results
+                for (let x = data.length - 1; x >= 0; x--) {  //Vue 3 loop through data returned from rest api
+                  if ((data[x].name.length > 0)  &&  (data[x].name != null)){
+                    if (dupTagCheck === true) {
+                      this.newTag = [];
+                      dupTagCheck = false;
+                    }else {
+                      if (data[x].roles.length < 1) {
+                        this.$notify({
+                          group: 'app',
+                          title: 'Warning',
+                          text: '<b>'+tag+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                          type: 'error',
+                          duration: 6000,
+                          position: "left bottom"
+                        });
+                      }else{
                         codeDescription = data[x].name;
-                        this.tags.push(tag + ":" + codeDescription);  //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
-                        this.newTag = ""; // Vue 3 reset newTag
+                        this.tags.push(tag + ":" + codeDescription);   //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
+                        this.newTag = ""; // reset newTag
                         this.tagCounter = this.tagCounter + 1;
                         this.newTagCounter = this.newTagCounter + 1;
+                        this.setSelectedTags()
                       }
-                    } else {
-                      tempStatus = data[x].queryStatus
-                    //  this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    //  this.newTag = ""                  //Vue 3 used for testing take out after testing
-                    //  this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
-                      //Vue 3 error message if invalid entity code is entered
-                      this.$notify({
-                        group: 'app',
-                        title: 'Invalid Concept Code',
-                        text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
-                        type: 'error',
-                        duration: 6000,
-                        position: "left bottom"
-                      });
                     }
-                  }
-                } else {
-                  //Vue 3 if a duplicate tag is entered in the textbox then the code will not add a new tag
-                  if (dupTagCheck === true) {
-                    this.newTag = [];
-                    dupTagCheck = false;
-                  } else {
-                   // this.tags.push(tag + ":" + "");   //take out after testing
-                   // this.newTag = ""                  //take out after testing
-                   // this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  }else{
+                    tempStatus = data[x].queryStatus
+                    // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    // this.newTag = "";                  //Vue 3 used for testing take out after testing
+                    // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
@@ -407,18 +418,39 @@ export default {
                     });
                   }
                 }
-              })
-        }
-      },
+              }else {
+                if (dupTagCheck === true) {
+                  this.newTag = [];
+                  dupTagCheck = false;
+                }else{
+                  //      this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                  //      this.newTag = ""                  //Vue 3 used for testing take out after testing
+                  //       this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+
+                  //Vue 3 error message if invalid entity code is entered
+                  this.$notify({
+                    group: 'app',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+              }
+            })
+      }
+    },
+
 
     // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
-     setSelectedTags () {
-       var bottomTab = "";
-       var indexBottomTab = 0;
+    setSelectedTags () {
+      var bottomTab = "";
+      var indexBottomTab = 0;
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
       for (let i = 0; i < Object.keys(this.tags).length; i++) {
-        // current top nodes (from the server hava a value of "C12434:Blood")
+        // currated top nodes (from the server hava a value of "C12434:Blood")
         // so we need to strip off everything from the : to the right.
         if (this.tags[i] !== "undefined") {
           bottomTab = this.tags[i];
@@ -428,6 +460,7 @@ export default {
       }
     },
 
+
     //Vue 3 move data from right list box on second screen to left list box on second screen
     moveLeft() {
       if(!this.rightSelectedUsers.length) return;
@@ -436,11 +469,13 @@ export default {
         this.rightUsers.splice(idx, 1);
         this.availableProperties.push(this.rightSelectedUsers[i - 1])
         this.rightSelectedUsers.pop();
+        document.getElementById("enteredCodeLabelLeft").style.display = "";
+        document.getElementById("enteredCodeLabelRight").style.display = "none";
       }
     },
 
     //Vue 3 move data from left list box on second screen to right list box on second screen
-    moveRight() {
+    moveRight(){
       if (!this.leftSelectedUsers.length) return;
       for (let i = this.leftSelectedUsers.length; i > 0; i--) {
         let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i-1]);
@@ -448,11 +483,13 @@ export default {
         this.rightUsers.push(this.leftSelectedUsers[i - 1]);
         this.tempListClear.push(this.leftSelectedUsers[i - 1]);
         this.leftSelectedUsers.pop();
+        document.getElementById("enteredCodeLabelLeft").style.display = "none";
+        document.getElementById("enteredCodeLabelRight").style.display = "";
       }
     },
 
 
-    //Vue 3 Start second screen left list box Search Function
+    //Vue 3 Start Step 2 left Search Function
     searchPropertiesFilter() {
       var input;
       var formattedInput;
@@ -475,8 +512,10 @@ export default {
         }
       }
     },
+    //Vue 3 End
 
-    //Vue 3 Start second screen right list box Search Function
+
+    //Vue 3 Start Step 2 Right Search Function
     searchSelectedPropertiesFilter() {
       var input;
       var formattedInput;
@@ -499,7 +538,7 @@ export default {
         }
       }
     },
-
+    //Vue 3 End
 
     //When page loads certain objects like buttons or text boxes will be hidden
     hideObjectsOnScreen() {
@@ -507,19 +546,6 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
-
-      api.getProperties(this.$baseURL)
-          .then((data)=> {
-
-            //console.log("This is the length of the data "+ data.length)
-
-            for (let x = 0 ; x < data.length; x++) {
-              //console.log("This is the length of the data inside the loop "+ data.length)
-              this.availableProperties.push(data[x].name);
-              //console.log("This is the properties value: "+ data[x].name)
-            }
-           // console.log("This is the properties count for the list box : "+this.availableProperties.length)
-          })
     },
 
     gaTrackDownload () {
@@ -531,9 +557,13 @@ export default {
     },
 
 
+
+    // Wizard methods
     validateFirstStep() {
-      //Vue 3 Select Next Option Counter.  This code replaces the form-Wizard logic that is not working
-      //correctly under vue 3.  If value is 1 then it implements validateFirstStep function.  If value is 2 then
+      // make sure the user has a code entered
+
+      //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
+      //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
 
 
@@ -549,7 +579,6 @@ export default {
         this.validatePropertyStep();
       }
 
-      //Vue 3 (Builds screen on step 2)
       if (selectNextOptionBTN_counter === 1) {
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
@@ -557,7 +586,23 @@ export default {
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
-          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
+          selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
+
+          if (this.rightUsers.length <=0)
+          {
+            document.getElementById("enteredCodeLabelLeft").style.display = "";
+            document.getElementById("enteredCodeLabelRight").style.display = "none";
+          }
+
+          this.setSelectedTags();
+          if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
+            api.getRoles(this.$baseURL, this.userEnteredCodes)
+                .then((data) => {
+                  for (let x = data.length - 1; x >= 0; x--) {
+                    this.availableProperties.push(data[x].type);
+                  }
+                })
+          }
         }
       }
     },
@@ -580,7 +625,7 @@ export default {
       }
     },
 
-    //Method is used for back button
+    //Vue 3 back button
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
@@ -593,7 +638,7 @@ export default {
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
 
-      //Shows screen for step 2
+      //Shows screen =for step 2
       if (selectNextOptionBTN_counter === 3) {
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
@@ -604,17 +649,16 @@ export default {
       }
     },
 
-    //Vue 3 This method helps to generate the file download
     exportStep() {
       this.downloadFile();
     },
 
-    //Vue 3 Method shows and hides Summary screen
+    // Toggle the Show/Hide Selection Summary title
     updateShowSummary() {
       this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
       this.showSummary = !this.showSummary;
-    },
 
+    },
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
     changeSelectedExportList(event){
@@ -640,7 +684,8 @@ export default {
       }
     },
 
-    // Vue 3 method to download file
+
+    //Method is for the file download
     downloadFile() {
 
       this.$notify({
@@ -655,7 +700,6 @@ export default {
 
       // set the user selected tags and properties
       this.gaTrackDownload();
-      this.setSelectedTags();
 
 
       //Vue 3 Sets default value to JSON for Select format for export dropdown on Step 3
@@ -671,10 +715,10 @@ export default {
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
       //alert("selectedFormat Extension: " + this.userSelectedFormat);
-      //alert (this.queryEntitySelection);
 
+      //alert (this.queryEntitySelection);
       axios({
-        url: this.$baseURL + 'download/get-file-for-readCodes/'  +
+        url: this.$baseURL + 'download/get-file-for-resolved-roles/'  +
             this.userEnteredCodes + '/' +
             this.rightUsers + '/' +
             this.fileFormat  + '/'+
@@ -686,6 +730,7 @@ export default {
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
         var fileLink = document.createElement('a');
 
+
         fileLink.href = fileURL;
         fileLink.setAttribute('download', this.filename + '.' + this.userSelectedFormat);
         document.body.appendChild(fileLink);
@@ -696,13 +741,23 @@ export default {
       })
       //.finally(function() { loader.hide()});
     },
-  },
-  created() {
 
+    // removes forward slashes and all kinds of Unicode whitespace characters
+    cleanString(string) {
+      return string.replace(/[\s/]/g, '')
+    }
+  },
+
+  created() {
     // scroll to the top of the page
     window.scrollTo(0,0);
 
     this.updateShowSummary();
+
+    // load properties after the page is loaded.
+    api.getFormats(this.$baseURL)
+        .then((data)=>{this.availableFormats = data;
+        })
   },
 }
 
