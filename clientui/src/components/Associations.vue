@@ -599,7 +599,7 @@ export default {
     getAssociations() {
       this.availableProperties = []
 
-      api.getRoles(this.$baseURL, this.userEnteredCodes)
+      api.getAssociations(this.$baseURL, this.userEnteredCodes)
           .then((data) => {
             for (let x = data.length - 1; x >= 0; x--) {
               this.availableProperties.push(data[x].type);
