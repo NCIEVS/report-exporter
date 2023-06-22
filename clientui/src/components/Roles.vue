@@ -577,6 +577,7 @@ export default {
       }
 
       if (selectNextOptionBTN_counter === 1) {
+        this.setSelectedTags()
         this.getRoles()
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
@@ -590,8 +591,6 @@ export default {
             document.getElementById("enteredCodeLabelLeft").style.display = "";
             document.getElementById("enteredCodeLabelRight").style.display = "none";
           }
-
-          this.setSelectedTags();
         }
       }
     },
@@ -640,7 +639,7 @@ export default {
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
 
-      //Shows screen =for step 2
+      //Shows screen for step 2
       if (selectNextOptionBTN_counter === 3) {
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
