@@ -304,11 +304,6 @@ export default {
 
   methods: {
 
-    test1(){
-      alert('test worked')
-    },
-
-
     //Vue 3 Removes a blue tags below text box
     removeAllTags2 (tagDeleteCounter) {
       for (let i = 0; i <= this.tags.length; i++) {
