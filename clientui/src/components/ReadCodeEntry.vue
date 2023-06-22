@@ -180,7 +180,7 @@
                         <span class="badge badge-secondary" id = "selectConceptCodesCount">{{Object.keys(this.tags).length}}</span>
                       </div>
                       <div class="card-body">
-                       <span class="list-group" id="selectedConceptCodesTags">{{ this.tags }}</span>
+                        <span class="list-group" id="selectedConceptCodesTags">{{ this.tags }}</span>
                       </div>
                     </div>
                   </div>
@@ -295,11 +295,15 @@ export default {
       rightUsers:[],
       tempListClear:[],
       tagCounter: 0,
-      newTagCounter: 0
+      newTagCounter: 0,
+      multipleEntitiesSplit: [],
+      detectComma: '',
+      tagsArray:[],
     };
   },
 
   methods: {
+
     //Vue 3 Removes a blue tags below text box
     removeAllTags2 (tagDeleteCounter) {
       for (let i = 0; i <= this.tags.length; i++) {
@@ -311,7 +315,6 @@ export default {
       this.userEnteredCodes = []
       this.selectedTags = []
       this.entityList = []
-      this.multipleEntitiesSplit = []
       this.invalidTag = ''
       this.userSelectedProperyNames = []
       this.tags2 = []
@@ -320,11 +323,29 @@ export default {
     //Vue 3 Code registers what entity code was entered in the text box then calls a api to return the code and description combo
     //in a blue tag below the text box
     addTag1(tag) {
+      //Detects if a comma was entered for the code search which would indicate multiple codes were entered.
+      //Different logic would need to get used if that occurs
+      this.detectComma = tag.search(',')
+
+
+      if (this.detectComma > 0) {
+        this.tagsArray = tag
+        this.multipleEntitiesSplit = this.tagsArray.split(',');
+
+
+        for (let i = 0; i < this.multipleEntitiesSplit.length; i++){
+          this.processTag(this.multipleEntitiesSplit[i])
+        }
+      }else{
+        this.processTag(tag)
+      }
+    },
+
+    processTag(tag){
       var codeDescription = []; // Vue 3 temporary variable used for the entity code description
       var dupTagCheck = false;  // Vue 3 temporary variable used to make sure duplicate blue tags are not created
-      tag = tag.replace(/[\s/]/g, '')
-      tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
       var tempStatus = ''
+      tag = tag.replace(/[\s/]/g, '')
 
       this.setSelectedTags()  // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
 
@@ -335,66 +356,66 @@ export default {
       }
       //Vue 3 checks entity code entered and returns a description if one is available
       if (tag != "") {
-        api.getCodes( this.$baseURL, tag, 'ENTITY')
-            .then((data)=> {
+        api.getCodes(this.$baseURL, tag, 'ENTITY')
+            .then((data) => {
 
-              if ((data !== null) && (data!== undefined) && (data!== "")) {   //Vue 3 check if rest api does not return any results
+              if ((data !== null) && (data !== undefined) && (data !== "")) {   //Vue 3 check if rest api does not return any results
                 for (let x = data.length - 1; x >= 0; x--) {      //Vue 3 loop through data returned from rest api
-                    if ((data[x].name.length > 0)  &&  (data[x].name != null)){
-                      if (dupTagCheck === true) {
-                        this.newTag = [];
-                        dupTagCheck = false;
-                      }else {
-                        codeDescription = data[x].name;
-                        this.tags.push(tag + ":" + codeDescription);  //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
-                        this.newTag = ""; // Vue 3 reset newTag
-                        this.tagCounter = this.tagCounter + 1;
-                        this.newTagCounter = this.newTagCounter + 1;
-                      }
-                    }else{
-                      tempStatus = data[x].queryStatus
-                    //  this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    //  this.newTag = ""                  //Vue 3 used for testing take out after testing
-                    //  this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
-                      //Vue 3 error message if invalid entity code is entered
-                      this.$notify({
-                        group: 'app',
-                        title: 'Invalid Concept Code',
-                        text: '<b>' +tag+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
-                        type: 'error',
-                        duration: 6000,
-                        position: "left bottom"
-                      });
+                  if ((data[x].name.length > 0) && (data[x].name != null)) {
+                    if (dupTagCheck === true) {
+                      this.newTag = [];
+                      dupTagCheck = false;
+                    } else {
+                      codeDescription = data[x].name;
+                      this.tags.push(tag + ":" + codeDescription);  //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
+                      this.newTag = ""; // Vue 3 reset newTag
+                      this.tagCounter = this.tagCounter + 1;
+                      this.newTagCounter = this.newTagCounter + 1;
                     }
-                  }
-                }else {
-                  //Vue 3 if a duplicate tag is entered in the textbox then the code will not add a new tag
-                  if (dupTagCheck === true) {
-                    this.newTag = [];
-                    dupTagCheck = false;
-                  }else{
-                    // this.tags.push(tag + ":" + "");   //take out after testing
-                    // this.newTag = ""                  //take out after testing
-                    // this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  } else {
+                    tempStatus = data[x].queryStatus
+                //    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                //    this.newTag = ""                  //Vue 3 used for testing take out after testing
+                //    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
                       title: 'Invalid Concept Code',
-                      text: '<b>' +tag+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
+                      text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
                       type: 'error',
                       duration: 6000,
                       position: "left bottom"
                     });
                   }
                 }
-              })
+              } else {
+                //Vue 3 if a duplicate tag is entered in the textbox then the code will not add a new tag
+                if (dupTagCheck === true) {
+                  this.newTag = [];
+                  dupTagCheck = false;
+                } else {
+              //    this.tags.push(tag + ":" + "");   //take out after testing
+              //    this.newTag = ""                  //take out after testing
+              //    this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  //Vue 3 error message if invalid entity code is entered
+                  this.$notify({
+                    group: 'app',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
+                    type: 'error',
+                    duration: 6000,
+                    position: "left bottom"
+                  });
+                }
+              }
+            })
       }
     },
 
     // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
-     setSelectedTags () {
-       var bottomTab = "";
-       var indexBottomTab = 0;
+    setSelectedTags () {
+      var bottomTab = "";
+      var indexBottomTab = 0;
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
       for (let i = 0; i < Object.keys(this.tags).length; i++) {
@@ -491,14 +512,9 @@ export default {
       api.getProperties(this.$baseURL)
           .then((data)=> {
 
-            //console.log("This is the length of the data "+ data.length)
-
             for (let x = 0 ; x < data.length; x++) {
-              //console.log("This is the length of the data inside the loop "+ data.length)
               this.availableProperties.push(data[x].name);
-              //console.log("This is the properties value: "+ data[x].name)
             }
-           // console.log("This is the properties count for the list box : "+this.availableProperties.length)
           })
     },
 

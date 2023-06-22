@@ -141,7 +141,7 @@
                                   icon="ti-info-alt">
                       EVS is committed to providing you with an elegant and robust mechanism
                         to retrieve the data of interest to you.
-                      Thank you for taking this brief survey.
+                       Please send feedback to NCIThesarus@nci.nih.gov
                      </tab-content>
                     <tab-content title="Features"
                                  icon="ti-stats-up" :before-change="validateFirstTab">

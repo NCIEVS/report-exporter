@@ -306,10 +306,12 @@ export default {
       leftUsers: [],
       rightSelectedUsers:[],
       rightUsers:[],
-      selectedAssociations: [],
       tempListClear:[],
       tagCounter: 0,
-      newTagCounter: 0
+      newTagCounter: 0,
+      multipleEntitiesSplit: [],
+      detectComma: '',
+      tagsArray:[]
     };
   },
 
@@ -326,7 +328,6 @@ export default {
       this.userEnteredCodes = []
       this.selectedTags = []
       this.entityList = []
-      this.multipleEntitiesSplit = []
       this.invalidTag = ''
       this.userSelectedProperyNames = []
       this.tags2 = []
@@ -335,11 +336,29 @@ export default {
     //Vue 3 Code registers what entity code was entered in the text box then calls a api to return the code and description combo
     //in a blue tag below the text box
     addTag1(tag) {
+      //Detects if a comma was entered for the code search which would indicate multiple codes were entered.
+      //Different logic would need to get used if that occurs
+      this.detectComma = tag.search(',')
+
+
+      if (this.detectComma > 0) {
+        this.tagsArray = tag
+        this.multipleEntitiesSplit = this.tagsArray.split(',');
+
+
+        for (let i = 0; i < this.multipleEntitiesSplit.length; i++){
+          this.processTag(this.multipleEntitiesSplit[i])
+        }
+      }else{
+        this.processTag(tag)
+      }
+    },
+
+    processTag(tag){
       var codeDescription = []; // Vue 3 temporary variable used for the entity code description
       var dupTagCheck = false;  // Vue 3 temporary variable used to make sure duplicate blue tags are not created
-      tag = tag.replace(/[\s/]/g, '')
-      tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
       var tempStatus = ''
+      tag = tag.replace(/[\s/]/g, '')
 
       this.setSelectedTags()  // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
 
@@ -350,7 +369,7 @@ export default {
       }
       //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
-        api.getCodes( this.$baseURL, tag, 'ENTITY')
+        api.getCodes( this.$baseURL, tag, 'ASSOC')
             .then((data)=> {
 
               if ((data !== null) && (data!== undefined) && (data!== "")) {  //Vue 3 check if rest api does not return any results
@@ -361,17 +380,31 @@ export default {
                       this.newTag = [];
                       dupTagCheck = false;
                     }else {
-                      codeDescription = data[x].name;
-                      this.tags.push(tag + ":" + codeDescription);  //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
-                      this.newTag = ""; // Vue 3 reset newTag
-                      this.tagCounter = this.tagCounter + 1;
-                      this.newTagCounter = this.newTagCounter + 1;
+                      if (data[x].associations.length < 1) {
+                        this.$notify({
+                          group: 'app',
+                          title: 'Warning',
+                          text: '<b>'+tag+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
+                          type: 'error',
+                          duration: 6000,
+                          position: "left bottom"
+                        });
+                      }else{
+                        codeDescription = data[x].name;
+                        this.tags.push(tag + ":" + codeDescription);  //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
+                        this.newTag = ""; // Vue 3 reset newTag
+                        this.tagCounter = this.tagCounter + 1;
+                        this.newTagCounter = this.newTagCounter + 1;
+                        this.setSelectedTags()
+                      }
                     }
                   }else{
                     tempStatus = data[x].queryStatus
-                    //    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    //    this.newTag = ""                  //Vue 3 used for testing take out after testing
-                    //     this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    // this.newTag = "";                  //Vue 3 used for testing take out after testing
+                    // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+
+                    //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
                       title: 'Invalid Concept Code',
@@ -390,6 +423,8 @@ export default {
                   //      this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
                   //      this.newTag = ""                  //Vue 3 used for testing take out after testing
                   //       this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+
+                  //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
                     title: 'Invalid Concept Code',
@@ -411,7 +446,6 @@ export default {
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
       for (let i = 0; i < Object.keys(this.tags).length; i++) {
-        //  for (let i = 0; i < 1; i++) {
         // currated top nodes (from the server hava a value of "C12434:Blood")
         // so we need to strip off everything from the : to the right.
         if (this.tags[i] !== "undefined") {
@@ -542,6 +576,8 @@ export default {
       }
 
       if (selectNextOptionBTN_counter === 1) {
+        this.setSelectedTags()
+        this.getAssociations()
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
           document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
@@ -556,26 +592,25 @@ export default {
             document.getElementById("enteredCodeLabelLeft").style.display = "";
             document.getElementById("enteredCodeLabelRight").style.display = "none";
           }
-
-          this.setSelectedTags();
-          if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
-            api.getAssociations(this.$baseURL, this.userEnteredCodes)
-                .then((data) => {
-                  for (let x = data.length - 1; x >= 0; x--) {
-                    this.availableProperties.push(data[x].type);
-                  }
-                })
-          }
         }
       }
+    },
+
+    getAssociations() {
+      this.availableProperties = []
+
+      api.getAssociations(this.$baseURL, this.userEnteredCodes)
+          .then((data) => {
+            for (let x = data.length - 1; x >= 0; x--) {
+              this.availableProperties.push(data[x].type);
+            }
+          })
     },
 
     //Vue 3 STEP 2
     validatePropertyStep() {
       // make sure the user has selected at least one property
       //Hides objects on screen that shouldn't appear in step 2
-      // document.getElementById("entityTextID").style.display = " ";
-      // document.getElementById("entityLabelId").style.display = " ";
 
       if (this.rightUsers.length > 0) {
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
@@ -595,6 +630,7 @@ export default {
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
+        this.rightUsers = []
         document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
         document.getElementById("clearButton").style.display = "";    //Shows clear button
         document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
@@ -604,7 +640,7 @@ export default {
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
 
-      //Shows screen =for step 2
+      //Shows screen for step 2
       if (selectNextOptionBTN_counter === 3) {
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
@@ -619,7 +655,7 @@ export default {
       this.downloadFile();
     },
 
-
+    // Toggle the Show/Hide Selection Summary title
     updateShowSummary() {
       this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
       this.showSummary = !this.showSummary;
@@ -675,12 +711,12 @@ export default {
       }
 
 
-    //  alert("base URL: " + this.$baseURL);
-    //  alert("tags: " + this.userEnteredCodes);
-    //  alert("selectedPropertyName: " + this.rightUsers);
-    //  alert("SelectedFormat: " + this.fileFormat);
-    //  alert("filename: " + this.filename);
-    //  alert("selectedFormat Extension: " + this.userSelectedFormat);
+      //  alert("base URL: " + this.$baseURL);
+      //  alert("tags: " + this.userEnteredCodes);
+      //  alert("selectedPropertyName: " + this.rightUsers);
+      //  alert("SelectedFormat: " + this.fileFormat);
+      //  alert("filename: " + this.filename);
+      //  alert("selectedFormat Extension: " + this.userSelectedFormat);
 
       //Check Extension
       axios({
