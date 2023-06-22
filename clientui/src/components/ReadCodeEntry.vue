@@ -303,6 +303,12 @@ export default {
   },
 
   methods: {
+
+    test1(){
+      alert('test worked')
+    },
+
+
     //Vue 3 Removes a blue tags below text box
     removeAllTags2 (tagDeleteCounter) {
       for (let i = 0; i <= this.tags.length; i++) {
@@ -373,9 +379,9 @@ export default {
                     }
                   } else {
                     tempStatus = data[x].queryStatus
-                    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    this.newTag = ""                  //Vue 3 used for testing take out after testing
-                    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                //    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                //    this.newTag = ""                  //Vue 3 used for testing take out after testing
+                //    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
@@ -393,9 +399,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 } else {
-                  this.tags.push(tag + ":" + "");   //take out after testing
-                  this.newTag = ""                  //take out after testing
-                  this.tagCounter = this.tagCounter + 1;  //take out after testing
+              //    this.tags.push(tag + ":" + "");   //take out after testing
+              //    this.newTag = ""                  //take out after testing
+              //    this.tagCounter = this.tagCounter + 1;  //take out after testing
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
@@ -511,14 +517,9 @@ export default {
       api.getProperties(this.$baseURL)
           .then((data)=> {
 
-            //console.log("This is the length of the data "+ data.length)
-
             for (let x = 0 ; x < data.length; x++) {
-              //console.log("This is the length of the data inside the loop "+ data.length)
               this.availableProperties.push(data[x].name);
-              //console.log("This is the properties value: "+ data[x].name)
             }
-            // console.log("This is the properties count for the list box : "+this.availableProperties.length)
           })
     },
 

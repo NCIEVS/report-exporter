@@ -253,9 +253,7 @@ export default {
   props: {
     msg: String
   },
-  components: {
-
-  },
+  components: {},
   metaInfo: {
 
     title: 'EVS Report Exporter - Read Code',
@@ -268,27 +266,26 @@ export default {
   },
 
 
-  setup(){
+  setup() {
     const tags = ref([]);
     const newTag = ref('') //keep up with new tag
     var removeTagIndex = 0;
 
     //Vue 3 Remotes a tag below text box
-    const removeTag = (allTags, selectedTag,  tagLength) => {
-      for (let x=0; x < tagLength; x++) {
-        if (selectedTag  === allTags[x])
-        {
+    const removeTag = (allTags, selectedTag, tagLength) => {
+      for (let x = 0; x < tagLength; x++) {
+        if (selectedTag === allTags[x]) {
           removeTagIndex = x
         }
       }
       tags.value.splice(removeTagIndex, 1);
     };
 
-    return { tags, newTag, removeTag }
+    return {tags, newTag, removeTag}
   },
 
 
-  data(){
+  data() {
     return {
       selectedTags: [],
       userEnteredCodes: '',
@@ -306,23 +303,23 @@ export default {
       showSummary: true,
       showSummaryText: '',
       tag: "[]",
-      leftSelectedUsers:[],
+      leftSelectedUsers: [],
       leftUsers: [],
-      rightSelectedUsers:[],
-      rightUsers:[],
-      tempListClear:[],
+      rightSelectedUsers: [],
+      rightUsers: [],
+      tempListClear: [],
       tagCounter: 0,
       newTagCounter: 0,
       multipleEntitiesSplit: [],
       detectComma: '',
-      tagsArray:[]
+      tagsArray: []
     };
   },
 
   methods: {
 
     //Vue 3 Removes all blue tags under text box
-    removeAllTags2 (tagDeleteCounter) {
+    removeAllTags2(tagDeleteCounter) {
       for (let i = 0; i <= this.tags.length; i++) {
         this.tags.splice(tagDeleteCounter, this.tags.length);
         tagDeleteCounter = tagDeleteCounter + 1;
@@ -350,15 +347,15 @@ export default {
         this.multipleEntitiesSplit = this.tagsArray.split(',');
 
 
-        for (let i = 0; i < this.multipleEntitiesSplit.length; i++){
+        for (let i = 0; i < this.multipleEntitiesSplit.length; i++) {
           this.processTag(this.multipleEntitiesSplit[i])
         }
-      }else{
+      } else {
         this.processTag(tag)
       }
     },
 
-    processTag(tag){
+    processTag(tag) {
       var codeDescription = []; // Vue 3 temporary variable used for the entity code description
       var dupTagCheck = false;  // Vue 3 temporary variable used to make sure duplicate blue tags are not created
       var tempStatus = ''
@@ -373,26 +370,26 @@ export default {
       }
       //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
-        api.getCodes( this.$baseURL, tag, 'ROLE')
-            .then((data)=> {
+        api.getCodes(this.$baseURL, tag, 'ROLE')
+            .then((data) => {
 
-              if ((data !== null) && (data!== undefined) && (data!== "")) {  //Vue 3 check if rest api does not return any results
+              if ((data !== null) && (data !== undefined) && (data !== "")) {  //Vue 3 check if rest api does not return any results
                 for (let x = data.length - 1; x >= 0; x--) {  //Vue 3 loop through data returned from rest api
-                  if ((data[x].name.length > 0)  &&  (data[x].name != null)){
+                  if ((data[x].name.length > 0) && (data[x].name != null)) {
                     if (dupTagCheck === true) {
                       this.newTag = [];
                       dupTagCheck = false;
-                    }else {
+                    } else {
                       if (data[x].roles.length < 1) {
                         this.$notify({
                           group: 'app',
                           title: 'Warning',
-                          text: '<b>'+tag+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                          text: '<b>' + tag + '</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
                           type: 'error',
                           duration: 6000,
                           position: "left bottom"
                         });
-                      }else{
+                      } else {
                         codeDescription = data[x].name;
                         this.tags.push(tag + ":" + codeDescription);   //Vue 3 adds entity code and description ex (C12219:Anatomic Structure System or Substance) in blue tag under text box
                         this.newTag = ""; // reset newTag
@@ -401,7 +398,7 @@ export default {
                         this.setSelectedTags()
                       }
                     }
-                  }else{
+                  } else {
                     tempStatus = data[x].queryStatus
                     // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
                     // this.newTag = "";                  //Vue 3 used for testing take out after testing
@@ -418,11 +415,11 @@ export default {
                     });
                   }
                 }
-              }else {
+              } else {
                 if (dupTagCheck === true) {
                   this.newTag = [];
                   dupTagCheck = false;
-                }else{
+                } else {
                   //      this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
                   //      this.newTag = ""                  //Vue 3 used for testing take out after testing
                   //       this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
@@ -444,7 +441,7 @@ export default {
 
 
     // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
-    setSelectedTags () {
+    setSelectedTags() {
       var bottomTab = "";
       var indexBottomTab = 0;
       // clear the internal user codes that are entered
@@ -455,7 +452,7 @@ export default {
         if (this.tags[i] !== "undefined") {
           bottomTab = this.tags[i];
           indexBottomTab = bottomTab.indexOf(":");
-          this.userEnteredCodes.push(bottomTab.slice(0,indexBottomTab));
+          this.userEnteredCodes.push(bottomTab.slice(0, indexBottomTab));
         }
       }
     },
@@ -463,9 +460,9 @@ export default {
 
     //Vue 3 move data from right list box on second screen to left list box on second screen
     moveLeft() {
-      if(!this.rightSelectedUsers.length) return;
-      for(let i=this.rightSelectedUsers.length;i>0;i--) {
-        let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
+      if (!this.rightSelectedUsers.length) return;
+      for (let i = this.rightSelectedUsers.length; i > 0; i--) {
+        let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i - 1]);
         this.rightUsers.splice(idx, 1);
         this.availableProperties.push(this.rightSelectedUsers[i - 1])
         this.rightSelectedUsers.pop();
@@ -475,10 +472,10 @@ export default {
     },
 
     //Vue 3 move data from left list box on second screen to right list box on second screen
-    moveRight(){
+    moveRight() {
       if (!this.leftSelectedUsers.length) return;
       for (let i = this.leftSelectedUsers.length; i > 0; i--) {
-        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i-1]);
+        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i - 1]);
         this.availableProperties.splice(idx, 1);
         this.rightUsers.push(this.leftSelectedUsers[i - 1]);
         this.tempListClear.push(this.leftSelectedUsers[i - 1]);
@@ -548,14 +545,13 @@ export default {
       document.getElementById("exportButton").style.display = "none";
     },
 
-    gaTrackDownload () {
+    gaTrackDownload() {
       // Send Google analytics download event
       this.$gtag.query('event', "Read Concept Code Download", {
         'event_category': "Download",
         'event_label': this.userSelectedFormat.name
       })
     },
-
 
 
     // Wizard methods
@@ -565,6 +561,7 @@ export default {
       //Vue 3 Select Next Option Counter.  This counter replaces the form-Wizard logic that is not working
       //correctly under vue 3.  If value is 1 then it implements validateFirstStep fucction.  If value is 2 then
       //it implements validatePropertyStep function.  If validateExportStep is 3 then it implements the validateExportSetup function
+
 
 
       //Vue 3 STEP 1
@@ -580,6 +577,7 @@ export default {
       }
 
       if (selectNextOptionBTN_counter === 1) {
+        this.getRoles()
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
           document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
@@ -588,23 +586,26 @@ export default {
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
-          if (this.rightUsers.length <=0)
-          {
+          if (this.rightUsers.length <= 0) {
             document.getElementById("enteredCodeLabelLeft").style.display = "";
             document.getElementById("enteredCodeLabelRight").style.display = "none";
           }
 
           this.setSelectedTags();
-          if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
-            api.getRoles(this.$baseURL, this.userEnteredCodes)
-                .then((data) => {
-                  for (let x = data.length - 1; x >= 0; x--) {
-                    this.availableProperties.push(data[x].type);
-                  }
-                })
-          }
         }
       }
+    },
+
+    getRoles() {
+      this.availableProperties = []
+      //    if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
+      api.getRoles(this.$baseURL, this.userEnteredCodes)
+          .then((data) => {
+            //          for (let x = data.length - 1; x >= 0; x--) {
+            //            this.availableProperties.push(data[x].type);
+            //          }
+            this.availableProperties = data;
+          })
     },
 
     //Vue 3 STEP 2
@@ -629,6 +630,7 @@ export default {
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
+        this.rightUsers = []
         document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
         document.getElementById("clearButton").style.display = "";    //Shows clear button
         document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
