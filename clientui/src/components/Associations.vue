@@ -384,7 +384,7 @@ export default {
                         this.$notify({
                           group: 'app',
                           title: 'Warning',
-                          text: '<b>'+tag+'</b> will not appear in the report. <br>Reason: No Roles for this concept code.',
+                          text: '<b>'+tag+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
                           type: 'error',
                           duration: 6000,
                           position: "left bottom"
