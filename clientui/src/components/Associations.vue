@@ -306,7 +306,6 @@ export default {
       leftUsers: [],
       rightSelectedUsers:[],
       rightUsers:[],
-      selectedAssociations: [],
       tempListClear:[],
       tagCounter: 0,
       newTagCounter: 0,
