@@ -597,13 +597,12 @@ export default {
 
     getRoles() {
       this.availableProperties = []
-      //    if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
+
       api.getRoles(this.$baseURL, this.userEnteredCodes)
           .then((data) => {
               for (let x = data.length - 1; x >= 0; x--) {
                 this.availableProperties.push(data[x].type);
               }
-            //this.availableProperties = data;
           })
     },
 

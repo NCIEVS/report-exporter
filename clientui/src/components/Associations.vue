@@ -423,6 +423,8 @@ export default {
                   //      this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
                   //      this.newTag = ""                  //Vue 3 used for testing take out after testing
                   //       this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+
+                  //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
                     title: 'Invalid Concept Code',
@@ -444,7 +446,6 @@ export default {
       // clear the internal user codes that are entered
       this.userEnteredCodes = []
       for (let i = 0; i < Object.keys(this.tags).length; i++) {
-        //  for (let i = 0; i < 1; i++) {
         // currated top nodes (from the server hava a value of "C12434:Blood")
         // so we need to strip off everything from the : to the right.
         if (this.tags[i] !== "undefined") {
@@ -575,6 +576,8 @@ export default {
       }
 
       if (selectNextOptionBTN_counter === 1) {
+        this.setSelectedTags()
+        this.getAssociations()
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
           document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
@@ -589,26 +592,25 @@ export default {
             document.getElementById("enteredCodeLabelLeft").style.display = "";
             document.getElementById("enteredCodeLabelRight").style.display = "none";
           }
-
-          this.setSelectedTags();
-          if ((this.availableProperties.length <= 0) && (this.rightUsers.length <=0)){
-            api.getAssociations(this.$baseURL, this.userEnteredCodes)
-                .then((data) => {
-                  for (let x = data.length - 1; x >= 0; x--) {
-                    this.availableProperties.push(data[x].type);
-                  }
-                })
-          }
         }
       }
+    },
+
+    getAssociations() {
+      this.availableProperties = []
+
+      api.getRoles(this.$baseURL, this.userEnteredCodes)
+          .then((data) => {
+            for (let x = data.length - 1; x >= 0; x--) {
+              this.availableProperties.push(data[x].type);
+            }
+          })
     },
 
     //Vue 3 STEP 2
     validatePropertyStep() {
       // make sure the user has selected at least one property
       //Hides objects on screen that shouldn't appear in step 2
-      // document.getElementById("entityTextID").style.display = " ";
-      // document.getElementById("entityLabelId").style.display = " ";
 
       if (this.rightUsers.length > 0) {
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
@@ -628,6 +630,7 @@ export default {
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
+        this.rightUsers = []
         document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
         document.getElementById("clearButton").style.display = "";    //Shows clear button
         document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
@@ -637,7 +640,7 @@ export default {
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
 
-      //Shows screen =for step 2
+      //Shows screen for step 2
       if (selectNextOptionBTN_counter === 3) {
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
@@ -652,7 +655,7 @@ export default {
       this.downloadFile();
     },
 
-
+    // Toggle the Show/Hide Selection Summary title
     updateShowSummary() {
       this.showSummaryText = this.showSummary? 'Hide Selection Summary' : 'Show Selection Summary'
       this.showSummary = !this.showSummary;
