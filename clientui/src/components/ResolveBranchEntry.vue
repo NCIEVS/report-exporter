@@ -50,7 +50,7 @@
         <div class="col-12 col-md-6">
           <div class="alert alert-light" role="alert" v-if="exportType == 'exportDeferred'  && this.deferredStatusHash != ''">
             Use this Download ID on the
-            <b><router-link v-bind:to="'/exports'" title="Link to Downloads">Downloads page</router-link> </b>
+            <b><router-link v-bind:to="'/report-exporter/exports'" title="Link to Downloads">Downloads page</router-link> </b>
             to retrieve your report: <b>{{ this.deferredStatusHash }} </b>
           </div>
         </div>
@@ -823,7 +823,7 @@ export default {
 
       input = document.getElementById("searchProperties"); //text input
       formattedInput = input.value.toUpperCase();  //change to upper case
-
+//debugger;
       listBoxValues = document.getElementById("selectSearchProperties");
       for (i = 0; i < listBoxValues.length; i++) {
         selectedListBoxValue = listBoxValues[i];
