@@ -1290,8 +1290,6 @@ export default {
     saveDeferredDownloads() {
       const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};  // Vue 3 Data saved on local storage
       localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));  //Vue 3 Save data on local storage
-
-      localStorage.name = "Cory"
     },
 
     clearDeferredData() {
