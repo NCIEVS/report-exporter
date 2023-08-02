@@ -704,6 +704,7 @@ export default {
       var codeDescription = [];
       var dupTagCheck = false;
       var indexBottomTab = 0;
+      var tempStatus = ''
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
 
@@ -749,6 +750,7 @@ export default {
                       this.updateChildrenToResolve()
                     }
                   }else{
+                    tempStatus = data[x].queryStatus
                     //this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
                     //this.newTag = ""                  //Vue 3 used for testing take out after testing
                     //this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
@@ -756,10 +758,10 @@ export default {
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
-                      title: 'Validation Failure',
-                      text: 'Could not verify concept code(s).  Possible network issue.',
+                      title: 'Invalid Concept Code',
+                      text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
                       type: 'error',
-                      duration: 4000,
+                      duration: 6000,
                       position: "left bottom"
                     });
                   }
@@ -777,10 +779,10 @@ export default {
                   //this.updateChildrenToResolve()      //Vue 3 used for testing take out after testing
                   this.$notify({
                     group: 'app',
-                    title: 'Validation Failure',
-                    text: 'Could not verify concept code(s).  Possible network issue.',
+                    title: 'Invalid Concept Code',
+                    text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
                     type: 'error',
-                    duration: 4000,
+                    duration: 6000,
                     position: "left bottom"
                   });
                 }
