@@ -1,8 +1,17 @@
 <template>
 
   <div class="header">
+
+    <div class="nci-logo" id="extended-mega-logo">
+
+
+      <a class="dropdown-item" alt="EVS" href="https://www.cancer.gov/" target="_blank">
+        <img src="../assets/NIH_Logo.png" alt="EVS" class = "NIHLogo">
+      </a>
+
+    </div>
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
-      <a class="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV </a>
+     <!-- <a class="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV TEST2</a>-->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -28,6 +37,10 @@
     </nav>
   </div>
 
+
+
+
+
   <!--div class="header">
     <h3>Header message: {{ msg }}</h3>
     <p class="intro">Test Text</p>
@@ -42,6 +55,7 @@
     }
   }
 </script>
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -66,6 +80,11 @@ a {
 }
 .button {
   padding: 0;
+}
+
+.NIHLogo{
+  width: 500px;
+  height: 54px;
 }
 /*  To control link and mouse over links
 .navbar a  {
