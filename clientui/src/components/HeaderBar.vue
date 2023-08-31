@@ -1,9 +1,8 @@
 <template>
 
   <div class="header">
-
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
-
+      <a class="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -68,7 +67,6 @@ a {
 .button {
   padding: 0;
 }
-
 /*  To control link and mouse over links
 .navbar a  {
   color: yellow;
