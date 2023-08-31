@@ -4,11 +4,6 @@
 
     <div class="nci-logo" id="extended-mega-logo">
 
-
-      <a class="dropdown-item" alt="EVS" href="https://www.cancer.gov/" target="_blank">
-        <img src="../assets/NIH_Logo.png" alt="EVS" class = "NIHLogo">
-      </a>
-
     </div>
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
      <!-- <a class="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV TEST2</a>-->

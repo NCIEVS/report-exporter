@@ -24,17 +24,15 @@
 
         <div class="grid-row grid-gap">
           <div class="usa-footer__social-links">
+
             <p><span class="usa-footer__follow-us">Follow us</span>
             <span class="usa-footer__Contact_info">CONTACT INFORMATION</span>
             <span class="usa-footer__More_info">MORE INFORMATION</span>
             <span class="usa-footer__policies">POLICIES</span></p>
             <br>
-            <a class= "Contact__US" href="mailto:NCIAppSupport@nih.gov">Contact Us</a>
-            <a class = "Home__URL" href="/report-exporter/" title="link to Report Exporter Home">Report Export Home</a>
-            <a class = "Accessibility__URL" href="https://www.cancer.gov/global/web/policies/accessibility" title="link to NCI Accessibility Policies">Accessibility</a>
 
 
-            <div class="grid-row grid-gap-1 nci-big__social">
+            <div class="social__media__images">
               <a class="facebook" href="https://www.facebook.com/cancer.gov">
                 <svg class="FacebookClass" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"  role="img" aria-labelledby="facebook-title">
                   <title id="facebook-title">Facebook</title>
@@ -83,17 +81,23 @@
                   </g>
                 </svg>
               </a>
-            </div>
-          </div>
 
-          <a class="Polocies__URL" href="https://www.cancer.gov/global/web/policies" title="link to NCI Policies">Policies</a>
+
+
+
+
+
+          <a class= "Contact__US" href="mailto:NCIAppSupport@nih.gov">Contact Us</a>
+          <a class = "Home__URL" href="/report-exporter/" title="link to Report Exporter Home">Report Export Home</a>
+          <a class = "Accessibility__URL" href="https://www.cancer.gov/global/web/policies/accessibility" title="link to NCI Accessibility Policies">Accessibility</a>
           <br>
+          <a class="Polocies__URL" href="https://www.cancer.gov/global/web/policies" title="link to NCI Policies">Policies</a>
           <br>
           <a class="FOIA__URL" href="https://www.cancer.gov/global/web/policies/foia" title="link to FOIA">FOIA</a>
           <br>
-          <br>
           <a class="HHS__URL" href="https://www.hhs.gov/vulnerability-disclosure-policy" title="Link to HHS Vulnerability Disclosure">HHS Vulnerability Disclosure</a>
-
+        </div>
+       </div>
           <div class="usa-footer__contact-links desktop:grid-col-7">
             <div class="usa-footer__address height-full">
               <div class="usa-footer__contact-info grid-row grid-gap height-full">
@@ -219,7 +223,7 @@ a:hover {
 }
 
 .usa-footer__follow-us{
-  margin-left: 720px;
+  margin-left: 740px;
   font-weight: bold;
 }
 
@@ -228,31 +232,33 @@ a:hover {
 }
 
 .usa-footer__Contact_info{
-  margin-left: 155px;
+  margin-left: 170px;
 }
 .usa-footer__More_info{
   margin-left: 135px;
 }
 
-.NCIAppSupport__Email{
-  margin-left: 1135px;
-}
 .Accessibility__URL{
   margin-left: 180px;
 }
 .Polocies__URL{
-  margin-left: 890px;
+  margin-left: 840px;
 }
 .FOIA__URL{
-  margin-left: 775px;
+  margin-left: 825px;
+
 }
 .HHS__URL{
-  margin-left: 910px;
+  margin-left: 960px;
 }
 .Contact__US{
-  margin-left: 955px;
+  margin-left: 50px;
 }
 .Home__URL{
   margin-left: 255px;
+}
+
+.social__media__images{
+  margin-left: 735px;
 }
 </style>
