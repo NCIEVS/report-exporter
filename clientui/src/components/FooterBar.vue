@@ -88,7 +88,7 @@
 
 
           <a class= "Contact__US" href="mailto:NCIAppSupport@nih.gov">Contact Us</a>
-          <a class = "Home__URL" href="/report-exporter/" title="link to Report Exporter Home">Report Export Home</a>
+          <a class = "Home__URL" href="/report-exporter/" title="link to Report Exporter Home">Report Exporter Home</a>
           <a class = "Accessibility__URL" href="https://www.cancer.gov/global/web/policies/accessibility" title="link to NCI Accessibility Policies">Accessibility</a>
           <br>
           <a class="Polocies__URL" href="https://www.cancer.gov/global/web/policies" title="link to NCI Policies">Policies</a>
@@ -239,7 +239,7 @@ a:hover {
 }
 
 .Accessibility__URL{
-  margin-left: 180px;
+  margin-left: 172px;
 }
 .Polocies__URL{
   margin-left: 840px;
@@ -259,6 +259,6 @@ a:hover {
 }
 
 .social__media__images{
-  margin-left: 735px;
+  margin-left: 737px;
 }
 </style>
