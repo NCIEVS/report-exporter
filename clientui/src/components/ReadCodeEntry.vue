@@ -381,7 +381,7 @@ export default {
                     this.$notify({
                       group: 'app',
                       title: 'Invalid Concept Code',
-                      text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
+                      text: '"' + tag + '" is not valid. Reason: "' + tempStatus + '".',
                       type: 'error',
                       duration: 6000,
                       position: "left bottom"
@@ -401,7 +401,7 @@ export default {
                   this.$notify({
                     group: 'app',
                     title: 'Invalid Concept Code',
-                    text: '<b>' + tag + '</b> is not valid. <br>Reason: ' + tempStatus + '.',
+                    text: '"' + tag + '" is not valid. Reason: "' + tempStatus + '".',
                     type: 'error',
                     duration: 6000,
                     position: "left bottom"
