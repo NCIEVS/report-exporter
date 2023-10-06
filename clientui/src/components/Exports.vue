@@ -160,7 +160,6 @@ export default {
         this.storageValues.push(localStorage.getItem(keys[i]));   // Vue 3 retrieval of data from local storage
         if (this.storageValues != null) {
           this.deferredData.push(JSON.parse(localStorage.getItem(keys[i])));  // Vue 3 add data from local storage to download list table
-          console.log('keys test: ' + Object.values(JSON.parse(localStorage.getItem(keys[i]))))
         }
       }
     },
