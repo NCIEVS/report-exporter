@@ -384,7 +384,7 @@ export default {
                         this.$notify({
                           group: 'app',
                           title: 'Warning',
-                          text: '<b>'+tag+'</b> will not appear in the report. <br>Reason: No Associations for this concept code.',
+                          text: '"'+tag+'" will not appear in the report. Reason: "No Associations for this concept code".',
                           type: 'error',
                           duration: 6000,
                           position: "left bottom"
@@ -408,7 +408,7 @@ export default {
                     this.$notify({
                       group: 'app',
                       title: 'Invalid Concept Code',
-                      text: '<b>' +tag+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
+                      text: '"' +tag+'" is not valid. Reason: "' +tempStatus+ '".',
                       type: 'error',
                       duration: 6000,
                       position: "left bottom"
@@ -428,7 +428,7 @@ export default {
                   this.$notify({
                     group: 'app',
                     title: 'Invalid Concept Code',
-                    text: '<b>' +tag+'</b> is not valid. <br>Reason: ' +tempStatus+ '.',
+                    text: '"' +tag+'" is not valid. Reason: "' +tempStatus+ '".',
                     type: 'error',
                     duration: 6000,
                     position: "left bottom"
