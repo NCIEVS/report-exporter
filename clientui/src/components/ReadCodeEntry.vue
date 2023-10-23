@@ -129,21 +129,50 @@
     <!--Vue 3 buttons start-->
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
-      </span>
+    </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "backButton" class="btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
-      </span>
+    </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "nextOption" class="btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
-      </span>
+    </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
-      </span>
+    </span>
     <!--Vue 3 buttons  End-->
-
+    <br>
+    <br>
+    <div id = "Templating">
+      <center>
+        <div>Use Templating (Yes/No)</div>
+        <select v-model="selected" id = "TemplateDropDown" class = "OptTemplateDropdown" @change="addTemplating($event)">
+          <option disabled value="">Optional Available Templates</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+        <br>
+        <br>
+        <div id = "TemplateOption" >
+          <div>Select a Template   </div>
+          <tr>
+            <input type="radio" id="html" name="fav_language" value="ALTDEFINITION_DEFINITION">
+            <label for="html">ALT_DEFINITION, DEFINITION</label>
+            <br>
+            <input type="radio" id="html" name="fav_language" value="EssenAmino_EssenFatty">
+            <label for="html">Essential_Amino_Acid, Essential_Fatty_Acid</label>
+            <br>
+            <input type="radio" id="html" name="fav_language" value="NCI_Drug_NCI_META">
+            <label for="html">NCI_Drug_Dictionary_ID, NCI_META_CUI</label>
+            <br>
+            <input type="radio" id="html" name="fav_language" value="Macronutrient_Micronutrient">
+            <label for="html">Macronutrient, Micronutrient</label>
+          </tr>
+        </div>
+      </center>
+    </div>
 
 
     <!-- Summary Information -->
@@ -374,9 +403,9 @@ export default {
                     }
                   } else {
                     tempStatus = data[x].queryStatus
-                //    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                //    this.newTag = ""                  //Vue 3 used for testing take out after testing
-                //    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    this.newTag = ""                  //Vue 3 used for testing take out after testing
+                    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
@@ -394,9 +423,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 } else {
-              //    this.tags.push(tag + ":" + "");   //take out after testing
-              //    this.newTag = ""                  //take out after testing
-              //    this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  this.tags.push(tag + ":" + "");   //take out after testing
+                  this.newTag = ""                  //take out after testing
+                  this.tagCounter = this.tagCounter + 1;  //take out after testing
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
@@ -508,6 +537,7 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
+      document.getElementById("Templating").style.display = "none";
 
       api.getProperties(this.$baseURL)
           .then((data)=> {
@@ -553,6 +583,7 @@ export default {
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
+          document.getElementById("TemplateOption").style.display = "none";
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
         }
       }
@@ -568,6 +599,7 @@ export default {
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
+        document.getElementById("Templating").style.display = "none";  //Hides Templating dropdown
 
         if (Object.keys(this.rightUsers).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
@@ -575,6 +607,7 @@ export default {
         }
       }
     },
+
 
     //Method is used for back button
     backStep(){
@@ -586,6 +619,7 @@ export default {
         document.getElementById("entityLabelId").style.display = "";  //Shows label on main screen
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
+        document.getElementById("Templating").style.display = "none";
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
 
@@ -594,8 +628,9 @@ export default {
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
         document.getElementById("exportButton").style.display = "none"; //Hides Export button
-        document.getElementById("nextOption").style.display = ""; //Hides next button
+        document.getElementById("nextOption").style.display = ""; //Shows next button
         document.getElementById("exportStep").style.display = "none";  //Hides Export Step
+        document.getElementById("Templating").style.display = "";
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
     },
@@ -634,6 +669,22 @@ export default {
         this.fileFormat = "EXCEL";
         this.selectedExportListName = "EXCEL (xlsx) Microsoft Excel Format"
       }
+    },
+
+    addTemplating(event){
+    this.userSelectedFormat = event.target.value;
+
+    if (event.target.value === "Yes")
+    {
+      alert("Yes")
+      document.getElementById("TemplateOption").style.display = "";
+    }
+
+     if (event.target.value === "No")
+     {
+       alert("No")
+       document.getElementById("TemplateOption").style.display = "none";
+     }
     },
 
     // Vue 3 method to download file
