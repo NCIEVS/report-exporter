@@ -145,6 +145,7 @@
     <!--Vue 3 buttons  End-->
     <br>
     <br>
+
     <div id = "Templating">
       <center>
         <div>Use Templating (Yes/No)</div>
@@ -153,26 +154,29 @@
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
-        <br>
-        <br>
-        <div id = "TemplateOption" >
+        </center>
+    </div>
+    <br>
+    <br>
+      <center>
+        <div id = "TemplateOption">
           <div>Select a Template   </div>
+          <div>Picked: {{ templateSelectedValue }}</div>
           <tr>
-            <input type="radio" id="html" name="fav_language" value="ALTDEFINITION_DEFINITION">
+            <input type="radio" id="html" name="fav_language" value="ALT_DEFINITION, DEFINITION" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue)">
             <label for="html">ALT_DEFINITION, DEFINITION</label>
             <br>
-            <input type="radio" id="html" name="fav_language" value="EssenAmino_EssenFatty">
+            <input type="radio" id="html" name="fav_language" value="Essential_Amino_Acid, Essential_Fatty_Acid" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue)">
             <label for="html">Essential_Amino_Acid, Essential_Fatty_Acid</label>
             <br>
-            <input type="radio" id="html" name="fav_language" value="NCI_Drug_NCI_META">
+            <input type="radio" id="html" name="fav_language" value="NCI_Drug_Dictionary_ID, NCI_META_CUI" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue)">
             <label for="html">NCI_Drug_Dictionary_ID, NCI_META_CUI</label>
             <br>
-            <input type="radio" id="html" name="fav_language" value="Macronutrient_Micronutrient">
+            <input type="radio" id="html" name="fav_language" value="Macronutrient, Micronutrient" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue)">
             <label for="html">Macronutrient, Micronutrient</label>
           </tr>
         </div>
       </center>
-    </div>
 
 
     <!-- Summary Information -->
@@ -328,6 +332,7 @@ export default {
       multipleEntitiesSplit: [],
       detectComma: '',
       tagsArray:[],
+      templateSelectedValue:[],
     };
   },
 
@@ -538,6 +543,7 @@ export default {
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
       document.getElementById("Templating").style.display = "none";
+      document.getElementById("TemplateOption").style.display = "none";
 
       api.getProperties(this.$baseURL)
           .then((data)=> {
@@ -583,7 +589,8 @@ export default {
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
-          document.getElementById("TemplateOption").style.display = "none";
+          document.getElementById("TemplateOption").style.display = "none";  //Hides Template options radio buttons
+          document.getElementById("Templating").style.display = "";  // Shows Template dropdown
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
         }
       }
@@ -600,6 +607,7 @@ export default {
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
         document.getElementById("Templating").style.display = "none";  //Hides Templating dropdown
+        document.getElementById("TemplateOption").style.display = "none";  //Hides Template option
 
         if (Object.keys(this.rightUsers).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
@@ -619,7 +627,8 @@ export default {
         document.getElementById("entityLabelId").style.display = "";  //Shows label on main screen
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
-        document.getElementById("Templating").style.display = "none";
+        document.getElementById("Templating").style.display = "none";  //Hides Templating dropdown
+        document.getElementById("TemplateOption").style.display = "none";  //Hides Template options radio buttons
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
 
@@ -630,7 +639,8 @@ export default {
         document.getElementById("exportButton").style.display = "none"; //Hides Export button
         document.getElementById("nextOption").style.display = ""; //Shows next button
         document.getElementById("exportStep").style.display = "none";  //Hides Export Step
-        document.getElementById("Templating").style.display = "";
+        document.getElementById("Templating").style.display = ""; //Show Templating dropdown
+        document.getElementById("TemplateOption").style.display = "none";  //Hides Template options radio buttons
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
     },
@@ -672,19 +682,24 @@ export default {
     },
 
     addTemplating(event){
-    this.userSelectedFormat = event.target.value;
+      this.userSelectedFormat = event.target.value;
 
-    if (event.target.value === "Yes")
-    {
-      alert("Yes")
-      document.getElementById("TemplateOption").style.display = "";
-    }
+      if (event.target.value === "Yes")
+      {
+        document.getElementById("SelectProperties1").style.display = "none";
+        document.getElementById("TemplateOption").style.display = "";
+      }
 
-     if (event.target.value === "No")
-     {
-       alert("No")
-       document.getElementById("TemplateOption").style.display = "none";
-     }
+      if (event.target.value === "No")
+      {
+        document.getElementById("SelectProperties1").style.display = "";
+        document.getElementById("TemplateOption").style.display = "none";
+       // this.rightUsers = null
+      }
+    },
+
+    changeTemplateSelectedVal(templateValue){
+      this.rightUsers = templateValue
     },
 
     // Vue 3 method to download file
