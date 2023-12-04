@@ -75,9 +75,9 @@
               <div class="msl-multi-select">
                 <div class="msl-searchable-list msl-multi-select__list">
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
-                  <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
-                    <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft }}
+                  <select multiple v-model="leftSelectedOptions" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
+                    <option v-for="optionLeft in availableProperties" :key="optionLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                      {{ optionLeft }}
                     </option>
                   </select>
                 </div>
@@ -125,9 +125,9 @@
                     <br>
                   </div>
                   <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
-                  <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
-                    <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
-                      {{ userRight }}
+                  <select multiple v-model="rightSelectedOptions" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
+                    <option v-for="optionRight in optionOptions" :key="optionRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
+                      {{ optionRight }}
                     </option>
                   </select>
                 </div>
@@ -203,10 +203,10 @@
                     <div class="card bg-light border-dark mb-3">
                       <div class="card-header">
                         Selected Roles
-                        <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
+                        <span class="badge badge-secondary">{{Object.keys(this.optionOptions).length}}</span>
                       </div>
                       <div class="card-body">
-                        <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
+                        <span class="list-group" id="selectedPropertyList">{{ this.optionOptions }}</span>
                       </div>
                     </div>
                   </div>
@@ -303,10 +303,9 @@ export default {
       showSummary: true,
       showSummaryText: '',
       tag: "[]",
-      leftSelectedUsers: [],
-      leftUsers: [],
-      rightSelectedUsers: [],
-      rightUsers: [],
+      leftSelectedOptions: [],
+      rightSelectedOptions: [],
+      optionOptions: [],
       tempListClear: [],
       tagCounter: 0,
       newTagCounter: 0,
@@ -400,9 +399,9 @@ export default {
                     }
                   } else {
                     tempStatus = data[x].queryStatus
-                    // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    // this.newTag = "";                  //Vue 3 used for testing take out after testing
-                    // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                     this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                     this.newTag = "";                  //Vue 3 used for testing take out after testing
+                     this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
 
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
@@ -420,9 +419,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 } else {
-                  //      this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                  //      this.newTag = ""                  //Vue 3 used for testing take out after testing
-                  //       this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                        this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                        this.newTag = ""                  //Vue 3 used for testing take out after testing
+                        this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
 
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
@@ -460,12 +459,12 @@ export default {
 
     //Vue 3 move data from right list box on second screen to left list box on second screen
     moveLeft() {
-      if (!this.rightSelectedUsers.length) return;
-      for (let i = this.rightSelectedUsers.length; i > 0; i--) {
-        let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i - 1]);
-        this.rightUsers.splice(idx, 1);
-        this.availableProperties.push(this.rightSelectedUsers[i - 1])
-        this.rightSelectedUsers.pop();
+      if (!this.rightSelectedOptions.length) return;
+      for (let i = this.rightSelectedOptions.length; i > 0; i--) {
+        let idx = this.optionOptions.indexOf(this.rightSelectedOptions[i - 1]);
+        this.optionOptions.splice(idx, 1);
+        this.availableProperties.push(this.rightSelectedOptions[i - 1])
+        this.rightSelectedOptions.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "";
         document.getElementById("enteredCodeLabelRight").style.display = "none";
       }
@@ -473,13 +472,13 @@ export default {
 
     //Vue 3 move data from left list box on second screen to right list box on second screen
     moveRight() {
-      if (!this.leftSelectedUsers.length) return;
-      for (let i = this.leftSelectedUsers.length; i > 0; i--) {
-        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i - 1]);
+      if (!this.leftSelectedOptions.length) return;
+      for (let i = this.leftSelectedOptions.length; i > 0; i--) {
+        let idx = this.availableProperties.indexOf(this.leftSelectedOptions[i - 1]);
         this.availableProperties.splice(idx, 1);
-        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
-        this.tempListClear.push(this.leftSelectedUsers[i - 1]);
-        this.leftSelectedUsers.pop();
+        this.optionOptions.push(this.leftSelectedOptions[i - 1]);
+        this.tempListClear.push(this.leftSelectedOptions[i - 1]);
+        this.leftSelectedOptions.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "none";
         document.getElementById("enteredCodeLabelRight").style.display = "";
       }
@@ -587,7 +586,7 @@ export default {
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
 
-          if (this.rightUsers.length <= 0) {
+          if (this.optionOptions.length <= 0) {
             document.getElementById("enteredCodeLabelLeft").style.display = "";
             document.getElementById("enteredCodeLabelRight").style.display = "none";
           }
@@ -611,15 +610,15 @@ export default {
       // make sure the user has selected at least one property
       //Hides objects on screen that shouldn't appear in step 2
 
-      if (this.rightUsers.length > 0) {
+      if (this.optionOptions.length > 0) {
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
 
-        if (Object.keys(this.rightUsers).length > 0) {
+        if (Object.keys(this.optionOptions).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
-          return Object.keys(this.rightUsers).length > 0
+          return Object.keys(this.optionOptions).length > 0
         }
       }
     },
@@ -628,7 +627,7 @@ export default {
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
-        this.rightUsers = []
+        this.optionOptions = []
         document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
         document.getElementById("clearButton").style.display = "";    //Shows clear button
         document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
@@ -711,7 +710,7 @@ export default {
 
       //alert("base URL: " + this.$baseURL);
       //alert("tags: " + this.userEnteredCodes);
-      //alert("selectedPropertyName: " + this.rightUsers);
+      //alert("selectedPropertyName: " + this.optionOptions);
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
       //alert("selectedFormat Extension: " + this.userSelectedFormat);
@@ -720,7 +719,7 @@ export default {
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-roles/'  +
             this.userEnteredCodes + '/' +
-            this.rightUsers + '/' +
+            this.optionOptions + '/' +
             this.fileFormat  + '/'+
             this.filename + '.' +
             this.userSelectedFormat,
