@@ -670,7 +670,7 @@ export default {
         if ((this.templateYesNoFlag === "No") || (this.templateYesNoFlag === ""))
         {
           document.getElementById("SelectProperties1").style.display = "";  //Hides listboxes on second screen
-          document.getElementById("TemplateOption").style.display = "none";
+          document.getElementById("TemplateOption").style.display = "none"; //hides Template option
         }
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
       }
