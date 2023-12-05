@@ -667,7 +667,7 @@ export default {
           document.getElementById("SelectProperties1").style.display = "none"; //Hides listboxes on second screen
         }
 
-        if (this.templateYesNoFlag === "No")
+        if ((this.templateYesNoFlag === "No") || (this.templateYesNoFlag === ""))
         {
           document.getElementById("SelectProperties1").style.display = "";  //Hides listboxes on second screen
           document.getElementById("TemplateOption").style.display = "none";
