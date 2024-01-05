@@ -15,7 +15,7 @@ import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 @RestController
-public class BranchResolutionController {
+public class -BranchResolutionController {
 
 	@Autowired
 	BranchResolutionService service;
