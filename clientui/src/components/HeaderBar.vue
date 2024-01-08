@@ -1,29 +1,34 @@
 <template>
 
-  <div class="header">
-    <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
-      <a class="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarHeader" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+  <include-html
+      src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  <div className="header">
+    <nav className="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
+      <a className="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE -
+        CANCER.GOV </a>
+      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarHeader"
+              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse collapse" id="collapsingNavbarHeader">
-          <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.cancer.gov/about-cancer" target="_blank">About Cancer<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.cancer.gov/research" target="_blank">Research</a>
-            </li>
-             <li class="nav-item">
-              <a class="nav-link" href="https://www.cancer.gov/grants-training" target="_blank">Grants & Training</a>
-            </li>
-             <li class="nav-item">
-              <a class="nav-link" href="https://www.cancer.gov/news-events" target="_blank">News & Events</a>
-            </li>
-             <li class="nav-item">
-              <a class="nav-link" href="https://www.cancer.gov/about-nci" target="_blank">About NCI</a>
-            </li>
-          </ul>
+      <div className="navbar-collapse collapse" id="collapsingNavbarHeader">
+        <ul className="nav navbar-nav ml-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="https://www.cancer.gov/about-cancer" target="_blank">About Cancer<span
+                className="sr-only">(current)</span></a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="https://www.cancer.gov/research" target="_blank">Research</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="https://www.cancer.gov/grants-training" target="_blank">Grants & Training</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="https://www.cancer.gov/news-events" target="_blank">News & Events</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="https://www.cancer.gov/about-nci" target="_blank">About NCI</a>
+          </li>
+        </ul>
       </div>
     </nav>
   </div>
@@ -35,25 +40,39 @@
 </template>
 
 <script>
-  export default {
-    name: 'HeaderBar',
-    props: {
-      msg: String
-    }
+export default {
+  name: 'HeaderBar',
+  props: {
+    msg: String
+  },
+
+  //Government Shutdown Banner. https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js checks the
+  //enabled/disabled flag in file https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html.  If enabled
+  //the banner would show on the report exporter main screen, if disabled the banner wouldn't show on the report exporter main screen.
+  mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute(
+        "src",
+        "https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"
+    );
+    plugin.async = true;
+    document.head.appendChild(plugin);
   }
+
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 .evs-header {
-  color:#fff;
+  color: #fff;
   background-color: #1c5e86;
   padding: 0 30px 2px;
 }
 
 .navbar-brand {
-   font-size: 14px;
+  font-size: 14px;
 }
 
 /*.navbar */
@@ -62,11 +81,13 @@ a {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-	color: rgba(255,255,255, 1);
+  color: rgba(255, 255, 255, 1);
 }
+
 .button {
   padding: 0;
 }
+
 /*  To control link and mouse over links
 .navbar a  {
   color: yellow;
