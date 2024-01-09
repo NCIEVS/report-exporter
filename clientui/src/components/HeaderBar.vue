@@ -1,7 +1,6 @@
 <template>
 
-  <include-html
-      src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  <include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
   <div className="header">
     <nav className="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
       <a className="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE -
@@ -58,7 +57,6 @@ export default {
     plugin.async = true;
     document.head.appendChild(plugin);
   }
-
 }
 </script>
 
