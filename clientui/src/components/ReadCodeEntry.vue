@@ -143,6 +143,7 @@
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
     </span>
     <!--Vue 3 buttons  End-->
+    <center><VueSpinner size="40" color="blue" /></center>
     <br>
     <br>
     <div id = "Templating">
@@ -254,7 +255,7 @@ import api from '../api.js'
 import axios from 'axios'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
 import {ref} from "vue";
-
+import {VueSpinner} from  'vue3-spinners';
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
@@ -266,7 +267,7 @@ export default {
     msg: String
   },
   components: {
-
+    VueSpinner,
   },
   metaInfo: {
 
