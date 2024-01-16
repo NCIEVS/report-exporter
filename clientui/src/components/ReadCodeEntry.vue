@@ -163,9 +163,11 @@
         <u><div>Select a Template</div></u>
         <div>Selected Template: {{ templateSelectedValue }}</div>
         <tr>
-          <input type="radio" id="html" name="fav_language" value="ALT_DEFINITION, DEFINITION" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
-          <label for="html">ALT_DEFINITION, DEFINITION</label>
+
+          <input type="radio" id="html" name="fav_language" value="OPTION 1, OPTION2" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
+          <label for="html">OPTION1 , OPTION2</label>
           <br>
+          <!--
           <input type="radio" id="html" name="fav_language" value="Essential_Amino_Acid, Essential_Fatty_Acid" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
           <label for="html">Essential_Amino_Acid, Essential_Fatty_Acid</label>
           <br>
@@ -175,6 +177,7 @@
           <input type="radio" id="html" name="fav_language" value="Macronutrient, Micronutrient" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
           <label for="html">Macronutrient, Micronutrient</label>
           <br>
+          -->
           <!--
           <input type="radio" id="html" name="fav_language" value= {{this.tags}} v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
           <label for="html">{{this.tags}}</label>
