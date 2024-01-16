@@ -56,15 +56,15 @@
     */
 
 
-    /*
+
     mounted() {
       const plugin = document.createElement("script");
       plugin.src = 'https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js';
       document.getElementsByTagName('head')[0].appendChild(plugin);
     }
   }
-*/
 
+/*
     mounted() {
       const ga = document.createElement('script');
       ga.type = 'text/javascript'; ga.async = true;
@@ -75,7 +75,7 @@
       s.parentNode.insertBefore(ga, s);
     },
   }
-
+*/
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
