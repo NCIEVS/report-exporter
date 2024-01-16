@@ -1,5 +1,5 @@
 <template>
-  <include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+
   <div class="header">
     <nav class="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
       <a class="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE - CANCER.GOV </a>
@@ -39,43 +39,8 @@
     name: 'HeaderBar',
     props: {
       msg: String
-    },
-    /*
-        //Government Shutdown Banner. https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js checks the
-        //enabled/disabled flag in file https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html.  If enabled
-        //the banner would show on the report exporter main screen, if disabled the banner wouldn't show on the report exporter main screen.
-        mounted() {
-          const plugin = document.createElement("script");
-          plugin.setAttribute(
-              "src",
-              "https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"
-          );
-          plugin.async = true;
-          document.head.appendChild(plugin);
-        },
-    */
-
-
-
-    mounted() {
-      const plugin = document.createElement("script");
-      plugin.src = 'https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js';
-      document.getElementsByTagName('head')[0].appendChild(plugin);
     }
   }
-
-/*
-    mounted() {
-      const ga = document.createElement('script');
-      ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ?
-              'https://ssl' : 'https://cbiit') +
-          '.github.io/nci-softwaresolutions-elements/components/include-html.js';
-      const s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(ga, s);
-    },
-  }
-*/
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
