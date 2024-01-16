@@ -9,6 +9,7 @@ import SearchTermEntry from "@/components/SearchTermEntry.vue";
 import ResolveBranchEntry from "@/components/ResolveBranchEntry.vue";
 import Roles from "@/components/Roles.vue";
 import Associations from "@/components/Associations.vue";
+import GovernmentBanner from "../../../../../../report-exporter/clientui/src/components/GovernmentBanner";
 
 //Vue 3 routers were added to this new index.js file
 
@@ -63,6 +64,7 @@ const routes = [
             title: "EVS Report Exporter - Associations"
         }
     },
+
     { path: '/about', component: About },
     {
         path: '/report-exporter/documentation',
@@ -76,6 +78,13 @@ const routes = [
         component: Exports,
         meta: {
             title: "EVS Report Exporter - Downloads"
+        }
+    },
+    {
+        path: '/report-exporter/GovernmentBanner',
+        component: GovernmentBanner,
+        meta: {
+            title: "EVS Report Exporter "
         }
     },
     // if page is unknown, show main selection page.
