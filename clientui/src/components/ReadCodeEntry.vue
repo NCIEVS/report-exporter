@@ -70,9 +70,9 @@
               <div class="msl-multi-select">
                 <div class="msl-searchable-list msl-multi-select__list">
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
-                  <select multiple v-model="leftSelectedUsers" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
-                    <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ userLeft }}
+                  <select multiple v-model="leftSelectedOptions" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
+                    <option v-for="optionLeft in availableProperties" :key="optionLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                      {{ optionLeft }}
                     </option>
                   </select>
                 </div>
@@ -111,9 +111,9 @@
                 </div>
                 <div class="msl-searchable-list msl-multi-select__selected msl-multi-select__list">
                   <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
-                  <select multiple v-model="rightSelectedUsers" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
-                    <option v-for="userRight in rightUsers" :key="userRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
-                      {{ userRight }}
+                  <select multiple v-model="rightSelectedOptions" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
+                    <option v-for="optionRight in rightOptions" :key="optionRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
+                      {{ optionRight }}
                     </option>
                   </select>
                 </div>
@@ -129,51 +129,24 @@
     <!--Vue 3 buttons start-->
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
-    </span>
+      </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "backButton" class="btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
-    </span>
+      </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "nextOption" class="btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
-    </span>
+      </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
-    </span>
+      </span>
     <!--Vue 3 buttons  End-->
-    <center><VueSpinner size="40" color="blue" /></center>
+    <center><VueSpinner id = "waitTimeIndicator" size="40" color="blue" /></center>
     <br>
     <br>
-    <div id = "Templating">
-      <center>
-        <div>Use Templating (Yes/No)</div>
-        <select v-model="selected" id = "TemplateDropDown" class = "OptTemplateDropdown" @change="addTemplating($event)">
-          <option disabled value="">Optional Available Templates</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-        <br>
-        <br>
-        <div id = "TemplateOption" >
-          <div>Select a Template   </div>
-          <tr>
-            <input type="radio" id="html" name="fav_language" value="ALTDEFINITION_DEFINITION">
-            <label for="html">ALT_DEFINITION, DEFINITION</label>
-            <br>
-            <input type="radio" id="html" name="fav_language" value="EssenAmino_EssenFatty">
-            <label for="html">Essential_Amino_Acid, Essential_Fatty_Acid</label>
-            <br>
-            <input type="radio" id="html" name="fav_language" value="NCI_Drug_NCI_META">
-            <label for="html">NCI_Drug_Dictionary_ID, NCI_META_CUI</label>
-            <br>
-            <input type="radio" id="html" name="fav_language" value="Macronutrient_Micronutrient">
-            <label for="html">Macronutrient, Micronutrient</label>
-          </tr>
-        </div>
-      </center>
-    </div>
+
 
 
     <!-- Summary Information -->
@@ -218,10 +191,10 @@
                     <div class="card bg-light border-dark mb-3">
                       <div class="card-header">
                         Selected Properties
-                        <span class="badge badge-secondary">{{Object.keys(this.rightUsers).length}}</span>
+                        <span class="badge badge-secondary">{{this.selectedPropertiesWindowCt}}</span>
                       </div>
                       <div class="card-body">
-                        <span class="list-group" id="selectedPropertyList">{{ this.rightUsers }}</span>
+                        <span class="list-group" id="selectedPropertyList">{{ this.selectedPropertiesWindow }}</span>
                       </div>
                     </div>
                   </div>
@@ -278,6 +251,7 @@ export default {
   mounted() {
     this.hideObjectsOnScreen();  //Vue 3 function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"      //Vue 3 default download option
+    document.getElementById("waitTimeIndicator").style.display = "none"; // Hide Wait time indicator when system loads
   },
 
   setup(){
@@ -319,16 +293,22 @@ export default {
       showSummary: true,
       showSummaryText: '',
       tag: "[]",
-      leftSelectedUsers:[],
-      leftUsers: [],
-      rightSelectedUsers:[],
-      rightUsers:[],
+      leftSelectedOptions:[],
+      rightSelectedOptions:[],
+      rightOptions:[],
       tempListClear:[],
       tagCounter: 0,
       newTagCounter: 0,
       multipleEntitiesSplit: [],
       detectComma: '',
       tagsArray:[],
+      templateSelectedValue:[],
+      templateValueCount: 0,
+      selectedExportOptions: '',
+      templateSelectedOptions: '',
+      templateYesNoFlag: '',
+      selectedPropertiesWindow: '',
+      selectedPropertiesWindowCt: 0,
     };
   },
 
@@ -386,6 +366,9 @@ export default {
       }
       //Vue 3 checks entity code entered and returns a description if one is available
       if (tag != "") {
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
+        this.WaitTimeIndicatorPause()
+
         api.getCodes(this.$baseURL, tag, 'ENTITY')
             .then((data) => {
 
@@ -461,24 +444,29 @@ export default {
 
     //Vue 3 move data from right list box on second screen to left list box on second screen
     moveLeft() {
-      if(!this.rightSelectedUsers.length) return;
-      for(let i=this.rightSelectedUsers.length;i>0;i--) {
-        let idx = this.rightUsers.indexOf(this.rightSelectedUsers[i-1]);
-        this.rightUsers.splice(idx, 1);
-        this.availableProperties.push(this.rightSelectedUsers[i - 1])
-        this.rightSelectedUsers.pop();
+      if(!this.rightSelectedOptions.length) return;
+      for(let i=this.rightSelectedOptions.length;i>0;i--) {
+        let idx = this.rightOptions.indexOf(this.rightSelectedOptions[i-1]);
+        this.rightOptions.splice(idx, 1);
+        this.availableProperties.push(this.rightSelectedOptions[i - 1])
+        this.rightSelectedOptions.pop();
+        this.selectedPropertiesWindowCt = Object.keys(this.selectedPropertiesWindow).length
+
       }
     },
 
     //Vue 3 move data from left list box on second screen to right list box on second screen
     moveRight() {
-      if (!this.leftSelectedUsers.length) return;
-      for (let i = this.leftSelectedUsers.length; i > 0; i--) {
-        let idx = this.availableProperties.indexOf(this.leftSelectedUsers[i-1]);
+      if (!this.leftSelectedOptions.length) return;
+      for (let i = this.leftSelectedOptions.length; i > 0; i--) {
+        let idx = this.availableProperties.indexOf(this.leftSelectedOptions[i-1]);
         this.availableProperties.splice(idx, 1);
-        this.rightUsers.push(this.leftSelectedUsers[i - 1]);
-        this.tempListClear.push(this.leftSelectedUsers[i - 1]);
-        this.leftSelectedUsers.pop();
+        this.rightOptions.push(this.leftSelectedOptions[i - 1]);
+        this.tempListClear.push(this.leftSelectedOptions[i - 1]);
+        this.leftSelectedOptions.pop();
+
+        this.selectedPropertiesWindow = this.rightOptions
+        this.selectedPropertiesWindowCt = Object.keys(this.selectedPropertiesWindow).length
       }
     },
 
@@ -538,7 +526,6 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
-      document.getElementById("Templating").style.display = "none";
 
       api.getProperties(this.$baseURL)
           .then((data)=> {
@@ -566,10 +553,12 @@ export default {
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
+        document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextButton").style.display = ""; //Hides next button
+        this.WaitTimeIndicatorPause()
       }
 
       if (selectNextOptionBTN_counter === 2) {
@@ -579,13 +568,15 @@ export default {
       //Vue 3 (Builds screen on step 2)
       if (selectNextOptionBTN_counter === 1) {
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
+          document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
           document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
-          document.getElementById("TemplateOption").style.display = "none";
+
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
+          this.WaitTimeIndicatorPause()
         }
       }
     },
@@ -594,18 +585,19 @@ export default {
     validatePropertyStep() {
       // make sure the user has selected at least one property
       //Hides objects on screen that shouldn't appear in step 2
-
-      if (this.rightUsers.length > 0) {
+      if ((this.rightOptions.length > 0) || ((this.templateValueCount > 0)  &&  (this.templateYesNoFlag === "Yes"))) {
+        document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
-        document.getElementById("Templating").style.display = "none";  //Hides Templating dropdown
+        this.WaitTimeIndicatorPause()
 
-        if (Object.keys(this.rightUsers).length > 0) {
+        if (Object.keys(this.rightOptions).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
-          return Object.keys(this.rightUsers).length > 0
+          return Object.keys(this.rightOptions).length > 0
         }
+
       }
     },
 
@@ -614,26 +606,36 @@ export default {
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
-        document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
+        document.getElementById("SelectProperties1").style.display = "none";  //hides listboxs
         document.getElementById("clearButton").style.display = "";    //Shows clear button
         document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
         document.getElementById("entityLabelId").style.display = "";  //Shows label on main screen
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
-        document.getElementById("Templating").style.display = "none";
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+        this.WaitTimeIndicatorPause()
       }
 
       //Shows screen for step 2
       if (selectNextOptionBTN_counter === 3) {
-        document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
+        document.getElementById("SelectProperties1").style.display = "";  //shows listboxes on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
         document.getElementById("exportButton").style.display = "none"; //Hides Export button
         document.getElementById("nextOption").style.display = ""; //Shows next button
         document.getElementById("exportStep").style.display = "none";  //Hides Export Step
-        document.getElementById("Templating").style.display = "";
+
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+        this.WaitTimeIndicatorPause()
       }
+    },
+
+    //Code provides a small delay so that the spinner circle shown to the end user when processing a task could be visible
+    async WaitTimeIndicatorPause () {
+      setTimeout(() => {
+        document.getElementById("waitTimeIndicator").style.display = "None";  //hides wait time indicator
+      }, 500);
     },
 
     //Vue 3 This method helps to generate the file download
@@ -672,25 +674,11 @@ export default {
       }
     },
 
-    addTemplating(event){
-    this.userSelectedFormat = event.target.value;
 
-    if (event.target.value === "Yes")
-    {
-      alert("Yes")
-      document.getElementById("TemplateOption").style.display = "";
-    }
-
-     if (event.target.value === "No")
-     {
-       alert("No")
-       document.getElementById("TemplateOption").style.display = "none";
-     }
-    },
 
     // Vue 3 method to download file
     downloadFile() {
-
+      document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
       this.$notify({
         group: 'download',
         title: 'Export in Progress',
@@ -715,16 +703,17 @@ export default {
 
       //alert("base URL: " + this.$baseURL);
       //alert("tags: " + this.userEnteredCodes);
-      //alert("selectedPropertyName: " + this.rightUsers);
+      //alert("selectedPropertyName: " + this.rightOptions);
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
       //alert("selectedFormat Extension: " + this.userSelectedFormat);
       //alert (this.queryEntitySelection);
 
+
       axios({
         url: this.$baseURL + 'download/get-file-for-readCodes/'  +
             this.userEnteredCodes + '/' +
-            this.rightUsers + '/' +
+            this.selectedExportOptions + '/' +
             this.fileFormat  + '/'+
             this.filename + '.' +
             this.userSelectedFormat,
@@ -743,8 +732,10 @@ export default {
         console.error("Download Error: " + error);
       })
       //.finally(function() { loader.hide()});
+      this.WaitTimeIndicatorPause()
     },
   },
+
   created() {
 
     // scroll to the top of the page
