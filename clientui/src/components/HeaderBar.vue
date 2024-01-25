@@ -1,10 +1,11 @@
 <template>
-
+  <meta http-equiv="Content-Security-Policy" content = "script-scc 'self' 'unsafe-inline'">
   <include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
   <div className="header">
     <nav className="navbar navbar-light navbar-expand-md navbar-dark justify-content-left evs-header">
       <a className="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE -
         CANCER.GOV </a>
+      <a className="navbar-brand" href="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html" target="_blank">PLEASE CLICK HERE FOR THE LATEST UPDATES ON IMPORTANT MESSAGES</a>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarHeader"
               aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
@@ -53,6 +54,7 @@ export default {
     plugin.setAttribute(
         "src",
         "https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"
+         //     "../components/include-html.js"
     );
     plugin.async = true;
     document.head.appendChild(plugin);
