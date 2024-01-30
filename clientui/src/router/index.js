@@ -9,6 +9,8 @@ import SearchTermEntry from "@/components/SearchTermEntry.vue";
 import ResolveBranchEntry from "@/components/ResolveBranchEntry.vue";
 import Roles from "@/components/Roles.vue";
 import Associations from "@/components/Associations.vue";
+import GovernmentBanner from "@/components/GovernmentBanner.vue";
+
 
 //Vue 3 routers were added to this new index.js file
 
@@ -39,18 +41,43 @@ const routes = [
             selectedTags:[]
         }
     },
+
+
+
+
+    {
+        path: '/report-exporter/GovernmentBanner', component: GovernmentBanner,
+        meta: {
+            title: "EVS Report Exporter - Government Banner"
+        },
+        props: {
+            msg: "selected tag",
+            selectedTags:[]
+        }
+    },
+
+
+
+
+
+
+
+
+
+
+
     {
         path: '/searchTermEntry', component: SearchTermEntry },
 
     {
-        path: '/report-exporter/resolveBranchEntry',
+        path: '/report-exporter/GovernmentBanner',
         component: ResolveBranchEntry,
         meta: {
             title: "EVS Report Exporter - Branch Resolve"
         }
     },
     {
-        path: '/report-exporter/roles',
+        path: '/report-exporter/GovernmentBanner',
         component: Roles,
         meta: {
             title: "EVS Report Exporter - Roles"

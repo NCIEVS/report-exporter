@@ -56,7 +56,7 @@
             </ul>
             <div class="mt-auto"></div>
             <div class="mt-auto"></div>
-            <router-link v-bind:to="'/report-exporter/resolveBranchEntry'" >
+            <router-link v-bind:to="'/report-exporter/GovernmentBanner'" >
               <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
             </router-link>
           </div>
@@ -74,7 +74,7 @@
             <div class="mt-auto"></div>
             <div class="mt-auto"></div>
             <div class="mt-auto"></div>
-            <router-link v-bind:to="'/report-exporter/roles'" >
+            <router-link v-bind:to="'https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html'" >
               <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Concepts</button>
             </router-link>
           </div>

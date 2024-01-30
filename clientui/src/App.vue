@@ -16,6 +16,9 @@
     </div>
     <!--<ReportSelection  msg="Bottom"/>-->
     <FooterBar msg="Bottom"/>
+    <WindowPortal v-model="open">
+      <HelloWorld :msg="msg" />
+    </WindowPortal>
   </div>
 
 </template>
@@ -24,6 +27,8 @@
 import HeaderBar from './components/HeaderBar.vue'
 import SubHeaderBar from './components/SubHeaderBar.vue'
 import FooterBar from './components/FooterBar.vue'
+import HelloWorld from './components/GovernmentBanner.vue'
+import WindowPortal from './components/WindowPortal'
 // Custom input tags
 // import VoerroTagsInput from '@voerro/vue-tagsinput'
 
@@ -36,6 +41,8 @@ export default {
     HeaderBar,
     SubHeaderBar,
     FooterBar,
+    HelloWorld,
+    WindowPortal
   },
 
   metaInfo: {
@@ -50,6 +57,7 @@ export default {
   },
   data() {
     return {
+      msg: 'Hello from another window!',
       selectedTags: []
     }
   }
