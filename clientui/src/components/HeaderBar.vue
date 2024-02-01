@@ -19,7 +19,7 @@
     <br />
     <input v-model="msg" style="width: 25%" />
     <br />
-    <input type="checkbox" v-model="open" /> Check me to open a portal!
+    <input type="checkbox" v-model="open" /> Check me to open a portal! FInal
   </div>
 
 
@@ -83,10 +83,12 @@
 <script>
 import { useRouter } from 'vue-router'
 import HelloWorld from "./GovernmentBanner";
+import WindowPortal from "./WindowPortal";
 
 export default {
   name: 'HeaderBar',
-  components:{HelloWorld},
+  components:{HelloWorld,
+    WindowPortal},
   props: {
    // open: {
      // msg: String,
@@ -95,6 +97,8 @@ export default {
 },
 
   data(){
+    alert("HeaderBar Test")
+    this.windowRef = window.open("https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html", "https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html", "width=600,height=400,left=200,top=200");
     return {
       msg: 'Hello from another window!',
       open: false,

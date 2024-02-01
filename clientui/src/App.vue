@@ -1,7 +1,9 @@
 
 <template>
   <div id="app">
-
+    <WindowPortal v-model="open">
+      <HelloWorld :msg="msg" />
+    </WindowPortal>
     <notifications group="app"/>
     <notifications group="download"/>
 
@@ -16,9 +18,7 @@
     </div>
     <!--<ReportSelection  msg="Bottom"/>-->
     <FooterBar msg="Bottom"/>
-    <WindowPortal v-model="open">
-      <HelloWorld :msg="msg" />
-    </WindowPortal>
+
   </div>
 
 </template>
@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       msg: 'Hello from another window!',
+      open: false,
       selectedTags: []
     }
   }

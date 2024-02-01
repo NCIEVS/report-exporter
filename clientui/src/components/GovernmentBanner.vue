@@ -85,6 +85,7 @@ export default {
   },
 
   mounted() {
+    alert("test Govt Load")
     const plugin = document.createElement("script");
     plugin.setAttribute(
         "src",
