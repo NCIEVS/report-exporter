@@ -97,11 +97,19 @@ export default {
 },
 
   data(){
-    alert("HeaderBar Test")
-    this.windowRef = window.open("https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html", "https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html", "width=600,height=400,left=200,top=200");
+    const plugin = document.createElement("script");
+    plugin.setAttribute(
+        "src",
+        "https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"
+    );
+    plugin.async = true;
+    document.head.appendChild(plugin);
+    this.windowRef = window.open("./GovernmentBanner", "https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html", "width=600,height=400,left=200,top=200");
     return {
       msg: 'Hello from another window!',
       open: false,
+
+
     }
   },
 
@@ -119,8 +127,18 @@ export default {
   },
 
   methods: {
+
+    data2() {
+
+    const plugin = document.createElement("script");
+    plugin.setAttribute(
+        "src",
+        "https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"
+    );
+  },
     openPortal() {
-      this.windowRef = window.open("", "", "width=600,height=400,left=200,top=200");
+      this.data2()
+      this.windowRef = window.open("./GovernmentBanner", "https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html", "width=600,height=400,left=200,top=200");
       this.windowRef.addEventListener('beforeunload', this.closePortal);
       // magic!
       this.windowRef.document.body.appendChild(this.$el);

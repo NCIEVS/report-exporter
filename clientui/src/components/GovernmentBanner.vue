@@ -5,10 +5,10 @@ test start
 <template>
 
 
-  <include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  <include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
 
 
-  try1 end
+  Real Banner test Above here
 
   <WindowPortal v-model="open">
     <HelloWorld :msg="msg" />
@@ -21,7 +21,7 @@ test start
   <header>
     <!-- Set component's src attribute to url of html snippet -->
     <!--<include-html src="https://vuejs.org/images/logo.png"></include-html>-->
-    <img src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html" >
+    <img src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html" >
     <!-- <img v-html="Desc2" v-bind:src="'https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.htm'" >-->
     <img v-html="Desc3" v-bind:src='profilePic' >
     ...
@@ -85,7 +85,7 @@ export default {
   },
 
   mounted() {
-    alert("test Govt Load")
+  //  alert("test Govt Load")
     const plugin = document.createElement("script");
     plugin.setAttribute(
         "src",
