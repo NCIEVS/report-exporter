@@ -104,7 +104,7 @@ export default {
     );
     plugin.async = true;
     document.head.appendChild(plugin);
-    this.windowRef = window.open("./GovernmentBanner", "https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html", "width=600,height=400,left=200,top=200");
+    this.windowRef = window.open("/report-exporter/GovernmentBanner", "https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html", "width=600,height=400,left=200,top=200");
     return {
       msg: 'Hello from another window!',
       open: false,
@@ -138,7 +138,7 @@ export default {
   },
     openPortal() {
       this.data2()
-      this.windowRef = window.open("./GovernmentBanner", "https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html", "width=600,height=400,left=200,top=200");
+      this.windowRef = window.open("/report-exporter/GovernmentBanner", "./components/GovernmentBanner.vue", "width=600,height=400,left=200,top=200");
       this.windowRef.addEventListener('beforeunload', this.closePortal);
       // magic!
       this.windowRef.document.body.appendChild(this.$el);
