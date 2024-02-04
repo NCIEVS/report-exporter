@@ -56,7 +56,7 @@
             </ul>
             <div class="mt-auto"></div>
             <div class="mt-auto"></div>
-            <router-link v-bind:to="'/report-exporter/GovernmentBanner'" >
+            <router-link v-bind:to="'/report-exporter/GovernmentBanne'" >
               <button type="button" class="align-self-end btn btn btn-block btn-primary selectButton">Start Selecting Root Nodes</button>
             </router-link>
           </div>
