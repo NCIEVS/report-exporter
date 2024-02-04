@@ -46,7 +46,7 @@
       <a className="navbar-brand" href="https://www.cancer.gov/" target="_blank">NATIONAL CANCER INSTITUTE -
         CANCER.GOV </a>
       <a className="navbar-brand" href="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html" target="_blank">PLEASE CLICK HERE FOR THE LATEST UPDATES ON IMPORTANT MESSAGES</a>
-      <a className="navbar-brand" href="../components/GovernmentBanner.vue" target="_blank">PLEASE CLICK HERE FOR THE LATEST UPDATES ON IMPORTANT MESSAGES</a>
+      <a className="navbar-brand" href="/report-exporter/GovernmentBanner" target="_blank">PLEASE CLICK HERE FOR THE LATEST UPDATES ON IMPORTANT MESSAGES</a>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbarHeader"
               aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
