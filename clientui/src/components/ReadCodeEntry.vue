@@ -713,7 +713,7 @@ export default {
       axios({
         url: this.$baseURL + 'download/get-file-for-readCodes/'  +
             this.userEnteredCodes + '/' +
-            this.selectedExportOptions + '/' +
+            this.rightOptions  + '/' +
             this.fileFormat  + '/'+
             this.filename + '.' +
             this.userSelectedFormat,
