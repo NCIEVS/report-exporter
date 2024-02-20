@@ -141,7 +141,7 @@
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
-      </span>
+    </span>
     <!--Vue 3 buttons  End-->
     <center><VueSpinner id = "waitTimeIndicator" size="40" color="blue" /></center>
     <br>
@@ -302,8 +302,6 @@ export default {
       multipleEntitiesSplit: [],
       detectComma: '',
       tagsArray:[],
-      selectedPropertiesWindow: '',
-      selectedPropertiesWindowCt: 0,
     };
   },
 
