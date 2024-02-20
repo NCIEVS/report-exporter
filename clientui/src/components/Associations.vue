@@ -372,7 +372,6 @@ export default {
       //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
         document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
-        this.WaitTimeIndicatorPause()
 
         api.getCodes( this.$baseURL, tag, 'ASSOC')
             .then((data)=> {
@@ -405,9 +404,9 @@ export default {
                     }
                   }else{
                     tempStatus = data[x].queryStatus
-                    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    this.newTag = "";                  //Vue 3 used for testing take out after testing
-                    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    // this.newTag = "";                  //Vue 3 used for testing take out after testing
+                    // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
 
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
@@ -425,9 +424,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 }else{
-                  this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                  this.newTag = ""                  //Vue 3 used for testing take out after testing
-                  this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                  // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                  // this.newTag = ""                  //Vue 3 used for testing take out after testing
+                  // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
 
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
@@ -442,6 +441,7 @@ export default {
               }
             })
       }
+      this.WaitTimeIndicatorPause()
     },
 
     // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)

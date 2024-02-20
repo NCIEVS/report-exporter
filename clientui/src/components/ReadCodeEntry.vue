@@ -129,15 +129,15 @@
     <!--Vue 3 buttons start-->
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
-      </span>
+    </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "backButton" class="btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
-      </span>
+    </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "nextOption" class="btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
-      </span>
+    </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
@@ -191,10 +191,10 @@
                     <div class="card bg-light border-dark mb-3">
                       <div class="card-header">
                         Selected Properties
-                        <span class="badge badge-secondary">{{this.selectedPropertiesWindowCt}}</span>
+                        <span class="badge badge-secondary">{{Object.keys(this.rightOptions).length}}</span>
                       </div>
                       <div class="card-body">
-                        <span class="list-group" id="selectedPropertyList">{{ this.selectedPropertiesWindow }}</span>
+                        <span class="list-group" id="selectedPropertyList">{{ this.rightOptions }}</span>
                       </div>
                     </div>
                   </div>
@@ -302,11 +302,6 @@ export default {
       multipleEntitiesSplit: [],
       detectComma: '',
       tagsArray:[],
-      templateSelectedValue:[],
-      templateValueCount: 0,
-      selectedExportOptions: '',
-      templateSelectedOptions: '',
-      templateYesNoFlag: '',
       selectedPropertiesWindow: '',
       selectedPropertiesWindowCt: 0,
     };
@@ -367,7 +362,6 @@ export default {
       //Vue 3 checks entity code entered and returns a description if one is available
       if (tag != "") {
         document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
-        this.WaitTimeIndicatorPause()
 
         api.getCodes(this.$baseURL, tag, 'ENTITY')
             .then((data) => {
@@ -387,9 +381,9 @@ export default {
                     }
                   } else {
                     tempStatus = data[x].queryStatus
-                    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    this.newTag = ""                  //Vue 3 used for testing take out after testing
-                    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    //this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    //this.newTag = ""                  //Vue 3 used for testing take out after testing
+                    //this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
@@ -407,9 +401,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 } else {
-                  this.tags.push(tag + ":" + "");   //take out after testing
-                  this.newTag = ""                  //take out after testing
-                  this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  //this.tags.push(tag + ":" + "");   //take out after testing
+                  //this.newTag = ""                  //take out after testing
+                  //this.tagCounter = this.tagCounter + 1;  //take out after testing
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
@@ -423,6 +417,7 @@ export default {
               }
             })
       }
+      this.WaitTimeIndicatorPause()
     },
 
     // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
@@ -450,8 +445,6 @@ export default {
         this.rightOptions.splice(idx, 1);
         this.availableProperties.push(this.rightSelectedOptions[i - 1])
         this.rightSelectedOptions.pop();
-        this.selectedPropertiesWindowCt = Object.keys(this.selectedPropertiesWindow).length
-
       }
     },
 
@@ -464,9 +457,6 @@ export default {
         this.rightOptions.push(this.leftSelectedOptions[i - 1]);
         this.tempListClear.push(this.leftSelectedOptions[i - 1]);
         this.leftSelectedOptions.pop();
-
-        this.selectedPropertiesWindow = this.rightOptions
-        this.selectedPropertiesWindowCt = Object.keys(this.selectedPropertiesWindow).length
       }
     },
 
@@ -585,7 +575,7 @@ export default {
     validatePropertyStep() {
       // make sure the user has selected at least one property
       //Hides objects on screen that shouldn't appear in step 2
-      if ((this.rightOptions.length > 0) || ((this.templateValueCount > 0)  &&  (this.templateYesNoFlag === "Yes"))) {
+      if (this.rightOptions.length > 0) {
         document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
@@ -597,7 +587,6 @@ export default {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
           return Object.keys(this.rightOptions).length > 0
         }
-
       }
     },
 
