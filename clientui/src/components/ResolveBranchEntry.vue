@@ -333,7 +333,7 @@ export default {
   },
   components: {
     Tree,
-    VueSpinner,
+    VueSpinner
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',

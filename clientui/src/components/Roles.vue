@@ -256,7 +256,7 @@ export default {
     msg: String
   },
   components: {
-    VueSpinner,
+    VueSpinner
   },
   metaInfo: {
 
