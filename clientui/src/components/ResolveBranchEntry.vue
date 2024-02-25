@@ -1181,6 +1181,11 @@ alert(this.$baseURL)
       //.finally(function() { loader.hide()});
 
       alert("after call")
+      alert("base " + this.$baseURL)
+      alert("User Entered Codes " + this.userEnteredCodes )
+      alert("User right options " + this.rightOptions)
+      alert("select level " + this.selectedLevel)
+      alert("select format " + this.userSelectedFormat)
       api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes, this.rightOptions, this.selectedLevel, this.userSelectedFormat)
           .then((data)=>{
             alert("Data Check" + data)
