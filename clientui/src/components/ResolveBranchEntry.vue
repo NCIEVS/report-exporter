@@ -736,7 +736,7 @@ export default {
 
       //Vue 3 checks entity code entered and returns a description if one is available
       if ((tag != "") && (this.tags.length <= 0) && (indexBottomTab <= 0)) {
-alert(this.$baseURL)
+
 
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
@@ -1039,7 +1039,6 @@ alert(this.$baseURL)
 
     async pollForStatus(hashId) {
       // check if a polling url was returned.
-      alert("is function called for Poll status")
       if (this.deferredStatusUrl != null && this.deferredStatusUrl.length >0) {
 
         // loop and wait until the status comes back as true
@@ -1050,7 +1049,6 @@ alert(this.$baseURL)
           await this.sleep(500);
         }
         //loader.hide()
-        //alert("before indicator call")
         this.WaitTimeIndicatorPauseDownload()
 
         if (this.deferredStatus === "ERROR") {
@@ -1135,7 +1133,6 @@ alert(this.$baseURL)
 
     //Method controls downloading a file
     downloadFile() {
-      alert("download")
       document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
       this.$notify({
         group: 'download',
@@ -1156,8 +1153,6 @@ alert(this.$baseURL)
         this.fileFormat = 'JSON';
         this.selectedExportListName = 'JSON (json) JavaScript Object Notation Format';
       }
-
-
 
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
@@ -1180,37 +1175,43 @@ alert(this.$baseURL)
       })
       //.finally(function() { loader.hide()});
 
-      alert("after call")
-      alert("base " + this.$baseURL)
-      alert("User Entered Codes " + this.userEnteredCodes )
-      alert("User right options " + this.rightOptions)
-      alert("select level " + this.selectedLevel)
-      alert("select format " + this.userSelectedFormat)
-      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes, this.rightOptions, this.selectedLevel, this.userSelectedFormat)
+      //alert("after call")
+      //alert("base " + this.$baseURL)
+      //alert("User Entered Codes " + this.userEnteredCodes )
+      //alert("User right options " + this.rightOptions)
+      //alert("select level " + this.selectedLevel)
+      //alert("select format " + this.userSelectedFormat)
+
+      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes, this.rightOptions, this.selectedLevel, this.fileFormat)
           .then((data)=>{
-            alert("Data Check" + data)
             if (data != null) {
               this.deferredStatusUrl = data
-              //const hashId = this.getHashFromURL(this.deferredStatusUrl)
               this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
               this.pollForStatus(this.deferredStatusHash)
-              alert("after poll status")
             }
             else {
               alert ("else")
-             // this.deferredStatusUrl = null
-             // console.log("Error making Deferred call");
+              // this.deferredStatusUrl = null
+              // console.log("Error making Deferred call");
               this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
-              alert("else Poll")
               this.pollForStatus(this.deferredStatusHash)
             }
           })
 
+
+
+
+
+
+
+
+
+
+
+
     },
 
-
     async initiateDeferredDownloadAndWait() {
-      /*
       this.$notify({
         group: 'download',
         title: 'Export in Progress',
@@ -1219,8 +1220,6 @@ alert(this.$baseURL)
         duration: 2000,
         position: "bottom left"
       });
-      */
-
       // show the busy indicator
       /*
       let loader = this.$loading.show({
@@ -1269,7 +1268,7 @@ alert(this.$baseURL)
       });
 
        */
-
+      document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
       this.gaTrackDeferredDownload();
       this.setSelectedTags();
 
@@ -1289,9 +1288,7 @@ alert(this.$baseURL)
       //  alert("selectedFormat Extension: " + this.userSelectedFormat.name);
 
 
-      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
-          this.rightOptions, this.selectedLevel,
-          this.fileFormat)
+      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes, this.rightOptions, this.selectedLevel, this.fileFormat)
           .then((data)=>{
             if (data != null) {
               this.deferredStatusUrl = data
@@ -1358,6 +1355,7 @@ alert(this.$baseURL)
     saveDeferredDownloads() {
       const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};  // Vue 3 Data saved on local storage
       localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));  //Vue 3 Save data on local storage
+      this.WaitTimeIndicatorPauseDownload()
     },
 
     clearDeferredData() {
@@ -1591,8 +1589,4 @@ ul {
 
 
 </style>
-
-
-
-
 
