@@ -976,7 +976,7 @@ export default {
     async WaitTimeIndicatorPauseDownload () {
       setTimeout(() => {
         document.getElementById("waitTimeIndicator").style.display = "None";  //hides wait time indicator
-      }, 2000);
+      }, 1000);
     },
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
