@@ -76,8 +76,8 @@
                 <div class="msl-searchable-list msl-multi-select__list">
                   <input placeholder="Search properties" class="msl-search-list-input custom-input-class" id = "searchProperties" @keyup = "searchPropertiesFilter()">
                   <select multiple v-model="leftSelectedOptions" @dblclick="moveRight" class="msl-searchable-list__items" id = "selectSearchProperties">
-                    <option v-for="optionLeft in availableProperties" :key="optionLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
-                      {{ optionLeft }}
+                    <option v-for="userLeft in availableProperties" :key="userLeft" class="multi-select-option msl-searchable-list__item" id = "optionSearchProperties">
+                      {{ userLeft}}
                     </option>
                   </select>
                 </div>
@@ -126,7 +126,7 @@
                   </div>
                   <input placeholder="Search selected properties" class="msl-search-list-input custom-input-class"  id = "selectedProperties" @keyup = "searchSelectedPropertiesFilter()" >
                   <select multiple v-model="rightSelectedOptions" @dblclick="moveLeft" class="msl-searchable-list__items" id = "selectSelectedProperties">
-                    <option v-for="optionRight in optionOptions" :key="optionRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
+                    <option v-for="optionRight in rightOptions" :key="optionRight" class="multi-select-option msl-searchable-list__item" id = "optionSelectedProperties">
                       {{ optionRight }}
                     </option>
                   </select>
@@ -157,7 +157,9 @@
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
     <!--Vue 3 buttons  End-->
-
+    <center><VueSpinner id = "waitTimeIndicator" size="40" color="blue" /></center>
+    <br>
+    <br>
 
 
     <!-- Summary Information -->
@@ -203,10 +205,10 @@
                     <div class="card bg-light border-dark mb-3">
                       <div class="card-header">
                         Selected Roles
-                        <span class="badge badge-secondary">{{Object.keys(this.optionOptions).length}}</span>
+                        <span class="badge badge-secondary">{{Object.keys(this.rightOptions).length}}</span>
                       </div>
                       <div class="card-body">
-                        <span class="list-group" id="selectedPropertyList">{{ this.optionOptions }}</span>
+                        <span class="list-group" id="selectedPropertyList">{{ this.rightOptions }}</span>
                       </div>
                     </div>
                   </div>
@@ -240,7 +242,7 @@ import api from '../api.js'
 import axios from 'axios'
 import {ref} from 'vue'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
-
+import {VueSpinner} from  'vue3-spinners';
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
@@ -253,7 +255,9 @@ export default {
   props: {
     msg: String
   },
-  components: {},
+  components: {
+    VueSpinner
+  },
   metaInfo: {
 
     title: 'EVS Report Exporter - Read Code',
@@ -263,6 +267,7 @@ export default {
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
+    document.getElementById("waitTimeIndicator").style.display = "none"; // Hide Wait time indicator when system loads
   },
 
 
@@ -303,10 +308,10 @@ export default {
       showSummary: true,
       showSummaryText: '',
       tag: "[]",
-      leftSelectedOptions: [],
-      rightSelectedOptions: [],
-      optionOptions: [],
-      tempListClear: [],
+      leftSelectedOptions:[],
+      rightSelectedOptions:[],
+      rightOptions:[],
+      tempListClear:[],
       tagCounter: 0,
       newTagCounter: 0,
       multipleEntitiesSplit: [],
@@ -369,6 +374,9 @@ export default {
       }
       //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
+        this.WaitTimeIndicatorPause()
+
         api.getCodes(this.$baseURL, tag, 'ROLE')
             .then((data) => {
 
@@ -399,9 +407,9 @@ export default {
                     }
                   } else {
                     tempStatus = data[x].queryStatus
-                    // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    // this.newTag = "";                  //Vue 3 used for testing take out after testing
-                    // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    //this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    //this.newTag = "";                  //Vue 3 used for testing take out after testing
+                    //this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
 
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
@@ -419,9 +427,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 } else {
-                  //      this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                  //      this.newTag = ""                  //Vue 3 used for testing take out after testing
-                  //       this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                  //this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                  //this.newTag = ""                  //Vue 3 used for testing take out after testing
+                  //this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
 
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
@@ -459,10 +467,10 @@ export default {
 
     //Vue 3 move data from right list box on second screen to left list box on second screen
     moveLeft() {
-      if (!this.rightSelectedOptions.length) return;
-      for (let i = this.rightSelectedOptions.length; i > 0; i--) {
-        let idx = this.optionOptions.indexOf(this.rightSelectedOptions[i - 1]);
-        this.optionOptions.splice(idx, 1);
+      if(!this.rightSelectedOptions.length) return;
+      for(let i=this.rightSelectedOptions.length;i>0;i--) {
+        let idx = this.rightOptions.indexOf(this.rightSelectedOptions[i-1]);
+        this.rightOptions.splice(idx, 1);
         this.availableProperties.push(this.rightSelectedOptions[i - 1])
         this.rightSelectedOptions.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "";
@@ -474,9 +482,9 @@ export default {
     moveRight() {
       if (!this.leftSelectedOptions.length) return;
       for (let i = this.leftSelectedOptions.length; i > 0; i--) {
-        let idx = this.availableProperties.indexOf(this.leftSelectedOptions[i - 1]);
+        let idx = this.availableProperties.indexOf(this.leftSelectedOptions[i-1]);
         this.availableProperties.splice(idx, 1);
-        this.optionOptions.push(this.leftSelectedOptions[i - 1]);
+        this.rightOptions.push(this.leftSelectedOptions[i - 1]);
         this.tempListClear.push(this.leftSelectedOptions[i - 1]);
         this.leftSelectedOptions.pop();
         document.getElementById("enteredCodeLabelLeft").style.display = "none";
@@ -565,10 +573,12 @@ export default {
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
+        document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextButton").style.display = ""; //Hides next button
+        this.WaitTimeIndicatorPause()
       }
 
       if (selectNextOptionBTN_counter === 2) {
@@ -579,14 +589,16 @@ export default {
         this.setSelectedTags()
         this.getRoles()
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
+          document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
           document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
+          this.WaitTimeIndicatorPause()
 
-          if (this.optionOptions.length <= 0) {
+          if (this.rightOptions.length <= 0) {
             document.getElementById("enteredCodeLabelLeft").style.display = "";
             document.getElementById("enteredCodeLabelRight").style.display = "none";
           }
@@ -599,9 +611,9 @@ export default {
 
       api.getRoles(this.$baseURL, this.userEnteredCodes)
           .then((data) => {
-              for (let x = data.length - 1; x >= 0; x--) {
-                this.availableProperties.push(data[x].type);
-              }
+            for (let x = data.length - 1; x >= 0; x--) {
+              this.availableProperties.push(data[x].type);
+            }
           })
     },
 
@@ -610,15 +622,17 @@ export default {
       // make sure the user has selected at least one property
       //Hides objects on screen that shouldn't appear in step 2
 
-      if (this.optionOptions.length > 0) {
+      if (this.rightOptions.length > 0) {
+        document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
+        this.WaitTimeIndicatorPause()
 
-        if (Object.keys(this.optionOptions).length > 0) {
+        if (Object.keys(this.rightOptions).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
-          return Object.keys(this.optionOptions).length > 0
+          return Object.keys(this.rightOptions).length > 0
         }
       }
     },
@@ -627,7 +641,8 @@ export default {
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
-        this.optionOptions = []
+        this.rightOptions = []
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
         document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
         document.getElementById("clearButton").style.display = "";    //Shows clear button
         document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
@@ -635,17 +650,27 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+        this.WaitTimeIndicatorPause()
       }
 
       //Shows screen for step 2
       if (selectNextOptionBTN_counter === 3) {
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
         document.getElementById("exportButton").style.display = "none"; //Hides Export button
         document.getElementById("nextOption").style.display = ""; //Hides next button
         document.getElementById("exportStep").style.display = "none";  //Hides Export Step
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+        this.WaitTimeIndicatorPause()
       }
+    },
+
+    //Code provides a small delay so that the spinner circle shown to the end user when processing a task could be visible
+    async WaitTimeIndicatorPause () {
+      setTimeout(() => {
+        document.getElementById("waitTimeIndicator").style.display = "None";  //hides wait time indicator
+      }, 500);
     },
 
     exportStep() {
@@ -686,7 +711,7 @@ export default {
 
     //Method is for the file download
     downloadFile() {
-
+      document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
       this.$notify({
         group: 'download',
         title: 'Export in Progress',
@@ -710,7 +735,7 @@ export default {
 
       //alert("base URL: " + this.$baseURL);
       //alert("tags: " + this.userEnteredCodes);
-      //alert("selectedPropertyName: " + this.optionOptions);
+      //alert("selectedPropertyName: " + this.rightOptions);
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
       //alert("selectedFormat Extension: " + this.userSelectedFormat);
@@ -719,7 +744,7 @@ export default {
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-roles/'  +
             this.userEnteredCodes + '/' +
-            this.optionOptions + '/' +
+            this.rightOptions + '/' +
             this.fileFormat  + '/'+
             this.filename + '.' +
             this.userSelectedFormat,
@@ -739,6 +764,7 @@ export default {
         console.error("Download Error: " + error);
       })
       //.finally(function() { loader.hide()});
+      this.WaitTimeIndicatorPause()
     },
 
     // removes forward slashes and all kinds of Unicode whitespace characters

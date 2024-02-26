@@ -154,7 +154,9 @@
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
     <!--Vue 3 buttons  End-->
-
+    <center><VueSpinner id = "waitTimeIndicator" size="40" color="blue" /></center>
+    <br>
+    <br>
 
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
@@ -236,7 +238,7 @@ import api from '../api.js'
 import axios from 'axios'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css'
 import {ref} from "vue";
-
+import {VueSpinner} from  'vue3-spinners';
 
 //vue 3 counter for (Select Next Option) button due to form-wizard not working
 let selectNextOptionBTN_counter =  1;
@@ -250,7 +252,7 @@ export default {
     msg: String
   },
   components: {
-
+    VueSpinner
   },
   metaInfo: {
 
@@ -261,6 +263,7 @@ export default {
   mounted() {
     this.hideObjectsOnScreen();  //function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"
+    document.getElementById("waitTimeIndicator").style.display = "none"; // Hide Wait time indicator when system loads
   },
 
   setup(){
@@ -368,6 +371,8 @@ export default {
       }
       //Vue 3 checks entity code entered and returns a description if on is available
       if (tag != "") {
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
+
         api.getCodes( this.$baseURL, tag, 'ASSOC')
             .then((data)=> {
 
@@ -419,9 +424,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 }else{
-                  //      this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                  //      this.newTag = ""                  //Vue 3 used for testing take out after testing
-                  //       this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                  // this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                  // this.newTag = ""                  //Vue 3 used for testing take out after testing
+                  // this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
 
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
@@ -436,6 +441,7 @@ export default {
               }
             })
       }
+      this.WaitTimeIndicatorPause()
     },
 
     // Vue 3 this method takes the code description combo ex. (C12219:Anatomic Structure System or Substance) and returns only the code ex (C12219)
@@ -564,10 +570,12 @@ export default {
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
+        document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextButton").style.display = ""; //Hides next button
+        this.WaitTimeIndicatorPause()
       }
 
       if (selectNextOptionBTN_counter === 2) {
@@ -578,6 +586,7 @@ export default {
         this.setSelectedTags()
         this.getAssociations()
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
+          document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
           document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
@@ -585,6 +594,7 @@ export default {
           document.getElementById("backButton").style.display = "";     //Shows back button
 
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1
+          this.WaitTimeIndicatorPause()
 
           // reset what concept codes are used
           if (this.rightOptions.length <=0) {
@@ -612,10 +622,12 @@ export default {
       //Hides objects on screen that shouldn't appear in step 2
 
       if (this.rightOptions.length > 0) {
+        document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
+        this.WaitTimeIndicatorPause()
 
 
         if (Object.keys(this.rightOptions).length > 0) {
@@ -630,6 +642,7 @@ export default {
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
         this.rightOptions = []
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
         document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
         document.getElementById("clearButton").style.display = "";    //Shows clear button
         document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
@@ -637,17 +650,27 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+        this.WaitTimeIndicatorPause()
       }
 
       //Shows screen for step 2
       if (selectNextOptionBTN_counter === 3) {
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
         document.getElementById("exportButton").style.display = "none"; //Hides Export button
         document.getElementById("nextOption").style.display = ""; //Hides next button
         document.getElementById("exportStep").style.display = "none";  //Hides Export Step
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+        this.WaitTimeIndicatorPause()
       }
+    },
+
+    //Code provides a small delay so that the spinner circle shown to the end user when processing a task could be visible
+    async WaitTimeIndicatorPause () {
+      setTimeout(() => {
+        document.getElementById("waitTimeIndicator").style.display = "None";  //hides wait time indicator
+      }, 500);
     },
 
     exportStep() {
@@ -688,7 +711,7 @@ export default {
 
     //Method controls downloading a file
     downloadFile() {
-
+      document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
       this.$notify({
         group: 'download',
         title: 'Export in Progress',
@@ -739,6 +762,7 @@ export default {
       }).catch(function(error) {
         console.error("Download Error: " + error);
       })
+      this.WaitTimeIndicatorPause()
     },
   },
   created() {

@@ -203,6 +203,9 @@
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="ExportNowOrLater()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
       </span>
     <!--Vue 3 buttons  End-->
+    <center><VueSpinner id = "waitTimeIndicator" size="40" color="blue" /></center>
+    <br>
+    <br>
 
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
@@ -299,6 +302,7 @@ import {ref} from "vue";
 import Tree from "vue3-tree";
 import "vue3-tree/dist/style.css";
 import { defineComponent } from "vue";
+import {VueSpinner} from  'vue3-spinners';
 //import 'src/router/index.js'
 //import router2 from './router'
 
@@ -328,7 +332,8 @@ export default {
     msg: String, defineComponent,
   },
   components: {
-    Tree
+    Tree,
+    VueSpinner
   },
   metaInfo: {
     title: 'EVS Report Exporter - Branch Resolve',
@@ -338,6 +343,7 @@ export default {
     this.hideObjectsOnScreen();  //Vue 3 function for when page loads certain objects like buttons or text boxes will be hidden
     this.selectedExportListName = "JSON (json) JavaScript Object Notation Format"  //Vue 3 Loads default file format
     this.$refs["my-tree"].expandNode(1);
+    document.getElementById("waitTimeIndicator").style.display = "none"; // Hide Wait time indicator when system loads
 
   },
   setup(){
@@ -707,6 +713,7 @@ export default {
       tag = tag.replace(/[\s/]/g, '')
       tag = tag.replace(',', '')  // Vue 3 removes commas if entered in the text box
 
+      document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
 
       indexBottomTab = tag.indexOf(":");
       if ((indexBottomTab > 0) && (this.tags.length <= 0)){
@@ -729,6 +736,7 @@ export default {
 
       //Vue 3 checks entity code entered and returns a description if one is available
       if ((tag != "") && (this.tags.length <= 0) && (indexBottomTab <= 0)) {
+
 
         api.getCodes( this.$baseURL, tag, 'ENTITY')
             .then((data)=> {
@@ -788,6 +796,7 @@ export default {
               }
             })
       }
+      this.WaitTimeIndicatorPause()
     },
 
     //Vue 3 move data from right list box on second screen to left list box on second screen
@@ -871,6 +880,7 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
+      document.getElementById("waitTimeIndicator").style.display = "none"; // Hide Wait time indicator when system loads
     },
 
     validateFirstStep() {
@@ -881,10 +891,12 @@ export default {
 
       //Vue 3 STEP 1
       if (selectNextOptionBTN_counter === 3) {
+        document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextButton").style.display = ""; //Hides next button
+        this.WaitTimeIndicatorPause()
       }
 
       if (selectNextOptionBTN_counter === 2) {
@@ -894,12 +906,14 @@ export default {
 
       if (selectNextOptionBTN_counter === 1) {
         if ((this.tags.length > 0) && (this.selectedLevel > 0)) {  // checks to make sure that a code was entered before proceeding to next screen
+          document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
           document.getElementById("clearButton").style.display = "none";    //Hides clear button
           document.getElementById("entityTextID").style.display = "none";   //Hides textbox on main screen
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
+          this.WaitTimeIndicatorPause()
         }
       }
     },
@@ -910,11 +924,12 @@ export default {
       //Hides objects on screen that shouldn't appear in step 2
 
       if (this.rightOptions.length > 0) {
+        document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
         document.getElementById("nextOption").style.display = "none"; //Hides next option button
-
+        this.WaitTimeIndicatorPause()
 
         if (Object.keys(this.rightOptions).length > 0) {
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1;
@@ -927,6 +942,7 @@ export default {
     backStep(){
       //Shows screen for step 1
       if (selectNextOptionBTN_counter === 2) {
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
         document.getElementById("SelectProperties1").style.display = "none";  //shows listboxs on second screen
         document.getElementById("clearButton").style.display = "";    //Shows clear button
         document.getElementById("entityTextID").style.display = "";   //Shows textbox on main screen
@@ -934,19 +950,34 @@ export default {
         document.getElementById("backButton").style.display = "none"; //Hides back button on main screen
         document.getElementById("nextOption").style.display = "";     //Shows next button
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+        this.WaitTimeIndicatorPause()
       }
 
       //Shows screen =for step 2
       if (selectNextOptionBTN_counter === 3) {
+        document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
         document.getElementById("SelectProperties1").style.display = "";  //shows listboxs on second screen
         document.getElementById("backButton").style.display = "";     //Shows back button on main screen
         document.getElementById("exportButton").style.display = "none"; //Hides Export button
         document.getElementById("nextOption").style.display = ""; //Hides next button
         document.getElementById("exportStep").style.display = "none";  //Hides Export Step
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
+        this.WaitTimeIndicatorPause()
       }
     },
 
+    //Code provides a small delay so that the spinner circle shown to the end user when processing a task could be visible
+    async WaitTimeIndicatorPause () {
+      setTimeout(() => {
+        document.getElementById("waitTimeIndicator").style.display = "None";  //hides wait time indicator
+      }, 500);
+    },
+
+    async WaitTimeIndicatorPauseDownload () {
+      setTimeout(() => {
+        document.getElementById("waitTimeIndicator").style.display = "None";  //hides wait time indicator
+      }, 2000);
+    },
 
     //Vue 3 Function controls Select format Export dropdown on Step 3
     changeSelectedExportList(event){
@@ -1018,6 +1049,7 @@ export default {
           await this.sleep(500);
         }
         //loader.hide()
+        this.WaitTimeIndicatorPauseDownload()
 
         if (this.deferredStatus === "ERROR") {
           alert("Error downloading deferred file");
@@ -1101,6 +1133,7 @@ export default {
 
     //Method controls downloading a file
     downloadFile() {
+      document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
       this.$notify({
         group: 'download',
         title: 'Export in Progress',
@@ -1141,6 +1174,26 @@ export default {
         console.error("Download Error: " + error);
       })
       //.finally(function() { loader.hide()});
+      //alert("base " + this.$baseURL)
+      //alert("User Entered Codes " + this.userEnteredCodes )
+      //alert("User right options " + this.rightOptions)
+      //alert("select level " + this.selectedLevel)
+      //alert("select format " + this.userSelectedFormat)
+
+      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes, this.rightOptions, this.selectedLevel, this.fileFormat)
+          .then((data)=>{
+            if (data != null) {
+              this.deferredStatusUrl = data
+              this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
+              this.pollForStatus(this.deferredStatusHash)
+            }
+            else {
+              // this.deferredStatusUrl = null
+              // console.log("Error making Deferred call");
+              this.deferredStatusHash = this.getHashFromURL(this.deferredStatusUrl)
+              this.pollForStatus(this.deferredStatusHash)
+            }
+          })
     },
 
     async initiateDeferredDownloadAndWait() {
@@ -1159,7 +1212,6 @@ export default {
         loader: 'dots',
         isFullPage: false,
       });
-
        */
 
       this.gaTrackDownload();
@@ -1200,7 +1252,7 @@ export default {
       });
 
        */
-
+      document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
       this.gaTrackDeferredDownload();
       this.setSelectedTags();
 
@@ -1219,10 +1271,7 @@ export default {
       //alert("filename: " + this.filename);
       //  alert("selectedFormat Extension: " + this.userSelectedFormat.name);
 
-
-      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes,
-          this.rightOptions, this.selectedLevel,
-          this.fileFormat)
+      api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes, this.rightOptions, this.selectedLevel, this.fileFormat)
           .then((data)=>{
             if (data != null) {
               this.deferredStatusUrl = data
@@ -1289,6 +1338,7 @@ export default {
     saveDeferredDownloads() {
       const fileData = { key: this.deferredStatusHash, format: this.fileFormat,  date: new Date().toLocaleString(), status: "TRUE"};  // Vue 3 Data saved on local storage
       localStorage.setItem(this.deferredStatusHash, JSON.stringify(fileData));  //Vue 3 Save data on local storage
+      this.WaitTimeIndicatorPauseDownload()
     },
 
     clearDeferredData() {
@@ -1521,4 +1571,6 @@ ul {
 
 
 
+
 </style>
+
