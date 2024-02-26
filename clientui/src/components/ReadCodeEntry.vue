@@ -129,25 +129,23 @@
     <!--Vue 3 buttons start-->
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "clearButton" class="btn-delete" v-on:click="removeAllTags2(0)"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Clear </button>
-    </span>
+      </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "backButton" class="btn-back" v-on:click="backStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Back </button>
-    </span>
+      </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "nextOption" class="btn-next" v-on:click="validateFirstStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Select Next Option </button>
-    </span>
+      </span>
 
     <span role="button" tabindex="0">
         <button tabindex="-1" type="button" id = "exportButton" class="btn-export" v-on:click="exportStep()"  style="background-color: rgb(1, 126, 190); border-color: rgb(1, 126, 190); color: white;"> Export </button>
-    </span>
+      </span>
     <!--Vue 3 buttons  End-->
     <center><VueSpinner id = "waitTimeIndicator" size="40" color="blue" /></center>
     <br>
     <br>
-
-
 
     <!-- Summary Information -->
     <div id="accordion" class="pb-3 pt-3">
@@ -302,6 +300,13 @@ export default {
       multipleEntitiesSplit: [],
       detectComma: '',
       tagsArray:[],
+      templateSelectedValue:[],
+      templateValueCount: 0,
+      selectedExportOptions: '',
+      templateSelectedOptions: '',
+      templateYesNoFlag: '',
+      selectedPropertiesWindow: '',
+      selectedPropertiesWindowCt: 0,
     };
   },
 
@@ -514,7 +519,6 @@ export default {
       document.getElementById("backButton").style.display = "none";
       document.getElementById("exportStep").style.display = "none";
       document.getElementById("exportButton").style.display = "none";
-
       api.getProperties(this.$baseURL)
           .then((data)=> {
 
@@ -562,7 +566,6 @@ export default {
           document.getElementById("entityLabelId").style.display = "none";  //Hides label on main screen
           document.getElementById("SelectProperties1").style.display = "";  //Shows listboxs on second screen
           document.getElementById("backButton").style.display = "";     //Shows back button
-
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
           this.WaitTimeIndicatorPause()
         }
@@ -588,7 +591,6 @@ export default {
       }
     },
 
-
     //Method is used for back button
     backStep(){
       //Shows screen for step 1
@@ -612,7 +614,6 @@ export default {
         document.getElementById("exportButton").style.display = "none"; //Hides Export button
         document.getElementById("nextOption").style.display = ""; //Shows next button
         document.getElementById("exportStep").style.display = "none";  //Hides Export Step
-
         selectNextOptionBTN_counter = selectNextOptionBTN_counter - 1;
         this.WaitTimeIndicatorPause()
       }
@@ -660,7 +661,6 @@ export default {
         this.selectedExportListName = "EXCEL (xlsx) Microsoft Excel Format"
       }
     },
-
 
 
     // Vue 3 method to download file
