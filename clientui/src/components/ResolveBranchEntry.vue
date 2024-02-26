@@ -1174,8 +1174,6 @@ export default {
         console.error("Download Error: " + error);
       })
       //.finally(function() { loader.hide()});
-
-      //alert("after call")
       //alert("base " + this.$baseURL)
       //alert("User Entered Codes " + this.userEnteredCodes )
       //alert("User right options " + this.rightOptions)
@@ -1197,18 +1195,6 @@ export default {
               this.pollForStatus(this.deferredStatusHash)
             }
           })
-
-
-
-
-
-
-
-
-
-
-
-
     },
 
     async initiateDeferredDownloadAndWait() {
@@ -1227,7 +1213,6 @@ export default {
         loader: 'dots',
         isFullPage: false,
       });
-
        */
 
       this.gaTrackDownload();
@@ -1286,7 +1271,6 @@ export default {
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
       //  alert("selectedFormat Extension: " + this.userSelectedFormat.name);
-
 
       api.initiateDeferredDownload(this.$baseURL, this.userEnteredCodes, this.rightOptions, this.selectedLevel, this.fileFormat)
           .then((data)=>{
