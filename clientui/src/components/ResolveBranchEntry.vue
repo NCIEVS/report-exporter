@@ -1302,7 +1302,6 @@ export default {
 
 
     downloadDeferredResult(hashId) {
-      document.getElementById("waitTimeIndicator").style.display = ""; //shows wait time indicator
       axios({
         url:this.$baseURL +
             'download/deferred/checkFileForHashFormatResponseEntity/'  +
@@ -1323,7 +1322,6 @@ export default {
         console.error("Deferred Download Error: " + error);
       }).finally(function() {
         //this.clearDeferredData()
-        this.WaitTimeIndicatorPauseDownload()
       });
     },
 
