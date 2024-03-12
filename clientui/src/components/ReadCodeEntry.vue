@@ -164,7 +164,7 @@
         <div>Selected Template: {{ templateSelectedValue }}</div>
         <tr>
           <input type="radio" id="html" name="fav_language" value="ALT_DEFINITION, DEFINITION" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
-          <label for="html">{{ this.newTag }}, ALT_DEFINITION, DEFINITION</label>
+          <label for="html">{{ this.userEnteredCodes }}, ALT_DEFINITION, DEFINITION</label>
           <br>
           <input type="radio" id="html" name="fav_language" value="Macronutrient, Micronutrient" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
           <label for="html">Macronutrient, Micronutrient</label>
