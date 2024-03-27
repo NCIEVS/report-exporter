@@ -161,7 +161,7 @@
     <center>
       <div id = "TemplateOption">
         <u><div>Select a Template</div></u>
-        <div>Selected Template: {{ templateSelectedValue }}</div>
+        <div class = "templateSelection">Selected Template: <strong>{{ templateSelectedValue }}</strong></div>
         <tr>
           <input type="radio" id="html" name="fav_language" :value= this.templateCodeDesc  v-model="templateSelectedValue" @change="changeTemplateSelectedVal(3)">
           <label for="html">{{ this.templateCodeDesc }}</label>
@@ -1038,5 +1038,9 @@ ul {
   border-radius: 4px;
   margin-left: 277px;
   width: 158px;
+}
+
+.templateSelection {
+  color: rgb(0, 125, 188);
 }
 </style>
