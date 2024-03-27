@@ -163,11 +163,8 @@
         <u><div>Select a Template</div></u>
         <div>Selected Template: {{ templateSelectedValue }}</div>
         <tr>
-          <input type="radio" id="html" name="fav_language" value="ALT_DEFINITION, DEFINITION" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
-          <label for="html">{{ this.userEnteredCodes }}, ALT_DEFINITION, DEFINITION</label>
-          <br>
-          <input type="radio" id="html" name="fav_language" value="Macronutrient, Micronutrient" v-model="templateSelectedValue" @change="changeTemplateSelectedVal(templateSelectedValue, 2)">
-          <label for="html">Macronutrient, Micronutrient</label>
+          <input type="radio" id="html" name="fav_language" :value= this.templateCodeDesc  v-model="templateSelectedValue" @change="changeTemplateSelectedVal(3)">
+          <label for="html">{{ this.templateCodeDesc }}</label>
         </tr>
       </div>
     </center>
@@ -333,6 +330,11 @@ export default {
       templateYesNoFlag: '',
       selectedPropertiesWindow: '',
       selectedPropertiesWindowCt: 0,
+      typeValue: [],
+      synonymValue: [],
+      qualifierValue: [],
+      templatePropertiesValue: 'FULL SYN, ALT_DEFINITION, DEFINITION',
+      templateCodeDesc: ''
     };
   },
 
@@ -407,12 +409,13 @@ export default {
                       this.newTag = ""; // Vue 3 reset newTag
                       this.tagCounter = this.tagCounter + 1;
                       this.newTagCounter = this.newTagCounter + 1;
+                      this.loadTemplateValues(this.tags)
                     }
                   } else {
                     tempStatus = data[x].queryStatus
-                    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                    this.newTag = ""                  //Vue 3 used for testing take out after testing
-                    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                  //  this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                  //  this.newTag = ""                  //Vue 3 used for testing take out after testing
+                  //  this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
@@ -422,6 +425,7 @@ export default {
                       duration: 6000,
                       position: "left bottom"
                     });
+                    this.loadTemplateValues(this.tags)
                   }
                 }
               } else {
@@ -430,9 +434,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 } else {
-                  this.tags.push(tag + ":" + "");   //take out after testing
-                  this.newTag = ""                  //take out after testing
-                  this.tagCounter = this.tagCounter + 1;  //take out after testing
+                //  this.tags.push(tag + ":" + "");   //take out after testing
+                //  this.newTag = ""                  //take out after testing
+                //  this.tagCounter = this.tagCounter + 1;  //take out after testing
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
@@ -442,10 +446,12 @@ export default {
                     duration: 6000,
                     position: "left bottom"
                   });
+                  this.loadTemplateValues(this.tags)
                 }
               }
             })
       }
+
       this.WaitTimeIndicatorPause()
     },
 
@@ -475,7 +481,6 @@ export default {
         this.availableProperties.push(this.rightSelectedOptions[i - 1])
         this.rightSelectedOptions.pop();
         this.selectedPropertiesWindowCt = Object.keys(this.selectedPropertiesWindow).length
-
       }
     },
 
@@ -488,7 +493,6 @@ export default {
         this.rightOptions.push(this.leftSelectedOptions[i - 1]);
         this.tempListClear.push(this.leftSelectedOptions[i - 1]);
         this.leftSelectedOptions.pop();
-
         this.selectedPropertiesWindow = this.rightOptions
         this.selectedPropertiesWindowCt = Object.keys(this.selectedPropertiesWindow).length
       }
@@ -583,7 +587,7 @@ export default {
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
         document.getElementById("SelectProperties1").style.display = "none";  //Hide list boxes from step 2
         document.getElementById("exportButton").style.display = ""; //Show Export button
-        document.getElementById("nextButton").style.display = ""; //Hides next button
+        document.getElementById("nextButton").style.display = ""; //Shows next button
         this.WaitTimeIndicatorPause()
       }
 
@@ -591,7 +595,7 @@ export default {
         this.validatePropertyStep();
       }
 
-      //Vue 3 (Builds screen on step 2)
+      //Vue 3 (Shows second screen with properties windows and template dropdown)
       if (selectNextOptionBTN_counter === 1) {
         if (this.tags.length > 0) {  // checks to make sure that a code was entered before proceeding to next screen
           document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
@@ -603,10 +607,16 @@ export default {
           document.getElementById("TemplateOption").style.display = "none";  //Hides Template options radio buttons
           document.getElementById("Templating").style.display = "";  // Shows Template dropdown
 
+          //Refreshes the template options when a selection is made
           if (this.templateYesNoFlag === "Yes")
           {
             document.getElementById("TemplateOption").style.display = "";  //shows Template option
             document.getElementById("SelectProperties1").style.display = "none";
+            this.templateCodeDesc = this.tags + ", " + this.templatePropertiesValue
+            this.selectedPropertiesWindow = this.templateCodeDesc
+            if (this.templateSelectedValue != "") {
+              this.templateSelectedValue = this.templateCodeDesc
+            }
           }
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
           this.WaitTimeIndicatorPause()
@@ -618,6 +628,7 @@ export default {
     validatePropertyStep() {
       // make sure the user has selected at least one property
       //Hides objects on screen that shouldn't appear in step 2
+      //(Shows 3rd screen export functionality)
       if ((this.rightOptions.length > 0) || ((this.templateValueCount > 0)  &&  (this.templateYesNoFlag === "Yes"))) {
         document.getElementById("waitTimeIndicator").style.display = "";  //Show wait time indicator
         document.getElementById("exportStep").style.display = "";  //Show Export dropdown
@@ -668,10 +679,17 @@ export default {
         document.getElementById("Templating").style.display = ""; //Show Templating dropdown
         document.getElementById("TemplateOption").style.display = "";  //Hides Template options radio buttons
 
+
         if (this.templateYesNoFlag === "Yes")
         {
           document.getElementById("TemplateOption").style.display = "";  //shows Template option
           document.getElementById("SelectProperties1").style.display = "none"; //Hides listboxes on second screen
+
+          // refreshes selected template if changes to the selected codes were made
+          if (this.templateSelectedValue != "")
+          {
+            this.templateSelectedValue = this.tags + ", " + this.templatePropertiesValue
+          }
         }
 
         if ((this.templateYesNoFlag === "No") || (this.templateYesNoFlag === ""))
@@ -741,6 +759,12 @@ export default {
           this.selectedPropertiesWindow = this.templateSelectedOptions
           this.selectedPropertiesWindowCt = this.templateValueCount
         }
+
+        // refreshes selected template if changes to the selected codes were made
+        if (this.templateSelectedValue != "")
+        {
+          this.selectedPropertiesWindow = this.tags + ", " + this.templatePropertiesValue
+        }
       }
 
       if (event.target.value === "No")
@@ -755,10 +779,10 @@ export default {
       }
     },
 
-    changeTemplateSelectedVal(templateValue, selectionLength){
+    changeTemplateSelectedVal(selectionLength){
       this.templateValueCount = selectionLength
-      this.templateSelectedOptions = templateValue
-      this.selectedPropertiesWindow = templateValue
+      this.templateSelectedOptions = this.templateCodeDesc
+      this.selectedPropertiesWindow = this.templateCodeDesc
       this.selectedPropertiesWindowCt = selectionLength
     },
 
@@ -795,15 +819,15 @@ export default {
       //alert("selectedFormat Extension: " + this.userSelectedFormat);
       //alert (this.queryEntitySelection);
 
+
       if ((this.rightOptions.length > 0) && (this.templateYesNoFlag === "No" || this.templateYesNoFlag === ""))
       {
         this.selectedExportOptions = this.rightOptions
       }
       else
       {
-        this.selectedExportOptions = this.templateSelectedOptions
+        this.selectedExportOptions = this.templatePropertiesValue
       }
-
       axios({
         url: this.$baseURL + 'download/get-file-for-readCodes/'  +
             this.userEnteredCodes + '/' +
@@ -828,6 +852,10 @@ export default {
       //.finally(function() { loader.hide()});
       this.WaitTimeIndicatorPause()
     },
+      loadTemplateValues(codeDesc){
+        this.templateCodeDesc = codeDesc
+        this.templateCodeDesc = this.templateCodeDesc + ", " + this.templatePropertiesValue
+    }
   },
 
   created() {
