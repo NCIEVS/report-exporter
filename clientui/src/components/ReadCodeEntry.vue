@@ -413,9 +413,9 @@ export default {
                     }
                   } else {
                     tempStatus = data[x].queryStatus
-                  //  this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                  //  this.newTag = ""                  //Vue 3 used for testing take out after testing
-                  //  this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    this.newTag = ""                  //Vue 3 used for testing take out after testing
+                    this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
@@ -434,9 +434,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 } else {
-                //  this.tags.push(tag + ":" + "");   //take out after testing
-                //  this.newTag = ""                  //take out after testing
-                //  this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  this.tags.push(tag + ":" + "");   //take out after testing
+                  this.newTag = ""                  //take out after testing
+                  this.tagCounter = this.tagCounter + 1;  //take out after testing
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
@@ -618,6 +618,14 @@ export default {
               this.templateSelectedValue = this.templateCodeDesc
             }
           }
+
+          if (this.templateYesNoFlag === "No")
+          {
+            this.templateCodeDesc = this.tags + ", " + this.templatePropertiesValue
+            this.templateSelectedValue = this.templateCodeDesc
+            this.selectedPropertiesWindow = this.templateCodeDesc
+          }
+
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
           this.WaitTimeIndicatorPause()
         }
@@ -756,14 +764,9 @@ export default {
         document.getElementById("TemplateOption").style.display = "";
 
         if (this.templateSelectedOptions.length > 0) {
-          this.selectedPropertiesWindow = this.templateSelectedOptions
-          this.selectedPropertiesWindowCt = this.templateValueCount
-        }
-
-        // refreshes selected template if changes to the selected codes were made
-        if (this.templateSelectedValue != "")
-        {
+        //  this.selectedPropertiesWindow = this.templateSelectedOptions
           this.selectedPropertiesWindow = this.tags + ", " + this.templatePropertiesValue
+          this.selectedPropertiesWindowCt = this.templateValueCount
         }
       }
 
