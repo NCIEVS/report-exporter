@@ -331,8 +331,6 @@ export default {
       selectedPropertiesWindow: '',
       selectedPropertiesWindowCt: 0,
       typeValue: [],
-      synonymValue: [],
-      qualifierValue: [],
       templatePropertiesValue: 'FULL SYN, ALT_DEFINITION, DEFINITION',
       templateCodeDesc: ''
     };
@@ -413,9 +411,9 @@ export default {
                     }
                   } else {
                     tempStatus = data[x].queryStatus
-                  //  this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
-                  //  this.newTag = ""                  //Vue 3 used for testing take out after testing
-                  //  this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
+                    //this.tags.push(tag + ":" + "");   //Vue 3 used for testing take out after testing
+                    //this.newTag = ""                  //Vue 3 used for testing take out after testing
+                    //this.tagCounter = this.tagCounter + 1;  //Vue 3 used for testing take out after testing
                     //Vue 3 error message if invalid entity code is entered
                     this.$notify({
                       group: 'app',
@@ -434,9 +432,9 @@ export default {
                   this.newTag = [];
                   dupTagCheck = false;
                 } else {
-                //  this.tags.push(tag + ":" + "");   //take out after testing
-                //  this.newTag = ""                  //take out after testing
-                //  this.tagCounter = this.tagCounter + 1;  //take out after testing
+                  //this.tags.push(tag + ":" + "");   //take out after testing
+                  //this.newTag = ""                  //take out after testing
+                  //this.tagCounter = this.tagCounter + 1;  //take out after testing
                   //Vue 3 error message if invalid entity code is entered
                   this.$notify({
                     group: 'app',
@@ -451,7 +449,6 @@ export default {
               }
             })
       }
-
       this.WaitTimeIndicatorPause()
     },
 
@@ -627,10 +624,6 @@ export default {
             this.selectedPropertiesWindowCt = 0
           }
 
-        //  if (this.rightOptions.length < 1){
-        //    this.selectedPropertiesWindow = ""
-        //    this.selectedPropertiesWindowCt = 0
-        //  }
           selectNextOptionBTN_counter = selectNextOptionBTN_counter + 1  // Counter controls navigating between steps 1 -3
           this.WaitTimeIndicatorPause()
         }
@@ -769,7 +762,6 @@ export default {
         document.getElementById("TemplateOption").style.display = "";
 
         if (this.templateSelectedOptions.length > 0) {
-        //  this.selectedPropertiesWindow = this.templateSelectedOptions
           this.selectedPropertiesWindow = this.tags + ", " + this.templatePropertiesValue
           this.selectedPropertiesWindowCt = this.templateValueCount
           this.templateCodeDesc = this.tags + ", " + this.templatePropertiesValue
@@ -832,7 +824,6 @@ export default {
       //alert("SelectedFormat: " + this.fileFormat);
       //alert("filename: " + this.filename);
       //alert("selectedFormat Extension: " + this.userSelectedFormat);
-      //alert (this.queryEntitySelection);
 
 
       if ((this.rightOptions.length > 0) && (this.templateYesNoFlag === "No" || this.templateYesNoFlag === ""))
