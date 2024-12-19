@@ -3,6 +3,7 @@ package gov.nih.nci.evs.report.exporter.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,11 @@ public class AssociationController {
 	
 	@Autowired
 	AssociationService service;
+	
+	@Autowired
+	public AssociationController(@Lazy AssociationService service) {
+		this.service = service;
+	}
 	
 	  @GetMapping("/association/{code}")
 	  public RestEntity codeReadRole(@PathVariable String code) {

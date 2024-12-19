@@ -31,6 +31,11 @@ public class RoleService {
 	
 	DelimitedRoleOutputUtility utility;
 	
+	@Autowired
+	public RoleService(CodeReadService crservice) {
+		this.crservice = crservice;
+	}
+	
 	public List<Role> getRolesForEntityCode(String code){
 		return service.getRestRole(code);
 	}

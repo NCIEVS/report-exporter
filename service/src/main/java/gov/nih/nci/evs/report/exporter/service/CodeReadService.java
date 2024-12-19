@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -30,6 +31,12 @@ public class CodeReadService {
 	
 	@Autowired
 	AssociationService associationService;
+	
+	@Autowired
+	public CodeReadService(@Lazy RoleService roleService, @Lazy AssociationService associationService) {
+		this.roleService = roleService;
+		this.associationService = associationService;
+	}
 	
 
 	public static final String NOTFOUND = "Concept Code Not Found";
