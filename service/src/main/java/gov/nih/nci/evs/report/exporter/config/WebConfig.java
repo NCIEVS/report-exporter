@@ -23,18 +23,4 @@ public class WebConfig{
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }
-    
-    @Bean
-    public CodeReadService crservice() {
-    	return new CodeReadService();
-    }
-    
-    @Bean
-    public AssociationService associationService() {
-    	return new AssociationService();
-    }
-    
-    @Bean RoleService roleService() {
-    	return new RoleService();
-    }
 }
