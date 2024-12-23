@@ -15,12 +15,15 @@ import org.mockito.Mockito;
 
 import gov.nih.nci.evs.report.exporter.model.Rel;
 import gov.nih.nci.evs.report.exporter.model.Role;
+import gov.nih.nci.evs.report.exporter.service.CodeReadService;
 import gov.nih.nci.evs.report.exporter.service.RoleService;
 import gov.nih.nci.evs.report.exporter.util.CommonServices;
 
 class RoleServiceTest {
 	
 	RoleService service;
+	
+	CodeReadService crservice;
 
 	@BeforeEach
 	void setUp() throws Exception {

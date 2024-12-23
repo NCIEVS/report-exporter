@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import gov.nih.nci.evs.report.exporter.model.Association;
@@ -32,11 +31,6 @@ public class AssociationService {
     CodeReadService crservice;
 	
 	DelimitedRoleOutputUtility utility;
-	
-	@Autowired
-	public AssociationService(@Lazy CodeReadService crservice) {
-		this.crservice = crservice;
-	}
 	
 	public List<Association> getAssociationsForCode(String code){
 		return service.getRestAssociation(code);
