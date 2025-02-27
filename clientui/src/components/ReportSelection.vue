@@ -27,6 +27,7 @@
     <div class="title-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h2 class="display-4">NCI Report Exporter</h2>
       <p class="lead">The NCI Thesaurus (NCIt) provides reference terminology services for the National Cancer Institute and other institutional users. The Report Exporter provides curated, filtered, and formatted output from the NCI Thesaurus in file types designed for typical research and development purposes.</p>
+      <p class="lead warning-text" > The EVS website hosts biomedical terminologies that NCI does not own or control. Some of these sources may contain gender-related terminology that does not comply with Executive Order 14168. </p>
     </div>
 
     <div class="container">
@@ -285,6 +286,13 @@ a:hover {
   background-color: rgb(0, 125, 188);
   border-color: rgb(0, 125, 188);
   color: white;
+}
+.warning-text {
+  background-color: #ffcc00; /* Bright yellow */
+  color: #000; /* Black text for readability */
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 </style>
