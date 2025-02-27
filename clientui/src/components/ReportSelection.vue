@@ -292,7 +292,8 @@ a:hover {
   color: #000; /* Black text for readability */
   padding: 10px;
   border-radius: 5px;
-  font-weight: bold;
+  font-size: 12px; /* Smaller font */
+  font-weight: normal;
 }
 
 </style>
