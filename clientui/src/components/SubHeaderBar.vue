@@ -44,15 +44,6 @@
                   <img  src="../assets/EVSTile.png" alt="EVS">
                   NCI Enterprise Vocabulary Services
                 </a>
-
-                <a class="dropdown-item" alt="NCIm" href="https://ncim.nci.nih.gov/ncimbrowser" target="_blank">
-                  <img  alt="NCIm" src="../assets/NCImTile.png">
-                  NCI Metathesaurus
-                </a>
-                <a class="dropdown-item" alt="NCI Term Browser" href="https://ncithesaurus.nci.nih.gov/ncitbrowser/" target="_blank">
-                  <img alt="NCI Term Browser" src="../assets/EVSTermsBrowserTile.png">
-                  NCI Term Browser
-                </a>
                 <a class="dropdown-item" alt="NCI Terminology Resources" href="http://www.cancer.gov/cancertopics/terminologyresources/" target="_blank">
                   <img alt="NCI Terminology Resources" src="../assets/Cancer_govTile.png">
                   NCI Terminology Resources

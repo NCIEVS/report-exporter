@@ -133,7 +133,7 @@ public class EVSAPIBaseService {
 		try {
 			return client
 					.get()
-					.uri(new URI(baseURL + summary + "," + maps + "," + parentsParam + "&list=" + codes))
+					.uri(new URI(baseURL.replaceAll("/$", "") + summary + "," + maps + "," + parentsParam + "&list=" + codes))
 					.retrieve()
 					.bodyToMono(RestEntity[].class)
 					.block();
