@@ -1,5 +1,14 @@
 
 <template>
+
+
+  <teleport to="head">
+    <component
+        :is="'script'"
+        src="https://assets.adobedtm.com/6a4249cd0a2c/785de09de161/launch-70d67a6a40a8.min.js"
+        async
+    />
+  </teleport>
   <div id="app">
 
     <notifications group="app"/>
