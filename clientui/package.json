@@ -20,7 +20,7 @@
     "axios": "^1.8.2",
     "bootstrap": "^4.6.0",
     "core-js": "^3.32.1",
-    "express": "^4.18.2",
+    "express": "^4.22.2",
     "follow-redirects": "^1.15.2",
     "form-wizard-vue3": "1.1.0",
     "jquery": "^3.7.0",
