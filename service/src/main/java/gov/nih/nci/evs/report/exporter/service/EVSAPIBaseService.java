@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.util.UriUtils;
+
+import java.nio.charset.StandardCharsets;
 
 import gov.nih.nci.evs.report.exporter.model.Association;
 import gov.nih.nci.evs.report.exporter.model.ChildEntity;
@@ -86,32 +89,62 @@ public class EVSAPIBaseService {
 	@Value("${ASSOCIATIONS}")
 	private String associations;
 	
+	// -------------------------------------------------------------
+    // Utility methods for safely encoding user-supplied path variables
+    // -------------------------------------------------------------
+
+    /**
+     * Safely encodes a single concept code so it can be appended to the base
+     * EVS REST API URL without introducing the possibility of Server-Side
+     * Request Forgery (SSRF) or path-traversal attacks. Only the path segment
+     * itself is encoded - reserved URI characters such as '/' are converted to
+     * their percent-encoded form so they cannot break out of the intended
+     * context.
+     *
+     * @param code raw concept code coming from a user request (e.g. "C1234")
+     * @return a URI-safe representation of the code.
+     */
+    private String encodeCode(String code) {
+        if (code == null) {
+            return ""; // defensive - will ultimately cause downstream call to fail fast
+        }
+        return UriUtils.encodePathSegment(code, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Encodes a comma-separated list of concept codes. Each individual code is
+     * encoded but the comma delimiter is preserved so the EVS API continues to
+     * accept the list parameter format it expects.
+     */
+    private String encodeCodesList(String codesCsv) {
+        if (codesCsv == null || codesCsv.isEmpty()) {
+            return codesCsv;
+        }
+        return Arrays.stream(codesCsv.split(","))
+                .map(this::encodeCode)
+                .collect(Collectors.joining(","));
+    }
 	
-    
 	public List<ChildEntity> getChildrenForBranchTopNode(List<String> codes){
-		return 
-				codes.stream().map(code -> CommonServices.getRestTemplate()
-				.getForObject(
-				baseURL  + code + children
-						,ChildEntity[].class)).flatMap(Arrays::stream)
-						.collect(Collectors.toList());
+		return codes.stream()
+                .map(code -> CommonServices.getRestTemplate()
+                        .getForObject(baseURL + encodeCode(code) + children, ChildEntity[].class))
+                .filter(Objects::nonNull)
+                .flatMap(arr -> Arrays.stream(arr))
+                .collect(Collectors.toList());
 	}
 	
 	public List<ChildEntity> getUnprocessedChildrenForBranchTopNode(String code, String max){
-		return 
-				Arrays.asList(CommonServices.getRestTemplate()
-				.getForObject(
-				baseURL 
-				+ code 
-				+ descendants + max
-						,ChildEntity[].class));
+		String safeCode = encodeCode(code);
+		return Arrays.asList(CommonServices.getRestTemplate()
+                .getForObject(baseURL + safeCode + descendants + max, ChildEntity[].class));
 	}
 	
 	public List<Root> getRestParents(String code){
 		List<Root> roots = Stream.of(WebClient
 				.create()
 				.get()
-				.uri(baseURL + code + parents)
+				.uri(baseURL + encodeCode(code) + parents)
 				.retrieve().bodyToMono(Root[].class)
 				.block()).collect(Collectors.toList());			
 		return roots;
@@ -121,7 +154,7 @@ public class EVSAPIBaseService {
 		WebClient client = getNewWebClientWithBuffer();
 			return client
 					.get()
-					.uri(new URI(baseURL + code + summary + "," + maps + "," + parentsParam))
+					.uri(new URI(baseURL + encodeCode(code) + summary + "," + maps + "," + parentsParam))
 					.retrieve()
 					.bodyToMono(RestEntity.class)
 					.block();
@@ -133,7 +166,7 @@ public class EVSAPIBaseService {
 		try {
 			return client
 					.get()
-					.uri(new URI(baseURL.replaceAll("/$", "") + summary + "," + maps + "," + parentsParam + "&list=" + codes))
+					.uri(new URI(baseURL.replaceAll("/$", "") + summary + "," + maps + "," + parentsParam + "&list=" + encodeCodesList(codes)))
 					.retrieve()
 					.bodyToMono(RestEntity[].class)
 					.block();
@@ -147,7 +180,7 @@ public class EVSAPIBaseService {
 		WebClient client = getNewWebClientWithBuffer();
 		return Stream.of(client
 				.get()
-				.uri(baseURL + code + roles)
+				.uri(baseURL + encodeCode(code) + roles)
 				.retrieve()
 				.bodyToMono(Role[].class)
 				.block()).collect(Collectors.toList());			
@@ -157,7 +190,7 @@ public class EVSAPIBaseService {
 		WebClient client = getNewWebClientWithBuffer();
 		return Stream.of(client
 				.get()
-				.uri(baseURL + code + associations)
+				.uri(baseURL + encodeCode(code) + associations)
 				.retrieve()
 				.bodyToMono(Association[].class)
 				.block()).collect(Collectors.toList());			
