@@ -105,12 +105,15 @@ public class EVSAPIBaseService {
      * @return a URI-safe representation of the code.
      */
     private String encodeCode(String code) {
-        if (code == null) {
-            return ""; // defensive - will ultimately cause downstream call to fail fast
+        if (code == null) return "";
+        code = code.trim();
+        // basic allow-list: only letters, numbers and underscore
+        if (!code.matches("[A-Za-z0-9_]+")) {
+            throw new IllegalArgumentException("Invalid concept code");
         }
-        // Prevent double-encoding (e.g. "%20" ⇒ "%2520")
+        // avoid double-encoding
         if (code.contains("%")) {
-            return code; // assume already encoded
+            return code;
         }
         return UriUtils.encodePathSegment(code, StandardCharsets.UTF_8);
     }
