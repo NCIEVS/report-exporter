@@ -1156,7 +1156,7 @@ export default {
 
       axios({
         url: this.$baseURL + 'download/get-file-for-resolved-branch/'  +
-            this.userEnteredCodes + '/' +
+            encodeURIComponent(this.userEnteredCodes.trim()) + '/' +
             this.rightOptions + '/' +
             this.selectedLevel + '/' +
             this.fileFormat + '/' +

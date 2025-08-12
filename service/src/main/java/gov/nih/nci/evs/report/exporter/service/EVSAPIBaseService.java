@@ -108,6 +108,10 @@ public class EVSAPIBaseService {
         if (code == null) {
             return ""; // defensive - will ultimately cause downstream call to fail fast
         }
+        // Prevent double-encoding (e.g. "%20" ⇒ "%2520")
+        if (code.contains("%")) {
+            return code; // assume already encoded
+        }
         return UriUtils.encodePathSegment(code, StandardCharsets.UTF_8);
     }
 
