@@ -77,7 +77,8 @@ const api = {
     getChildren(baseUrl, code, levels){
         return new Promise((resolve)=>{
             // hard code to 1 for single level resolution only
-            axios.get(baseUrl + 'resolve-branch-for-codes/' + code + '/' + levels
+            const safeCode = encodeURIComponent(String(code).trim());
+            axios.get(baseUrl + 'resolve-branch-for-codes/' + safeCode + '/' + levels
           )
                 .then((response) =>{
                     resolve(response.data);
