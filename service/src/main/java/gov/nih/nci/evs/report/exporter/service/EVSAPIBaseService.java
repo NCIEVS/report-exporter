@@ -134,7 +134,7 @@ public class EVSAPIBaseService {
                 .map(code -> CommonServices.getRestTemplate()
                         .getForObject(baseURL + encodeCode(code) + children, ChildEntity[].class))
                 .filter(Objects::nonNull)
-                .flatMap(arr -> Arrays.stream(arr))
+                .flatMap(arr -> arr == null ? Stream.empty() : Arrays.stream(arr))
                 .collect(Collectors.toList());
 	}
 	
