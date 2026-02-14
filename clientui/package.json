@@ -21,7 +21,7 @@
     "bootstrap": "^4.6.0",
     "core-js": "^3.32.1",
     "esbuild": "^0.25.0",
-    "express": "^4.21.2",
+    "express": "^4.22.1",
     "follow-redirects": "^1.15.2",
     "form-wizard-vue3": "1.1.0",
     "http-proxy-middleware": "^2.0.9",
